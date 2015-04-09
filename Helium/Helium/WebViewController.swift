@@ -15,8 +15,6 @@ class WebViewController: NSViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "requestedReload", name: "HeliumReload", object: nil)
-
-        
     }
 
     override var representedObject: AnyObject? {
