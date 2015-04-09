@@ -17,7 +17,92 @@ class HeliumPanelController : NSWindowController {
     }
     
     override func windowDidLoad() {
-        self.panel.floatingPanel = true
+        panel.floatingPanel = true
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didBecomeActive", name: NSApplicationDidBecomeActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willResignActive", name: NSApplicationWillResignActiveNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnableTranslucency", name: "HeliumTranslucencyEnabled", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didDisableTranslucency", name: "HeliumTranslucencyDisabled", object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdateAlpha:", name: "HeliumUpdateAlpha", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didRequestLocation", name: "HeliumRequestLocation", object: nil)
+
+
     }
     
+    func didRequestLocation() {
+        let alert = NSAlert()
+        alert.alertStyle = NSAlertStyle.InformationalAlertStyle
+        alert.messageText = "Enter Destination URL"
+        
+        let urlField = NSTextField()
+        urlField.frame = NSRect(x: 0, y: 0, width: 300, height: 20)
+        
+        alert.accessoryView = urlField
+        alert.addButtonWithTitle("Load")
+        alert.addButtonWithTitle("Cancel")
+        alert.beginSheetModalForWindow(self.window!, completionHandler: { response in
+            if response == NSAlertFirstButtonReturn {
+                // Load
+                var text = (alert.accessoryView as! NSTextField).stringValue
+                
+                if !(text.lowercaseString.hasPrefix("http://") || text.lowercaseString.hasPrefix("https://")) {
+                    text = "http://" + text
+                }
+                
+                let webVC = self.window?.contentViewController as! WebViewController
+                if let url = NSURL(string: text) {
+                    webVC.loadURL(url)
+                }
+            }
+        })
+    }
+    
+    var alpha: CGFloat = 0.6 { //default
+        didSet {
+            if translucent {
+                panel.alphaValue = alpha
+            }
+        }
+    }
+
+    var translucent = false {
+        didSet {
+            if !NSApplication.sharedApplication().active {
+                panel.ignoresMouseEvents = translucent
+            }
+            if translucent {
+                panel.opaque = false
+                panel.alphaValue = alpha
+            }
+            else {
+                panel.opaque = true
+                panel.alphaValue = 1.0
+            }
+        }
+    }
+    
+    func didBecomeActive() {
+        panel.ignoresMouseEvents = false
+    }
+    
+    func willResignActive() {
+        if translucent {
+            panel.ignoresMouseEvents = true
+        }
+    }
+    
+    func didEnableTranslucency() {
+        translucent = true
+    }
+    
+    func didDisableTranslucency() {
+        translucent = false
+    }
+    
+    func didUpdateAlpha(notifcation: NSNotification) {
+        let newAlpha = notifcation.object as! NSNumber
+        alpha = CGFloat(newAlpha.doubleValue) / CGFloat(100.0)
+    }
 }
