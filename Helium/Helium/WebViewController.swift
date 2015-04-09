@@ -7,13 +7,16 @@
 //
 
 import Cocoa
+import WebKit
 
-class ViewController: NSViewController {
+class WebViewController: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "requestedReload", name: "HeliumReload", object: nil)
+
+        
     }
 
     override var representedObject: AnyObject? {
@@ -21,7 +24,15 @@ class ViewController: NSViewController {
         // Update the view, if already loaded.
         }
     }
+    
+    func loadURL(url:NSURL) {
+        webView.mainFrame.loadRequest(NSURLRequest(URL: url))
+    }
+    func requestedReload() {
+        webView.mainFrame.reload()
+    }
 
-
+    @IBOutlet weak var webView: WebView!
+    
 }
 
