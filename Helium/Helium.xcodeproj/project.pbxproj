@@ -404,6 +404,7 @@
 				4D867CCF1AD6781200681331 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4D867CD01AD6781200681331 /* Build configuration list for PBXNativeTarget "HeliumTests" */ = {
 			isa = XCConfigurationList;
@@ -412,6 +413,7 @@
 				4D867CD21AD6781200681331 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
