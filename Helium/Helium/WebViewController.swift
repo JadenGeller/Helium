@@ -15,6 +15,9 @@ class WebViewController: NSViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "requestedReload", name: "HeliumReload", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "clear", name: "HeliumClear", object: nil)
+        
+        clear()
     }
 
     override var representedObject: AnyObject? {
@@ -28,6 +31,9 @@ class WebViewController: NSViewController {
     }
     func requestedReload() {
         webView.mainFrame.reload()
+    }
+    func clear() {
+        webView.mainFrame.loadHTMLString("<!DOCTYPE html><html><head><style>body{background-color:#101010}</style></head></html>", baseURL: nil)
     }
 
     @IBOutlet weak var webView: WebView!

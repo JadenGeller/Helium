@@ -69,6 +69,14 @@
                                                 <action selector="reloadPress:" target="Voe-Tx-rLC" id="s9q-6Q-yVK"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Clear" id="yCk-JK-BBT">
+                                            <string key="keyEquivalent" base64-UTF8="YES">
+CA
+</string>
+                                            <connections>
+                                                <action selector="clearPress:" target="Voe-Tx-rLC" id="Q3H-QC-5dk"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -245,7 +253,9 @@
                         <subviews>
                             <webView translatesAutoresizingMaskIntoConstraints="NO" id="bnm-Cq-vij">
                                 <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
-                                <webPreferences key="preferences" defaultFontSize="12" defaultFixedFontSize="12"/>
+                                <webPreferences key="preferences" defaultFontSize="12" defaultFixedFontSize="12">
+                                    <nil key="identifier"/>
+                                </webPreferences>
                             </webView>
                         </subviews>
                         <constraints>
