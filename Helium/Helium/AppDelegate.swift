@@ -25,6 +25,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     }
     
+    @IBAction func clearPress(sender: AnyObject) {
+        NSNotificationCenter.defaultCenter().postNotificationName("HeliumClear", object: nil)
+    }
+    
     @IBAction func translucencyPress(sender: NSMenuItem) {
         if sender.state == NSOnState {
             sender.state = NSOffState
