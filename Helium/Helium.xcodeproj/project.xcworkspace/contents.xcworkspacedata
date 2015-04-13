@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../../Squirrel.Mac/Squirrel.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "self:Helium.xcodeproj">
    </FileRef>
 </Workspace>
