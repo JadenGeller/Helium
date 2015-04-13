@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7519.1" systemVersion="14C99d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7519.1"/>
-        <plugIn identifier="com.apple.WebKitIBPlugin" version="7519.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7531"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -22,7 +21,16 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
-                                        <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW"/>
+                                        <menuItem title="Preferences..." id="MMM-uX-MFR">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Preferences..." id="BdD-B4-azf">
+                                                <items>
+                                                    <menuItem title="Magic URL Redirects" state="on" id="Vn0-wi-SSU">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
                                         <menuItem title="Services" id="NMo-om-nkz">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -250,24 +258,7 @@ CA
                     <view key="view" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <webView translatesAutoresizingMaskIntoConstraints="NO" id="bnm-Cq-vij">
-                                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
-                                <webPreferences key="preferences" defaultFontSize="12" defaultFixedFontSize="12">
-                                    <nil key="identifier"/>
-                                </webPreferences>
-                            </webView>
-                        </subviews>
-                        <constraints>
-                            <constraint firstAttribute="bottom" secondItem="bnm-Cq-vij" secondAttribute="bottom" id="28J-3V-yvZ"/>
-                            <constraint firstItem="bnm-Cq-vij" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="EId-b9-byU"/>
-                            <constraint firstItem="bnm-Cq-vij" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="PyS-mM-MJb"/>
-                            <constraint firstAttribute="trailing" secondItem="bnm-Cq-vij" secondAttribute="trailing" id="Xwh-UX-MI2"/>
-                        </constraints>
                     </view>
-                    <connections>
-                        <outlet property="webView" destination="bnm-Cq-vij" id="kei-SN-fvV"/>
-                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
