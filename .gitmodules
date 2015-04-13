@@ -1,0 +1,3 @@
+[submodule "Squirrel.Mac"]
+	path = Squirrel.Mac
+	url = git://github.com/Squirrel/Squirrel.Mac.git
