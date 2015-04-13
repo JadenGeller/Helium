@@ -17,6 +17,8 @@ class WebViewController: NSViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "requestedReload", name: "HeliumReload", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "clear", name: "HeliumClear", object: nil)
         
+        webView.customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_0) AppleWebKit/600.5.17 (KHTML, like Gecko) Version/7.1.5 Safari/537.85.14"
+
         clear()
     }
 
@@ -33,7 +35,9 @@ class WebViewController: NSViewController {
         webView.mainFrame.reload()
     }
     func clear() {
-        webView.mainFrame.loadHTMLString("<!DOCTYPE html><html><head><style>body{background-color:#3399FF; color:white; font-family: 'Helvetica Neue'}</style></head><body><center>Navigate to a webpage using the <b>Location</b> menu in the menubar.<br><br><img src='http://jadengeller.github.io/Helium/helium_icon.png' style='width:45%'></center></body></html>", baseURL: nil)
+        let url = NSURL(string: "https://rawgit.com/JadenGeller/4bb77b2fac2f57b29c91/raw/d6d82ba87db3058b3059fbc64d85ab5c7568baf5/helium_start.html")
+        let request = NSURLRequest(URL: url!)
+        webView.mainFrame.loadRequest(request)
     }
 
     @IBOutlet weak var webView: WebView!
