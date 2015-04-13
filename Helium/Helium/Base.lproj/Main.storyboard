@@ -27,6 +27,9 @@
                                                 <items>
                                                     <menuItem title="Magic URL Redirects" state="on" id="Vn0-wi-SSU">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="magicURLRedirectToggled:" target="Voe-Tx-rLC" id="OyL-id-RDj"/>
+                                                        </connections>
                                                     </menuItem>
                                                 </items>
                                             </menu>
@@ -226,6 +229,7 @@ CA
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Helium" customModuleProvider="target">
                     <connections>
                         <outlet property="allTranslucencyValues" destination="5ao-Bb-P10" id="NDg-n5-yLb"/>
+                        <outlet property="magicURLMenu" destination="Vn0-wi-SSU" id="jow-sG-Fmx"/>
                     </connections>
                 </customObject>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

@@ -11,9 +11,12 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
+    @IBOutlet weak var magicURLMenu: NSMenuItem!
+    
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Insert code here to initialize your application
-
+        magicURLMenu.state = NSUserDefaults.standardUserDefaults().boolForKey("disabledMagicURLs") ? NSOffState : NSOnState
+        
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {
@@ -23,6 +26,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func reloadPress(sender: AnyObject) {
         NSNotificationCenter.defaultCenter().postNotificationName("HeliumReload", object: nil)
 
+    }
+    @IBAction func magicURLRedirectToggled(sender: NSMenuItem) {
+        sender.state = (sender.state == NSOnState) ? NSOffState : NSOnState
+        NSUserDefaults.standardUserDefaults().setBool((sender.state == NSOffState), forKey: "disabledMagicURLs")
     }
     
     @IBAction func clearPress(sender: AnyObject) {
