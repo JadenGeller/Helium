@@ -13,6 +13,7 @@
 		4D867CBE1AD6781200681331 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D867CBC1AD6781200681331 /* Main.storyboard */; };
 		4D867CCA1AD6781200681331 /* HeliumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D867CC91AD6781200681331 /* HeliumTests.swift */; };
 		4D867CD41AD6796A00681331 /* HeliumPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D867CD31AD6796A00681331 /* HeliumPanelController.swift */; };
+		4DC720631ADC060100B853B7 /* Squirrel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC720561ADBF96800B853B7 /* Squirrel.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -22,6 +23,48 @@
 			proxyType = 1;
 			remoteGlobalIDString = 4D867CB01AD6781200681331;
 			remoteInfo = Helium;
+		};
+		4DC720551ADBF96800B853B7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4DC7204D1ADBF96700B853B7 /* Squirrel.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D0C22BD7179CC00E00158214;
+			remoteInfo = Squirrel;
+		};
+		4DC720571ADBF96800B853B7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4DC7204D1ADBF96700B853B7 /* Squirrel.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D0C22BEF179CC00E00158214;
+			remoteInfo = SquirrelTests;
+		};
+		4DC720591ADBF96800B853B7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4DC7204D1ADBF96700B853B7 /* Squirrel.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D08D4E0C17B451500012B22D;
+			remoteInfo = TestApplication;
+		};
+		4DC7205B1ADBF96800B853B7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4DC7204D1ADBF96700B853B7 /* Squirrel.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 534FF36017D8E90A0020A51A;
+			remoteInfo = TestService;
+		};
+		4DC7205D1ADBF96800B853B7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4DC7204D1ADBF96700B853B7 /* Squirrel.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D014AC0117B97885007D79D0;
+			remoteInfo = ShipIt;
+		};
+		4DC720611ADC05F900B853B7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4DC7204D1ADBF96700B853B7 /* Squirrel.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D0C22BD6179CC00E00158214;
+			remoteInfo = Squirrel;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -36,6 +79,7 @@
 		4D867CC81AD6781200681331 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D867CC91AD6781200681331 /* HeliumTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeliumTests.swift; sourceTree = "<group>"; };
 		4D867CD31AD6796A00681331 /* HeliumPanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeliumPanelController.swift; sourceTree = "<group>"; };
+		4DC7204D1ADBF96700B853B7 /* Squirrel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Squirrel.xcodeproj; path = ../Squirrel.Mac/Squirrel.xcodeproj; sourceTree = "<group>"; };
 		4DEAB8FD1ADBD98600A2FC2B /* Helium-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Helium-Bridging-Header.h"; sourceTree = "<group>"; };
 		4DEAB8FE1ADBD98600A2FC2B /* WKWebViewPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKWebViewPrivate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -45,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DC720631ADC060100B853B7 /* Squirrel.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +106,7 @@
 		4D867CA81AD6781200681331 = {
 			isa = PBXGroup;
 			children = (
+				4DC7204D1ADBF96700B853B7 /* Squirrel.xcodeproj */,
 				4D867CB31AD6781200681331 /* Helium */,
 				4D867CC61AD6781200681331 /* HeliumTests */,
 				4D867CB21AD6781200681331 /* Products */,
@@ -116,6 +162,18 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		4DC7204E1ADBF96700B853B7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4DC720561ADBF96800B853B7 /* Squirrel.framework */,
+				4DC720581ADBF96800B853B7 /* SquirrelTests.xctest */,
+				4DC7205A1ADBF96800B853B7 /* TestApplication.app */,
+				4DC7205C1ADBF96800B853B7 /* com.github.Squirrel.TestApplication.TestService.xpc */,
+				4DC7205E1ADBF96800B853B7 /* ShipIt */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -130,6 +188,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				4DC720621ADC05F900B853B7 /* PBXTargetDependency */,
 			);
 			name = Helium;
 			productName = Helium;
@@ -183,6 +242,12 @@
 			mainGroup = 4D867CA81AD6781200681331;
 			productRefGroup = 4D867CB21AD6781200681331 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 4DC7204E1ADBF96700B853B7 /* Products */;
+					ProjectRef = 4DC7204D1ADBF96700B853B7 /* Squirrel.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				4D867CB01AD6781200681331 /* Helium */,
@@ -190,6 +255,44 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		4DC720561ADBF96800B853B7 /* Squirrel.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Squirrel.framework;
+			remoteRef = 4DC720551ADBF96800B853B7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4DC720581ADBF96800B853B7 /* SquirrelTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SquirrelTests.xctest;
+			remoteRef = 4DC720571ADBF96800B853B7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4DC7205A1ADBF96800B853B7 /* TestApplication.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = TestApplication.app;
+			remoteRef = 4DC720591ADBF96800B853B7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4DC7205C1ADBF96800B853B7 /* com.github.Squirrel.TestApplication.TestService.xpc */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = com.github.Squirrel.TestApplication.TestService.xpc;
+			remoteRef = 4DC7205B1ADBF96800B853B7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4DC7205E1ADBF96800B853B7 /* ShipIt */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = ShipIt;
+			remoteRef = 4DC7205D1ADBF96800B853B7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		4D867CAF1AD6781200681331 /* Resources */ = {
@@ -236,6 +339,11 @@
 			isa = PBXTargetDependency;
 			target = 4D867CB01AD6781200681331 /* Helium */;
 			targetProxy = 4D867CC41AD6781200681331 /* PBXContainerItemProxy */;
+		};
+		4DC720621ADC05F900B853B7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Squirrel;
+			targetProxy = 4DC720611ADC05F900B853B7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
