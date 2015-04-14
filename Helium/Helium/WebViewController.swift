@@ -22,6 +22,8 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "zoomOut", name: "HeliumZoomOut", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "resetZoom", name: "HeliumResetZoom", object: nil)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "loadURLObject:", name: "HeliumLoadURL", object: nil)
+        
         // Layout webview
         view.addSubview(webView)
         webView.frame = view.bounds
@@ -61,6 +63,12 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     }
     
     func loadURL(url:NSURL) {
+        webView.loadRequest(NSURLRequest(URL: url))
+    }
+    
+//MARK: - loadURLObject
+    func loadURLObject(urlObject : NSNotification) {
+        let url:NSURL = (urlObject.object as! NSURL)
         webView.loadRequest(NSURLRequest(URL: url))
     }
     
