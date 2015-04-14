@@ -172,6 +172,29 @@ CA
                                                 </items>
                                             </menu>
                                         </menuItem>
+                                        <menuItem title="Zoom" id="kjo-5J-SOa">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Zoom" id="91W-6v-hBY">
+                                                <items>
+                                                    <menuItem title="Zoom In" keyEquivalent="+" id="x5u-Za-He5">
+                                                        <connections>
+                                                            <action selector="zoomIn:" target="Voe-Tx-rLC" id="tFa-u3-FxL"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Zoom Out" keyEquivalent="-" id="oZd-ZE-I3d">
+                                                        <connections>
+                                                            <action selector="zoomOut:" target="Voe-Tx-rLC" id="wvJ-Qx-6lu"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Reset Zoom Level" id="CkG-jI-gbw">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="resetZoomLevel:" target="Voe-Tx-rLC" id="el4-Pc-uBz"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
