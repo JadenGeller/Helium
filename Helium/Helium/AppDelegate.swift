@@ -62,5 +62,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSNotificationCenter.defaultCenter().postNotificationName("HeliumRequestLocation", object: nil)
 
     }
+    
+    @IBAction func openFilePress(sender: AnyObject) {
+        NSNotificationCenter.defaultCenter().postNotificationName("HeliumRequestFile", object: nil)
+        
+    }
 }
 
