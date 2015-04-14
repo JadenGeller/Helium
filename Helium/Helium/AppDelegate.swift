@@ -16,6 +16,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Insert code here to initialize your application
         magicURLMenu.state = NSUserDefaults.standardUserDefaults().boolForKey("disabledMagicURLs") ? NSOffState : NSOnState
+        NSAppleEventManager.sharedAppleEventManager().setEventHandler(
+            self,
+            andSelector: "handleURLEvent:withReply:",
+            forEventClass: AEEventClass(kInternetEventClass),
+            andEventID: AEEventID(kAEGetURL)
+        )
         
     }
 
@@ -78,6 +84,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func zoomOut(sender: AnyObject) {
         NSNotificationCenter.defaultCenter().postNotificationName("HeliumZoomOut", object: nil)
 
+    }
+    
+//MARK: - handleURLEvent
+    // Called when the App opened via URL.
+    func handleURLEvent(event: NSAppleEventDescriptor, withReply reply: NSAppleEventDescriptor) {
+        if let urlString:String? = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject))?.stringValue {
+            if let url:String? = urlString?.substringFromIndex(advance(urlString!.startIndex,9)){
+                var urlObject:NSURL = NSURL(string:url!)!
+            NSNotificationCenter.defaultCenter().postNotificationName("HeliumLoadURL", object: urlObject)
+                
+            }else {
+                println("No valid URL to handle")
+            }
+            
+            
+        }
     }
 }
 
