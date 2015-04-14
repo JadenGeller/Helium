@@ -67,5 +67,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSNotificationCenter.defaultCenter().postNotificationName("HeliumRequestFile", object: nil)
         
     }
+    @IBAction func resetZoomLevel(sender: AnyObject) {
+        NSNotificationCenter.defaultCenter().postNotificationName("HeliumResetZoom", object: nil)
+
+    }
+    @IBAction func zoomIn(sender: AnyObject) {
+        NSNotificationCenter.defaultCenter().postNotificationName("HeliumZoomIn", object: nil)
+
+    }
+    @IBAction func zoomOut(sender: AnyObject) {
+        NSNotificationCenter.defaultCenter().postNotificationName("HeliumZoomOut", object: nil)
+
+    }
 }
 

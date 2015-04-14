@@ -18,6 +18,10 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "requestedReload", name: "HeliumReload", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "clear", name: "HeliumClear", object: nil)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "zoomIn", name: "HeliumZoomIn", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "zoomOut", name: "HeliumZoomOut", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "resetZoom", name: "HeliumResetZoom", object: nil)
+        
         // Layout webview
         view.addSubview(webView)
         webView.frame = view.bounds
@@ -32,7 +36,22 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         // Setup magic URLs
         webView.navigationDelegate = self
         
+        // Allow zooming
+        webView.allowsMagnification = true
+        
         clear()
+    }
+    
+    func zoomIn() {
+        webView.magnification += 0.1
+    }
+    
+    func zoomOut() {
+        webView.magnification -= 0.1
+    }
+    
+    func resetZoom() {
+        webView.magnification = 1
     }
 
     override var representedObject: AnyObject? {
