@@ -146,16 +146,16 @@ CA
                                                             <action selector="percentagePress:" target="Voe-Tx-rLC" id="9Vj-ap-ubs"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="80%" id="mJa-We-e3P">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="percentagePress:" target="Voe-Tx-rLC" id="Xw9-sU-pWI"/>
-                                                        </connections>
-                                                    </menuItem>
                                                     <menuItem title="90%" id="JLI-El-Rtf">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
                                                             <action selector="percentagePress:" target="Voe-Tx-rLC" id="LBJ-aC-kDW"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="100%" id="2NP-ZM-pKs">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="percentagePress:" target="Voe-Tx-rLC" id="sdN-oy-hGP"/>
                                                         </connections>
                                                     </menuItem>
                                                 </items>
@@ -233,6 +233,12 @@ CA
                     </connections>
                 </customObject>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <menuItem title="80%" id="mJa-We-e3P">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="percentagePress:" target="Voe-Tx-rLC" id="Xw9-sU-pWI"/>
+                    </connections>
+                </menuItem>
             </objects>
             <point key="canvasLocation" x="75" y="0.0"/>
         </scene>
