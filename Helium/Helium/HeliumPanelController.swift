@@ -27,8 +27,29 @@ class HeliumPanelController : NSWindowController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdateAlpha:", name: "HeliumUpdateAlpha", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didRequestLocation", name: "HeliumRequestLocation", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didRequestFile", name: "HeliumRequestFile", object: nil)
 
 
+    }
+    
+    func didRequestFile() {
+        
+        let open = NSOpenPanel()
+        open.allowsMultipleSelection = false
+        open.canChooseFiles = true
+        open.canChooseDirectories = false
+        
+        if open.runModal() == NSModalResponseOK {
+            if let url = open.URL {
+                webViewController.loadURL(url)
+            }
+        }
+    }
+    
+    var webViewController: WebViewController {
+        get {
+            return self.window?.contentViewController as! WebViewController
+        }
     }
     
     func didRequestLocation() {
@@ -51,9 +72,8 @@ class HeliumPanelController : NSWindowController {
                     text = "http://" + text
                 }
                 
-                let webVC = self.window?.contentViewController as! WebViewController
                 if let url = NSURL(string: text) {
-                    webVC.loadURL(url)
+                    self.webViewController.loadURL(url)
                 }
             }
         })

@@ -70,9 +70,14 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Location" id="bib-Uj-vzu">
                                     <items>
-                                        <menuItem title="Open Location..." keyEquivalent="l" id="JqH-ds-lJa">
+                                        <menuItem title="Open Web URL..." keyEquivalent="l" id="JqH-ds-lJa">
                                             <connections>
                                                 <action selector="openLocationPress:" target="Voe-Tx-rLC" id="gYi-q1-2Jc"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Open File..." keyEquivalent="o" id="iba-HN-Jos">
+                                            <connections>
+                                                <action selector="openFilePress:" target="Voe-Tx-rLC" id="Xsi-Xk-Gx6"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Reload" keyEquivalent="r" id="drw-0K-OAV">

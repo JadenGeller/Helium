@@ -74,7 +74,6 @@ class WebViewController: NSViewController, WKNavigationDelegate {
                 decisionHandler(WKNavigationActionPolicy.Cancel)
                 loadURL(NSURL(string: modified)!)
                 return
-
             }
         }
         
