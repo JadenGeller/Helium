@@ -46,10 +46,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             NSNotificationCenter.defaultCenter().postNotificationName("HeliumTranslucencyEnabled", object: nil)
         }
     }
-    @IBOutlet weak var allTranslucencyValues: NSMenu!
+    @IBOutlet weak var allOpacityValues: NSMenu!
     
     @IBAction func percentagePress(sender: NSMenuItem) {
-        for button in allTranslucencyValues.itemArray {
+        for button in allOpacityValues.itemArray {
             (button as! NSMenuItem).state = NSOffState
         }
         sender.state = NSOnState

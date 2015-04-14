@@ -100,9 +100,9 @@ CA
                                                 <action selector="translucencyPress:" target="Voe-Tx-rLC" id="f09-uo-WB4"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Translucency" id="wlj-XI-Lng">
+                                        <menuItem title="Opacity" id="wlj-XI-Lng">
                                             <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="Translucency" systemMenu="window" id="5ao-Bb-P10">
+                                            <menu key="submenu" title="Opacity" systemMenu="window" id="5ao-Bb-P10">
                                                 <items>
                                                     <menuItem title="10%" id="SpQ-gr-DsG">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
@@ -228,7 +228,7 @@ CA
                 </application>
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Helium" customModuleProvider="target">
                     <connections>
-                        <outlet property="allTranslucencyValues" destination="5ao-Bb-P10" id="NDg-n5-yLb"/>
+                        <outlet property="allOpacityValues" destination="5ao-Bb-P10" id="R45-vA-JcY"/>
                         <outlet property="magicURLMenu" destination="Vn0-wi-SSU" id="jow-sG-Fmx"/>
                     </connections>
                 </customObject>
