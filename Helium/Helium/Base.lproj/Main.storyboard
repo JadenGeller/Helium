@@ -160,8 +160,7 @@ CA
                                                             <action selector="percentagePress:" target="Voe-Tx-rLC" id="LBJ-aC-kDW"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="100%" id="2NP-ZM-pKs">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    <menuItem title="100%" keyEquivalent="0" id="2NP-ZM-pKs">
                                                         <connections>
                                                             <action selector="percentagePress:" target="Voe-Tx-rLC" id="sdN-oy-hGP"/>
                                                         </connections>
