@@ -14,6 +14,7 @@
 		4D867CCA1AD6781200681331 /* HeliumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D867CC91AD6781200681331 /* HeliumTests.swift */; };
 		4D867CD41AD6796A00681331 /* HeliumPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D867CD31AD6796A00681331 /* HeliumPanelController.swift */; };
 		B34C1EC31ADE3B520094ADBA /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B34C1EC21ADE3B520094ADBA /* Sparkle.framework */; };
+		B34C1EC61ADE3CBE0094ADBA /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = B34C1EC51ADE3CBE0094ADBA /* dsa_pub.pem */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		4DEAB8FD1ADBD98600A2FC2B /* Helium-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Helium-Bridging-Header.h"; sourceTree = "<group>"; };
 		4DEAB8FE1ADBD98600A2FC2B /* WKWebViewPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKWebViewPrivate.h; sourceTree = "<group>"; };
 		B34C1EC21ADE3B520094ADBA /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
+		B34C1EC51ADE3CBE0094ADBA /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 				4D867CBC1AD6781200681331 /* Main.storyboard */,
 				4D867CB41AD6781200681331 /* Supporting Files */,
 				4DEAB8FD1ADBD98600A2FC2B /* Helium-Bridging-Header.h */,
+				B34C1EC71ADE3CCA0094ADBA /* Resources */,
 				B34C1EC41ADE3B5E0094ADBA /* Frameworks */,
 			);
 			path = Helium;
@@ -126,6 +129,14 @@
 				B34C1EC21ADE3B520094ADBA /* Sparkle.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B34C1EC71ADE3CCA0094ADBA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B34C1EC51ADE3CBE0094ADBA /* dsa_pub.pem */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -209,6 +220,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D867CBB1AD6781200681331 /* Images.xcassets in Resources */,
+				B34C1EC61ADE3CBE0094ADBA /* dsa_pub.pem in Resources */,
 				4D867CBE1AD6781200681331 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
