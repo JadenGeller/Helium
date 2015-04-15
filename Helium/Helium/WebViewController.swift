@@ -41,6 +41,9 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         // Allow zooming
         webView.allowsMagnification = true
         
+        // Listen for load progress
+        webView.addObserver(self, forKeyPath: "estimatedProgress", options: NSKeyValueObservingOptions.New, context: nil)
+        
         clear()
     }
     
@@ -68,8 +71,9 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     
 //MARK: - loadURLObject
     func loadURLObject(urlObject : NSNotification) {
-        let url:NSURL = (urlObject.object as! NSURL)
-        webView.loadRequest(NSURLRequest(URL: url))
+        if let url = urlObject.object as? NSURL {
+            loadURL(url);
+        }
     }
     
     func requestedReload() {
@@ -105,6 +109,34 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         }
         
         decisionHandler(WKNavigationActionPolicy.Allow)
+    }
+    
+    func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation) {
+        if let pageTitle = webView.title {
+            var title = pageTitle;
+            if title.isEmpty { title = "Helium" }
+            let notif = NSNotification(name: "HeliumUpdateTitle", object: title);
+            NSNotificationCenter.defaultCenter().postNotification(notif)
+        }
+        
+    }
+    
+    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+        
+        if object as! NSObject == webView && keyPath == "estimatedProgress" {
+            if let progress = change["new"] as? Float {
+                let percent = progress * 100
+                var title = NSString(format: "Loading... %.2f%%", percent)
+                if percent == 100 {
+                    title = "Helium"
+                }
+                
+                let notif = NSNotification(name: "HeliumUpdateTitle", object: title);
+                NSNotificationCenter.defaultCenter().postNotification(notif)
+            }
+        }
+        
+        
     }
 }
 
