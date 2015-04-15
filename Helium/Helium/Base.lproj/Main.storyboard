@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14D131" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7531"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -109,56 +109,47 @@ CA
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Opacity" systemMenu="window" id="5ao-Bb-P10">
                                                 <items>
-                                                    <menuItem title="10%" id="SpQ-gr-DsG">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    <menuItem title="10%" keyEquivalent="1" id="SpQ-gr-DsG">
                                                         <connections>
                                                             <action selector="percentagePress:" target="Voe-Tx-rLC" id="KkQ-Pa-FtT"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="20%" id="B4x-FQ-kVj">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    <menuItem title="20%" keyEquivalent="2" id="B4x-FQ-kVj">
                                                         <connections>
                                                             <action selector="percentagePress:" target="Voe-Tx-rLC" id="29f-lb-ysI"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="30%" id="S1G-zW-xWx">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    <menuItem title="30%" keyEquivalent="3" id="S1G-zW-xWx">
                                                         <connections>
                                                             <action selector="percentagePress:" target="Voe-Tx-rLC" id="hbM-5d-yPN"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="40%" id="sB8-xz-mYZ">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    <menuItem title="40%" keyEquivalent="4" id="sB8-xz-mYZ">
                                                         <connections>
                                                             <action selector="percentagePress:" target="Voe-Tx-rLC" id="cdE-q6-uLh"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="50%" id="BNJ-gh-yGK">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    <menuItem title="50%" keyEquivalent="5" id="BNJ-gh-yGK">
                                                         <connections>
                                                             <action selector="percentagePress:" target="Voe-Tx-rLC" id="6FD-yN-k0v"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="60%" state="on" id="iS5-Jd-p7Q">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    <menuItem title="60%" state="on" keyEquivalent="6" id="iS5-Jd-p7Q">
                                                         <connections>
                                                             <action selector="percentagePress:" target="Voe-Tx-rLC" id="9ek-0T-Yvi"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="70%" id="0pX-17-4u5">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    <menuItem title="70%" keyEquivalent="7" id="0pX-17-4u5">
                                                         <connections>
                                                             <action selector="percentagePress:" target="Voe-Tx-rLC" id="9Vj-ap-ubs"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="80%" id="mJa-We-e3P">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    <menuItem title="80%" keyEquivalent="8" id="mJa-We-e3P">
                                                         <connections>
                                                             <action selector="percentagePress:" target="Voe-Tx-rLC" id="Xw9-sU-pWI"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="90%" id="JLI-El-Rtf">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    <menuItem title="90%" keyEquivalent="9" id="JLI-El-Rtf">
                                                         <connections>
                                                             <action selector="percentagePress:" target="Voe-Tx-rLC" id="LBJ-aC-kDW"/>
                                                         </connections>
