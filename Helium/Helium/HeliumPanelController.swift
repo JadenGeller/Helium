@@ -28,8 +28,14 @@ class HeliumPanelController : NSWindowController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdateAlpha:", name: "HeliumUpdateAlpha", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didRequestLocation", name: "HeliumRequestLocation", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didRequestFile", name: "HeliumRequestFile", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdateTitle:", name: "HeliumUpdateTitle", object: nil)
 
-
+    }
+    
+    func didUpdateTitle(notification: NSNotification) {
+        if let title = notification.object as? String {
+            panel.title = title
+        }
     }
     
     func didRequestFile() {
