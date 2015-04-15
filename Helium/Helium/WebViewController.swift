@@ -76,7 +76,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         webView.reload()
     }
     func clear() {
-        loadURL(NSURL(string: "https://rawgit.com/JadenGeller/4bb77b2fac2f57b29c91/raw/d6d82ba87db3058b3059fbc64d85ab5c7568baf5/helium_start.html")!)
+        loadURL(NSURL(string: "https://rawgit.com/JadenGeller/451d6a81c4e48865fbc7/raw/d6d82ba87db3058b3059fbc64d85ab5c7568baf5/helium_start_auto.html")!)
     }
 
     var webView = WKWebView()
