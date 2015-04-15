@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel>
+        <title>Helium Changelog</title>
+        <link>https://raw.githubusercontent.com/JadenGeller/Helium/master/HeliumUpdatesSparkleFeed.xml</link>
+        <description>Most recent changes with links to updates.</description>
+        <language>en</language>
+        <item>
+            <title>Version 1.6</title>
+            <description>
+          	    <![CDATA[
+                    <ul>
+            	    <li>Added keyboard shortcuts for opacity</li>
+                    </ul>
+                ]]>
+            </description>
+            <pubDate>Tue, 14 Apr 2015 23:52:00 -0800</pubDate>
+            <link></link>
+            <enclosure url="https://github.com/JadenGeller/Helium/releases/download/v1.5.1/Helium.app.zip"
+                sparkle:shortVersionString="1.5.1"
+                sparkle:version="1"
+                sparkle:dsaSignature="MC0CFQCruBzV4NWE2GFRO3kx5eDwBo6yUQIUWYIHP9mlln1JS6CTKanziU2IyCg="
+                length="2757513"
+                type="application/octet-stream" />
+        </item>
+    </channel>
+</rss>
