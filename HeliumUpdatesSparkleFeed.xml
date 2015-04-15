@@ -10,17 +10,19 @@
             <description>
           	    <![CDATA[
                     <ul>
-            	    <li>Added keyboard shortcuts for opacity</li>
+                    <li>Renamed menu options and added keyboard shortcuts</li>
+                    <li>Zoom support via menubar, keyboard shortcuts, and trackpad</li>
+                    <li>Added automatic updating</li>
                     </ul>
                 ]]>
             </description>
-            <pubDate>Tue, 14 Apr 2015 23:52:00 -0800</pubDate>
+            <pubDate>Wed, 15 Apr 2015 00:58:00 -0800</pubDate>
             <link></link>
-            <enclosure url="https://github.com/JadenGeller/Helium/releases/download/v1.5.1/Helium.app.zip"
-                sparkle:shortVersionString="1.5.1"
-                sparkle:version="1"
-                sparkle:dsaSignature="MC0CFQCruBzV4NWE2GFRO3kx5eDwBo6yUQIUWYIHP9mlln1JS6CTKanziU2IyCg="
-                length="2757513"
+            <enclosure url="https://github.com/JadenGeller/Helium/releases/download/v1.6/Helium.app.zip"
+                sparkle:shortVersionString="1.6"
+                sparkle:version="10"
+                sparkle:dsaSignature="MCwCFBgh+k6o6WVzV4PiO75X1RAXnZG/AhR3A/kxt/2bmeVOvYfvFswgWBTfiA=="
+                length="3899649"
                 type="application/octet-stream" />
         </item>
     </channel>
