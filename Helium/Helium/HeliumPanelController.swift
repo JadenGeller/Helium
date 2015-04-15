@@ -67,7 +67,7 @@ class HeliumPanelController : NSWindowController {
         }
     }
 
-    var translucent = false {
+    var translucent: Bool = false {
         didSet {
             if !NSApplication.sharedApplication().active {
                 panel.ignoresMouseEvents = translucent
