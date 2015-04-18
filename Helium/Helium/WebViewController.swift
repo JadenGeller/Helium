@@ -14,14 +14,6 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "requestedReload", name: "HeliumReload", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "clear", name: "HeliumClear", object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "zoomIn", name: "HeliumZoomIn", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "zoomOut", name: "HeliumZoomOut", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "resetZoom", name: "HeliumResetZoom", object: nil)
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "loadURLObject:", name: "HeliumLoadURL", object: nil)
         
         // Layout webview
