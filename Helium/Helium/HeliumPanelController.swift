@@ -10,9 +10,40 @@ import AppKit
 
 class HeliumPanelController : NSWindowController {
 
+    var alpha: CGFloat = 0.6 { //default
+        didSet {
+            if translucent {
+                panel.alphaValue = alpha
+            }
+        }
+    }
+    
+    var translucent: Bool = false {
+        didSet {
+            if !NSApplication.sharedApplication().active {
+                panel.ignoresMouseEvents = translucent
+            }
+            if translucent {
+                panel.opaque = false
+                panel.alphaValue = alpha
+            }
+            else {
+                panel.opaque = true
+                panel.alphaValue = 1.0
+            }
+        }
+    }
+    
+    
     var panel: NSPanel! {
         get {
             return (self.window as! NSPanel)
+        }
+    }
+    
+    var webViewController: WebViewController {
+        get {
+            return self.window?.contentViewController as! WebViewController
         }
     }
     
@@ -21,16 +52,62 @@ class HeliumPanelController : NSWindowController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didBecomeActive", name: NSApplicationDidBecomeActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willResignActive", name: NSApplicationWillResignActiveNotification, object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnableTranslucency", name: "HeliumTranslucencyEnabled", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didDisableTranslucency", name: "HeliumTranslucencyDisabled", object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdateAlpha:", name: "HeliumUpdateAlpha", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didRequestLocation", name: "HeliumRequestLocation", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didRequestFile", name: "HeliumRequestFile", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdateTitle:", name: "HeliumUpdateTitle", object: nil)
-
     }
+    
+    //MARK: IBActions
+    
+    @IBAction func translucencyPress(sender: NSMenuItem) {
+        if sender.state == NSOnState {
+            sender.state = NSOffState
+            didDisableTranslucency()
+        }
+        else {
+            sender.state = NSOnState
+            didEnableTranslucency()
+        }
+    }
+    
+    @IBAction func percentagePress(sender: NSMenuItem) {
+        for button in sender.menu!.itemArray{
+            (button as! NSMenuItem).state = NSOffState
+        }
+        sender.state = NSOnState
+        let value = sender.title.substringToIndex(advance(sender.title.endIndex, -1))
+        if let alpha = value.toInt() {
+             didUpdateAlpha(NSNumber(integer: alpha))
+        }
+    }
+    
+    @IBAction func openLocationPress(sender: AnyObject) {
+        didRequestLocation()
+    }
+    
+    @IBAction func openFilePress(sender: AnyObject) {
+        didRequestFile()
+    }
+    
+    
+    @IBAction func reloadPress(sender: AnyObject) {
+        webViewController.requestedReload()
+    }
+    
+    @IBAction func clearPress(sender: AnyObject) {
+        webViewController.clear()
+    }
+    
+    @IBAction func resetZoomLevel(sender: AnyObject) {
+        webViewController.resetZoom()
+    }
+    @IBAction func zoomIn(sender: AnyObject) {
+        webViewController.zoomIn()
+    }
+    @IBAction func zoomOut(sender: AnyObject) {
+        webViewController.zoomOut()
+    }
+    
+    
+    //MARK: Actual functionality
     
     func didUpdateTitle(notification: NSNotification) {
         if let title = notification.object as? String {
@@ -52,11 +129,6 @@ class HeliumPanelController : NSWindowController {
         }
     }
     
-    var webViewController: WebViewController {
-        get {
-            return self.window?.contentViewController as! WebViewController
-        }
-    }
     
     func didRequestLocation() {
         let alert = NSAlert()
@@ -85,30 +157,6 @@ class HeliumPanelController : NSWindowController {
         })
     }
     
-    var alpha: CGFloat = 0.6 { //default
-        didSet {
-            if translucent {
-                panel.alphaValue = alpha
-            }
-        }
-    }
-
-    var translucent: Bool = false {
-        didSet {
-            if !NSApplication.sharedApplication().active {
-                panel.ignoresMouseEvents = translucent
-            }
-            if translucent {
-                panel.opaque = false
-                panel.alphaValue = alpha
-            }
-            else {
-                panel.opaque = true
-                panel.alphaValue = 1.0
-            }
-        }
-    }
-    
     func didBecomeActive() {
         panel.ignoresMouseEvents = false
     }
@@ -127,8 +175,7 @@ class HeliumPanelController : NSWindowController {
         translucent = false
     }
     
-    func didUpdateAlpha(notifcation: NSNotification) {
-        let newAlpha = notifcation.object as! NSNumber
+    func didUpdateAlpha(newAlpha: NSNumber) {
         alpha = CGFloat(newAlpha.doubleValue) / CGFloat(100.0)
     }
 }
