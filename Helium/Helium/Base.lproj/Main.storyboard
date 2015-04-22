@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14C109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7531"/>
     </dependencies>
@@ -72,6 +72,128 @@
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="Location" id="dMs-cI-mzQ">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Location" id="bib-Uj-vzu">
+                                    <items>
+                                        <menuItem title="Open Web URL..." keyEquivalent="l" id="JqH-ds-lJa">
+                                            <connections>
+                                                <action selector="openLocationPress:" target="Voe-Tx-rLC" id="gYi-q1-2Jc"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Open File..." keyEquivalent="o" id="iba-HN-Jos">
+                                            <connections>
+                                                <action selector="openFilePress:" target="Voe-Tx-rLC" id="Xsi-Xk-Gx6"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Reload" keyEquivalent="r" id="drw-0K-OAV">
+                                            <connections>
+                                                <action selector="reloadPress:" target="Voe-Tx-rLC" id="s9q-6Q-yVK"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Clear" id="yCk-JK-BBT">
+                                            <string key="keyEquivalent" base64-UTF8="YES">
+CA
+</string>
+                                            <connections>
+                                                <action selector="clearPress:" target="Voe-Tx-rLC" id="Q3H-QC-5dk"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Appearance" id="H8h-7b-M4v">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Appearance" id="HyV-fh-RgO">
+                                    <items>
+                                        <menuItem title="Translucent" keyEquivalent="t" id="wnn-Wb-fUq">
+                                            <connections>
+                                                <action selector="translucencyPress:" target="Voe-Tx-rLC" id="f09-uo-WB4"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Opacity" id="wlj-XI-Lng">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Opacity" systemMenu="window" id="5ao-Bb-P10">
+                                                <items>
+                                                    <menuItem title="10%" keyEquivalent="1" id="SpQ-gr-DsG">
+                                                        <connections>
+                                                            <action selector="percentagePress:" target="Voe-Tx-rLC" id="KkQ-Pa-FtT"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="20%" keyEquivalent="2" id="B4x-FQ-kVj">
+                                                        <connections>
+                                                            <action selector="percentagePress:" target="Voe-Tx-rLC" id="29f-lb-ysI"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="30%" keyEquivalent="3" id="S1G-zW-xWx">
+                                                        <connections>
+                                                            <action selector="percentagePress:" target="Voe-Tx-rLC" id="hbM-5d-yPN"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="40%" keyEquivalent="4" id="sB8-xz-mYZ">
+                                                        <connections>
+                                                            <action selector="percentagePress:" target="Voe-Tx-rLC" id="cdE-q6-uLh"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="50%" keyEquivalent="5" id="BNJ-gh-yGK">
+                                                        <connections>
+                                                            <action selector="percentagePress:" target="Voe-Tx-rLC" id="6FD-yN-k0v"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="60%" state="on" keyEquivalent="6" id="iS5-Jd-p7Q">
+                                                        <connections>
+                                                            <action selector="percentagePress:" target="Voe-Tx-rLC" id="9ek-0T-Yvi"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="70%" keyEquivalent="7" id="0pX-17-4u5">
+                                                        <connections>
+                                                            <action selector="percentagePress:" target="Voe-Tx-rLC" id="9Vj-ap-ubs"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="80%" keyEquivalent="8" id="mJa-We-e3P">
+                                                        <connections>
+                                                            <action selector="percentagePress:" target="Voe-Tx-rLC" id="Xw9-sU-pWI"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="90%" keyEquivalent="9" id="JLI-El-Rtf">
+                                                        <connections>
+                                                            <action selector="percentagePress:" target="Voe-Tx-rLC" id="LBJ-aC-kDW"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="100%" keyEquivalent="0" id="2NP-ZM-pKs">
+                                                        <connections>
+                                                            <action selector="percentagePress:" target="Voe-Tx-rLC" id="sdN-oy-hGP"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
+                                        <menuItem title="Zoom" id="kjo-5J-SOa">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Zoom" id="91W-6v-hBY">
+                                                <items>
+                                                    <menuItem title="Zoom In" keyEquivalent="+" id="x5u-Za-He5">
+                                                        <connections>
+                                                            <action selector="zoomIn:" target="Voe-Tx-rLC" id="tFa-u3-FxL"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Zoom Out" keyEquivalent="-" id="oZd-ZE-I3d">
+                                                        <connections>
+                                                            <action selector="zoomOut:" target="Voe-Tx-rLC" id="wvJ-Qx-6lu"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Reset Zoom Level" id="CkG-jI-gbw">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="resetZoomLevel:" target="Voe-Tx-rLC" id="el4-Pc-uBz"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem title="Edit" id="5QF-Oa-p0T">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Edit" id="W48-6f-4Dl">
@@ -136,13 +258,14 @@
                 </application>
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Helium" customModuleProvider="target">
                     <connections>
+                        <outlet property="allOpacityValues" destination="5ao-Bb-P10" id="R45-vA-JcY"/>
                         <outlet property="magicURLMenu" destination="Vn0-wi-SSU" id="jow-sG-Fmx"/>
                     </connections>
                 </customObject>
                 <customObject id="sQQ-SA-Rgm" customClass="SUUpdater"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-12" y="-14"/>
+            <point key="canvasLocation" x="75" y="0.0"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
@@ -161,20 +284,20 @@
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="102" y="312"/>
+            <point key="canvasLocation" x="75" y="250"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <viewController id="XfG-lQ-9wD" customClass="WebViewController" customModule="Helium" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </view>
                 </viewController>
+                <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="102" y="759"/>
+            <point key="canvasLocation" x="75" y="655"/>
         </scene>
     </scenes>
 </document>

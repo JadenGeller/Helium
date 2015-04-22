@@ -22,19 +22,71 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             forEventClass: AEEventClass(kInternetEventClass),
             andEventID: AEEventID(kAEGetURL)
         )
+        
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {
         // Insert code here to tear down your application
     }
     
+    @IBAction func reloadPress(sender: AnyObject) {
+        NSNotificationCenter.defaultCenter().postNotificationName("HeliumReload", object: nil)
+
+    }
     @IBAction func magicURLRedirectToggled(sender: NSMenuItem) {
         sender.state = (sender.state == NSOnState) ? NSOffState : NSOnState
         NSUserDefaults.standardUserDefaults().setBool((sender.state == NSOffState), forKey: "disabledMagicURLs")
     }
     
+    @IBAction func clearPress(sender: AnyObject) {
+        NSNotificationCenter.defaultCenter().postNotificationName("HeliumClear", object: nil)
+    }
     
-    //MARK: - handleURLEvent
+    @IBAction func translucencyPress(sender: NSMenuItem) {
+        if sender.state == NSOnState {
+            sender.state = NSOffState
+            NSNotificationCenter.defaultCenter().postNotificationName("HeliumTranslucencyDisabled", object: nil)
+        }
+        else {
+            sender.state = NSOnState
+            NSNotificationCenter.defaultCenter().postNotificationName("HeliumTranslucencyEnabled", object: nil)
+        }
+    }
+    @IBOutlet weak var allOpacityValues: NSMenu!
+    
+    @IBAction func percentagePress(sender: NSMenuItem) {
+        for button in allOpacityValues.itemArray {
+            (button as! NSMenuItem).state = NSOffState
+        }
+        sender.state = NSOnState
+        let value = sender.title.substringToIndex(advance(sender.title.endIndex, -1))
+        if let alpha = value.toInt() {
+            NSNotificationCenter.defaultCenter().postNotificationName("HeliumUpdateAlpha", object: NSNumber(integer: alpha))
+        }
+    }
+    @IBAction func openLocationPress(sender: AnyObject) {
+        NSNotificationCenter.defaultCenter().postNotificationName("HeliumRequestLocation", object: nil)
+
+    }
+    
+    @IBAction func openFilePress(sender: AnyObject) {
+        NSNotificationCenter.defaultCenter().postNotificationName("HeliumRequestFile", object: nil)
+        
+    }
+    @IBAction func resetZoomLevel(sender: AnyObject) {
+        NSNotificationCenter.defaultCenter().postNotificationName("HeliumResetZoom", object: nil)
+
+    }
+    @IBAction func zoomIn(sender: AnyObject) {
+        NSNotificationCenter.defaultCenter().postNotificationName("HeliumZoomIn", object: nil)
+
+    }
+    @IBAction func zoomOut(sender: AnyObject) {
+        NSNotificationCenter.defaultCenter().postNotificationName("HeliumZoomOut", object: nil)
+
+    }
+    
+//MARK: - handleURLEvent
     // Called when the App opened via URL.
     func handleURLEvent(event: NSAppleEventDescriptor, withReply reply: NSAppleEventDescriptor) {
         if let urlString:String? = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject))?.stringValue {
@@ -45,6 +97,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }else {
                 println("No valid URL to handle")
             }
+            
+            
         }
     }
 }
