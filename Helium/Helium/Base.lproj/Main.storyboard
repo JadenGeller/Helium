@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14C109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7531"/>
     </dependencies>
@@ -97,6 +97,17 @@ CA
 </string>
                                             <connections>
                                                 <action selector="clearPress:" target="Ady-hI-5gd" id="Wa2-ng-FRA"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="wbg-XB-qHT"/>
+                                        <menuItem title="Back" keyEquivalent="" id="UkE-up-3w1">
+                                            <connections>
+                                                <action selector="backPress:" target="Ady-hI-5gd" id="YrQ-Sk-Om5"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Forward" keyEquivalent="" id="hcU-ei-qc9">
+                                            <connections>
+                                                <action selector="forwardPress:" target="Ady-hI-5gd" id="WVi-G0-CqM"/>
                                             </connections>
                                         </menuItem>
                                     </items>
