@@ -74,9 +74,24 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     func clear() {
         loadURL(NSURL(string: "https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html")!)
     }
-
-    var webView = WKWebView()
     
+    func back() {
+        webView.goBack()
+    }
+    
+    func forward() {
+        webView.goForward()
+    }
+    
+    func canGoBack() -> Bool {
+        return webView.canGoBack
+    }
+    
+    func canGoForward() -> Bool {
+        return webView.canGoForward
+    }
+    
+    var webView = WKWebView()
     var shouldRedirect: Bool {
         get {
             return !NSUserDefaults.standardUserDefaults().boolForKey("disabledMagicURLs")

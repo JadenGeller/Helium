@@ -55,6 +55,17 @@ class HeliumPanelController : NSWindowController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdateTitle:", name: "HeliumUpdateTitle", object: nil)
     }
     
+    override func validateMenuItem(menuItem: NSMenuItem) -> Bool {
+        switch(menuItem.action) {
+        case Selector("backPress:"):
+            return webViewController.canGoBack()
+        case Selector("forwardPress:"):
+            return webViewController.canGoForward()
+        default:
+            return true
+        }
+    }
+    
     //MARK: IBActions
     
     @IBAction func translucencyPress(sender: NSMenuItem) {
@@ -106,6 +117,13 @@ class HeliumPanelController : NSWindowController {
         webViewController.zoomOut()
     }
     
+    @IBAction func backPress(sender: AnyObject) {
+        webViewController.back()
+    }
+    
+    @IBAction func forwardPress(sender: AnyObject) {
+        webViewController.forward()
+    }
     
     //MARK: Actual functionality
     
