@@ -39,6 +39,25 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         clear()
     }
     
+    override func validateMenuItem(menuItem: NSMenuItem) -> Bool{
+        switch menuItem.title {
+        case "Back":
+            return webView.canGoBack
+        case "Forward":
+            return webView.canGoForward
+        default:
+            return true
+        }
+    }
+    
+    @IBAction func backPress(sender: AnyObject) {
+        webView.goBack()
+    }
+    
+    @IBAction func forwardPress(sender: AnyObject) {
+        webView.goForward()
+    }
+    
     func zoomIn() {
         webView.magnification += 0.1
     }
@@ -50,6 +69,25 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     func resetZoom() {
         webView.magnification = 1
     }
+    
+    @IBAction func reloadPress(sender: AnyObject) {
+        requestedReload()
+    }
+    
+    @IBAction func clearPress(sender: AnyObject) {
+        clear()
+    }
+    
+    @IBAction func resetZoomLevel(sender: AnyObject) {
+        resetZoom()
+    }
+    @IBAction func zoomIn(sender: AnyObject) {
+        zoomIn()
+    }
+    @IBAction func zoomOut(sender: AnyObject) {
+        zoomOut()
+    }
+
 
     override var representedObject: AnyObject? {
         didSet {
@@ -76,7 +114,6 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     }
 
     var webView = WKWebView()
-    
     var shouldRedirect: Bool {
         get {
             return !NSUserDefaults.standardUserDefaults().boolForKey("disabledMagicURLs")

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7531"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -86,16 +86,6 @@
                                                 <action selector="openFilePress:" target="Ady-hI-5gd" id="hS5-ai-It3"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Go Back" keyEquivalent="b" id="h6e-d0-cKi">
-                                            <connections>
-                                                <action selector="goBack:" target="Ady-hI-5gd" id="lo6-nI-orX"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Go Forward" keyEquivalent="f" id="GIt-1q-u9X">
-                                            <connections>
-                                                <action selector="goForward:" target="Ady-hI-5gd" id="Mrk-Sa-wzc"/>
-                                            </connections>
-                                        </menuItem>
                                         <menuItem title="Reload" keyEquivalent="r" id="drw-0K-OAV">
                                             <connections>
                                                 <action selector="reloadPress:" target="Ady-hI-5gd" id="gYL-ny-dkm"/>
@@ -107,6 +97,17 @@ CA
 </string>
                                             <connections>
                                                 <action selector="clearPress:" target="Ady-hI-5gd" id="Wa2-ng-FRA"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="wbg-XB-qHT"/>
+                                        <menuItem title="Back" keyEquivalent="[" id="UkE-up-3w1">
+                                            <connections>
+                                                <action selector="backPress:" target="Ady-hI-5gd" id="Ihu-ny-5RO"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Forward" keyEquivalent="]" id="hcU-ei-qc9">
+                                            <connections>
+                                                <action selector="forwardPress:" target="Ady-hI-5gd" id="WVi-G0-CqM"/>
                                             </connections>
                                         </menuItem>
                                     </items>
