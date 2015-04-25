@@ -86,47 +86,7 @@ class HeliumPanelController : NSWindowController {
     @IBAction func openFilePress(sender: AnyObject) {
         didRequestFile()
     }
-    
-    
-    @IBAction func reloadPress(sender: AnyObject) {
-        webViewController.requestedReload()
-    }
-    
-    @IBAction func clearPress(sender: AnyObject) {
-        webViewController.clear()
-    }
-    
-    @IBAction func resetZoomLevel(sender: AnyObject) {
-        webViewController.resetZoom()
-    }
-    @IBAction func zoomIn(sender: AnyObject) {
-        webViewController.zoomIn()
-    }
-    @IBAction func zoomOut(sender: AnyObject) {
-        webViewController.zoomOut()
-    }
-    
-    @IBAction func goBack(sender: AnyObject){
-        webViewController.webView.goBack()
-    }
-    
-    @IBAction func goForward(sender: AnyObject){
-        webViewController.webView.goForward()
-    }
-    
-    //MARK: Menu Item Functionality
-    
-    override func validateMenuItem(menuItem: NSMenuItem) -> Bool{
-        var rValue : Bool = true
-        if(menuItem.title == "Go Back"){
-            rValue = webViewController.webView.canGoBack
-        }
-        if(menuItem.title == "Go Forward"){
-            rValue = webViewController.webView.canGoForward
-        }
-        return rValue
-    }
-    
+        
     //MARK: Actual functionality
     
     func didUpdateTitle(notification: NSNotification) {
