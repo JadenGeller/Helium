@@ -10,6 +10,8 @@ import AppKit
 
 class HeliumPanelController : NSWindowController {
 
+    lazy var nextWindowController : HeliumPanelController = HeliumPanelController()
+    
     var alpha: CGFloat = 0.6 { //default
         didSet {
             if translucent {
@@ -52,27 +54,20 @@ class HeliumPanelController : NSWindowController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didBecomeActive", name: NSApplicationDidBecomeActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willResignActive", name: NSApplicationWillResignActiveNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdateTitle:", name: "HeliumUpdateTitle", object: nil)
     }
     
     //MARK: IBActions
-    
+
     @IBAction func translucencyPress(sender: NSMenuItem) {
         if sender.state == NSOnState {
-            sender.state = NSOffState
             didDisableTranslucency()
         }
         else {
-            sender.state = NSOnState
             didEnableTranslucency()
         }
     }
     
     @IBAction func percentagePress(sender: NSMenuItem) {
-        for button in sender.menu!.itemArray{
-            (button as! NSMenuItem).state = NSOffState
-        }
-        sender.state = NSOnState
         let value = sender.title.substringToIndex(advance(sender.title.endIndex, -1))
         if let alpha = value.toInt() {
              didUpdateAlpha(NSNumber(integer: alpha))
@@ -123,6 +118,15 @@ class HeliumPanelController : NSWindowController {
         }
         if(menuItem.title == "Go Forward"){
             rValue = webViewController.webView.canGoForward
+        }
+        if(menuItem.title == "Translucent"){
+            menuItem.state = (translucent) ? NSOnState : NSOffState
+        }
+        if menuItem.menu?.title == "Opacity" {
+            rValue = translucent
+            let aValue = Int(self.alpha * 100)
+            let aString = "\(aValue)%"
+            menuItem.state = (menuItem.title == aString) ? NSOnState : NSOffState
         }
         return rValue
     }

@@ -14,8 +14,6 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "loadURLObject:", name: "HeliumLoadURL", object: nil)
-        
         // Layout webview
         view.addSubview(webView)
         webView.frame = view.bounds
@@ -61,13 +59,6 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         webView.loadRequest(NSURLRequest(URL: url))
     }
     
-//MARK: - loadURLObject
-    func loadURLObject(urlObject : NSNotification) {
-        if let url = urlObject.object as? NSURL {
-            loadURL(url);
-        }
-    }
-    
     func requestedReload() {
         webView.reload()
     }
@@ -103,12 +94,15 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         decisionHandler(WKNavigationActionPolicy.Allow)
     }
     
+    func setWindowTitle(newTitle : String){
+        self.view.window?.title = newTitle
+    }
+    
     func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation) {
         if let pageTitle = webView.title {
             var title = pageTitle;
             if title.isEmpty { title = "Helium" }
-            let notif = NSNotification(name: "HeliumUpdateTitle", object: title);
-            NSNotificationCenter.defaultCenter().postNotification(notif)
+            setWindowTitle(title)
         }
     }
     
@@ -121,9 +115,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
                 if percent == 100 {
                     title = "Helium"
                 }
-                
-                let notif = NSNotification(name: "HeliumUpdateTitle", object: title);
-                NSNotificationCenter.defaultCenter().postNotification(notif)
+                setWindowTitle(title as String)
             }
         }
         

@@ -11,9 +11,13 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
+    //Necessary to retain all of the information in each window
+    var windowStack : Array<HeliumPanelController> = []
+    
     @IBOutlet weak var magicURLMenu: NSMenuItem!
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
+        self.popNewWindow(aNotification)
         
         // Insert code here to initialize your application
         magicURLMenu.state = NSUserDefaults.standardUserDefaults().boolForKey("disabledMagicURLs") ? NSOffState : NSOnState
@@ -37,14 +41,24 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     
+    @IBAction func popNewWindow(sender: AnyObject){
+        var nextWindowController : HeliumPanelController = NSStoryboard(name: "Main", bundle: nil)?.instantiateControllerWithIdentifier("HeliumController") as! HeliumPanelController
+        
+        nextWindowController.showWindow(sender)
+        
+        windowStack.append(nextWindowController)
+    }
+    
+    
 //MARK: - handleURLEvent
     // Called when the App opened via URL.
     func handleURLEvent(event: NSAppleEventDescriptor, withReply reply: NSAppleEventDescriptor) {
         if let urlString:String? = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject))?.stringValue {
             if let url:String? = urlString?.substringFromIndex(advance(urlString!.startIndex,9)){
                 var urlObject:NSURL = NSURL(string:url!)!
-            NSNotificationCenter.defaultCenter().postNotificationName("HeliumLoadURL", object: urlObject)
-                
+                //NOTE:
+                let hP : HeliumPanelController = windowStack[0]
+                hP.webViewController.loadURL(urlObject)
             }else {
                 println("No valid URL to handle")
             }
@@ -52,5 +66,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             
         }
     }
+
 }
 
