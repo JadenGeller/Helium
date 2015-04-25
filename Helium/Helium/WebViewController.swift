@@ -10,7 +10,7 @@ import Cocoa
 import WebKit
 
 class WebViewController: NSViewController, WKNavigationDelegate {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -110,7 +110,6 @@ class WebViewController: NSViewController, WKNavigationDelegate {
             let notif = NSNotification(name: "HeliumUpdateTitle", object: title);
             NSNotificationCenter.defaultCenter().postNotification(notif)
         }
-        
     }
     
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
