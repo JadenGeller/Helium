@@ -106,6 +106,26 @@ class HeliumPanelController : NSWindowController {
         webViewController.zoomOut()
     }
     
+    @IBAction func goBack(sender: AnyObject){
+        webViewController.webView.goBack()
+    }
+    
+    @IBAction func goForward(sender: AnyObject){
+        webViewController.webView.goForward()
+    }
+    
+    //MARK: Menu Item Functionality
+    
+    override func validateMenuItem(menuItem: NSMenuItem) -> Bool{
+        var rValue : Bool = true
+        if(menuItem.title == "Go Back"){
+            rValue = webViewController.webView.canGoBack
+        }
+        if(menuItem.title == "Go Forward"){
+            rValue = webViewController.webView.canGoForward
+        }
+        return rValue
+    }
     
     //MARK: Actual functionality
     
