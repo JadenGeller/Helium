@@ -10,8 +10,6 @@ import AppKit
 
 class HeliumPanelController : NSWindowController {
 
-    lazy var nextWindowController : HeliumPanelController = HeliumPanelController()
-    
     var alpha: CGFloat = 0.6 { //default
         didSet {
             if translucent {
@@ -51,6 +49,7 @@ class HeliumPanelController : NSWindowController {
     
     override func windowDidLoad() {
         panel.floatingPanel = true
+        
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didBecomeActive", name: NSApplicationDidBecomeActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willResignActive", name: NSApplicationWillResignActiveNotification, object: nil)
@@ -132,12 +131,6 @@ class HeliumPanelController : NSWindowController {
     }
     
     //MARK: Actual functionality
-    
-    func didUpdateTitle(notification: NSNotification) {
-        if let title = notification.object as? String {
-            panel.title = title
-        }
-    }
     
     func didRequestFile() {
         

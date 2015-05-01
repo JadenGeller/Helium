@@ -103,6 +103,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
             var title = pageTitle;
             if title.isEmpty { title = "Helium" }
             setWindowTitle(title)
+            NSApp.changeWindowsItem(self.view.window!, title: title, filename: false)
         }
     }
     

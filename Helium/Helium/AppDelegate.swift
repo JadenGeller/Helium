@@ -16,8 +16,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     @IBOutlet weak var magicURLMenu: NSMenuItem!
     
+    func application(application: NSApplication, didFinishLaunchingWithOptions launchOptions: NSDictionary?) -> Bool {
+        
+        return true
+    }
+    
     func applicationDidFinishLaunching(aNotification: NSNotification) {
-        self.popNewWindow(aNotification)
+        if(windowStack.isEmpty){
+            self.popNewWindow(aNotification)
+        }
         
         // Insert code here to initialize your application
         magicURLMenu.state = NSUserDefaults.standardUserDefaults().boolForKey("disabledMagicURLs") ? NSOffState : NSOnState
@@ -27,9 +34,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             forEventClass: AEEventClass(kInternetEventClass),
             andEventID: AEEventID(kAEGetURL)
         )
-        
     }
 
+    
+    
+    
     func applicationWillTerminate(aNotification: NSNotification) {
         // Insert code here to tear down your application
     }
@@ -44,9 +53,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @IBAction func popNewWindow(sender: AnyObject){
         var nextWindowController : HeliumPanelController = NSStoryboard(name: "Main", bundle: nil)?.instantiateControllerWithIdentifier("HeliumController") as! HeliumPanelController
         
+        
         nextWindowController.showWindow(sender)
         
         windowStack.append(nextWindowController)
+        
+        NSApp.addWindowsItem(nextWindowController.panel, title: nextWindowController.panel.title!, filename: false)
     }
     
     
@@ -55,9 +67,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func handleURLEvent(event: NSAppleEventDescriptor, withReply reply: NSAppleEventDescriptor) {
         if let urlString:String? = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject))?.stringValue {
             if let url:String? = urlString?.substringFromIndex(advance(urlString!.startIndex,9)){
-                var urlObject:NSURL = NSURL(string:url!)!
-                //NOTE:
-                let hP : HeliumPanelController = windowStack[0]
+                var urlObject:NSURL = NSURL(string:("http://" + url!))!
+                
+                popNewWindow(self)
+                
+                let hP : HeliumPanelController = windowStack.last!
                 hP.webViewController.loadURL(urlObject)
             }else {
                 println("No valid URL to handle")
@@ -68,4 +82,3 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
 }
-
