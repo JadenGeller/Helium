@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7531"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -117,18 +117,19 @@ CA
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Appearance" id="HyV-fh-RgO">
                                     <items>
-                                        <menuItem title="Translucent" keyEquivalent="t" id="wnn-Wb-fUq">
-                                            <connections>
-                                                <action selector="translucencyPress:" target="Ady-hI-5gd" id="orR-QV-BPD"/>
-                                            </connections>
-                                        </menuItem>
                                         <menuItem title="Opacity" id="wlj-XI-Lng">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Opacity" systemMenu="window" id="5ao-Bb-P10">
                                                 <items>
-                                                    <menuItem title="10%" keyEquivalent="1" id="SpQ-gr-DsG">
+                                                    <menuItem title="Boss Alert" keyEquivalent="d" id="SpQ-gr-DsG">
+                                                        <attributedString key="attributedTitle"/>
                                                         <connections>
                                                             <action selector="percentagePress:" target="Ady-hI-5gd" id="RXN-qL-deK"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="10%" keyEquivalent="1" id="E6f-Cn-kpt">
+                                                        <connections>
+                                                            <action selector="percentagePress:" target="Ady-hI-5gd" id="tlx-uV-8wV"/>
                                                         </connections>
                                                     </menuItem>
                                                     <menuItem title="20%" keyEquivalent="2" id="B4x-FQ-kVj">
@@ -171,7 +172,7 @@ CA
                                                             <action selector="percentagePress:" target="Ady-hI-5gd" id="jqj-3n-Dci"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="100%" keyEquivalent="0" id="2NP-ZM-pKs">
+                                                    <menuItem title="100%" keyEquivalent="f" id="2NP-ZM-pKs">
                                                         <connections>
                                                             <action selector="percentagePress:" target="Ady-hI-5gd" id="wDd-yl-gr1"/>
                                                         </connections>
@@ -297,7 +298,7 @@ CA
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="250"/>
+            <point key="canvasLocation" x="587" y="156"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="hIz-AP-VOD">
