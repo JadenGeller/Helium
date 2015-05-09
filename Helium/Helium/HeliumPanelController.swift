@@ -54,6 +54,13 @@ class HeliumPanelController : NSWindowController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willResignActive", name: NSApplicationWillResignActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdateTitle:", name: "HeliumUpdateTitle", object: nil)
     }
+    
+    func changePercentage (newValue: String) {
+        let value = newValue.substringToIndex(advance(newValue.endIndex, -1))
+        if var alpha = value.toInt() {
+            didUpdateAlpha(NSNumber(integer: alpha));
+        }
+    }
 
     //MARK: IBActions
 
@@ -62,9 +69,11 @@ class HeliumPanelController : NSWindowController {
             (button as! NSMenuItem).state = NSOffState
         }
         sender.state = NSOnState
-        let value = sender.title.substringToIndex(advance(sender.title.endIndex, -1))
-        if let alpha = value.toInt() {
-             didUpdateAlpha(NSNumber(integer: alpha));
+        if sender.title == "Boss Alert" {
+            changePercentage("0%");
+        }
+        else {
+            changePercentage(sender.title);
         }
     }
 
