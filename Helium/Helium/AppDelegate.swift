@@ -15,11 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     var windowStack : Array<HeliumPanelController> = []
     
     @IBOutlet weak var magicURLMenu: NSMenuItem!
-    
-    func application(application: NSApplication, didFinishLaunchingWithOptions launchOptions: NSDictionary?) -> Bool {
-        
-        return true
-    }
+    @IBOutlet var windowsMenu: NSMenu!
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         if(windowStack.isEmpty){
@@ -53,12 +49,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @IBAction func popNewWindow(sender: AnyObject){
         var nextWindowController : HeliumPanelController = NSStoryboard(name: "Main", bundle: nil)?.instantiateControllerWithIdentifier("HeliumController") as! HeliumPanelController
         
-        
         nextWindowController.showWindow(sender)
         
         windowStack.append(nextWindowController)
-        
-        NSApp.addWindowsItem(nextWindowController.panel, title: nextWindowController.panel.title!, filename: false)
     }
     
     

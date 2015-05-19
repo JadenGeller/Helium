@@ -119,8 +119,6 @@ class WebViewController: NSViewController, WKNavigationDelegate {
                 setWindowTitle(title as String)
             }
         }
-        
-        
     }
 }
 

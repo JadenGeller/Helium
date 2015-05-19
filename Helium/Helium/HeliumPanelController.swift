@@ -50,7 +50,6 @@ class HeliumPanelController : NSWindowController {
     override func windowDidLoad() {
         panel.floatingPanel = true
         
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didBecomeActive", name: NSApplicationDidBecomeActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willResignActive", name: NSApplicationWillResignActiveNotification, object: nil)
     }
