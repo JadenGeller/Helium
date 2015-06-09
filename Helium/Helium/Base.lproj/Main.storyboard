@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7531"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -196,8 +196,7 @@ CA
                                                             <action selector="zoomOut:" target="Ady-hI-5gd" id="B27-BH-sc0"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="Reset Zoom Level" id="CkG-jI-gbw">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    <menuItem title="Reset Zoom Level" keyEquivalent="0" id="CkG-jI-gbw">
                                                         <connections>
                                                             <action selector="resetZoomLevel:" target="Ady-hI-5gd" id="fjs-3Q-hPk"/>
                                                         </connections>
