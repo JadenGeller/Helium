@@ -7,15 +7,22 @@
 //
 
 import Cocoa
+import CoreGraphics
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     @IBOutlet weak var magicURLMenu: NSMenuItem!
     
+    var defaultWindow:NSWindow!
+    
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         
         // Insert code here to initialize your application
+        defaultWindow = NSApplication.sharedApplication().windows.first as? NSWindow
+        defaultWindow?.level = Int(CGWindowLevelForKey(Int32(kCGMainMenuWindowLevelKey-1)))
+        defaultWindow.collectionBehavior = NSWindowCollectionBehavior.FullScreenAuxiliary|NSWindowCollectionBehavior.CanJoinAllSpaces|NSWindowCollectionBehavior.FullScreenAuxiliary
+        
         magicURLMenu.state = NSUserDefaults.standardUserDefaults().boolForKey("disabledMagicURLs") ? NSOffState : NSOnState
         NSAppleEventManager.sharedAppleEventManager().setEventHandler(
             self,
