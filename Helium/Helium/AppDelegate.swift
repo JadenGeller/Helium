@@ -13,10 +13,18 @@ import CoreGraphics
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     @IBOutlet weak var magicURLMenu: NSMenuItem!
+    @IBOutlet weak var menuBarMenu: NSMenu!
     
+    
+    var statusBar = NSStatusBar.systemStatusBar()
+    var statusBarItem : NSStatusItem = NSStatusItem()
     var defaultWindow:NSWindow!
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
+        
+        statusBarItem = statusBar.statusItemWithLength(-1)
+        statusBarItem.menu = menuBarMenu
+        statusBarItem.image = NSImage(named: "menuBar")
         
         // Insert code here to initialize your application
         defaultWindow = NSApplication.sharedApplication().windows.first as? NSWindow
