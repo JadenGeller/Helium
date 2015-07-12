@@ -10,21 +10,9 @@
                 <application id="hnw-xV-0zn" sceneMemberID="viewController">
                     <menu key="mainMenu" title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
                         <items>
-                            <menuItem title="About Helium" id="5kV-Vb-QxS">
+                            <menuItem title="Preferences" id="dMs-cI-mzQ">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="orderFrontStandardAboutPanel:" target="Ady-hI-5gd" id="Exp-CZ-Vem"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Check for Updates" id="ugT-xN-SoJ">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="checkForUpdates:" target="sQQ-SA-Rgm" id="dbi-vN-hI7"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Location" id="dMs-cI-mzQ">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Location" id="bib-Uj-vzu">
+                                <menu key="submenu" title="Preferences" id="bib-Uj-vzu">
                                     <items>
                                         <menuItem title="Open Web URL..." keyEquivalent="l" id="JqH-ds-lJa">
                                             <connections>
@@ -57,6 +45,23 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="magicURLRedirectToggled:" target="Voe-Tx-rLC" id="OyL-id-RDj"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Check for Updates" id="ugT-xN-SoJ">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="checkForUpdates:" target="sQQ-SA-Rgm" id="dbi-vN-hI7"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="About Helium" id="5kV-Vb-QxS">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="orderFrontStandardAboutPanel:" target="Ady-hI-5gd" id="Exp-CZ-Vem"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Quit Helium" keyEquivalent="q" id="4sb-4s-VLi">
+                                            <connections>
+                                                <action selector="terminate:" target="hnw-xV-0zn" id="pxt-ZK-I6x"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -156,11 +161,6 @@
                                         </menuItem>
                                     </items>
                                 </menu>
-                            </menuItem>
-                            <menuItem title="Quit Helium" keyEquivalent="q" id="4sb-4s-VLi">
-                                <connections>
-                                    <action selector="terminate:" target="Ady-hI-5gd" id="Te7-pn-YzF"/>
-                                </connections>
                             </menuItem>
                         </items>
                     </menu>
