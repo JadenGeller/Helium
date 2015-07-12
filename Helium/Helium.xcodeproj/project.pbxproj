@@ -12,10 +12,11 @@
 		4D867CBB1AD6781200681331 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D867CBA1AD6781200681331 /* Images.xcassets */; };
 		4D867CBE1AD6781200681331 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D867CBC1AD6781200681331 /* Main.storyboard */; };
 		4D867CCA1AD6781200681331 /* HeliumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D867CC91AD6781200681331 /* HeliumTests.swift */; };
-		4D867CD41AD6796A00681331 /* HeliumPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D867CD31AD6796A00681331 /* HeliumPanelController.swift */; };
 		B34C1EC31ADE3B520094ADBA /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B34C1EC21ADE3B520094ADBA /* Sparkle.framework */; };
 		B34C1EC61ADE3CBE0094ADBA /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = B34C1EC51ADE3CBE0094ADBA /* dsa_pub.pem */; };
 		B34C1EC91ADE3F980094ADBA /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B34C1EC21ADE3B520094ADBA /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C95672401B50A42700AF7E31 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C956723E1B50A42700AF7E31 /* icon@2x.png */; };
+		C95672411B50A42700AF7E31 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C956723F1B50A42700AF7E31 /* icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,7 +43,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4D867CB11AD6781200681331 /* Helium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Helium.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D867CB11AD6781200681331 /* Helium Lift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Helium Lift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D867CB51AD6781200681331 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D867CB61AD6781200681331 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D867CB81AD6781200681331 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -51,11 +52,12 @@
 		4D867CC31AD6781200681331 /* HeliumTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HeliumTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D867CC81AD6781200681331 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D867CC91AD6781200681331 /* HeliumTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeliumTests.swift; sourceTree = "<group>"; };
-		4D867CD31AD6796A00681331 /* HeliumPanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeliumPanelController.swift; sourceTree = "<group>"; };
 		4DEAB8FD1ADBD98600A2FC2B /* Helium-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Helium-Bridging-Header.h"; sourceTree = "<group>"; };
 		4DEAB8FE1ADBD98600A2FC2B /* WKWebViewPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKWebViewPrivate.h; sourceTree = "<group>"; };
 		B34C1EC21ADE3B520094ADBA /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		B34C1EC51ADE3CBE0094ADBA /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
+		C956723E1B50A42700AF7E31 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
+		C956723F1B50A42700AF7E31 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,7 +91,7 @@
 		4D867CB21AD6781200681331 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4D867CB11AD6781200681331 /* Helium.app */,
+				4D867CB11AD6781200681331 /* Helium Lift.app */,
 				4D867CC31AD6781200681331 /* HeliumTests.xctest */,
 			);
 			name = Products;
@@ -99,7 +101,6 @@
 			isa = PBXGroup;
 			children = (
 				4D867CB61AD6781200681331 /* AppDelegate.swift */,
-				4D867CD31AD6796A00681331 /* HeliumPanelController.swift */,
 				4D867CB81AD6781200681331 /* WebViewController.swift */,
 				4DEAB8FE1ADBD98600A2FC2B /* WKWebViewPrivate.h */,
 				4D867CBA1AD6781200681331 /* Images.xcassets */,
@@ -148,6 +149,8 @@
 		B34C1EC71ADE3CCA0094ADBA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C956723E1B50A42700AF7E31 /* icon@2x.png */,
+				C956723F1B50A42700AF7E31 /* icon.png */,
 				B34C1EC51ADE3CBE0094ADBA /* dsa_pub.pem */,
 			);
 			name = Resources;
@@ -171,7 +174,7 @@
 			);
 			name = Helium;
 			productName = Helium;
-			productReference = 4D867CB11AD6781200681331 /* Helium.app */;
+			productReference = 4D867CB11AD6781200681331 /* Helium Lift.app */;
 			productType = "com.apple.product-type.application";
 		};
 		4D867CC21AD6781200681331 /* HeliumTests */ = {
@@ -199,10 +202,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0630;
-				ORGANIZATIONNAME = "Jaden Geller";
+				ORGANIZATIONNAME = "Justin Mitchell";
 				TargetAttributes = {
 					4D867CB01AD6781200681331 = {
 						CreatedOnToolsVersion = 6.3;
+						DevelopmentTeam = 844ZY8TQFX;
 					};
 					4D867CC21AD6781200681331 = {
 						CreatedOnToolsVersion = 6.3;
@@ -235,6 +239,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D867CBB1AD6781200681331 /* Images.xcassets in Resources */,
+				C95672411B50A42700AF7E31 /* icon.png in Resources */,
+				C95672401B50A42700AF7E31 /* icon@2x.png in Resources */,
 				B34C1EC61ADE3CBE0094ADBA /* dsa_pub.pem in Resources */,
 				4D867CBE1AD6781200681331 /* Main.storyboard in Resources */,
 			);
@@ -254,7 +260,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D867CD41AD6796A00681331 /* HeliumPanelController.swift in Sources */,
 				4D867CB91AD6781200681331 /* WebViewController.swift in Sources */,
 				4D867CB71AD6781200681331 /* AppDelegate.swift in Sources */,
 			);
@@ -375,6 +380,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -383,7 +389,7 @@
 				INFOPLIST_FILE = Helium/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Helium Lift";
 				SWIFT_OBJC_BRIDGING_HEADER = "Helium/Helium-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -394,6 +400,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -402,7 +409,7 @@
 				INFOPLIST_FILE = Helium/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Helium Lift";
 				SWIFT_OBJC_BRIDGING_HEADER = "Helium/Helium-Bridging-Header.h";
 			};
 			name = Release;
