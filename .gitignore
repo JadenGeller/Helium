@@ -26,3 +26,7 @@ DerivedData
 #Pods/
 
 .DS_Store
+
+*.pbxproj
+
+*.pbxproj
