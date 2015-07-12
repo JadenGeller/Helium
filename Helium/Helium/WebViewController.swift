@@ -101,9 +101,16 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     
 //MARK: - loadURLObject
     func loadURLObject(urlObject : NSNotification) {
-        if let url = urlObject.object as? NSURL {
-            loadURL(url);
-        }
+    
+        // This is where the work gets done - it grabs everything after
+        // "openURL=" from the urlObject, makes a new NSURL out of it
+        // and sends it to loadURL.
+        
+        if let url = urlObject.object as? NSURL,
+            let lastPart = url.absoluteString?.componentsSeparatedByString("openURL=").last,
+            let newURL = NSURL(string: lastPart) {
+                loadURL(newURL);
+            }
     }
     
     func requestedReload() {

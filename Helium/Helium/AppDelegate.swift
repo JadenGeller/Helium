@@ -20,6 +20,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     var statusBarItem : NSStatusItem = NSStatusItem()
     var defaultWindow:NSWindow!
     
+    func applicationWillFinishLaunching(notification: NSNotification) {
+        
+        // This has to be called before the application is finished launching
+        // or something (the sandbox maybe?) prevents it from registering.
+        // I moved it from the applicationDidFinishLaunching method.
+        NSAppleEventManager.sharedAppleEventManager().setEventHandler(
+            self,
+            andSelector: "handleURLEvent:withReply:",
+            forEventClass: AEEventClass(kInternetEventClass),
+            andEventID: AEEventID(kAEGetURL)
+        )
+    }
+    
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         
         statusBarItem = statusBar.statusItemWithLength(-1)
@@ -32,18 +45,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         defaultWindow.collectionBehavior = NSWindowCollectionBehavior.FullScreenAuxiliary|NSWindowCollectionBehavior.CanJoinAllSpaces|NSWindowCollectionBehavior.FullScreenAuxiliary
         
         magicURLMenu.state = NSUserDefaults.standardUserDefaults().boolForKey("disabledMagicURLs") ? NSOffState : NSOnState
-        NSAppleEventManager.sharedAppleEventManager().setEventHandler(
-            self,
-            andSelector: "handleURLEvent:withReply:",
-            forEventClass: AEEventClass(kInternetEventClass),
-            andEventID: AEEventID(kAEGetURL)
-        )
         
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {
         // Insert code here to tear down your application
     }
+    
     
     
     @IBAction func magicURLRedirectToggled(sender: NSMenuItem) {
@@ -55,17 +63,25 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 //MARK: - handleURLEvent
     // Called when the App opened via URL.
     func handleURLEvent(event: NSAppleEventDescriptor, withReply reply: NSAppleEventDescriptor) {
-        if let urlString:String? = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject))?.stringValue {
-            if let url:String? = urlString?.substringFromIndex(advance(urlString!.startIndex,9)){
-                var urlObject:NSURL = NSURL(string:url!)!
-            NSNotificationCenter.defaultCenter().postNotificationName("HeliumLoadURL", object: urlObject)
+    
+        // There were a lot of strange Optionals being used in this method,
+        // including a bunch of stuff that was being force-unwrapped.
+        // I just cleaned it up a little, but didn't make any substantive changes.
+        if let urlString = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject))?.stringValue {
+            
+            let url = urlString.substringFromIndex(advance(urlString.startIndex, 9))
+            
+            if let urlObject = NSURL(string: url) {
+            
+                NSNotificationCenter.defaultCenter().postNotificationName("HeliumLoadURL", object: urlObject)
                 
-            }else {
+            }
+                
+            } else {
                 println("No valid URL to handle")
             }
             
-            
-        }
+        
     }
     
     var alpha: CGFloat = 0.6 { //default
