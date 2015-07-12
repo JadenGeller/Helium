@@ -154,16 +154,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     @IBAction func openLocationPress(sender: AnyObject) {
-        println("location requested...")
         didRequestLocation()
     }
     
     @IBAction func openFilePress(sender: AnyObject) {
         didRequestFile()
-    }
-    
-    @IBAction func goHomePress(sender: AnyObject) {
-        webViewController.clear()
     }
     
     //MARK: Actual functionality
