@@ -116,6 +116,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     func requestedReload() {
         webView.reload()
     }
+    
     func clear() {
         loadURL(NSURL(string: "http://jmitch.duet.to/index.html")!)
     }

@@ -10,8 +10,8 @@
 		4D867CB71AD6781200681331 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D867CB61AD6781200681331 /* AppDelegate.swift */; };
 		4D867CB91AD6781200681331 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D867CB81AD6781200681331 /* WebViewController.swift */; };
 		4D867CBB1AD6781200681331 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D867CBA1AD6781200681331 /* Images.xcassets */; };
-		4D867CBE1AD6781200681331 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D867CBC1AD6781200681331 /* Main.storyboard */; };
 		4D867CCA1AD6781200681331 /* HeliumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D867CC91AD6781200681331 /* HeliumTests.swift */; };
+		5713549A1B52663D00924D2F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D867CBC1AD6781200681331 /* Main.storyboard */; };
 		B34C1EC31ADE3B520094ADBA /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B34C1EC21ADE3B520094ADBA /* Sparkle.framework */; };
 		B34C1EC61ADE3CBE0094ADBA /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = B34C1EC51ADE3CBE0094ADBA /* dsa_pub.pem */; };
 		B34C1EC91ADE3F980094ADBA /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B34C1EC21ADE3B520094ADBA /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -239,10 +239,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D867CBB1AD6781200681331 /* Images.xcassets in Resources */,
+				5713549A1B52663D00924D2F /* Main.storyboard in Resources */,
 				C95672411B50A42700AF7E31 /* icon.png in Resources */,
 				C95672401B50A42700AF7E31 /* icon@2x.png in Resources */,
 				B34C1EC61ADE3CBE0094ADBA /* dsa_pub.pem in Resources */,
-				4D867CBE1AD6781200681331 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,7 +380,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -400,7 +399,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

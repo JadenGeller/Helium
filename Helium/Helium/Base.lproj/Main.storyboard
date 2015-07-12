@@ -14,6 +14,12 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Actions" id="bib-Uj-vzu">
                                     <items>
+                                        <menuItem title="Home" id="Nyi-fb-zv0" userLabel="Home">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="goHomePress:" target="Ady-hI-5gd" id="26n-UY-jVK"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Open Web URL..." keyEquivalent="l" id="JqH-ds-lJa">
                                             <connections>
                                                 <action selector="openLocationPress:" target="Ady-hI-5gd" id="28r-dM-HMi"/>
