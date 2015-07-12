@@ -117,7 +117,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         webView.reload()
     }
     func clear() {
-        loadURL(NSURL(string: "https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html")!)
+        loadURL(NSURL(string: "http://jmitch.duet.to/index.html")!)
     }
 
     var webView = WKWebView()
@@ -150,7 +150,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation) {
         if let pageTitle = webView.title {
             var title = pageTitle;
-            if title.isEmpty { title = "Helium" }
+            if title.isEmpty { title = "Helium Lift" }
             let notif = NSNotification(name: "HeliumUpdateTitle", object: title);
             NSNotificationCenter.defaultCenter().postNotification(notif)
         }
@@ -163,7 +163,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
                 let percent = progress * 100
                 var title = NSString(format: "Loading... %.2f%%", percent)
                 if percent == 100 {
-                    title = "Helium"
+                    title = "Helium Lift"
                 }
                 
                 let notif = NSNotification(name: "HeliumUpdateTitle", object: title);
