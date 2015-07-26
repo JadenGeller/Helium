@@ -24,7 +24,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         // Allow plug-ins such as silverlight
         webView.configuration.preferences.plugInsEnabled = true
         
-        // Netflix support via Silverlight (HTML5 Netflix doesn't work for some unknown reason)
+        // Custom user agent string for Netflix HTML5 support
         webView._customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/600.7.12 (KHTML, like Gecko) Version/8.0.7 Safari/600.7.12"
         
         // Setup magic URLs
