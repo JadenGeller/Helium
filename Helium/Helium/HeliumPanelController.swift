@@ -117,6 +117,8 @@ class HeliumPanelController : NSWindowController {
         
         let urlField = NSTextField()
         urlField.frame = NSRect(x: 0, y: 0, width: 300, height: 20)
+        urlField.lineBreakMode = NSLineBreakMode.ByTruncatingHead
+        urlField.usesSingleLineMode = true
         
         alert.accessoryView = urlField
         alert.addButtonWithTitle("Load")
