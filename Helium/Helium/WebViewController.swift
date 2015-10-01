@@ -19,7 +19,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         // Layout webview
         view.addSubview(webView)
         webView.frame = view.bounds
-        webView.autoresizingMask = NSAutoresizingMaskOptions.ViewHeightSizable | NSAutoresizingMaskOptions.ViewWidthSizable
+        webView.autoresizingMask = [NSAutoresizingMaskOptions.ViewHeightSizable, NSAutoresizingMaskOptions.ViewWidthSizable]
         
         // Allow plug-ins such as silverlight
         webView.configuration.preferences.plugInsEnabled = true
@@ -149,7 +149,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         }
     }
     
-    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         
         if object as! NSObject == webView && keyPath == "estimatedProgress" {
             if let progress = change["new"] as? Float {
