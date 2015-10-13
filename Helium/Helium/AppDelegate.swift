@@ -41,12 +41,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // Called when the App opened via URL.
     func handleURLEvent(event: NSAppleEventDescriptor, withReply reply: NSAppleEventDescriptor) {
         if let urlString:String? = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject))?.stringValue {
-            if let url:String? = urlString?.substringFromIndex(advance(urlString!.startIndex,9)){
-                var urlObject:NSURL = NSURL(string:url!)!
+            if let url:String? = urlString?.substringFromIndex(urlString!.startIndex.advancedBy(9)){
+                let urlObject:NSURL = NSURL(string:url!)!
             NSNotificationCenter.defaultCenter().postNotificationName("HeliumLoadURL", object: urlObject)
                 
             }else {
-                println("No valid URL to handle")
+                print("No valid URL to handle")
             }
             
             
