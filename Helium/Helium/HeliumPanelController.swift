@@ -46,7 +46,7 @@ class HeliumPanelController : NSWindowController {
             return self.window?.contentViewController as! WebViewController
         }
     }
-    
+
     override func windowDidLoad() {
         panel.floatingPanel = true
         
@@ -69,12 +69,12 @@ class HeliumPanelController : NSWindowController {
     }
     
     @IBAction func percentagePress(sender: NSMenuItem) {
-        for button in sender.menu!.itemArray{
-            (button as! NSMenuItem).state = NSOffState
+        for button in sender.menu!.itemArray {
+            button.state = NSOffState
         }
         sender.state = NSOnState
-        let value = sender.title.substringToIndex(advance(sender.title.endIndex, -1))
-        if let alpha = value.toInt() {
+        let value = sender.title.substringToIndex(sender.title.endIndex.advancedBy(-1))
+        if let alpha = Int(value) {
              didUpdateAlpha(NSNumber(integer: alpha))
         }
     }
@@ -86,9 +86,8 @@ class HeliumPanelController : NSWindowController {
     @IBAction func openFilePress(sender: AnyObject) {
         didRequestFile()
     }
-        
-    //MARK: Actual functionality
     
+    //MARK: Actual functionality
     func didUpdateTitle(notification: NSNotification) {
         if let title = notification.object as? String {
             panel.title = title

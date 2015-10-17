@@ -198,7 +198,9 @@
 		4D867CA91AD6781200681331 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Jaden Geller";
 				TargetAttributes = {
 					4D867CB01AD6781200681331 = {
@@ -311,6 +313,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -383,6 +386,7 @@
 				INFOPLIST_FILE = Helium/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.JadenGeller.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Helium/Helium-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -402,6 +406,7 @@
 				INFOPLIST_FILE = Helium/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.JadenGeller.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Helium/Helium-Bridging-Header.h";
 			};
@@ -422,6 +427,7 @@
 				);
 				INFOPLIST_FILE = HeliumTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.JadenGeller.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Helium.app/Contents/MacOS/Helium";
 			};
@@ -438,6 +444,7 @@
 				);
 				INFOPLIST_FILE = HeliumTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.JadenGeller.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Helium.app/Contents/MacOS/Helium";
 			};
