@@ -19,7 +19,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         // Layout webview
         view.addSubview(webView)
         webView.frame = view.bounds
-        webView.autoresizingMask = NSAutoresizingMaskOptions.ViewHeightSizable | NSAutoresizingMaskOptions.ViewWidthSizable
+        webView.autoresizingMask = [NSAutoresizingMaskOptions.ViewHeightSizable, NSAutoresizingMaskOptions.ViewWidthSizable]
         
         // Allow plug-ins such as silverlight
         webView.configuration.preferences.plugInsEnabled = true
@@ -123,7 +123,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     // Redirect Hulu and YouTube to pop-out videos
     func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
         
-        if shouldRedirect, let url = navigationAction.request.URL, let urlString = url.absoluteString {
+        if shouldRedirect, let url = navigationAction.request.URL, let urlString: String! = url.absoluteString {
             var modified = urlString
             modified = modified.replacePrefix("https://www.youtube.com/watch?", replacement: "https://www.youtube.com/watch_popup?")
             modified = modified.replacePrefix("https://vimeo.com/", replacement: "http://player.vimeo.com/video/")
@@ -149,7 +149,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         }
     }
     
-    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]!, context: UnsafeMutablePointer<Void>) {
         
         if object as! NSObject == webView && keyPath == "estimatedProgress" {
             if let progress = change["new"] as? Float {
