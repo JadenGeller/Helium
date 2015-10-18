@@ -40,9 +40,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if let urlString:String? = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject))?.stringValue {
             if let url:String? = urlString?.substringFromIndex(urlString!.startIndex.advancedBy(prefixLength)) {
                 let urlObject:NSURL = NSURL(string:url!)!
+                NSLog("Loading %@", url!)
                 NSNotificationCenter.defaultCenter().postNotificationName("HeliumLoadURL", object: urlObject)
             } else {
-                print("No valid URL to handle", terminator: "")
+                NSLog("No valid URL to handle")
             }
         }
     }
