@@ -12,9 +12,8 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     @IBOutlet weak var magicURLMenu: NSMenuItem!
-    
+
     func applicationDidFinishLaunching(aNotification: NSNotification) {
-        
         // Insert code here to initialize your application
         magicURLMenu.state = NSUserDefaults.standardUserDefaults().boolForKey("disabledMagicURLs") ? NSOffState : NSOnState
         NSAppleEventManager.sharedAppleEventManager().setEventHandler(
@@ -28,8 +27,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func applicationWillTerminate(aNotification: NSNotification) {
         // Insert code here to tear down your application
     }
-    
-    
+
     @IBAction func magicURLRedirectToggled(sender: NSMenuItem) {
         sender.state = (sender.state == NSOnState) ? NSOffState : NSOnState
         NSUserDefaults.standardUserDefaults().setBool((sender.state == NSOffState), forKey: "disabledMagicURLs")
@@ -39,15 +37,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // Called when the App opened via URL.
     func handleURLEvent(event: NSAppleEventDescriptor, withReply reply: NSAppleEventDescriptor) {
         if let urlString:String? = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject))?.stringValue {
-            if let url:String? = urlString?.substringFromIndex(urlString!.startIndex.advancedBy(9)){
+            if let url:String? = urlString?.substringFromIndex(urlString!.startIndex.advancedBy(9)) {
                 let urlObject:NSURL = NSURL(string:url!)!
-            NSNotificationCenter.defaultCenter().postNotificationName("HeliumLoadURL", object: urlObject)
-                
-            }else {
+                NSNotificationCenter.defaultCenter().postNotificationName("HeliumLoadURL", object: urlObject)
+            } else {
                 print("No valid URL to handle", terminator: "")
             }
-            
-            
         }
     }
 }
