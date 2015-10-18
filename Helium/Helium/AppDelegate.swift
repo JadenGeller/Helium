@@ -36,8 +36,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     //MARK: - handleURLEvent
     // Called when the App opened via URL.
     func handleURLEvent(event: NSAppleEventDescriptor, withReply reply: NSAppleEventDescriptor) {
+        let prefixLength = "helium://".lengthOfBytesUsingEncoding(NSASCIIStringEncoding)
         if let urlString:String? = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject))?.stringValue {
-            if let url:String? = urlString?.substringFromIndex(urlString!.startIndex.advancedBy(9)) {
+            if let url:String? = urlString?.substringFromIndex(urlString!.startIndex.advancedBy(prefixLength)) {
                 let urlObject:NSURL = NSURL(string:url!)!
                 NSNotificationCenter.defaultCenter().postNotificationName("HeliumLoadURL", object: urlObject)
             } else {
