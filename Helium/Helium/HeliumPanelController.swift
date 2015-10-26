@@ -10,26 +10,76 @@ import AppKit
 
 class HeliumPanelController : NSWindowController {
 
+    var mouseOver: Bool = false
+    override func mouseEntered(theEvent: NSEvent) {
+        mouseOver = true
+        updateTranslucency()
+    }
+    
+    override func mouseExited(theEvent: NSEvent) {
+        mouseOver = false
+        updateTranslucency()
+    }
+    
     var alpha: CGFloat = 0.6 { //default
         didSet {
-            if translucent {
-                panel.alphaValue = alpha
-            }
+            updateTranslucency()
         }
     }
     
-    var translucent: Bool = false {
+    func updateTranslucency() {
+        currentlyTranslucent = shouldBeTranslucent()
+    }
+    
+    func shouldBeTranslucent() -> Bool {
+        /* Implicit Arguments
+         * - mouseOver
+         * - translucencyPreference
+         * - tranlucencyEnalbed
+         */
+        
+        guard translucencyEnabled else { return false }
+        
+        switch translucencyPreference {
+        case .Always:
+            return true
+        case .MouseOver:
+            return mouseOver
+        case .MouseOutside:
+            return !mouseOver
+        }
+    }
+    
+    enum TranslucencyPreference {
+        case Always
+        case MouseOver
+        case MouseOutside
+    }
+    
+    var translucencyPreference: TranslucencyPreference = .Always {
+        didSet {
+            updateTranslucency()
+        }
+    }
+    
+    var translucencyEnabled: Bool = false {
+        didSet {
+            updateTranslucency()
+        }
+    }
+    
+    var currentlyTranslucent: Bool = false {
         didSet {
             if !NSApplication.sharedApplication().active {
-                panel.ignoresMouseEvents = translucent
+                panel.ignoresMouseEvents = currentlyTranslucent
             }
-            if translucent {
+            if currentlyTranslucent {
+                panel.animator().alphaValue = alpha
                 panel.opaque = false
-                panel.alphaValue = alpha
             }
             else {
                 panel.opaque = true
-                panel.alphaValue = 1.0
+                panel.animator().alphaValue = 1
             }
         }
     }
@@ -57,6 +107,29 @@ class HeliumPanelController : NSWindowController {
     
     //MARK: IBActions
     
+    func disabledAllMouseOverPreferences(allMenus: [NSMenuItem]) {
+        // GROSS HARD CODED
+        for x in allMenus.dropFirst(2) {
+            x.state = NSOffState
+        }
+    }
+    
+    @IBAction func alwaysPreferencePress(sender: NSMenuItem) {
+        disabledAllMouseOverPreferences(sender.menu!.itemArray)
+        translucencyPreference = .Always
+        sender.state = NSOnState
+    }
+    @IBAction func overPreferencePress(sender: NSMenuItem) {
+        disabledAllMouseOverPreferences(sender.menu!.itemArray)
+        translucencyPreference = .MouseOver
+        sender.state = NSOnState
+    }
+    @IBAction func outsidePreferencePress(sender: NSMenuItem) {
+        disabledAllMouseOverPreferences(sender.menu!.itemArray)
+        translucencyPreference = .MouseOutside
+        sender.state = NSOnState
+    }
+    
     @IBAction func translucencyPress(sender: NSMenuItem) {
         if sender.state == NSOnState {
             sender.state = NSOffState
@@ -75,7 +148,7 @@ class HeliumPanelController : NSWindowController {
         sender.state = NSOnState
         let value = sender.title.substringToIndex(sender.title.endIndex.advancedBy(-1))
         if let alpha = Int(value) {
-             didUpdateAlpha(NSNumber(integer: alpha))
+             didUpdateAlpha(CGFloat(alpha))
         }
     }
     
@@ -137,20 +210,20 @@ class HeliumPanelController : NSWindowController {
     }
     
     func willResignActive() {
-        if translucent {
+        if currentlyTranslucent {
             panel.ignoresMouseEvents = true
         }
     }
     
     func didEnableTranslucency() {
-        translucent = true
+        translucencyEnabled = true
     }
     
     func didDisableTranslucency() {
-        translucent = false
+        translucencyEnabled = false
     }
     
-    func didUpdateAlpha(newAlpha: NSNumber) {
-        alpha = CGFloat(newAlpha.doubleValue) / CGFloat(100.0)
+    func didUpdateAlpha(newAlpha: CGFloat) {
+        alpha = newAlpha / 100
     }
 }
