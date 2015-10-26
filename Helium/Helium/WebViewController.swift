@@ -34,6 +34,9 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         // Allow zooming
         webView.allowsMagnification = true
         
+        // Alow back and forth
+        webView.allowsBackForwardNavigationGestures = true
+        
         // Listen for load progress
         webView.addObserver(self, forKeyPath: "estimatedProgress", options: NSKeyValueObservingOptions.New, context: nil)
         
