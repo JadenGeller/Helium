@@ -12,18 +12,18 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     @IBOutlet weak var magicURLMenu: NSMenuItem!
-    
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
-        
-        // Insert code here to initialize your application
-        magicURLMenu.state = NSUserDefaults.standardUserDefaults().boolForKey("disabledMagicURLs") ? NSOffState : NSOnState
+
+    func applicationWillFinishLaunching(notification: NSNotification) {
         NSAppleEventManager.sharedAppleEventManager().setEventHandler(
             self,
             andSelector: "handleURLEvent:withReply:",
             forEventClass: AEEventClass(kInternetEventClass),
             andEventID: AEEventID(kAEGetURL)
         )
-        
+    }
+
+    func applicationDidFinishLaunching(aNotification: NSNotification) {
+        magicURLMenu.state = NSUserDefaults.standardUserDefaults().boolForKey("disabledMagicURLs") ? NSOffState : NSOnState
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {
