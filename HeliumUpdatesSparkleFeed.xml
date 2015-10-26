@@ -12,6 +12,7 @@
                     <ul>
             	    <li>Support for Netflix HTML5 player! (Bye, Silverlight!)</li>
             	    <li>URL scheme improvements</li>
+            	    <li>Gatekeeper-compatible</li>
             	    <li>Other bug fixes and minor features</li>
                     </ul>
                 ]]>
