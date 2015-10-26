@@ -95,6 +95,16 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         }
     }
     
+    func loadAlmostURL(var text: String) {
+        if !(text.lowercaseString.hasPrefix("http://") || text.lowercaseString.hasPrefix("https://")) {
+            text = "http://" + text
+        }
+        
+        if let url = NSURL(string: text) {
+            loadURL(url)
+        }
+    }
+    
     func loadURL(url:NSURL) {
         webView.loadRequest(NSURLRequest(URL: url))
     }
@@ -102,7 +112,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
 //MARK: - loadURLObject
     func loadURLObject(urlObject : NSNotification) {
         if let url = urlObject.object as? NSURL {
-            loadURL(url);
+            loadAlmostURL(url.absoluteString);
         }
     }
     

@@ -126,15 +126,8 @@ class HeliumPanelController : NSWindowController {
         alert.beginSheetModalForWindow(self.window!, completionHandler: { response in
             if response == NSAlertFirstButtonReturn {
                 // Load
-                var text = (alert.accessoryView as! NSTextField).stringValue
-                
-                if !(text.lowercaseString.hasPrefix("http://") || text.lowercaseString.hasPrefix("https://")) {
-                    text = "http://" + text
-                }
-                
-                if let url = NSURL(string: text) {
-                    self.webViewController.loadURL(url)
-                }
+                let text = (alert.accessoryView as! NSTextField).stringValue
+                self.webViewController.loadAlmostURL(text)
             }
         })
     }
