@@ -19,13 +19,13 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         // Layout webview
         view.addSubview(webView)
         webView.frame = view.bounds
-        webView.autoresizingMask = NSAutoresizingMaskOptions.ViewHeightSizable | NSAutoresizingMaskOptions.ViewWidthSizable
+        webView.autoresizingMask = [NSAutoresizingMaskOptions.ViewHeightSizable, NSAutoresizingMaskOptions.ViewWidthSizable]
         
         // Allow plug-ins such as silverlight
         webView.configuration.preferences.plugInsEnabled = true
         
-        // Netflix support via Silverlight (HTML5 Netflix doesn't work for some unknown reason)
-        webView._customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_0) AppleWebKit/600.5.17 (KHTML, like Gecko) Version/7.1.5 Safari/537.85.14"
+        // Custom user agent string for Netflix HTML5 support
+        webView._customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/600.7.12 (KHTML, like Gecko) Version/8.0.7 Safari/600.7.12"
         
         // Setup magic URLs
         webView.navigationDelegate = self
@@ -95,22 +95,25 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         }
     }
     
+    func loadAlmostURL(var text: String) {
+        if !(text.lowercaseString.hasPrefix("http://") || text.lowercaseString.hasPrefix("https://")) {
+            text = "http://" + text
+        }
+        
+        if let url = NSURL(string: text) {
+            loadURL(url)
+        }
+    }
+    
     func loadURL(url:NSURL) {
         webView.loadRequest(NSURLRequest(URL: url))
     }
     
 //MARK: - loadURLObject
     func loadURLObject(urlObject : NSNotification) {
-    
-        // This is where the work gets done - it grabs everything after
-        // "openURL=" from the urlObject, makes a new NSURL out of it
-        // and sends it to loadURL.
-        
-        if let url = urlObject.object as? NSURL,
-            let lastPart = url.absoluteString?.componentsSeparatedByString("openURL=").last,
-            let newURL = NSURL(string: lastPart) {
-                loadURL(newURL);
-            }
+        if let url = urlObject.object as? NSURL {
+            loadAlmostURL(url.absoluteString);
+        }
     }
     
     func requestedReload() {
@@ -130,7 +133,8 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     // Redirect Hulu and YouTube to pop-out videos
     func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
         
-        if shouldRedirect, let url = navigationAction.request.URL, let urlString = url.absoluteString {
+        if shouldRedirect, let url = navigationAction.request.URL {
+            let urlString = url.absoluteString
             var modified = urlString
             modified = modified.replacePrefix("https://www.youtube.com/watch?", replacement: "https://www.youtube.com/watch_popup?")
             modified = modified.replacePrefix("https://vimeo.com/", replacement: "http://player.vimeo.com/video/")
@@ -156,10 +160,10 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         }
     }
     
-    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         
         if object as! NSObject == webView && keyPath == "estimatedProgress" {
-            if let progress = change["new"] as? Float {
+            if let progress = change?["new"] as? Float {
                 let percent = progress * 100
                 var title = NSString(format: "Loading... %.2f%%", percent)
                 if percent == 100 {

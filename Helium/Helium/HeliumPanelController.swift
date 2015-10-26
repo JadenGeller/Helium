@@ -1,79 +1,15 @@
 //
-//  AppDelegate.swift
+//  HeliumPanelController.swift
 //  Helium
 //
 //  Created by Jaden Geller on 4/9/15.
 //  Copyright (c) 2015 Jaden Geller. All rights reserved.
 //
 
-import Cocoa
-import CoreGraphics
+import AppKit
 
-@NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
+class HeliumPanelController : NSWindowController {
 
-    @IBOutlet weak var magicURLMenu: NSMenuItem!
-    @IBOutlet weak var menuBarMenu: NSMenu!
-    
-    
-    var statusBar = NSStatusBar.systemStatusBar()
-    var statusBarItem : NSStatusItem = NSStatusItem()
-    var defaultWindow:NSWindow!
-    
-    func applicationWillFinishLaunching(notification: NSNotification) {
-        
-        // This has to be called before the application is finished launching
-        // or something (the sandbox maybe?) prevents it from registering.
-        // I moved it from the applicationDidFinishLaunching method.
-        NSAppleEventManager.sharedAppleEventManager().setEventHandler(
-            self,
-            andSelector: "handleURLEvent:withReply:",
-            forEventClass: AEEventClass(kInternetEventClass),
-            andEventID: AEEventID(kAEGetURL)
-        )
-    }
-    
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
-        
-        statusBarItem = statusBar.statusItemWithLength(-1)
-        statusBarItem.menu = menuBarMenu
-        statusBarItem.image = NSImage(named: "menuBar")
-        
-        // Insert code here to initialize your application
-        defaultWindow = NSApplication.sharedApplication().windows.first!
-        defaultWindow?.level = Int(CGWindowLevelForKey(.MainMenuWindowLevelKey))
-        defaultWindow.collectionBehavior = [.FullScreenAuxiliary, .CanJoinAllSpaces, .FullScreenAuxiliary]
-        
-        magicURLMenu.state = NSUserDefaults.standardUserDefaults().boolForKey("disabledMagicURLs") ? NSOffState : NSOnState
-        
-    }
-
-    func applicationWillTerminate(aNotification: NSNotification) {
-        // Insert code here to tear down your application
-    }
-    
-    
-    
-    @IBAction func magicURLRedirectToggled(sender: NSMenuItem) {
-        sender.state = (sender.state == NSOnState) ? NSOffState : NSOnState
-        NSUserDefaults.standardUserDefaults().setBool((sender.state == NSOffState), forKey: "disabledMagicURLs")
-    }
-    
-    
-//MARK: - handleURLEvent
-    // Called when the App opened via URL.
-    func handleURLEvent(event: NSAppleEventDescriptor, withReply reply: NSAppleEventDescriptor) {
-        if let urlString = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject))?.stringValue {
-            if let url:String? = urlString.substringFromIndex(urlString.startIndex.advancedBy(9)){
-                let urlObject:NSURL = NSURL(string:url!)!
-            NSNotificationCenter.defaultCenter().postNotificationName("HeliumLoadURL", object: urlObject)
-                
-            }else {
-                print("No valid URL to handle")
-            }
-        }
-    }
-    
     var alpha: CGFloat = 0.6 { //default
         didSet {
             if translucent {
@@ -101,17 +37,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     var panel: NSPanel! {
         get {
-            return (self.defaultWindow as! NSPanel)
+            return (self.window as! NSPanel)
         }
     }
     
     var webViewController: WebViewController {
         get {
-            return self.defaultWindow?.contentViewController as! WebViewController
+            return self.window?.contentViewController as! WebViewController
         }
     }
     
-    func windowDidLoad() {
+    override func windowDidLoad() {
         panel.floatingPanel = true
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didBecomeActive", name: NSApplicationDidBecomeActiveNotification, object: nil)
@@ -134,12 +70,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     @IBAction func percentagePress(sender: NSMenuItem) {
         for button in sender.menu!.itemArray{
-            button.state = NSOffState
+            (button ).state = NSOffState
         }
         sender.state = NSOnState
         let value = sender.title.substringToIndex(sender.title.endIndex.advancedBy(-1))
         if let alpha = Int(value) {
-            didUpdateAlpha(NSNumber(integer: alpha))
+             didUpdateAlpha(NSNumber(integer: alpha))
         }
     }
     
@@ -150,7 +86,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @IBAction func openFilePress(sender: AnyObject) {
         didRequestFile()
     }
-    
+        
     //MARK: Actual functionality
     
     func didUpdateTitle(notification: NSNotification) {
@@ -181,22 +117,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         let urlField = NSTextField()
         urlField.frame = NSRect(x: 0, y: 0, width: 300, height: 20)
+        urlField.lineBreakMode = NSLineBreakMode.ByTruncatingHead
+        urlField.usesSingleLineMode = true
         
         alert.accessoryView = urlField
         alert.addButtonWithTitle("Load")
         alert.addButtonWithTitle("Cancel")
-        alert.beginSheetModalForWindow(defaultWindow!, completionHandler: { response in
+        alert.beginSheetModalForWindow(self.window!, completionHandler: { response in
             if response == NSAlertFirstButtonReturn {
                 // Load
-                var text = (alert.accessoryView as! NSTextField).stringValue
-                
-                if !(text.lowercaseString.hasPrefix("http://") || text.lowercaseString.hasPrefix("https://")) {
-                    text = "http://" + text
-                }
-                
-                if let url = NSURL(string: text) {
-                    self.webViewController.loadURL(url)
-                }
+                let text = (alert.accessoryView as! NSTextField).stringValue
+                self.webViewController.loadAlmostURL(text)
             }
         })
     }
@@ -223,4 +154,3 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         alpha = CGFloat(newAlpha.doubleValue) / CGFloat(100.0)
     }
 }
-
