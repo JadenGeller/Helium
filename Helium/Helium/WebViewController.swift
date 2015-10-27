@@ -11,6 +11,8 @@ import WebKit
 
 class WebViewController: NSViewController, WKNavigationDelegate {
     
+    let appDelegate = NSApplication.sharedApplication().delegate as! AppDelegate
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addTrackingRect(view.bounds, owner: self, userData: nil, assumeInside: false)
@@ -161,6 +163,10 @@ class WebViewController: NSViewController, WKNavigationDelegate {
             if title.isEmpty { title = "Helium" }
             let notif = NSNotification(name: "HeliumUpdateTitle", object: title);
             NSNotificationCenter.defaultCenter().postNotification(notif)
+        }
+        
+        if let pageUrl = webView.URL {
+            appDelegate.lastKnownLocation = pageUrl
         }
     }
     
