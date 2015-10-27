@@ -10,26 +10,76 @@ import AppKit
 
 class HeliumPanelController : NSWindowController {
 
+    var mouseOver: Bool = false
+    override func mouseEntered(theEvent: NSEvent) {
+        mouseOver = true
+        updateTranslucency()
+    }
+    
+    override func mouseExited(theEvent: NSEvent) {
+        mouseOver = false
+        updateTranslucency()
+    }
+    
     var alpha: CGFloat = 0.6 { //default
         didSet {
-            if translucent {
-                panel.alphaValue = alpha
-            }
+            updateTranslucency()
         }
     }
     
-    var translucent: Bool = false {
+    func updateTranslucency() {
+        currentlyTranslucent = shouldBeTranslucent()
+    }
+    
+    func shouldBeTranslucent() -> Bool {
+        /* Implicit Arguments
+         * - mouseOver
+         * - translucencyPreference
+         * - tranlucencyEnalbed
+         */
+        
+        guard translucencyEnabled else { return false }
+        
+        switch translucencyPreference {
+        case .Always:
+            return true
+        case .MouseOver:
+            return mouseOver
+        case .MouseOutside:
+            return !mouseOver
+        }
+    }
+    
+    enum TranslucencyPreference {
+        case Always
+        case MouseOver
+        case MouseOutside
+    }
+    
+    var translucencyPreference: TranslucencyPreference = .Always {
+        didSet {
+            updateTranslucency()
+        }
+    }
+    
+    var translucencyEnabled: Bool = false {
+        didSet {
+            updateTranslucency()
+        }
+    }
+    
+    var currentlyTranslucent: Bool = false {
         didSet {
             if !NSApplication.sharedApplication().active {
-                panel.ignoresMouseEvents = translucent
+                panel.ignoresMouseEvents = currentlyTranslucent
             }
-            if translucent {
+            if currentlyTranslucent {
+                panel.animator().alphaValue = alpha
                 panel.opaque = false
-                panel.alphaValue = alpha
             }
             else {
                 panel.opaque = true
-                panel.alphaValue = 1.0
+                panel.animator().alphaValue = 1
             }
         }
     }
@@ -57,6 +107,29 @@ class HeliumPanelController : NSWindowController {
     
     //MARK: IBActions
     
+    func disabledAllMouseOverPreferences(allMenus: [NSMenuItem]) {
+        // GROSS HARD CODED
+        for x in allMenus.dropFirst(2) {
+            x.state = NSOffState
+        }
+    }
+    
+    @IBAction func alwaysPreferencePress(sender: NSMenuItem) {
+        disabledAllMouseOverPreferences(sender.menu!.itemArray)
+        translucencyPreference = .Always
+        sender.state = NSOnState
+    }
+    @IBAction func overPreferencePress(sender: NSMenuItem) {
+        disabledAllMouseOverPreferences(sender.menu!.itemArray)
+        translucencyPreference = .MouseOver
+        sender.state = NSOnState
+    }
+    @IBAction func outsidePreferencePress(sender: NSMenuItem) {
+        disabledAllMouseOverPreferences(sender.menu!.itemArray)
+        translucencyPreference = .MouseOutside
+        sender.state = NSOnState
+    }
+    
     @IBAction func translucencyPress(sender: NSMenuItem) {
         if sender.state == NSOnState {
             sender.state = NSOffState
@@ -70,12 +143,12 @@ class HeliumPanelController : NSWindowController {
     
     @IBAction func percentagePress(sender: NSMenuItem) {
         for button in sender.menu!.itemArray{
-            (button as! NSMenuItem).state = NSOffState
+            (button ).state = NSOffState
         }
         sender.state = NSOnState
-        let value = sender.title.substringToIndex(advance(sender.title.endIndex, -1))
-        if let alpha = value.toInt() {
-             didUpdateAlpha(NSNumber(integer: alpha))
+        let value = sender.title.substringToIndex(sender.title.endIndex.advancedBy(-1))
+        if let alpha = Int(value) {
+             didUpdateAlpha(CGFloat(alpha))
         }
     }
     
@@ -117,6 +190,8 @@ class HeliumPanelController : NSWindowController {
         
         let urlField = NSTextField()
         urlField.frame = NSRect(x: 0, y: 0, width: 300, height: 20)
+        urlField.lineBreakMode = NSLineBreakMode.ByTruncatingHead
+        urlField.usesSingleLineMode = true
         
         alert.accessoryView = urlField
         alert.addButtonWithTitle("Load")
@@ -124,15 +199,8 @@ class HeliumPanelController : NSWindowController {
         alert.beginSheetModalForWindow(self.window!, completionHandler: { response in
             if response == NSAlertFirstButtonReturn {
                 // Load
-                var text = (alert.accessoryView as! NSTextField).stringValue
-                
-                if !(text.lowercaseString.hasPrefix("http://") || text.lowercaseString.hasPrefix("https://")) {
-                    text = "http://" + text
-                }
-                
-                if let url = NSURL(string: text) {
-                    self.webViewController.loadURL(url)
-                }
+                let text = (alert.accessoryView as! NSTextField).stringValue
+                self.webViewController.loadAlmostURL(text)
             }
         })
     }
@@ -142,20 +210,20 @@ class HeliumPanelController : NSWindowController {
     }
     
     func willResignActive() {
-        if translucent {
+        if currentlyTranslucent {
             panel.ignoresMouseEvents = true
         }
     }
     
     func didEnableTranslucency() {
-        translucent = true
+        translucencyEnabled = true
     }
     
     func didDisableTranslucency() {
-        translucent = false
+        translucencyEnabled = false
     }
     
-    func didUpdateAlpha(newAlpha: NSNumber) {
-        alpha = CGFloat(newAlpha.doubleValue) / CGFloat(100.0)
+    func didUpdateAlpha(newAlpha: CGFloat) {
+        alpha = newAlpha / 100
     }
 }

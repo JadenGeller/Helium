@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7531"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9059"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -117,68 +117,97 @@ CA
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Appearance" id="HyV-fh-RgO">
                                     <items>
-                                        <menuItem title="Translucent" keyEquivalent="t" id="wnn-Wb-fUq">
-                                            <connections>
-                                                <action selector="translucencyPress:" target="Ady-hI-5gd" id="orR-QV-BPD"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Opacity" id="wlj-XI-Lng">
+                                        <menuItem title="Translucency" id="RVf-yr-XjB" userLabel="Translucency">
                                             <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="Opacity" systemMenu="window" id="5ao-Bb-P10">
+                                            <menu key="submenu" title="Translucency" systemMenu="window" id="fPu-ZA-vuX">
                                                 <items>
-                                                    <menuItem title="10%" keyEquivalent="1" id="SpQ-gr-DsG">
+                                                    <menuItem title="Enabled" keyEquivalent="t" id="wnn-Wb-fUq">
                                                         <connections>
-                                                            <action selector="percentagePress:" target="Ady-hI-5gd" id="RXN-qL-deK"/>
+                                                            <action selector="translucencyPress:" target="Ady-hI-5gd" id="orR-QV-BPD"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="20%" keyEquivalent="2" id="B4x-FQ-kVj">
+                                                    <menuItem title="Opacity" id="wlj-XI-Lng">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <menu key="submenu" title="Opacity" systemMenu="window" id="5ao-Bb-P10">
+                                                            <items>
+                                                                <menuItem title="10%" keyEquivalent="1" id="SpQ-gr-DsG">
+                                                                    <connections>
+                                                                        <action selector="percentagePress:" target="Ady-hI-5gd" id="RXN-qL-deK"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="20%" keyEquivalent="2" id="B4x-FQ-kVj">
+                                                                    <connections>
+                                                                        <action selector="percentagePress:" target="Ady-hI-5gd" id="SJU-4R-onV"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="30%" keyEquivalent="3" id="S1G-zW-xWx">
+                                                                    <connections>
+                                                                        <action selector="percentagePress:" target="Ady-hI-5gd" id="UJH-Ul-L4m"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="40%" keyEquivalent="4" id="sB8-xz-mYZ">
+                                                                    <connections>
+                                                                        <action selector="percentagePress:" target="Ady-hI-5gd" id="sew-bc-Bz1"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="50%" keyEquivalent="5" id="BNJ-gh-yGK">
+                                                                    <connections>
+                                                                        <action selector="percentagePress:" target="Ady-hI-5gd" id="Aa8-hl-bKq"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="60%" state="on" keyEquivalent="6" id="iS5-Jd-p7Q">
+                                                                    <connections>
+                                                                        <action selector="percentagePress:" target="Ady-hI-5gd" id="du4-a9-MJw"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="70%" keyEquivalent="7" id="0pX-17-4u5">
+                                                                    <connections>
+                                                                        <action selector="percentagePress:" target="Ady-hI-5gd" id="AjV-cx-Ila"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="80%" keyEquivalent="8" id="mJa-We-e3P">
+                                                                    <connections>
+                                                                        <action selector="percentagePress:" target="Ady-hI-5gd" id="Ets-Bj-vej"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="90%" keyEquivalent="9" id="JLI-El-Rtf">
+                                                                    <connections>
+                                                                        <action selector="percentagePress:" target="Ady-hI-5gd" id="jqj-3n-Dci"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="100%" keyEquivalent="0" id="2NP-ZM-pKs">
+                                                                    <connections>
+                                                                        <action selector="percentagePress:" target="Ady-hI-5gd" id="wDd-yl-gr1"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                            </items>
+                                                            <connections>
+                                                                <outlet property="delegate" destination="Voe-Tx-rLC" id="hNg-oj-Cad"/>
+                                                            </connections>
+                                                        </menu>
+                                                    </menuItem>
+                                                    <menuItem isSeparatorItem="YES" id="52B-gm-nq5"/>
+                                                    <menuItem title="Always" state="on" id="UhQ-aG-PEv" userLabel="Always">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
-                                                            <action selector="percentagePress:" target="Ady-hI-5gd" id="SJU-4R-onV"/>
+                                                            <action selector="alwaysPreferencePress:" target="Ady-hI-5gd" id="HmW-j0-3Nx"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="30%" keyEquivalent="3" id="S1G-zW-xWx">
+                                                    <menuItem title="Mouse Over" id="Tdi-1w-idY">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
-                                                            <action selector="percentagePress:" target="Ady-hI-5gd" id="UJH-Ul-L4m"/>
+                                                            <action selector="overPreferencePress:" target="Ady-hI-5gd" id="mAm-Yw-rQF"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="40%" keyEquivalent="4" id="sB8-xz-mYZ">
+                                                    <menuItem title="Mouse Outside" id="keL-ga-Rmv">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
-                                                            <action selector="percentagePress:" target="Ady-hI-5gd" id="sew-bc-Bz1"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="50%" keyEquivalent="5" id="BNJ-gh-yGK">
-                                                        <connections>
-                                                            <action selector="percentagePress:" target="Ady-hI-5gd" id="Aa8-hl-bKq"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="60%" state="on" keyEquivalent="6" id="iS5-Jd-p7Q">
-                                                        <connections>
-                                                            <action selector="percentagePress:" target="Ady-hI-5gd" id="du4-a9-MJw"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="70%" keyEquivalent="7" id="0pX-17-4u5">
-                                                        <connections>
-                                                            <action selector="percentagePress:" target="Ady-hI-5gd" id="AjV-cx-Ila"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="80%" keyEquivalent="8" id="mJa-We-e3P">
-                                                        <connections>
-                                                            <action selector="percentagePress:" target="Ady-hI-5gd" id="Ets-Bj-vej"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="90%" keyEquivalent="9" id="JLI-El-Rtf">
-                                                        <connections>
-                                                            <action selector="percentagePress:" target="Ady-hI-5gd" id="jqj-3n-Dci"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="100%" keyEquivalent="0" id="2NP-ZM-pKs">
-                                                        <connections>
-                                                            <action selector="percentagePress:" target="Ady-hI-5gd" id="wDd-yl-gr1"/>
+                                                            <action selector="outsidePreferencePress:" target="Ady-hI-5gd" id="9TA-nd-SjS"/>
                                                         </connections>
                                                     </menuItem>
                                                 </items>
                                                 <connections>
-                                                    <outlet property="delegate" destination="Voe-Tx-rLC" id="hNg-oj-Cad"/>
+                                                    <outlet property="delegate" destination="Voe-Tx-rLC" id="Pga-5b-ccP"/>
                                                 </connections>
                                             </menu>
                                         </menuItem>
@@ -196,8 +225,7 @@ CA
                                                             <action selector="zoomOut:" target="Ady-hI-5gd" id="B27-BH-sc0"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="Reset Zoom Level" id="CkG-jI-gbw">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    <menuItem title="Reset Zoom Level" keyEquivalent="0" id="CkG-jI-gbw">
                                                         <connections>
                                                             <action selector="resetZoomLevel:" target="Ady-hI-5gd" id="fjs-3Q-hPk"/>
                                                         </connections>
@@ -306,6 +334,7 @@ CA
                     <view key="view" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
                     </view>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
