@@ -8,6 +8,8 @@
 
 import AppKit
 
+let optionKeyCode: UInt16 = 58
+
 class HeliumPanelController : NSWindowController {
 
     var mouseOver: Bool = false
@@ -97,6 +99,7 @@ class HeliumPanelController : NSWindowController {
         }
     }
     
+
     override func windowDidLoad() {
         panel.floatingPanel = true
         
