@@ -12,6 +12,7 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     @IBOutlet weak var magicURLMenu: NSMenuItem!
+    @IBOutlet weak var fullScreenFloatMenu: NSMenuItem!
 
     func applicationWillFinishLaunching(notification: NSNotification) {
         NSAppleEventManager.sharedAppleEventManager().setEventHandler(
@@ -24,6 +25,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         magicURLMenu.state = NSUserDefaults.standardUserDefaults().boolForKey("disabledMagicURLs") ? NSOffState : NSOnState
+        
+        fullScreenFloatMenu.state = NSUserDefaults.standardUserDefaults().boolForKey("disabledFullScreenFloat") ? NSOffState : NSOnState
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {
