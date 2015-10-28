@@ -106,6 +106,17 @@ class HeliumPanelController : NSWindowController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didBecomeActive", name: NSApplicationDidBecomeActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willResignActive", name: NSApplicationWillResignActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdateTitle:", name: "HeliumUpdateTitle", object: nil)
+        
+            setFloatOverFullScreenApps()
+    }
+    
+    func setFloatOverFullScreenApps() {
+        if NSUserDefaults.standardUserDefaults().boolForKey("disabledFullScreenFloat") {
+            panel.collectionBehavior = [.MoveToActiveSpace, .FullScreenAuxiliary]
+
+        } else {
+            panel.collectionBehavior = [.CanJoinAllSpaces, .FullScreenAuxiliary]
+        }
     }
     
     //MARK: IBActions
@@ -162,7 +173,14 @@ class HeliumPanelController : NSWindowController {
     @IBAction func openFilePress(sender: AnyObject) {
         didRequestFile()
     }
+    
+    @IBAction func floatOverFullScreenAppsToggled(sender: NSMenuItem) {
+        sender.state = (sender.state == NSOnState) ? NSOffState : NSOnState
+        NSUserDefaults.standardUserDefaults().setBool((sender.state == NSOffState), forKey: "disabledFullScreenFloat")
         
+        setFloatOverFullScreenApps()
+    }
+    
     //MARK: Actual functionality
     
     func didUpdateTitle(notification: NSNotification) {

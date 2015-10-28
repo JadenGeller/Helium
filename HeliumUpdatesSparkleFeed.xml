@@ -6,6 +6,33 @@
         <description>Most recent changes with links to updates.</description>
         <language>en</language>
         <item>
+            <title>Version 1.8</title>
+            <description>
+          	    <![CDATA[
+          	        This update:
+          	        <ul>
+          	        <li> Translucency preferences: "Always", "Mouse Over", "Mouse Outside"
+          	        <li> Updated menu bar interface to make it easier to use
+          	        </ul>
+          	        Last update:
+                    <ul>
+            	    <li>Support for Netflix HTML5 player! (Bye, Silverlight!)</li>
+            	    <li>URL scheme improvements</li>
+            	    <li>Gatekeeper-compatible</li>
+            	    <li>Other bug fixes and minor features</li>
+                    </ul>
+                ]]>
+            </description>
+            <pubDate>Sun, 26 Oct 2015 16:00:00 -0000</pubDate>
+            <link></link>
+            <enclosure url="https://github.com/JadenGeller/Helium/releases/download/v1.8/Helium.app.zip"
+                sparkle:shortVersionString="1.8"
+                sparkle:version="14"
+                sparkle:dsaSignature="MCwCFBp57eO+G/9vX2Gs0k7BZHewcn3RAhQ7HwaIkeeXYPD+CjaegQPypzawwg=="
+                length="4438191"
+                type="application/octet-stream" />
+        </item>
+        <item>
             <title>Version 1.7</title>
             <description>
           	    <![CDATA[
