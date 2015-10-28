@@ -27,7 +27,7 @@
             <link></link>
             <enclosure url="https://github.com/JadenGeller/Helium/releases/download/v1.8/Helium.app.zip"
                 sparkle:shortVersionString="1.8"
-                sparkle:version="18"
+                sparkle:version="14"
                 sparkle:dsaSignature="MCwCFBp57eO+G/9vX2Gs0k7BZHewcn3RAhQ7HwaIkeeXYPD+CjaegQPypzawwg=="
                 length="4438191"
                 type="application/octet-stream" />
