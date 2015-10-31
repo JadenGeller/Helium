@@ -6,6 +6,36 @@
         <description>Most recent changes with links to updates.</description>
         <language>en</language>
         <item>
+            <title>Version 1.9</title>
+            <description>
+          	    <![CDATA[
+          	        This update:
+          	        <ul>
+                    <li>"Open in Helium" from Safari with the built-in share extension!</li>
+                    <li>Stays on top even as you switch between spaces—even full screen ones! (This can be disabled in preferences.)</li>
+                    <li>Navigation gestures like swipe to go back</li>
+          	        </ul>
+          	        Last update:
+                    <ul>
+            	    <li>Support for Netflix HTML5 player! (Bye, Silverlight!)</li>
+            	    <li>URL scheme improvements</li>
+            	    <li>Gatekeeper-compatible</li>
+            	    <li>Other bug fixes and minor features</li>
+            	    <li> Translucency preferences: "Always", "Mouse Over", "Mouse Outside"
+          	        <li> Updated menu bar interface to make it easier to use
+                    </ul>
+                ]]>
+            </description>
+            <pubDate>Fri, 30 Oct 2015 19:35:00 -0000</pubDate>
+            <link></link>
+            <enclosure url="https://github.com/JadenGeller/Helium/releases/download/1.9/Helium.app.zip"
+                sparkle:shortVersionString="1.9"
+                sparkle:version="19"
+                sparkle:dsaSignature="MC0CFQDOrl4A5s3q+rswz+zLRQ9zSb2mggIUWi6WT7z1J9CiQ/B4HLPNkrdf7wg="
+                length="4952528"
+                type="application/octet-stream" />
+        </item>
+        <item>
             <title>Version 1.8</title>
             <description>
           	    <![CDATA[
