@@ -31,7 +31,7 @@
                                                             <action selector="magicURLRedirectToggled:" target="Voe-Tx-rLC" id="OyL-id-RDj"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="Float over Full Screen Apps" state="on" id="J8Z-sv-9PI" userLabel="Float over Full Screen Apps Menu">
+                                                    <menuItem title="Float Above All Spaces" state="on" id="J8Z-sv-9PI" userLabel="Float over Full Screen Apps Menu">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
                                                             <action selector="floatOverFullScreenAppsToggled:" target="Ady-hI-5gd" id="WlK-rI-bD7"/>
