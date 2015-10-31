@@ -281,11 +281,11 @@
 				TargetAttributes = {
 					27199AAF1BE422AC00E02297 = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = F7GMNKXJRB;
+						DevelopmentTeam = PLYLXBYCEQ;
 					};
 					4D867CB01AD6781200681331 = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = F7GMNKXJRB;
+						DevelopmentTeam = PLYLXBYCEQ;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
 								enabled = 0;
@@ -615,6 +615,7 @@
 				27199AC01BE422AC00E02297 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4D867CAC1AD6781200681331 /* Build configuration list for PBXProject "Helium" */ = {
 			isa = XCConfigurationList;
