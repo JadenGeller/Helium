@@ -40,12 +40,6 @@
                                                 </items>
                                             </menu>
                                         </menuItem>
-                                        <menuItem title="Check for Updates" id="ugT-xN-SoJ">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="checkForUpdates:" target="sQQ-SA-Rgm" id="dbi-vN-hI7"/>
-                                            </connections>
-                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
                                         <menuItem title="Services" id="NMo-om-nkz">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -332,7 +326,7 @@ CA
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="250"/>
+            <point key="canvasLocation" x="75" y="339"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="hIz-AP-VOD">
