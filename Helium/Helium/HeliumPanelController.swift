@@ -111,7 +111,7 @@ class HeliumPanelController : NSWindowController {
     }
     
     func setFloatOverFullScreenApps() {
-        if NSUserDefaults.standardUserDefaults().boolForKey("disabledFullScreenFloat") {
+        if NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledFullScreenFloat.userDefaultsKey) {
             panel.collectionBehavior = [.MoveToActiveSpace, .FullScreenAuxiliary]
 
         } else {
@@ -176,7 +176,7 @@ class HeliumPanelController : NSWindowController {
     
     @IBAction func floatOverFullScreenAppsToggled(sender: NSMenuItem) {
         sender.state = (sender.state == NSOnState) ? NSOffState : NSOnState
-        NSUserDefaults.standardUserDefaults().setBool((sender.state == NSOffState), forKey: "disabledFullScreenFloat")
+        NSUserDefaults.standardUserDefaults().setBool((sender.state == NSOffState), forKey: UserSetting.DisabledFullScreenFloat.userDefaultsKey)
         
         setFloatOverFullScreenApps()
     }
