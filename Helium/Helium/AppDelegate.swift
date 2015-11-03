@@ -25,7 +25,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             andEventID: AEEventID(kAEGetURL)
         )
         
-        lastKnownLocation = NSUserDefaults.standardUserDefaults().URLForKey(appDefaultLastLocation)!
+        lastKnownLocation = NSUserDefaults.standardUserDefaults().URLForKey(appDefaultLastLocation)
         
         if (lastKnownLocation != nil) {
             NSNotificationCenter.defaultCenter().postNotificationName("HeliumLoadURL", object:lastKnownLocation)
