@@ -14,6 +14,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @IBOutlet weak var magicURLMenu: NSMenuItem!
     @IBOutlet weak var fullScreenFloatMenu: NSMenuItem!
 
+    let appDefaultLastLocation = "lastOpenedLocation"
+    
+    var lastKnownLocation: NSURL?
+    
     func applicationWillFinishLaunching(notification: NSNotification) {
         NSAppleEventManager.sharedAppleEventManager().setEventHandler(
             self,
@@ -21,6 +25,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             forEventClass: AEEventClass(kInternetEventClass),
             andEventID: AEEventID(kAEGetURL)
         )
+        
+        lastKnownLocation = NSUserDefaults.standardUserDefaults().URLForKey(appDefaultLastLocation)
+        
+        if (lastKnownLocation != nil) {
+            NSNotificationCenter.defaultCenter().postNotificationName("HeliumLoadURL", object:lastKnownLocation)
+        }
     }
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
@@ -30,7 +40,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {
-        // Insert code here to tear down your application
+        NSUserDefaults.standardUserDefaults().setURL(lastKnownLocation, forKey:appDefaultLastLocation)
     }
     
     

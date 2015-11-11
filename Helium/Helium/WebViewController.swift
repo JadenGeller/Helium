@@ -11,6 +11,15 @@ import WebKit
 
 class WebViewController: NSViewController, WKNavigationDelegate {
     
+    let appDelegate = NSApplication.sharedApplication().delegate as! AppDelegate
+    
+    let youtubeVideoURLPrefix = "https://www.youtube.com/watch?"
+    let youtubeVideoURLPopupPrefix = "https://www.youtube.com/watch_popup?"
+    let vimeoVideoURLPrefix = "https://vimeo.com/"
+    let vimeoVideoURLPopupPrefix = "http://player.vimeo.com/video/"
+    let youkuVideoURLPrefix = "http://v.youku.com/v_show/id_"
+    let youkuVideoURLPopupPrefix = "http://player.youku.com/embed/"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addTrackingRect(view.bounds, owner: self, userData: nil, assumeInside: false)
@@ -140,11 +149,15 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         if shouldRedirect, let url = navigationAction.request.URL {
             let urlString = url.absoluteString
             var modified = urlString
-            modified = modified.replacePrefix("https://www.youtube.com/watch?", replacement: "https://www.youtube.com/watch_popup?")
-            modified = modified.replacePrefix("https://vimeo.com/", replacement: "http://player.vimeo.com/video/")
             
-            modified = modified.replacePrefix("http://v.youku.com/v_show/id_", replacement: "http://player.youku.com/embed/")
-
+            if(modified.hasPrefix(youtubeVideoURLPrefix)) {
+                modified = modified.replacePrefix(youtubeVideoURLPrefix, replacement:youtubeVideoURLPopupPrefix)
+            } else if(modified.hasPrefix(vimeoVideoURLPrefix)) {
+                modified = modified.replacePrefix(vimeoVideoURLPrefix, replacement:vimeoVideoURLPopupPrefix)
+            } else if(modified.hasPrefix(youkuVideoURLPrefix)) {
+                modified = modified.replacePrefix(youkuVideoURLPrefix, replacement:youkuVideoURLPopupPrefix)
+            }
+            
             if urlString != modified {
                 decisionHandler(WKNavigationActionPolicy.Cancel)
                 loadURL(NSURL(string: modified)!)
@@ -161,6 +174,10 @@ class WebViewController: NSViewController, WKNavigationDelegate {
             if title.isEmpty { title = "Helium" }
             let notif = NSNotification(name: "HeliumUpdateTitle", object: title);
             NSNotificationCenter.defaultCenter().postNotification(notif)
+        }
+        
+        if let pageUrl = webView.URL {
+            appDelegate.lastKnownLocation = pageUrl
         }
     }
     

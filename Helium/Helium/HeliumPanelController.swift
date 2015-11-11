@@ -8,11 +8,12 @@
 
 import AppKit
 
-let optionKeyCode: UInt16 = 58
+class HeliumPanelController : NSWindowController, NSWindowDelegate {
 
-class HeliumPanelController : NSWindowController {
-
+    let optionKeyCode: UInt16 = 58
+    let defaultFrameName: String = "defaultFrameName"
     var mouseOver: Bool = false
+    
     override func mouseEntered(theEvent: NSEvent) {
         mouseOver = true
         updateTranslucency()
@@ -102,12 +103,22 @@ class HeliumPanelController : NSWindowController {
 
     override func windowDidLoad() {
         panel.floatingPanel = true
+        panel.setFrameUsingName(defaultFrameName)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didBecomeActive", name: NSApplicationDidBecomeActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willResignActive", name: NSApplicationWillResignActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdateTitle:", name: "HeliumUpdateTitle", object: nil)
-        
-            setFloatOverFullScreenApps()
+
+        panel.delegate = self
+        setFloatOverFullScreenApps()
+    }
+    
+    func windowDidResize(notification: NSNotification) {
+        panel.saveFrameUsingName(defaultFrameName)
+    }
+    
+    func windowDidMove(notification: NSNotification) {
+        panel.saveFrameUsingName(defaultFrameName)
     }
     
     func setFloatOverFullScreenApps() {
