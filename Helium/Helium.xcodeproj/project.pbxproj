@@ -17,6 +17,7 @@
 		4D867CBE1AD6781200681331 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D867CBC1AD6781200681331 /* Main.storyboard */; };
 		4D867CCA1AD6781200681331 /* HeliumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D867CC91AD6781200681331 /* HeliumTests.swift */; };
 		4D867CD41AD6796A00681331 /* HeliumPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D867CD31AD6796A00681331 /* HeliumPanelController.swift */; };
+		AAA3EA021BE4CEC9001A471F /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA3EA011BE4CEC9001A471F /* UserSettings.swift */; settings = {ASSET_TAGS = (); }; };
 		B34C1EC31ADE3B520094ADBA /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B34C1EC21ADE3B520094ADBA /* Sparkle.framework */; };
 		B34C1EC61ADE3CBE0094ADBA /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = B34C1EC51ADE3CBE0094ADBA /* dsa_pub.pem */; };
 		B34C1EC91ADE3F980094ADBA /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B34C1EC21ADE3B520094ADBA /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -82,6 +83,7 @@
 		4D867CD31AD6796A00681331 /* HeliumPanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeliumPanelController.swift; sourceTree = "<group>"; };
 		4DEAB8FD1ADBD98600A2FC2B /* Helium-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Helium-Bridging-Header.h"; sourceTree = "<group>"; };
 		4DEAB8FE1ADBD98600A2FC2B /* WKWebViewPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKWebViewPrivate.h; sourceTree = "<group>"; };
+		AAA3EA011BE4CEC9001A471F /* UserSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		B34C1EC21ADE3B520094ADBA /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		B34C1EC51ADE3CBE0094ADBA /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -136,7 +138,6 @@
 			isa = PBXGroup;
 			children = (
 				4D867CB31AD6781200681331 /* Helium */,
-				4D867CC61AD6781200681331 /* HeliumTests */,
 				27199AB11BE422AC00E02297 /* HeliumShareExtension */,
 				4D867CB21AD6781200681331 /* Products */,
 			);
@@ -165,6 +166,8 @@
 				4DEAB8FD1ADBD98600A2FC2B /* Helium-Bridging-Header.h */,
 				B34C1EC71ADE3CCA0094ADBA /* Resources */,
 				B34C1EC41ADE3B5E0094ADBA /* Frameworks */,
+				AAA3EA011BE4CEC9001A471F /* UserSettings.swift */,
+				4D867CC61AD6781200681331 /* HeliumTests */,
 			);
 			path = Helium;
 			sourceTree = "<group>";
