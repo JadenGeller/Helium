@@ -12,6 +12,7 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     @IBOutlet weak var magicURLMenu: NSMenuItem!
+    @IBOutlet weak var fullScreenFloatMenu: NSMenuItem!
 
     let appDefaultLastLocation = "lastOpenedLocation"
     
@@ -33,7 +34,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
-        magicURLMenu.state = NSUserDefaults.standardUserDefaults().boolForKey("disabledMagicURLs") ? NSOffState : NSOnState
+        magicURLMenu.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledMagicURLs.userDefaultsKey) ? NSOffState : NSOnState
+        
+        fullScreenFloatMenu.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledFullScreenFloat.userDefaultsKey) ? NSOffState : NSOnState
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {
@@ -43,7 +46,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     @IBAction func magicURLRedirectToggled(sender: NSMenuItem) {
         sender.state = (sender.state == NSOnState) ? NSOffState : NSOnState
-        NSUserDefaults.standardUserDefaults().setBool((sender.state == NSOffState), forKey: "disabledMagicURLs")
+        NSUserDefaults.standardUserDefaults().setBool((sender.state == NSOffState), forKey: UserSetting.DisabledMagicURLs.userDefaultsKey)
     }
     
     

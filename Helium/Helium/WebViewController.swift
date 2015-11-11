@@ -139,7 +139,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     var webView = WKWebView()
     var shouldRedirect: Bool {
         get {
-            return !NSUserDefaults.standardUserDefaults().boolForKey("disabledMagicURLs")
+            return !NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledMagicURLs.userDefaultsKey)
         }
     }
     

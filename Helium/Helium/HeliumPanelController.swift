@@ -10,6 +10,7 @@ import AppKit
 
 class HeliumPanelController : NSWindowController, NSWindowDelegate {
 
+    let optionKeyCode: UInt16 = 58
     let defaultFrameName: String = "defaultFrameName"
     var mouseOver: Bool = false
     
@@ -99,6 +100,7 @@ class HeliumPanelController : NSWindowController, NSWindowDelegate {
         }
     }
     
+
     override func windowDidLoad() {
         panel.floatingPanel = true
         panel.setFrameUsingName(defaultFrameName)
@@ -106,7 +108,9 @@ class HeliumPanelController : NSWindowController, NSWindowDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didBecomeActive", name: NSApplicationDidBecomeActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willResignActive", name: NSApplicationWillResignActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdateTitle:", name: "HeliumUpdateTitle", object: nil)
+
         panel.delegate = self
+        setFloatOverFullScreenApps()
     }
     
     func windowDidResize(notification: NSNotification) {
@@ -115,6 +119,15 @@ class HeliumPanelController : NSWindowController, NSWindowDelegate {
     
     func windowDidMove(notification: NSNotification) {
         panel.saveFrameUsingName(defaultFrameName)
+    }
+    
+    func setFloatOverFullScreenApps() {
+        if NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledFullScreenFloat.userDefaultsKey) {
+            panel.collectionBehavior = [.MoveToActiveSpace, .FullScreenAuxiliary]
+
+        } else {
+            panel.collectionBehavior = [.CanJoinAllSpaces, .FullScreenAuxiliary]
+        }
     }
     
     //MARK: IBActions
@@ -171,7 +184,14 @@ class HeliumPanelController : NSWindowController, NSWindowDelegate {
     @IBAction func openFilePress(sender: AnyObject) {
         didRequestFile()
     }
+    
+    @IBAction func floatOverFullScreenAppsToggled(sender: NSMenuItem) {
+        sender.state = (sender.state == NSOnState) ? NSOffState : NSOnState
+        NSUserDefaults.standardUserDefaults().setBool((sender.state == NSOffState), forKey: UserSetting.DisabledFullScreenFloat.userDefaultsKey)
         
+        setFloatOverFullScreenApps()
+    }
+    
     //MARK: Actual functionality
     
     func didUpdateTitle(notification: NSNotification) {
