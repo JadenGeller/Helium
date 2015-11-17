@@ -99,6 +99,8 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         }
     }
     
+    var uneditedURL:String!
+    
     func loadAlmostURL(var text: String) {
         if !(text.lowercaseString.hasPrefix("http://") || text.lowercaseString.hasPrefix("https://")) {
             text = "http://" + text
@@ -107,6 +109,8 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         if let url = NSURL(string: text) {
             loadURL(url)
         }
+        
+        self.uneditedURL = text
     }
     
     func loadURL(url:NSURL) {
@@ -144,8 +148,8 @@ class WebViewController: NSViewController, WKNavigationDelegate {
             modified = modified.replacePrefix("https://vimeo.com/", replacement: "http://player.vimeo.com/video/")
             modified = modified.replacePrefix("http://v.youku.com/v_show/id_", replacement: "http://player.youku.com/embed/")
             
-            if modified.containsString("https://www.youtube.com") {
-                modified = makeCustomStartTimeURL(modified)
+            if self.uneditedURL.containsString("https://www.youtube.com") {
+                modified = makeCustomStartTimeURL(uneditedURL)
             }
 
             if urlString != modified {
