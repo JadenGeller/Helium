@@ -142,7 +142,9 @@ class WebViewController: NSViewController, WKNavigationDelegate {
             var modified = urlString
             modified = modified.replacePrefix("https://www.youtube.com/watch?", replacement: "https://www.youtube.com/watch_popup?")
             modified = modified.replacePrefix("https://vimeo.com/", replacement: "http://player.vimeo.com/video/")
-            modified = makeCustomStartTimeURL(modified)
+            if modified.containsString("https://www.youtube.com") {
+                modified = makeCustomStartTimeURL(modified)
+            }
             modified = modified.replacePrefix("http://v.youku.com/v_show/id_", replacement: "http://player.youku.com/embed/")
 
             if urlString != modified {
