@@ -99,6 +99,8 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         }
     }
     
+    var uneditedURL:String!
+    
     func loadAlmostURL(var text: String) {
         if !(text.lowercaseString.hasPrefix("http://") || text.lowercaseString.hasPrefix("https://")) {
             text = "http://" + text
@@ -107,6 +109,8 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         if let url = NSURL(string: text) {
             loadURL(url)
         }
+        
+        self.uneditedURL = text
     }
     
     func loadURL(url:NSURL) {
@@ -142,8 +146,13 @@ class WebViewController: NSViewController, WKNavigationDelegate {
             var modified = urlString
             modified = modified.replacePrefix("https://www.youtube.com/watch?", replacement: "https://www.youtube.com/watch_popup?")
             modified = modified.replacePrefix("https://vimeo.com/", replacement: "http://player.vimeo.com/video/")
-            
             modified = modified.replacePrefix("http://v.youku.com/v_show/id_", replacement: "http://player.youku.com/embed/")
+            
+        if self.uneditedURL.containsString("https://youtu.be") {
+                if urlString.containsString("?t=") {
+                    modified = "https://youtube.com/embed/" + getVideoHash(urlString) + makeCustomStartTimeURL(urlString)
+                }
+            }
 
             if urlString != modified {
                 decisionHandler(WKNavigationActionPolicy.Cancel)
@@ -178,8 +187,68 @@ class WebViewController: NSViewController, WKNavigationDelegate {
                 NSNotificationCenter.defaultCenter().postNotification(notif)
             }
         }
-        
-        
+    }
+    
+    //Convert a YouTube video url that starts at a certian point to popup/embedded design
+    // (i.e. ...?t=1m2s --> ?start=62)
+    func makeCustomStartTimeURL(url: String) -> String {
+        let startTime = "?t="
+        let idx = url.indexOf(startTime)
+        if idx == -1 {
+            return url
+        } else {
+            var returnURL = url
+            let timing = url.substringFromIndex(url.startIndex.advancedBy(idx+3))
+            let hoursDigits = timing.indexOf("h")
+            var minutesDigits = timing.indexOf("m")
+            let secondsDigits = timing.indexOf("s")
+            
+            returnURL.removeRange(Range<String.Index>(start: returnURL.startIndex.advancedBy(idx+1), end: returnURL.endIndex))
+            returnURL = "?start="
+            
+            //If there are no h/m/s params and only seconds (i.e. ...?t=89)
+            if (hoursDigits == -1 && minutesDigits == -1 && secondsDigits == -1) {
+                let onlySeconds = url.substringFromIndex(url.startIndex.advancedBy(idx+3))
+                returnURL = returnURL + onlySeconds
+                return returnURL
+            }
+            
+            //Do check to see if there is an hours parameter.
+            var hours = 0
+            if (hoursDigits != -1) {
+                hours = Int(timing.substringToIndex(timing.startIndex.advancedBy(hoursDigits)))!
+            }
+            
+            //Do check to see if there is a minutes parameter.
+            var minutes = 0
+            if (minutesDigits != -1) {
+                minutes = Int(timing.substringWithRange(Range<String.Index>(start: timing.startIndex.advancedBy(hoursDigits+1), end: timing.startIndex.advancedBy(minutesDigits))))!
+            }
+            
+            if minutesDigits == -1 {
+                minutesDigits = hoursDigits
+            }
+            
+            //Do check to see if there is a seconds parameter.
+            var seconds = 0
+            if (secondsDigits != -1) {
+                seconds = Int(timing.substringWithRange(Range<String.Index>(start: timing.startIndex.advancedBy(minutesDigits+1), end: timing.startIndex.advancedBy(secondsDigits))))!
+            }
+            
+            //Combine all to make seconds.
+            let secondsFinal = 3600*hours + 60*minutes + seconds
+            returnURL = returnURL + String(secondsFinal)
+            
+            return returnURL
+        }
+    }
+    
+    //Helper function to return the hash of the video for encoding a popout video that has a start time code.
+    func getVideoHash(url: String) -> String {
+        let startOfHash = url.indexOf(".be/")
+        let endOfHash = url.indexOf("?t")
+        let hash = url.substringWithRange(Range<String.Index>(start: url.startIndex.advancedBy(startOfHash+4), end: url.startIndex.advancedBy(endOfHash)))
+        return hash
     }
 }
 
@@ -191,6 +260,14 @@ extension String {
         else {
             return self
         }
+    }
     
+    func indexOf(target: String) -> Int {
+        let range = self.rangeOfString(target)
+        if let range = range {
+            return self.startIndex.distanceTo(range.startIndex)
+        } else {
+            return -1
+        }
     }
 }
