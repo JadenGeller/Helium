@@ -99,7 +99,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         }
     }
     
-    var uneditedURL:String!
+    var uneditedURL:String = ""
     
     func loadAlmostURL(var text: String) {
         if !(text.lowercaseString.hasPrefix("http://") || text.lowercaseString.hasPrefix("https://")) {
@@ -147,6 +147,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
             modified = modified.replacePrefix("https://www.youtube.com/watch?", replacement: "https://www.youtube.com/watch_popup?")
             modified = modified.replacePrefix("https://vimeo.com/", replacement: "http://player.vimeo.com/video/")
             modified = modified.replacePrefix("http://v.youku.com/v_show/id_", replacement: "http://player.youku.com/embed/")
+            modified = modified.replacePrefix("http://www.twitch.tv/", replacement: "http://player.twitch.tv?&channel=")
             
         if self.uneditedURL.containsString("https://youtu.be") {
                 if urlString.containsString("?t=") {
