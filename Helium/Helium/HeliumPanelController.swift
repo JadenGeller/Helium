@@ -107,7 +107,10 @@ class HeliumPanelController : NSWindowController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "willResignActive", name: NSApplicationWillResignActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdateTitle:", name: "HeliumUpdateTitle", object: nil)
         
-            setFloatOverFullScreenApps()
+        setFloatOverFullScreenApps()
+        if let alpha = NSUserDefaults.standardUserDefaults().objectForKey(UserSetting.OpacityPercentage.userDefaultsKey) {
+            didUpdateAlpha(CGFloat(alpha as! Int))
+        }
     }
     
     func setFloatOverFullScreenApps() {
@@ -163,6 +166,7 @@ class HeliumPanelController : NSWindowController {
         let value = sender.title.substringToIndex(sender.title.endIndex.advancedBy(-1))
         if let alpha = Int(value) {
              didUpdateAlpha(CGFloat(alpha))
+             NSUserDefaults.standardUserDefaults().setInteger(alpha, forKey: UserSetting.OpacityPercentage.userDefaultsKey)
         }
     }
     
