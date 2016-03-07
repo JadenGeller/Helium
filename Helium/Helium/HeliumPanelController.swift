@@ -266,7 +266,7 @@ class HeliumPanelController : NSWindowController {
         })
     }
     
-    func validateURL (stringURL : NSString) -> Bool {
+    func validateURL (stringURL : String) -> Bool {
         
         let urlRegEx = "((https|http)://)((\\w|-)+)(([.]|[/])((\\w|-)+))+"
         let predicate = NSPredicate(format:"SELF MATCHES %@", argumentArray:[urlRegEx])
