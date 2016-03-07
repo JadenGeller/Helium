@@ -128,7 +128,13 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         webView.reload()
     }
     func clear() {
-        loadURL(NSURL(string: "https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html")!)
+        // Reload to home page (or default if no URL stored in UserDefaults)
+        if let homePage = NSUserDefaults.standardUserDefaults().stringForKey(UserSetting.HomePageURL.userDefaultsKey) {
+            loadAlmostURL(homePage)
+        }
+        else{
+            loadURL(NSURL(string: "https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html")!)
+        }
     }
 
     var webView = WKWebView()

@@ -11,11 +11,13 @@ import Foundation
 public enum UserSetting {
     case DisabledMagicURLs
     case DisabledFullScreenFloat
+    case HomePageURL
 
     var userDefaultsKey: String {
         switch self {
         case .DisabledMagicURLs: return "disabledMagicURLs"
         case .DisabledFullScreenFloat: return "disabledFullScreenFloat"
+        case .HomePageURL: return "homePageURL"
         }
     }
 }

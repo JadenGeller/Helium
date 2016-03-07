@@ -181,6 +181,10 @@ class HeliumPanelController : NSWindowController {
         setFloatOverFullScreenApps()
     }
     
+    @IBAction func setHomePage(sender: AnyObject){
+        didRequestChangeHomepage()
+    }
+    
     //MARK: Actual functionality
     
     func didUpdateTitle(notification: NSNotification) {
@@ -226,6 +230,37 @@ class HeliumPanelController : NSWindowController {
         })
     }
     
+    func didRequestChangeHomepage(){
+        let alert = NSAlert()
+        alert.alertStyle = NSAlertStyle.InformationalAlertStyle
+        alert.messageText = "Enter new Home Page URL"
+        
+        let urlField = NSTextField()
+        urlField.frame = NSRect(x: 0, y: 0, width: 300, height: 20)
+        urlField.lineBreakMode = NSLineBreakMode.ByTruncatingHead
+        urlField.usesSingleLineMode = true
+        
+        alert.accessoryView = urlField
+        alert.addButtonWithTitle("Set")
+        alert.addButtonWithTitle("Cancel")
+        alert.beginSheetModalForWindow(self.window!, completionHandler: { response in
+            if response == NSAlertFirstButtonReturn {
+                let text = (alert.accessoryView as! NSTextField).stringValue
+
+                // Save to defaults
+                if text != "" {
+                    NSUserDefaults.standardUserDefaults().setObject(text, forKey: UserSetting.HomePageURL.userDefaultsKey)
+                }
+                else{
+                    NSUserDefaults.standardUserDefaults().setObject("https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html", forKey: UserSetting.HomePageURL.userDefaultsKey)
+                }
+                
+                // Load
+                self.webViewController.loadAlmostURL(NSUserDefaults.standardUserDefaults().stringForKey(UserSetting.HomePageURL.userDefaultsKey)!)
+            }
+        })
+    }
+        
     func didBecomeActive() {
         panel.ignoresMouseEvents = false
     }
