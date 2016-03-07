@@ -245,20 +245,33 @@ class HeliumPanelController : NSWindowController {
         alert.addButtonWithTitle("Cancel")
         alert.beginSheetModalForWindow(self.window!, completionHandler: { response in
             if response == NSAlertFirstButtonReturn {
-                let text = (alert.accessoryView as! NSTextField).stringValue
+                var text = (alert.accessoryView as! NSTextField).stringValue
+                
+                // Add prefix if necessary
+                if !(text.lowercaseString.hasPrefix("http://") || text.lowercaseString.hasPrefix("https://")) {
+                    text = "http://" + text
+                }
 
-                // Save to defaults
-                if text != "" {
+                // Save to defaults if valid. Else, use Helium default page
+                if self.validateURL(text) {
                     NSUserDefaults.standardUserDefaults().setObject(text, forKey: UserSetting.HomePageURL.userDefaultsKey)
                 }
                 else{
                     NSUserDefaults.standardUserDefaults().setObject("https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html", forKey: UserSetting.HomePageURL.userDefaultsKey)
                 }
                 
-                // Load
+                // Load new Home page
                 self.webViewController.loadAlmostURL(NSUserDefaults.standardUserDefaults().stringForKey(UserSetting.HomePageURL.userDefaultsKey)!)
             }
         })
+    }
+    
+    func validateURL (stringURL : NSString) -> Bool {
+        
+        let urlRegEx = "((https|http)://)((\\w|-)+)(([.]|[/])((\\w|-)+))+"
+        let predicate = NSPredicate(format:"SELF MATCHES %@", argumentArray:[urlRegEx])
+        
+        return predicate.evaluateWithObject(stringURL)
     }
         
     func didBecomeActive() {
