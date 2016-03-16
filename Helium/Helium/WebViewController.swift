@@ -255,22 +255,3 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     }
 }
 
-extension String {
-    func replacePrefix(prefix: String, replacement: String) -> String {
-        if hasPrefix(prefix) {
-            return replacement + substringFromIndex(prefix.endIndex)
-        }
-        else {
-            return self
-        }
-    }
-    
-    func indexOf(target: String) -> Int {
-        let range = self.rangeOfString(target)
-        if let range = range {
-            return self.startIndex.distanceTo(range.startIndex)
-        } else {
-            return -1
-        }
-    }
-}
