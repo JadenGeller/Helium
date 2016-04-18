@@ -78,6 +78,9 @@ class HeliumPanelController : NSWindowController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdateTitle:", name: "HeliumUpdateTitle", object: nil)
         
         setFloatOverFullScreenApps()
+        if let alpha = NSUserDefaults.standardUserDefaults().objectForKey(UserSetting.OpacityPercentage.userDefaultsKey) {
+            didUpdateAlpha(CGFloat(alpha as! Int))
+        }
     }
 
     // MARK : Mouse events
@@ -171,6 +174,7 @@ class HeliumPanelController : NSWindowController {
         let value = sender.title.substringToIndex(sender.title.endIndex.advancedBy(-1))
         if let alpha = Int(value) {
              didUpdateAlpha(CGFloat(alpha))
+             NSUserDefaults.standardUserDefaults().setInteger(alpha, forKey: UserSetting.OpacityPercentage.userDefaultsKey)
         }
     }
     

@@ -12,6 +12,7 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     @IBOutlet weak var magicURLMenu: NSMenuItem!
+    @IBOutlet weak var percentageMenu: NSMenuItem!
     @IBOutlet weak var fullScreenFloatMenu: NSMenuItem!
 
     func applicationWillFinishLaunching(notification: NSNotification) {
@@ -27,6 +28,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         magicURLMenu.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledMagicURLs.userDefaultsKey) ? NSOffState : NSOnState
         
         fullScreenFloatMenu.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledFullScreenFloat.userDefaultsKey) ? NSOffState : NSOnState
+      
+        if let alpha = NSUserDefaults.standardUserDefaults().objectForKey(UserSetting.OpacityPercentage.userDefaultsKey) {
+            let offset = (alpha as! Int)/10 - 1
+            for (index, button) in percentageMenu.submenu!.itemArray.enumerate() {
+                (button ).state = (offset == index) ? NSOnState : NSOffState
+            }
+        }
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {
