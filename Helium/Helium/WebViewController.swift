@@ -150,8 +150,10 @@ class WebViewController: NSViewController, WKNavigationDelegate {
             modified = modified.replacePrefix("https://vimeo.com/", replacement: "http://player.vimeo.com/video/")
             modified = modified.replacePrefix("http://v.youku.com/v_show/id_", replacement: "http://player.youku.com/embed/")
             modified = modified.replacePrefix("https://www.twitch.tv/", replacement: "https://player.twitch.tv?&channel=")
-            
-            if self.uneditedURL.containsString("https://youtu.be") {
+            modified = modified.replacePrefix("http://www.dailymotion.com/video/", replacement: "http://www.dailymotion.com/embed/video/")
+            modified = modified.replacePrefix("http://dai.ly/", replacement: "http://www.dailymotion.com/embed/video/")
+ 
+        if self.uneditedURL.containsString("https://youtu.be") {
                 if urlString.containsString("?t=") {
                     modified = "https://youtube.com/embed/" + getVideoHash(urlString) + makeCustomStartTimeURL(urlString)
                 }
