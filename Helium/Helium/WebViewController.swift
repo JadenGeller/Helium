@@ -11,6 +11,22 @@ import WebKit
 
 class WebViewController: NSViewController, WKNavigationDelegate {
     
+    // MARK: Properties
+    private var uneditedURL:String = ""
+    private func clear() {
+        loadURL(NSURL(string: "https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html")!)
+    }
+    
+    private var webView = WKWebView()
+    
+    private var shouldRedirect: Bool {
+        get {
+            return !NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledMagicURLs.userDefaultsKey)
+        }
+    }
+    
+    
+    // MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addTrackingRect(view.bounds, owner: self, userData: nil, assumeInside: false)
@@ -43,6 +59,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         clear()
     }
     
+    // MARK: Actions
     override func validateMenuItem(menuItem: NSMenuItem) -> Bool{
         switch menuItem.title {
         case "Back":
@@ -62,46 +79,37 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         webView.goForward()
     }
     
-    func zoomIn() {
+    private func zoomIn() {
         webView.magnification += 0.1
     }
     
-    func zoomOut() {
+    private func zoomOut() {
         webView.magnification -= 0.1
     }
     
-    func resetZoom() {
+    private func resetZoom() {
         webView.magnification = 1
     }
     
-    @IBAction func reloadPress(sender: AnyObject) {
+    @IBAction private func reloadPress(sender: AnyObject) {
         requestedReload()
     }
     
-    @IBAction func clearPress(sender: AnyObject) {
+    @IBAction private func clearPress(sender: AnyObject) {
         clear()
     }
     
-    @IBAction func resetZoomLevel(sender: AnyObject) {
+    @IBAction private func resetZoomLevel(sender: AnyObject) {
         resetZoom()
     }
-    @IBAction func zoomIn(sender: AnyObject) {
+    @IBAction private func zoomIn(sender: AnyObject) {
         zoomIn()
     }
-    @IBAction func zoomOut(sender: AnyObject) {
+    @IBAction private func zoomOut(sender: AnyObject) {
         zoomOut()
     }
-
-
-    override var representedObject: AnyObject? {
-        didSet {
-        // Update the view, if already loaded.
-        }
-    }
     
-    var uneditedURL:String = ""
-    
-    func loadAlmostURL(var text: String) {
+    internal func loadAlmostURL(var text: String) {
         if !(text.lowercaseString.hasPrefix("http://") || text.lowercaseString.hasPrefix("https://")) {
             text = "http://" + text
         }
@@ -113,30 +121,24 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         self.uneditedURL = text
     }
     
-    func loadURL(url:NSURL) {
+    // MARK: Loading
+    
+    internal func loadURL(url:NSURL) {
         webView.loadRequest(NSURLRequest(URL: url))
     }
     
-//MARK: - loadURLObject
     func loadURLObject(urlObject : NSNotification) {
         if let url = urlObject.object as? NSURL {
             loadAlmostURL(url.absoluteString);
         }
     }
     
-    func requestedReload() {
+    private func requestedReload() {
         webView.reload()
     }
-    func clear() {
-        loadURL(NSURL(string: "https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html")!)
-    }
-
-    var webView = WKWebView()
-    var shouldRedirect: Bool {
-        get {
-            return !NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledMagicURLs.userDefaultsKey)
-        }
-    }
+    
+    
+    // MARK: Webview functions
     
     // Redirect Hulu and YouTube to pop-out videos
     func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
@@ -149,12 +151,12 @@ class WebViewController: NSViewController, WKNavigationDelegate {
             modified = modified.replacePrefix("http://v.youku.com/v_show/id_", replacement: "http://player.youku.com/embed/")
             modified = modified.replacePrefix("http://www.twitch.tv/", replacement: "http://player.twitch.tv?&channel=")
             
-        if self.uneditedURL.containsString("https://youtu.be") {
+            if self.uneditedURL.containsString("https://youtu.be") {
                 if urlString.containsString("?t=") {
                     modified = "https://youtube.com/embed/" + getVideoHash(urlString) + makeCustomStartTimeURL(urlString)
                 }
             }
-
+            
             if urlString != modified {
                 decisionHandler(WKNavigationActionPolicy.Cancel)
                 loadURL(NSURL(string: modified)!)
@@ -192,7 +194,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     
     //Convert a YouTube video url that starts at a certian point to popup/embedded design
     // (i.e. ...?t=1m2s --> ?start=62)
-    func makeCustomStartTimeURL(url: String) -> String {
+    private func makeCustomStartTimeURL(url: String) -> String {
         let startTime = "?t="
         let idx = url.indexOf(startTime)
         if idx == -1 {
@@ -245,7 +247,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     }
     
     //Helper function to return the hash of the video for encoding a popout video that has a start time code.
-    func getVideoHash(url: String) -> String {
+    private func getVideoHash(url: String) -> String {
         let startOfHash = url.indexOf(".be/")
         let endOfHash = url.indexOf("?t")
         let hash = url.substringWithRange(Range<String.Index>(start: url.startIndex.advancedBy(startOfHash+4), end: url.startIndex.advancedBy(endOfHash)))
@@ -253,22 +255,3 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     }
 }
 
-extension String {
-    func replacePrefix(prefix: String, replacement: String) -> String {
-        if hasPrefix(prefix) {
-            return replacement + substringFromIndex(prefix.endIndex)
-        }
-        else {
-            return self
-        }
-    }
-    
-    func indexOf(target: String) -> Int {
-        let range = self.rangeOfString(target)
-        if let range = range {
-            return self.startIndex.distanceTo(range.startIndex)
-        } else {
-            return -1
-        }
-    }
-}

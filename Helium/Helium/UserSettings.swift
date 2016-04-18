@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum UserSetting {
+internal enum UserSetting {
     case DisabledMagicURLs
     case DisabledFullScreenFloat
 

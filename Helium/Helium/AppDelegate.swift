@@ -40,20 +40,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     
-//MARK: - handleURLEvent
+    //MARK: - handleURLEvent
     // Called when the App opened via URL.
     func handleURLEvent(event: NSAppleEventDescriptor, withReply reply: NSAppleEventDescriptor) {
-        if let urlString:String? = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject))?.stringValue {
-            if let url:String? = urlString?.substringFromIndex(urlString!.startIndex.advancedBy(9)){
-                let urlObject:NSURL = NSURL(string:url!)!
-            NSNotificationCenter.defaultCenter().postNotificationName("HeliumLoadURL", object: urlObject)
+        
+        guard let keyDirectObject = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject)), let urlString = keyDirectObject.stringValue,
+            let url : String = urlString.substringFromIndex(urlString.startIndex.advancedBy(9)),
+            let urlObject = NSURL(string:url) else {
+            
+                return print("No valid URL to handle")
                 
-            }else {
-                print("No valid URL to handle")
-            }
-            
-            
         }
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("HeliumLoadURL", object: urlObject)
+        
     }
 }
 
