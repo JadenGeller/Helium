@@ -18,7 +18,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func applicationWillFinishLaunching(notification: NSNotification) {
         NSAppleEventManager.sharedAppleEventManager().setEventHandler(
             self,
-            andSelector: "handleURLEvent:withReply:",
+            andSelector: #selector(AppDelegate.handleURLEvent(_:withReply:)),
             forEventClass: AEEventClass(kInternetEventClass),
             andEventID: AEEventID(kAEGetURL)
         )
@@ -50,7 +50,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     //MARK: - handleURLEvent
     // Called when the App opened via URL.
-    func handleURLEvent(event: NSAppleEventDescriptor, withReply reply: NSAppleEventDescriptor) {
+    @objc func handleURLEvent(event: NSAppleEventDescriptor, withReply reply: NSAppleEventDescriptor) {
         
         guard let keyDirectObject = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject)), let urlString = keyDirectObject.stringValue,
             let url : String = urlString.substringFromIndex(urlString.startIndex.advancedBy(9)),

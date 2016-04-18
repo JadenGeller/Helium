@@ -73,9 +73,9 @@ class HeliumPanelController : NSWindowController {
     override func windowDidLoad() {
         panel.floatingPanel = true
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didBecomeActive", name: NSApplicationDidBecomeActiveNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "willResignActive", name: NSApplicationWillResignActiveNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didUpdateTitle:", name: "HeliumUpdateTitle", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HeliumPanelController.didBecomeActive), name: NSApplicationDidBecomeActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HeliumPanelController.willResignActive), name: NSApplicationWillResignActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HeliumPanelController.didUpdateTitle(_:)), name: "HeliumUpdateTitle", object: nil)
         
         setFloatOverFullScreenApps()
         if let alpha = NSUserDefaults.standardUserDefaults().objectForKey(UserSetting.OpacityPercentage.userDefaultsKey) {
@@ -195,7 +195,7 @@ class HeliumPanelController : NSWindowController {
     
     //MARK: Actual functionality
     
-    private func didUpdateTitle(notification: NSNotification) {
+    @objc private func didUpdateTitle(notification: NSNotification) {
         if let title = notification.object as? String {
             panel.title = title
         }
@@ -238,11 +238,11 @@ class HeliumPanelController : NSWindowController {
         })
     }
     
-    private func didBecomeActive() {
+    @objc private func didBecomeActive() {
         panel.ignoresMouseEvents = false
     }
     
-    private func willResignActive() {
+    @objc private func willResignActive() {
         if currentlyTranslucent {
             panel.ignoresMouseEvents = true
         }

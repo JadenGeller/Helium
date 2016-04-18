@@ -31,7 +31,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         super.viewDidLoad()
         view.addTrackingRect(view.bounds, owner: self, userData: nil, assumeInside: false)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "loadURLObject:", name: "HeliumLoadURL", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WebViewController.loadURLObject(_:)), name: "HeliumLoadURL", object: nil)
         
         // Layout webview
         view.addSubview(webView)
@@ -109,7 +109,8 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         zoomOut()
     }
     
-    internal func loadAlmostURL(var text: String) {
+    internal func loadAlmostURL(text: String) {
+        var text = text
         if !(text.lowercaseString.hasPrefix("http://") || text.lowercaseString.hasPrefix("https://")) {
             text = "http://" + text
         }
@@ -208,7 +209,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
             var minutesDigits = timing.indexOf("m")
             let secondsDigits = timing.indexOf("s")
             
-            returnURL.removeRange(Range<String.Index>(start: returnURL.startIndex.advancedBy(idx+1), end: returnURL.endIndex))
+            returnURL.removeRange(returnURL.startIndex.advancedBy(idx+1) ..< returnURL.endIndex)
             returnURL = "?start="
             
             //If there are no h/m/s params and only seconds (i.e. ...?t=89)
@@ -227,7 +228,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
             //Do check to see if there is a minutes parameter.
             var minutes = 0
             if (minutesDigits != -1) {
-                minutes = Int(timing.substringWithRange(Range<String.Index>(start: timing.startIndex.advancedBy(hoursDigits+1), end: timing.startIndex.advancedBy(minutesDigits))))!
+                minutes = Int(timing.substringWithRange(timing.startIndex.advancedBy(hoursDigits+1) ..< timing.startIndex.advancedBy(minutesDigits)))!
             }
             
             if minutesDigits == -1 {
@@ -237,7 +238,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
             //Do check to see if there is a seconds parameter.
             var seconds = 0
             if (secondsDigits != -1) {
-                seconds = Int(timing.substringWithRange(Range<String.Index>(start: timing.startIndex.advancedBy(minutesDigits+1), end: timing.startIndex.advancedBy(secondsDigits))))!
+                seconds = Int(timing.substringWithRange(timing.startIndex.advancedBy(minutesDigits+1) ..< timing.startIndex.advancedBy(secondsDigits)))!
             }
             
             //Combine all to make seconds.
@@ -252,7 +253,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     private func getVideoHash(url: String) -> String {
         let startOfHash = url.indexOf(".be/")
         let endOfHash = url.indexOf("?t")
-        let hash = url.substringWithRange(Range<String.Index>(start: url.startIndex.advancedBy(startOfHash+4), end: url.startIndex.advancedBy(endOfHash)))
+        let hash = url.substringWithRange(url.startIndex.advancedBy(startOfHash+4) ..<  url.startIndex.advancedBy(endOfHash))
         return hash
     }
 }
