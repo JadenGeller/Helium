@@ -10,22 +10,8 @@ import Cocoa
 import WebKit
 
 class WebViewController: NSViewController, WKNavigationDelegate {
-    
-    // MARK: Properties
     private var uneditedURL:String = ""
-    private func clear() {
-        loadURL(NSURL(string: "https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html")!)
-    }
-    
-    private var webView = WKWebView()
-    
-    private var shouldRedirect: Bool {
-        get {
-            return !NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledMagicURLs.userDefaultsKey)
-        }
-    }
-    
-    
+
     // MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -138,8 +124,23 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         webView.reload()
     }
     
-    
     // MARK: Webview functions
+    func clear() {
+        // Reload to home page (or default if no URL stored in UserDefaults)
+        if let homePage = NSUserDefaults.standardUserDefaults().stringForKey(UserSetting.HomePageURL.userDefaultsKey) {
+            loadAlmostURL(homePage)
+        }
+        else{
+            loadURL(NSURL(string: "https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html")!)
+        }
+    }
+
+    var webView = WKWebView()
+    var shouldRedirect: Bool {
+        get {
+            return !NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledMagicURLs.userDefaultsKey)
+        }
+    }
     
     // Redirect Hulu and YouTube to pop-out videos
     func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {

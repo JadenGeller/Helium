@@ -193,6 +193,10 @@ class HeliumPanelController : NSWindowController {
         setFloatOverFullScreenApps()
     }
     
+    @IBAction func setHomePage(sender: AnyObject){
+        didRequestChangeHomepage()
+    }
+    
     //MARK: Actual functionality
     
     @objc private func didUpdateTitle(notification: NSNotification) {
@@ -238,6 +242,50 @@ class HeliumPanelController : NSWindowController {
         })
     }
     
+    func didRequestChangeHomepage(){
+        let alert = NSAlert()
+        alert.alertStyle = NSAlertStyle.InformationalAlertStyle
+        alert.messageText = "Enter new Home Page URL"
+        
+        let urlField = NSTextField()
+        urlField.frame = NSRect(x: 0, y: 0, width: 300, height: 20)
+        urlField.lineBreakMode = NSLineBreakMode.ByTruncatingHead
+        urlField.usesSingleLineMode = true
+        
+        alert.accessoryView = urlField
+        alert.addButtonWithTitle("Set")
+        alert.addButtonWithTitle("Cancel")
+        alert.beginSheetModalForWindow(self.window!, completionHandler: { response in
+            if response == NSAlertFirstButtonReturn {
+                var text = (alert.accessoryView as! NSTextField).stringValue
+                
+                // Add prefix if necessary
+                if !(text.lowercaseString.hasPrefix("http://") || text.lowercaseString.hasPrefix("https://")) {
+                    text = "http://" + text
+                }
+
+                // Save to defaults if valid. Else, use Helium default page
+                if self.validateURL(text) {
+                    NSUserDefaults.standardUserDefaults().setObject(text, forKey: UserSetting.HomePageURL.userDefaultsKey)
+                }
+                else{
+                    NSUserDefaults.standardUserDefaults().setObject("https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html", forKey: UserSetting.HomePageURL.userDefaultsKey)
+                }
+                
+                // Load new Home page
+                self.webViewController.loadAlmostURL(NSUserDefaults.standardUserDefaults().stringForKey(UserSetting.HomePageURL.userDefaultsKey)!)
+            }
+        })
+    }
+    
+    func validateURL (stringURL : String) -> Bool {
+        
+        let urlRegEx = "((https|http)://)((\\w|-)+)(([.]|[/])((\\w|-)+))+"
+        let predicate = NSPredicate(format:"SELF MATCHES %@", argumentArray:[urlRegEx])
+        
+        return predicate.evaluateWithObject(stringURL)
+    }
+        
     @objc private func didBecomeActive() {
         panel.ignoresMouseEvents = false
     }
