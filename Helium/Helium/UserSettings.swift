@@ -12,12 +12,14 @@ internal enum UserSetting {
     case DisabledMagicURLs
     case DisabledFullScreenFloat
     case OpacityPercentage
+    case HomePageURL
 
     var userDefaultsKey: String {
         switch self {
         case .DisabledMagicURLs: return "disabledMagicURLs"
         case .DisabledFullScreenFloat: return "disabledFullScreenFloat"
         case .OpacityPercentage: return "opacityPercentage"
+        case .HomePageURL: return "homePageURL"
         }
     }
 }
