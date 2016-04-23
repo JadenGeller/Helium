@@ -129,6 +129,12 @@ CA
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Appearance" id="HyV-fh-RgO">
                                     <items>
+ <menuItem title="Title Bar" state="on" keyEquivalent="b" id="ADo-ja-cxb" userLabel="Title Bar">
+                                            <connections>
+                                                <action selector="hideTitle:" target="Ady-hI-5gd" id="dlp-Lh-5pz"/>
+                                            </connections>
+                                        </menuItem>
+
                                         <menuItem title="Translucency" id="RVf-yr-XjB" userLabel="Translucency">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Translucency" systemMenu="window" id="fPu-ZA-vuX">

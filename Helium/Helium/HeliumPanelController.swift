@@ -192,6 +192,17 @@ class HeliumPanelController : NSWindowController {
         
         setFloatOverFullScreenApps()
     }
+
+	@IBAction private func hideTitle(sender: NSMenuItem) {
+	   if sender.state == NSOnState {
+	       sender.state = NSOffState
+	       panel.styleMask = NSBorderlessWindowMask
+	   }
+	   else {
+	       sender.state = NSOnState
+	       panel.styleMask = 8345
+	   }
+	}
     
     @IBAction func setHomePage(sender: AnyObject){
         didRequestChangeHomepage()
