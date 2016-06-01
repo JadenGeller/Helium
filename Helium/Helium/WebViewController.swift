@@ -28,7 +28,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         webView.configuration.preferences.plugInsEnabled = true
         
         // Custom user agent string for Netflix HTML5 support
-        webView._customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/600.7.12 (KHTML, like Gecko) Version/8.0.7 Safari/600.7.12"
+        webView._customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/601.6.17 (KHTML, like Gecko) Version/9.1.1 Safari/601.6.17"
         
         // Setup magic URLs
         webView.navigationDelegate = self
