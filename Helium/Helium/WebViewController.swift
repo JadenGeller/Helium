@@ -10,7 +10,6 @@ import Cocoa
 import WebKit
 
 class WebViewController: NSViewController, WKNavigationDelegate {
-    private var uneditedURL:String = ""
 
     // MARK: View lifecycle
     override func viewDidLoad() {
@@ -105,7 +104,6 @@ class WebViewController: NSViewController, WKNavigationDelegate {
             loadURL(url)
         }
         
-        self.uneditedURL = text
     }
     
     // MARK: Loading
@@ -148,16 +146,17 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         if shouldRedirect, let url = navigationAction.request.URL {
             let urlString = url.absoluteString
             var modified = urlString
-            modified = modified.replacePrefix("https://www.youtube.com/watch?", replacement: "https://www.youtube.com/watch_popup?")
+            modified = modified.replacePrefix("https://www.youtube.com/watch?v=", replacement: modified.containsString("list") ? "https://www.youtube.com/embed/?v=" : "https://www.youtube.com/embed/")
             modified = modified.replacePrefix("https://vimeo.com/", replacement: "http://player.vimeo.com/video/")
             modified = modified.replacePrefix("http://v.youku.com/v_show/id_", replacement: "http://player.youku.com/embed/")
             modified = modified.replacePrefix("https://www.twitch.tv/", replacement: "https://player.twitch.tv?&channel=")
             modified = modified.replacePrefix("http://www.dailymotion.com/video/", replacement: "http://www.dailymotion.com/embed/video/")
             modified = modified.replacePrefix("http://dai.ly/", replacement: "http://www.dailymotion.com/embed/video/")
  
-        if self.uneditedURL.containsString("https://youtu.be") {
-                if urlString.containsString("?t=") {
-                    modified = "https://youtube.com/embed/" + getVideoHash(urlString) + makeCustomStartTimeURL(urlString)
+        if modified.containsString("https://youtu.be") {
+            modified = "https://www.youtube.com/embed/" + getVideoHash(urlString)
+            if urlString.containsString("?t=") {
+                    modified += makeCustomStartTimeURL(urlString)
                 }
             }
             
@@ -254,7 +253,8 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     private func getVideoHash(url: String) -> String {
         let startOfHash = url.indexOf(".be/")
         let endOfHash = url.indexOf("?t")
-        let hash = url.substringWithRange(url.startIndex.advancedBy(startOfHash+4) ..<  url.startIndex.advancedBy(endOfHash))
+        let hash = url.substringWithRange(url.startIndex.advancedBy(startOfHash+4) ..<
+                                                        (endOfHash == -1 ? url.endIndex : url.startIndex.advancedBy(endOfHash)))
         return hash
     }
 }
