@@ -11,11 +11,12 @@ import WebKit
 
 class WebViewController: NSViewController, WKNavigationDelegate {
 
+    var trackingTag: NSTrackingRectTag?
+
     // MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addTrackingRect(view.bounds, owner: self, userData: nil, assumeInside: false)
-        
+
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WebViewController.loadURLObject(_:)), name: "HeliumLoadURL", object: nil)
         
         // Layout webview
@@ -43,7 +44,17 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         
         clear()
     }
-    
+
+    override func viewDidLayout() {
+        super.viewDidLayout()
+
+        if let tag = trackingTag {
+            view.removeTrackingRect(tag)
+        }
+
+        trackingTag = view.addTrackingRect(view.bounds, owner: self, userData: nil, assumeInside: false)
+    }
+
     // MARK: Actions
     override func validateMenuItem(menuItem: NSMenuItem) -> Bool{
         switch menuItem.title {
