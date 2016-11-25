@@ -13,6 +13,8 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, H
     var paneShouldInterruptScroll: Bool = false
     var videotagExists = false
 
+    var trackingTag: NSTrackingRectTag?
+
     // MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,11 +50,18 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, H
     }
 
     override func viewDidLayout() {
+        super.viewDidLayout()
         if let window = self.view.window as? HeliumPanel {
             window.heliumDelegate = self
         } else {
             print("Failed to set delegate!")
         }
+
+        if let tag = trackingTag {
+            view.removeTrackingRect(tag)
+        }
+
+        trackingTag = view.addTrackingRect(view.bounds, owner: self, userData: nil, assumeInside: false)
     }
 
     func paneShouldFireEvent(_ event: HeliumPanel.ControlEventType) -> Bool {
