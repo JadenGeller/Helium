@@ -17,8 +17,8 @@ class ShareViewController: NSViewController {
 	override func viewDidLoad() {
 		
 		if let item = self.extensionContext!.inputItems.first as? NSExtensionItem,
-			let attachment = item.attachments?.first as? NSItemProvider
-			where attachment.hasItemConformingToTypeIdentifier("public.url")
+            let attachment = item.attachments?.first as? NSItemProvider,
+            attachment.hasItemConformingToTypeIdentifier("public.url")
 		{
 			attachment.loadItem(forTypeIdentifier: "public.url", options: nil)
 				{

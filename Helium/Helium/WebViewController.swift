@@ -18,7 +18,7 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, H
         super.viewDidLoad()
         view.addTrackingRect(view.bounds, owner: self, userData: nil, assumeInside: false)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(WebViewController.loadURLObject(_:)), name: "HeliumLoadURL" as NSNotification.Name, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(WebViewController.loadURLObject(_:)), name: NSNotification.Name(rawValue: "HeliumLoadURL"), object: nil)
         
         // Layout webview
         view.addSubview(webView)
@@ -59,13 +59,13 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, H
         if self.videotagExists {
             switch event {
             case .left:
-                self.webView.callJavascriptFunction("__Helium.seekBackward")
+                let _ = self.webView.callJavascriptFunction("__Helium.seekBackward")
             case .right:
-                self.webView.callJavascriptFunction("__Helium.seekForward")
+                let _ = self.webView.callJavascriptFunction("__Helium.seekForward")
             case .up:
-                self.webView.callJavascriptFunction("__Helium.volumeUp")
+                let _ = self.webView.callJavascriptFunction("__Helium.volumeUp")
             case .down:
-                self.webView.callJavascriptFunction("__Helium.volumeDown")
+                let _ = self.webView.callJavascriptFunction("__Helium.volumeDown")
             }
 
             return false;
@@ -171,7 +171,7 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, H
     }
     
     // Redirect Hulu and YouTube to pop-out videos
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
+    private func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
         
         if shouldRedirect, let url = navigationAction.request.url {
             let urlString = url.absoluteString
@@ -204,12 +204,11 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, H
         if let pageTitle = webView.title {
             var title = pageTitle;
             if title.isEmpty { title = "Helium" }
-            let notif = Notification(name: "HeliumUpdateTitle" as NSNotification.Name, object: title);
+            let notif = Notification(name: NSNotification.Name(rawValue: "HeliumUpdateTitle"), object: title);
             NotificationCenter.default.post(notif)
         }
 
-        self.webView.embedUserJS(Bundle.main.url(forResource: "youtubetads.user", withExtension: "js")!)
-        self.webView.embedUserJS(Bundle.main.url(forResource: "Helium.user", withExtension: "js")!)
+        let _ = self.webView.embedUserJS(Bundle.main.url(forResource: "Helium.user", withExtension: "js")!)
 
         if let height = self.webView.evaluateJavascript("document.height") as? NSNumber {
             self.paneShouldInterruptScroll =  Int(height) <= Int(self.webView.frame.height)
@@ -218,22 +217,21 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, H
         self.videotagExists = self.webView.callJavascriptFunction("__Helium.hasVideotag")
     }
 
-    override func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [NSKeyValueChangeKey : AnyObject]?, context: UnsafeMutablePointer<Void>?) {
-        
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if object as! NSObject == webView && keyPath == "estimatedProgress" {
-            if let progress = change?["new" as NSKeyValueChangeKey] as? Float {
+            if let progress = change?[NSKeyValueChangeKey(rawValue: "new")] as? Float {
                 let percent = progress * 100
                 var title = NSString(format: "Loading... %.2f%%", percent)
                 if percent == 100 {
                     title = "Helium"
                 }
                 
-                let notif = Notification(name: "HeliumUpdateTitle" as NSNotification.Name, object: title);
+                let notif = Notification(name: NSNotification.Name(rawValue: "HeliumUpdateTitle"), object: title);
                 NotificationCenter.default.post(notif)
             }
         }
     }
-    
+
     //Convert a YouTube video url that starts at a certian point to popup/embedded design
     // (i.e. ...?t=1m2s --> ?start=62)
     private func makeCustomStartTimeURL(_ url: String) -> String {

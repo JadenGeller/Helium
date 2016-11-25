@@ -130,11 +130,11 @@ extension WKWebView {
         return self.evaluateJavascript("\(fc)();") as? Bool == true
     }
     
-    func evaluateJavascript(_ js: String) -> AnyObject? {
-        var value : AnyObject?
+    func evaluateJavascript(_ js: String) -> Any? {
+        var value : Any?
         var didSet = false
         self.evaluateJavaScript(js) {
-            (object: AnyObject?, error: Error?) in
+            (object: Any?, error: Error?) in
             if let error = error {
                 Swift.print(error)
             }
@@ -151,7 +151,7 @@ extension WKWebView {
 
     func embedUserJS(_ location: URL) -> Bool {
         if let js = UserJS.load(withContentsAt: location) {
-            self.evaluateJavascript(js.embedCode())
+            let _ = self.evaluateJavascript(js.embedCode())
             return true
         }
 
