@@ -27,6 +27,16 @@ var __Helium = {
         __Helium._volume(-0.15);
     },
 
+    playPause: function () {
+        var player = document.getElementsByTagName('video')[0];
+        player.paused ? player.play() : player.pause();
+    },
+
+    documentHeight: function () {
+        var body = document.body, html = document.documentElement;
+
+        return Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+    },
 
     hasVideotag: function () {
         return document.getElementsByTagName('video').length != 0;

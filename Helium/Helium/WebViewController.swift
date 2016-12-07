@@ -67,6 +67,8 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, H
     func paneShouldFireEvent(_ event: HeliumPanel.ControlEventType) -> Bool {
         if self.videotagExists {
             switch event {
+            case .playpause:
+                let _ = self.webView.callJavascriptFunction("__Helium.playPause")
             case .left:
                 let _ = self.webView.callJavascriptFunction("__Helium.seekBackward")
             case .right:
@@ -178,10 +180,9 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, H
             return !UserDefaults.standard.bool(forKey: UserSetting.disabledMagicURLs.userDefaultsKey)
         }
     }
-    
+
     // Redirect Hulu and YouTube to pop-out videos
-    private func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
-        
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if shouldRedirect, let url = navigationAction.request.url {
             let urlString = url.absoluteString
             var modified = urlString
@@ -219,7 +220,7 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, H
 
         let _ = self.webView.embedUserJS(Bundle.main.url(forResource: "Helium.user", withExtension: "js")!)
 
-        if let height = self.webView.evaluateJavascript("document.height") as? NSNumber {
+        if let height = self.webView.evaluateJavascript("__Helium.documentHeight()") as? NSNumber {
             self.paneShouldInterruptScroll =  Int(height) <= Int(self.webView.frame.height)
         }
 

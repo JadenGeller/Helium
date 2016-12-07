@@ -22,6 +22,7 @@ class HeliumPanel : NSPanel {
     }
 
     enum ControlEventType {
+        case playpause
         case up
         case down
         case left
@@ -89,19 +90,6 @@ class HeliumPanel : NSPanel {
     }
 
     func scrollingEvent(_ event: NSEvent) {
-        func makeKeyEvent(type: NSEventType, characters: String) -> NSEvent! {
-            return NSEvent.keyEvent(with: type,
-                                    location: NSPoint(x: 0, y: 0),
-                                    modifierFlags: [],
-                                    timestamp: Date.timeIntervalSinceReferenceDate,
-                                    windowNumber: NSApp.keyWindow?.windowNumber ?? 0,
-                                    context: NSApp.keyWindow?.graphicsContext,
-                                    characters: characters,
-                                    charactersIgnoringModifiers: characters,
-                                    isARepeat: false,
-                                    keyCode: 0)
-        }
-
         if self.scrollingLock == .none && event.phase == .changed {
             self.scrollingLock =
                 abs(event.scrollingDeltaY) * 1.5 > abs(event.scrollingDeltaX)
@@ -118,28 +106,41 @@ class HeliumPanel : NSPanel {
             if (CFAbsoluteTimeGetCurrent() - self.scrollingTime > self.scrollingTimeout) {
                 self.scrollingTime = CFAbsoluteTimeGetCurrent()
 
-                var characters : String = ""
                 var type : ControlEventType?
                 switch self.scrollingLock {
                 case .vertical:
-                    characters = event.scrollingDeltaY < 0 ? "" : ""
-                                                          // up    down
                     type = event.scrollingDeltaY < 0 ? .up : .down
                 case .horizontal:
-                    characters = event.scrollingDeltaX < 0 ? "" : ""
-                                                          // left    right
                     type = event.scrollingDeltaX < 0 ? .left : .right
                 case .none:
                     return
                 }
 
-                if self.heliumDelegate?.paneShouldFireEvent(type!) ?? true {
-                    self.keyDown(with: makeKeyEvent(type: .keyDown, characters: characters))
-                    self.keyUp(with: makeKeyEvent(type: .keyUp, characters: characters))
-                }
+                self.fireControlEvent(of: type!)
             }
         }
 
+    }
+
+    func fireControlEvent(of type: ControlEventType) {
+        func makeKeyEvent(type: NSEventType, characters: String) -> NSEvent! {
+            return NSEvent.keyEvent(with: type,
+                                    location: NSPoint(x: 0, y: 0),
+                                    modifierFlags: [],
+                                    timestamp: Date.timeIntervalSinceReferenceDate,
+                                    windowNumber: NSApp.keyWindow?.windowNumber ?? 0,
+                                    context: NSApp.keyWindow?.graphicsContext,
+                                    characters: characters,
+                                    charactersIgnoringModifiers: characters,
+                                    isARepeat: false,
+                                    keyCode: 0)
+        }
+
+        let characters = [.up: "", .down: "", .left: "", .right: "", .playpause: " ", ][type]!
+        if self.heliumDelegate?.paneShouldFireEvent(type) ?? true {
+            self.keyDown(with: makeKeyEvent(type: .keyDown, characters: characters))
+            self.keyUp(with: makeKeyEvent(type: .keyUp, characters: characters))
+        }
     }
 }
 

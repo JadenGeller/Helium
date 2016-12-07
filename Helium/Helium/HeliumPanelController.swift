@@ -13,9 +13,11 @@ let optionKeyCode: UInt16 = 58
 class HeliumPanelController : NSWindowController {
 
     private var webViewController: WebViewController {
-        get {
-            return self.window?.contentViewController as! WebViewController
-        }
+        return self.window?.contentViewController as! WebViewController
+    }
+
+    private var heliumPanel: HeliumPanel {
+        return self.panel as! HeliumPanel
     }
 
     private var mouseOver: Bool = false
@@ -72,10 +74,16 @@ class HeliumPanelController : NSWindowController {
     // MARK: Window lifecycle
     override func windowDidLoad() {
         panel.isFloatingPanel = true
-
+        
+        let _ = AppleMediaKeyController.init()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.didBecomeActive), name: NSNotification.Name.NSApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.willResignActive), name: NSNotification.Name.NSApplicationWillResignActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.didUpdateTitle(_:)), name: NSNotification.Name(rawValue: "HeliumUpdateTitle"), object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.playPauseNotification(_:)), name: Notification.Name.MediaKeyPlayPause, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.seekBackwardNotification(_:)), name: Notification.Name.MediaKeyPrevious, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.seekForwardNotification(_:)), name: Notification.Name.MediaKeyNext, object: nil)
 
         self.setupTitleVisibility()
         setFloatOverFullScreenApps()
@@ -93,6 +101,19 @@ class HeliumPanelController : NSWindowController {
     override func mouseExited(with theEvent: NSEvent) {
         mouseOver = false
         updateTranslucency()
+    }
+
+    // MARK: media keys
+    func playPauseNotification(_ notification: Notification) {
+        self.heliumPanel.fireControlEvent(of: .playpause)
+    }
+
+    func seekForwardNotification(_ notification: Notification) {
+        self.heliumPanel.fireControlEvent(of: .right)
+    }
+
+    func seekBackwardNotification(_ notification: Notification) {
+        self.heliumPanel.fireControlEvent(of: .left)
     }
     
     // MARK : Translucency

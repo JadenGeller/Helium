@@ -25,6 +25,7 @@
 		B34C1EC61ADE3CBE0094ADBA /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = B34C1EC51ADE3CBE0094ADBA /* dsa_pub.pem */; };
 		B34C1EC91ADE3F980094ADBA /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B34C1EC21ADE3B520094ADBA /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F35A24811D5B913E00BBE4EC /* HeliumPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35A24801D5B913E00BBE4EC /* HeliumPanel.swift */; };
+		F3A466611DF8503A0064FB4C /* AppleMediaKeyController.m in Sources */ = {isa = PBXBuildFile; fileRef = F3A466601DF8503A0064FB4C /* AppleMediaKeyController.m */; };
 		F3CB2BCE1D5C729700333CB1 /* WebViewUserJS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CB2BCD1D5C729700333CB1 /* WebViewUserJS.swift */; };
 		F3CB2BD31D5C886A00333CB1 /* Helium.user.js in Resources */ = {isa = PBXBuildFile; fileRef = F3CB2BD21D5C886A00333CB1 /* Helium.user.js */; };
 /* End PBXBuildFile section */
@@ -94,6 +95,8 @@
 		B34C1EC21ADE3B520094ADBA /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		B34C1EC51ADE3CBE0094ADBA /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		F35A24801D5B913E00BBE4EC /* HeliumPanel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeliumPanel.swift; sourceTree = "<group>"; };
+		F3A4665F1DF8503A0064FB4C /* AppleMediaKeyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppleMediaKeyController.h; path = AppleMediaKeyController/AppleMediaKeyController.h; sourceTree = "<group>"; };
+		F3A466601DF8503A0064FB4C /* AppleMediaKeyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppleMediaKeyController.m; path = AppleMediaKeyController/AppleMediaKeyController.m; sourceTree = "<group>"; };
 		F3CB2BCD1D5C729700333CB1 /* WebViewUserJS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewUserJS.swift; sourceTree = "<group>"; };
 		F3CB2BD21D5C886A00333CB1 /* Helium.user.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = Helium.user.js; path = Resources/Helium.user.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -147,6 +150,7 @@
 		4D867CA81AD6781200681331 = {
 			isa = PBXGroup;
 			children = (
+				F3A4665E1DF8502B0064FB4C /* AppleMediaKeyController */,
 				4D867CB31AD6781200681331 /* Helium */,
 				4D8DAEB01C3A427D00B212EC /* HeliumTests */,
 				27199AB11BE422AC00E02297 /* HeliumShareExtension */,
@@ -218,6 +222,15 @@
 				B34C1EC51ADE3CBE0094ADBA /* dsa_pub.pem */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		F3A4665E1DF8502B0064FB4C /* AppleMediaKeyController */ = {
+			isa = PBXGroup;
+			children = (
+				F3A4665F1DF8503A0064FB4C /* AppleMediaKeyController.h */,
+				F3A466601DF8503A0064FB4C /* AppleMediaKeyController.m */,
+			);
+			name = AppleMediaKeyController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -384,6 +397,7 @@
 				5B75B5121C9A13D600475921 /* StringHelpers.swift in Sources */,
 				4D867CD41AD6796A00681331 /* HeliumPanelController.swift in Sources */,
 				F3CB2BCE1D5C729700333CB1 /* WebViewUserJS.swift in Sources */,
+				F3A466611DF8503A0064FB4C /* AppleMediaKeyController.m in Sources */,
 				F35A24811D5B913E00BBE4EC /* HeliumPanel.swift in Sources */,
 				4D8DAEAC1C3A41F300B212EC /* UserSettings.swift in Sources */,
 				4D867CB91AD6781200681331 /* WebViewController.swift in Sources */,
