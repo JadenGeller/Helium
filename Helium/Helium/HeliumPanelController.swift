@@ -300,6 +300,7 @@ class HeliumPanelController : NSWindowController {
                 self.webViewController.loadAlmostURL(text)
             }
         })
+        urlField.becomeFirstResponder()
     }
 
     private func didRequestClipboard() {
