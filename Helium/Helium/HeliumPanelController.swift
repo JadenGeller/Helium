@@ -240,6 +240,10 @@ class HeliumPanelController : NSWindowController {
         urlField.frame = NSRect(x: 0, y: 0, width: 300, height: 20)
         urlField.lineBreakMode = NSLineBreakMode.ByTruncatingHead
         urlField.usesSingleLineMode = true
+        // Load from URL before
+        let result : AnyObject! = config.objectForKey("saveURL")
+        var savedUrl:String = result as NSString
+	urlField.stringValue = savedUrl
         
         alert.accessoryView = urlField
         alert.addButtonWithTitle("Load")
@@ -248,6 +252,11 @@ class HeliumPanelController : NSWindowController {
             if response == NSAlertFirstButtonReturn {
                 // Load
                 let text = (alert.accessoryView as! NSTextField).stringValue
+		// Save URL
+                let config = NSUserDefaults.standardUserDefaults()
+                config.setObject(text, forKey:"saveURL")
+                config.synchronize()
+
                 self.webViewController.loadAlmostURL(text)
             }
         })
