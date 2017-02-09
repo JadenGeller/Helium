@@ -102,19 +102,19 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     }
     
     private func zoomIn() {
-		if !fileReferencedURL {
+		if !videoFileReferencedURL {
 			webView.magnification += 0.1
 		}
      }
     
     private func zoomOut() {
-		if !fileReferencedURL {
+		if !videoFileReferencedURL {
 			webView.magnification -= 0.1
 		}
     }
     
     private func resetZoom() {
-		if !fileReferencedURL {
+		if !videoFileReferencedURL {
 			webView.magnification = 1
 		}
     }
@@ -229,7 +229,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         }
     }
     
-	var fileReferencedURL = false
+	var videoFileReferencedURL = false
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         
         if object as! NSObject == webView && keyPath == "estimatedProgress" {
@@ -242,20 +242,20 @@ class WebViewController: NSViewController, WKNavigationDelegate {
 						title = "Helium"
 					} else {
 						let url = (self.webView.URL)
+						videoFileReferencedURL = false
 						if ((url?.isFileReferenceURL()) != nil) {
 							title = url!.lastPathComponent!
-							fileReferencedURL = true
 	
 							//	if it's a video file, get and set window content size to its dimentions
 							let track0 = AVURLAsset(URL:url!, options:nil).tracks[0]
 							if track0.mediaType == AVMediaTypeVideo
 							{
 								webView.window?.setContentSize(track0.naturalSize)
+								videoFileReferencedURL = true
 							}
 
 						} else {
 							title = (url?.absoluteString)!
-							fileReferencedURL = false
 						}
 					}
 					lastTitle = title as String
