@@ -44,14 +44,14 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         webView.addObserver(self, forKeyPath: "estimatedProgress", options: NSKeyValueObservingOptions.New, context: nil)
 
 		// Listen for auto hide title changes
-		NSUserDefaults.standardUserDefaults().addObserver(self, forKeyPath: "autoHideTitle", options: NSKeyValueObservingOptions.New, context: nil)
+		NSUserDefaults.standardUserDefaults().addObserver(self, forKeyPath: UserSetting.AutoHideTitle.userDefaultsKey, options: NSKeyValueObservingOptions.New, context: nil)
 		
         clear()
     }
 	
 	var lastStyle : Int = 0
 	var lastTitle = "Helium"
-	var autoHideTitle : Bool = NSUserDefaults.standardUserDefaults().boolForKey("autoHideTitle")
+	var autoHideTitle : Bool = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.AutoHideTitle.userDefaultsKey)
 
 	override func mouseExited(theEvent: NSEvent) {
 		if autoHideTitle {
@@ -266,8 +266,8 @@ class WebViewController: NSViewController, WKNavigationDelegate {
             }
         }
 
-		if (keyPath == "autoHideTitle") {
-			autoHideTitle = NSUserDefaults.standardUserDefaults().boolForKey("autoHideTitle")
+		if (keyPath == UserSetting.AutoHideTitle.userDefaultsKey) {
+			autoHideTitle = NSUserDefaults.standardUserDefaults().boolForKey(keyPath!)
 			if autoHideTitle {
 				if lastStyle == 0 { lastStyle = (self.view.window?.styleMask)! }
 				self.view.window!.titleVisibility = NSWindowTitleVisibility.Hidden;
