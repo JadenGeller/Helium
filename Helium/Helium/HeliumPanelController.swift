@@ -196,7 +196,7 @@ class HeliumPanelController : NSWindowController {
     var autoHideTitle : Bool = false
     @IBAction private func autoHideTitle(sender: NSMenuItem) {
         sender.state = (sender.state == NSOnState) ? NSOffState : NSOnState
-        NSUserDefaults.standardUserDefaults().setBool((sender.state == NSOnState), forKey: UserSetting.AutoHideTitle.userDefaultsKey)
+        NSUserDefaults.standardUserDefaults().setBool((sender.state == NSOffState), forKey: UserSetting.AutoHideTitle.userDefaultsKey)
     }
     
     @IBAction func setHomePage(sender: AnyObject){
