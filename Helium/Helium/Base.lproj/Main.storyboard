@@ -132,8 +132,7 @@ CA
                                         <menuItem title="Title Bar" state="on" toolTip="auto hide title outside of view" id="ADo-ja-cxb" userLabel="Title Bar">
                                             <menu key="submenu" id="TjI-Bc-P7g">
                                                 <items>
-                                                    <menuItem title="Auto-hide" id="4b7-4E-I4E">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    <menuItem title="Auto-hide" keyEquivalent="b" id="4b7-4E-I4E">
                                                         <connections>
                                                             <action selector="autoHideTitle:" target="Ady-hI-5gd" id="GhW-xc-Upg"/>
                                                             <binding destination="H0D-H0-Cmz" name="value" keyPath="values.autoHideTitle" id="VIq-Be-HlC"/>
@@ -358,7 +357,7 @@ CA
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="250"/>
+            <point key="canvasLocation" x="75" y="272"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="hIz-AP-VOD">
@@ -371,7 +370,7 @@ CA
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="655"/>
+            <point key="canvasLocation" x="244" y="686"/>
         </scene>
     </scenes>
 </document>
