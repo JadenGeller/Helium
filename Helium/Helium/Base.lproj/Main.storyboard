@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16D32" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -129,12 +129,23 @@ CA
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Appearance" id="HyV-fh-RgO">
                                     <items>
- <menuItem title="Title Bar" state="on" keyEquivalent="b" id="ADo-ja-cxb" userLabel="Title Bar">
+                                        <menuItem title="Title Bar" state="on" toolTip="auto hide title outside of view" id="ADo-ja-cxb" userLabel="Title Bar">
+                                            <menu key="submenu" id="TjI-Bc-P7g">
+                                                <items>
+                                                    <menuItem title="Auto-hide" id="4b7-4E-I4E">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="autoHideTitle:" target="Ady-hI-5gd" id="GhW-xc-Upg"/>
+                                                            <binding destination="H0D-H0-Cmz" name="value" keyPath="values.autoHideTitle" id="VIq-Be-HlC"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
                                             <connections>
                                                 <action selector="hideTitle:" target="Ady-hI-5gd" id="dlp-Lh-5pz"/>
+                                                <binding destination="H0D-H0-Cmz" name="value" keyPath="values.autoHideTitle" id="LJF-zz-gf5"/>
                                             </connections>
                                         </menuItem>
-
                                         <menuItem title="Translucency" id="RVf-yr-XjB" userLabel="Translucency">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Translucency" systemMenu="window" id="fPu-ZA-vuX">
@@ -318,6 +329,7 @@ CA
                 </application>
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Helium" customModuleProvider="target">
                     <connections>
+                        <outlet property="autoHideTitleMenu" destination="4b7-4E-I4E" id="j5g-JZ-3jG"/>
                         <outlet property="fullScreenFloatMenu" destination="J8Z-sv-9PI" id="8gu-KT-nBS"/>
                         <outlet property="magicURLMenu" destination="GQ3-Bi-0IJ" id="1Kj-Qu-x6d"/>
                         <outlet property="percentageMenu" destination="wlj-XI-Lng" id="9dj-5p-3sa"/>
@@ -325,6 +337,7 @@ CA
                 </customObject>
                 <customObject id="sQQ-SA-Rgm" customClass="SUUpdater"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <userDefaultsController representsSharedInstance="YES" id="H0D-H0-Cmz"/>
             </objects>
             <point key="canvasLocation" x="75" y="0.0"/>
         </scene>
