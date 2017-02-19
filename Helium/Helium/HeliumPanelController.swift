@@ -10,6 +10,12 @@ import AppKit
 
 let optionKeyCode: UInt16 = 58
 
+struct Constants {
+	static let defaultURL = "https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html"
+	static let PlayList = "PlayList"
+	static let PlayItem = "PlayItem"
+}
+
 class HeliumPanelController : NSWindowController {
 
     private var webViewController: WebViewController {
@@ -202,9 +208,9 @@ class HeliumPanelController : NSWindowController {
     @IBAction func setHomePage(sender: AnyObject){
         didRequestChangeHomepage()
     }
-    
-    //MARK: Actual functionality
-    
+
+	//MARK: Actual functionality
+	
     @objc private func didUpdateTitle(notification: NSNotification) {
         if let title = notification.object as? String {
             panel.title = title
@@ -224,8 +230,7 @@ class HeliumPanelController : NSWindowController {
             }
         }
     }
-    
-    
+	
     private func didRequestLocation() {
         let alert = NSAlert()
         alert.alertStyle = NSAlertStyle.InformationalAlertStyle
@@ -254,6 +259,7 @@ class HeliumPanelController : NSWindowController {
         alert.messageText = "Enter new Home Page URL"
         
         let urlField = NSTextField()
+		urlField.stringValue = NSUserDefaults.standardUserDefaults().stringForKey(UserSetting.HomePageURL.userDefaultsKey)!
         urlField.frame = NSRect(x: 0, y: 0, width: 300, height: 20)
         urlField.lineBreakMode = NSLineBreakMode.ByTruncatingHead
         urlField.usesSingleLineMode = true
@@ -261,13 +267,13 @@ class HeliumPanelController : NSWindowController {
         alert.accessoryView = urlField
         alert.addButtonWithTitle("Set")
         alert.addButtonWithTitle("Cancel")
-		alert.addButtonWithTitle("Default")
+		let defaultButton = alert.addButtonWithTitle("Default")
+		defaultButton.toolTip = Constants.defaultURL
         alert.beginSheetModalForWindow(self.window!, completionHandler: { response in
-			let defaultURL = "https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html"
 			var text : String
 			switch response {
 			case NSAlertThirdButtonReturn:
-				text = defaultURL
+				text = Constants.defaultURL
 				break
 
 			case NSAlertFirstButtonReturn:
@@ -293,7 +299,7 @@ class HeliumPanelController : NSWindowController {
 				if self.validateURL(text) {
 					NSUserDefaults.standardUserDefaults().setObject(text, forKey: UserSetting.HomePageURL.userDefaultsKey)
 				} else {
-					NSUserDefaults.standardUserDefaults().setObject(defaultURL, forKey: UserSetting.HomePageURL.userDefaultsKey)
+					NSUserDefaults.standardUserDefaults().setObject(Constants.defaultURL, forKey: UserSetting.HomePageURL.userDefaultsKey)
 				}
 				
                 // Load new Home page
@@ -301,8 +307,8 @@ class HeliumPanelController : NSWindowController {
 			}
         })
     }
-    
-    func validateURL (stringURL : String) -> Bool {
+	
+	func validateURL (stringURL : String) -> Bool {
         
         let urlRegEx = "((https|http)://)((\\w|-)+)(([.]|[/])((\\w|-)+))+"
         let predicate = NSPredicate(format:"SELF MATCHES %@", argumentArray:[urlRegEx])
