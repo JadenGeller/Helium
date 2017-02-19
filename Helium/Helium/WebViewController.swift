@@ -45,13 +45,15 @@ class WebViewController: NSViewController, WKNavigationDelegate {
 
 		// Listen for auto hide title changes
 		NSUserDefaults.standardUserDefaults().addObserver(self, forKeyPath: UserSetting.AutoHideTitle.userDefaultsKey, options: NSKeyValueObservingOptions.New, context: nil)
-		
+		NSUserDefaults.standardUserDefaults().addObserver(self, forKeyPath: UserSetting.Playlists.userDefaultsKey, options: NSKeyValueObservingOptions.New, context: nil)
+
         clear()
     }
 	
 	var lastStyle : Int = 0
 	var lastTitle = "Helium"
 	var autoHideTitle : Bool = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.AutoHideTitle.userDefaultsKey)
+	var playlists = NSUserDefaults.standardUserDefaults().dictionaryForKey(UserSetting.Playlists.userDefaultsKey)
 
 	override func mouseExited(theEvent: NSEvent) {
 		if autoHideTitle {
@@ -136,6 +138,20 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     @IBAction private func zoomOut(sender: AnyObject) {
         zoomOut()
     }
+	
+	lazy var playlistViewController: PlaylistViewController = {
+		return self.storyboard!.instantiateControllerWithIdentifier("PlaylistViewController")
+			as! PlaylistViewController
+	}()
+	
+	@IBAction func displaySheet(sender: AnyObject) {
+		
+		self.presentViewControllerAsSheet(playlistViewController)
+	}
+	
+	@IBAction private func presentPlaylistSheet(sender: AnyObject) {
+		
+	}
 
     override var representedObject: AnyObject? {
         didSet {
@@ -178,7 +194,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
             loadAlmostURL(homePage)
         }
         else{
-            loadURL(NSURL(string: "https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html")!)
+            loadURL(NSURL(string: Constants.defaultURL)!)
         }
     }
 
@@ -202,12 +218,12 @@ class WebViewController: NSViewController, WKNavigationDelegate {
             modified = modified.replacePrefix("http://www.dailymotion.com/video/", replacement: "http://www.dailymotion.com/embed/video/")
             modified = modified.replacePrefix("http://dai.ly/", replacement: "http://www.dailymotion.com/embed/video/")
  
-        if modified.containsString("https://youtu.be") {
-            modified = "https://www.youtube.com/embed/" + getVideoHash(urlString)
-            if urlString.containsString("?t=") {
-                    modified += makeCustomStartTimeURL(urlString)
-            }
-        }
+			if modified.containsString("https://youtu.be") {
+				modified = "https://www.youtube.com/embed/" + getVideoHash(urlString)
+				if urlString.containsString("?t=") {
+						modified += makeCustomStartTimeURL(urlString)
+				}
+			}
             
             if urlString != modified {
                 decisionHandler(WKNavigationActionPolicy.Cancel)
@@ -280,6 +296,10 @@ class WebViewController: NSViewController, WKNavigationDelegate {
 
 			let notif = NSNotification(name: "HeliumUpdateTitle", object: lastTitle);
 			NSNotificationCenter.defaultCenter().postNotification(notif)
+		}
+		
+		if (keyPath == UserSetting.Playlists.userDefaultsKey) {
+			playlists = NSUserDefaults.standardUserDefaults().dictionaryForKey(UserSetting.Playlists.userDefaultsKey)
 		}
     }
     
