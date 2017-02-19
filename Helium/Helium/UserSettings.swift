@@ -14,6 +14,7 @@ internal enum UserSetting {
     case OpacityPercentage
     case HomePageURL
 	case AutoHideTitle
+	case Playlists
 
     var userDefaultsKey: String {
         switch self {
@@ -22,6 +23,7 @@ internal enum UserSetting {
         case .OpacityPercentage: return "opacityPercentage"
         case .HomePageURL: return "homePageURL"
 		case .AutoHideTitle: return "autoHideTitle"
+		case .Playlists: return "playlists"
         }
     }
 }
