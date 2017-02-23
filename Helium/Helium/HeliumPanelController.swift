@@ -281,8 +281,7 @@ class HeliumPanelController : NSWindowController {
 				break
 				
 			case NSAlertSecondButtonReturn:
-				text = NSUserDefaults.standardUserDefaults().stringForKey(UserSetting.HomePageURL.userDefaultsKey)!
-				break
+				return
 
 			default:
 				text = ""
