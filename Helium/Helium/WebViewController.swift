@@ -45,7 +45,6 @@ class WebViewController: NSViewController, WKNavigationDelegate {
 
 		// Listen for auto hide title changes
 		NSUserDefaults.standardUserDefaults().addObserver(self, forKeyPath: UserSetting.AutoHideTitle.userDefaultsKey, options: NSKeyValueObservingOptions.New, context: nil)
-		NSUserDefaults.standardUserDefaults().addObserver(self, forKeyPath: UserSetting.Playlists.userDefaultsKey, options: NSKeyValueObservingOptions.New, context: nil)
 
         clear()
     }
@@ -298,9 +297,6 @@ class WebViewController: NSViewController, WKNavigationDelegate {
 			NSNotificationCenter.defaultCenter().postNotification(notif)
 		}
 		
-		if (keyPath == UserSetting.Playlists.userDefaultsKey) {
-			playlists = NSUserDefaults.standardUserDefaults().arrayForKey(UserSetting.Playlists.userDefaultsKey)
-		}
     }
     
     //Convert a YouTube video url that starts at a certian point to popup/embedded design
