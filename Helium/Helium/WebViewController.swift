@@ -52,7 +52,6 @@ class WebViewController: NSViewController, WKNavigationDelegate {
 	var lastStyle : Int = 0
 	var lastTitle = "Helium"
 	var autoHideTitle : Bool = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.AutoHideTitle.userDefaultsKey)
-	var playlists = NSUserDefaults.standardUserDefaults().arrayForKey(UserSetting.Playlists.userDefaultsKey)
 
 	override func mouseExited(theEvent: NSEvent) {
 		if autoHideTitle {
