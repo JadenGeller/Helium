@@ -143,13 +143,8 @@ class WebViewController: NSViewController, WKNavigationDelegate {
 			as! PlaylistViewController
 	}()
 	
-	@IBAction func displaySheet(sender: AnyObject) {
-		
-		self.presentViewControllerAsSheet(playlistViewController)
-	}
-	
 	@IBAction private func presentPlaylistSheet(sender: AnyObject) {
-		
+		self.presentViewControllerAsSheet(playlistViewController)
 	}
 
     override var representedObject: AnyObject? {
