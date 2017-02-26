@@ -378,7 +378,7 @@ CA
                                 <rect key="frame" x="0.0" y="0.0" width="126" height="272"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tOS-xf-jmG">
+                                    <button toolTip="Play selected playlist" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tOS-xf-jmG">
                                         <rect key="frame" x="56" y="3" width="66" height="32"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="54" id="XYE-Xu-zTL"/>
@@ -387,6 +387,10 @@ CA
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
+                                        <connections>
+                                            <action selector="playPlaylist:" target="YAy-lX-dae" id="SZn-cv-787"/>
+                                            <binding destination="79C-nm-Fgg" name="enabled" keyPath="selection.listCount" id="bJO-7b-uyF"/>
+                                        </connections>
                                     </button>
                                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KRs-AT-9D8">
                                         <rect key="frame" x="0.0" y="39" width="126" height="233"/>
@@ -445,6 +449,10 @@ CA
                                                             </connections>
                                                         </tableColumn>
                                                     </tableColumns>
+                                                    <connections>
+                                                        <outlet property="dataSource" destination="YAy-lX-dae" id="khl-A5-RrM"/>
+                                                        <outlet property="delegate" destination="YAy-lX-dae" id="9Ke-15-NRs"/>
+                                                    </connections>
                                                 </tableView>
                                             </subviews>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -522,19 +530,26 @@ CA
                                     <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WiW-pB-vRx">
                                         <rect key="frame" x="10" y="10" width="134" height="21"/>
                                         <subviews>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DNq-eF-IsJ">
+                                            <button toolTip="Revert to saved playlists" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DNq-eF-IsJ">
                                                 <rect key="frame" x="-6" y="-7" width="80" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Revert" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3XW-t7-vOU">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
+                                                <connections>
+                                                    <action selector="restorePlaylists:" target="YAy-lX-dae" id="zhn-cs-UOH"/>
+                                                </connections>
                                             </button>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zo4-as-HFj">
+                                            <button toolTip="Save to playlists" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zo4-as-HFj">
                                                 <rect key="frame" x="70" y="-7" width="70" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="x6P-T8-kml">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
+                                                <connections>
+                                                    <action selector="savePlaylists:" target="YAy-lX-dae" id="KLq-pb-ZJ7"/>
+                                                    <binding destination="79C-nm-Fgg" name="enabled" keyPath="canRemove" id="rph-8c-Wlc"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <visibilityPriorities>
@@ -549,7 +564,7 @@ CA
                                     <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R4x-I0-Rvl">
                                         <rect key="frame" x="151" y="10" width="152" height="21"/>
                                         <subviews>
-                                            <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="b6L-u6-6xa">
+                                            <button toolTip="Discard changes and dismiss" verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="b6L-u6-6xa">
                                                 <rect key="frame" x="-6" y="-7" width="84" height="32"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="72" id="Rio-0z-8nj"/>
@@ -565,7 +580,7 @@ Gw
                                                     <action selector="dismissController:" target="YAy-lX-dae" id="DbP-L8-Giv"/>
                                                 </connections>
                                             </button>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NuZ-En-DGv">
+                                            <button toolTip="Dismiss editing, keep changes" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NuZ-En-DGv">
                                                 <rect key="frame" x="74" y="-7" width="84" height="32"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="72" id="P3r-hM-XmL"/>
@@ -735,6 +750,10 @@ Gw
                                                             </connections>
                                                         </tableColumn>
                                                     </tableColumns>
+                                                    <connections>
+                                                        <outlet property="dataSource" destination="YAy-lX-dae" id="HRh-zi-HF8"/>
+                                                        <outlet property="delegate" destination="YAy-lX-dae" id="Hp7-jK-PSQ"/>
+                                                    </connections>
                                                 </tableView>
                                             </subviews>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -772,6 +791,7 @@ Gw
                         </holdingPriorities>
                     </splitView>
                     <connections>
+                        <outlet property="playButton" destination="tOS-xf-jmG" id="lbU-1Z-IDE"/>
                         <outlet property="playitemArrayController" destination="fqr-Ij-jQ9" id="pJ4-3Y-cGG"/>
                         <outlet property="playitemTableView" destination="QDo-AC-Wda" id="vCV-ds-aif"/>
                         <outlet property="playlistArrayController" destination="79C-nm-Fgg" id="lkj-mu-Vli"/>
@@ -782,7 +802,8 @@ Gw
                 <arrayController objectClassName="PlayList" id="79C-nm-Fgg">
                     <declaredKeys>
                         <string>name</string>
-                        <string>link</string>
+                        <string>list</string>
+                        <string>listCount</string>
                     </declaredKeys>
                     <connections>
                         <binding destination="YAy-lX-dae" name="contentArray" keyPath="self.playlists" id="GwV-q2-3HI"/>
