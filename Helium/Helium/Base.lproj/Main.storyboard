@@ -36,7 +36,7 @@
                                                     <menuItem title="Playlists" id="ddP-BI-eP5" userLabel="Platlists">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
-                                                            <action selector="displaySheet:" target="Ady-hI-5gd" id="sC9-gw-BBe"/>
+                                                            <action selector="presentPlaylistSheet:" target="Ady-hI-5gd" id="ySE-xa-5KO"/>
                                                         </connections>
                                                     </menuItem>
                                                     <menuItem title="Magic URL Redirects" state="on" id="GQ3-Bi-0IJ">
@@ -378,6 +378,16 @@ CA
                                 <rect key="frame" x="0.0" y="0.0" width="126" height="272"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tOS-xf-jmG">
+                                        <rect key="frame" x="56" y="3" width="66" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="54" id="XYE-Xu-zTL"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="push" title="Play" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mvj-Ud-PSU">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
                                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KRs-AT-9D8">
                                         <rect key="frame" x="0.0" y="39" width="126" height="233"/>
                                         <clipView key="contentView" id="Noe-Za-eMO">
@@ -498,6 +508,8 @@ CA
                                     <constraint firstItem="KRs-AT-9D8" firstAttribute="leading" secondItem="UIC-Lb-O4p" secondAttribute="leading" id="6zE-WR-LIy"/>
                                     <constraint firstAttribute="bottom" secondItem="IJO-dk-87l" secondAttribute="bottom" constant="12" id="a8v-XM-ovl"/>
                                     <constraint firstItem="KRs-AT-9D8" firstAttribute="top" secondItem="UIC-Lb-O4p" secondAttribute="top" id="aLv-nk-met"/>
+                                    <constraint firstAttribute="trailing" secondItem="tOS-xf-jmG" secondAttribute="trailing" constant="10" id="hes-X9-siA"/>
+                                    <constraint firstAttribute="bottom" secondItem="tOS-xf-jmG" secondAttribute="bottom" constant="10" id="j0k-Kp-FLU"/>
                                     <constraint firstAttribute="trailing" secondItem="KRs-AT-9D8" secondAttribute="trailing" id="kqp-ZL-0a6"/>
                                     <constraint firstItem="IJO-dk-87l" firstAttribute="leading" secondItem="UIC-Lb-O4p" secondAttribute="leading" constant="8" id="pjQ-kG-AlR"/>
                                     <constraint firstItem="IJO-dk-87l" firstAttribute="top" secondItem="KRs-AT-9D8" secondAttribute="bottom" constant="9" id="wYY-wb-IvJ"/>
@@ -507,6 +519,79 @@ CA
                                 <rect key="frame" x="136" y="0.0" width="314" height="272"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
+                                    <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WiW-pB-vRx">
+                                        <rect key="frame" x="10" y="10" width="134" height="21"/>
+                                        <subviews>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DNq-eF-IsJ">
+                                                <rect key="frame" x="-6" y="-7" width="80" height="32"/>
+                                                <buttonCell key="cell" type="push" title="Revert" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3XW-t7-vOU">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                            </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zo4-as-HFj">
+                                                <rect key="frame" x="70" y="-7" width="70" height="32"/>
+                                                <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="x6P-T8-kml">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                            </button>
+                                        </subviews>
+                                        <visibilityPriorities>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                        </visibilityPriorities>
+                                        <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                        </customSpacing>
+                                    </stackView>
+                                    <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R4x-I0-Rvl">
+                                        <rect key="frame" x="151" y="10" width="152" height="21"/>
+                                        <subviews>
+                                            <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="b6L-u6-6xa">
+                                                <rect key="frame" x="-6" y="-7" width="84" height="32"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="72" id="Rio-0z-8nj"/>
+                                                </constraints>
+                                                <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="374-ij-eOf">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                    <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="dismissController:" target="YAy-lX-dae" id="DbP-L8-Giv"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NuZ-En-DGv">
+                                                <rect key="frame" x="74" y="-7" width="84" height="32"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="72" id="P3r-hM-XmL"/>
+                                                </constraints>
+                                                <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Mja-kD-PVK">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="dismissController:" target="YAy-lX-dae" id="RrX-Lw-E3r"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="b6L-u6-6xa" secondAttribute="bottom" id="8pi-Fl-1HU"/>
+                                            <constraint firstAttribute="trailing" secondItem="NuZ-En-DGv" secondAttribute="trailing" id="W6U-2a-yyz"/>
+                                        </constraints>
+                                        <visibilityPriorities>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                        </visibilityPriorities>
+                                        <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                        </customSpacing>
+                                    </stackView>
                                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2bv-5U-x3T">
                                         <rect key="frame" x="0.0" y="39" width="314" height="233"/>
                                         <clipView key="contentView" id="uob-g2-AEI">
@@ -559,6 +644,9 @@ CA
                                                                     </connections>
                                                                 </tableCellView>
                                                             </prototypeCellViews>
+                                                            <connections>
+                                                                <binding destination="fqr-Ij-jQ9" name="value" keyPath="arrangedObjects.rank" id="gxV-nQ-Ruf"/>
+                                                            </connections>
                                                         </tableColumn>
                                                         <tableColumn width="116" minWidth="40" maxWidth="1000" id="ehA-rf-OVw">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Name">
@@ -599,6 +687,9 @@ CA
                                                                     </connections>
                                                                 </tableCellView>
                                                             </prototypeCellViews>
+                                                            <connections>
+                                                                <binding destination="fqr-Ij-jQ9" name="value" keyPath="arrangedObjects.name" id="kbB-ve-Mv1"/>
+                                                            </connections>
                                                         </tableColumn>
                                                         <tableColumn identifier="" width="167" minWidth="10" maxWidth="3.4028234663852886e+38" id="NBE-KP-77M">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Link">
@@ -639,6 +730,9 @@ CA
                                                                     </connections>
                                                                 </tableCellView>
                                                             </prototypeCellViews>
+                                                            <connections>
+                                                                <binding destination="fqr-Ij-jQ9" name="value" keyPath="arrangedObjects.link" id="eVA-XB-XdN"/>
+                                                            </connections>
                                                         </tableColumn>
                                                     </tableColumns>
                                                 </tableView>
@@ -658,58 +752,15 @@ CA
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableHeaderView>
                                     </scrollView>
-                                    <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R4x-I0-Rvl">
-                                        <rect key="frame" x="151" y="10" width="152" height="21"/>
-                                        <subviews>
-                                            <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="b6L-u6-6xa">
-                                                <rect key="frame" x="-6" y="-7" width="84" height="32"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="72" id="Rio-0z-8nj"/>
-                                                </constraints>
-                                                <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="374-ij-eOf">
-                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="system"/>
-                                                    <string key="keyEquivalent" base64-UTF8="YES">
-Gw
-</string>
-                                                </buttonCell>
-                                                <connections>
-                                                    <action selector="dismissController:" target="YAy-lX-dae" id="DbP-L8-Giv"/>
-                                                </connections>
-                                            </button>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NuZ-En-DGv">
-                                                <rect key="frame" x="74" y="-7" width="84" height="32"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="72" id="P3r-hM-XmL"/>
-                                                </constraints>
-                                                <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Mja-kD-PVK">
-                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="system"/>
-                                                </buttonCell>
-                                                <connections>
-                                                    <action selector="dismissController:" target="YAy-lX-dae" id="RrX-Lw-E3r"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="b6L-u6-6xa" secondAttribute="bottom" id="8pi-Fl-1HU"/>
-                                            <constraint firstAttribute="trailing" secondItem="NuZ-En-DGv" secondAttribute="trailing" id="W6U-2a-yyz"/>
-                                        </constraints>
-                                        <visibilityPriorities>
-                                            <integer value="1000"/>
-                                            <integer value="1000"/>
-                                        </visibilityPriorities>
-                                        <customSpacing>
-                                            <real value="3.4028234663852886e+38"/>
-                                            <real value="3.4028234663852886e+38"/>
-                                        </customSpacing>
-                                    </stackView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="R4x-I0-Rvl" secondAttribute="trailing" constant="11" id="Dcf-Gr-G8Y"/>
                                     <constraint firstItem="R4x-I0-Rvl" firstAttribute="top" secondItem="2bv-5U-x3T" secondAttribute="bottom" constant="8" symbolic="YES" id="Fii-E9-OUt"/>
                                     <constraint firstItem="2bv-5U-x3T" firstAttribute="top" secondItem="ahD-mY-TSA" secondAttribute="top" id="H8j-hT-GLy"/>
+                                    <constraint firstItem="WiW-pB-vRx" firstAttribute="leading" secondItem="ahD-mY-TSA" secondAttribute="leading" constant="10" id="ILx-c6-Vjx"/>
                                     <constraint firstItem="2bv-5U-x3T" firstAttribute="leading" secondItem="ahD-mY-TSA" secondAttribute="leading" id="Ihe-za-R8V"/>
+                                    <constraint firstItem="WiW-pB-vRx" firstAttribute="leading" secondItem="ahD-mY-TSA" secondAttribute="leading" constant="10" id="NpO-tb-PPQ"/>
+                                    <constraint firstAttribute="bottom" secondItem="WiW-pB-vRx" secondAttribute="bottom" constant="10" id="QAc-oW-WAU"/>
                                     <constraint firstAttribute="bottom" secondItem="R4x-I0-Rvl" secondAttribute="bottom" constant="10" id="WBt-8F-JUI"/>
                                     <constraint firstAttribute="trailing" secondItem="2bv-5U-x3T" secondAttribute="trailing" id="qDa-v1-V93"/>
                                 </constraints>
@@ -721,8 +772,8 @@ Gw
                         </holdingPriorities>
                     </splitView>
                     <connections>
-                        <outlet property="playItemArrayController" destination="fqr-Ij-jQ9" id="cRh-B7-fV1"/>
-                        <outlet property="playitemTableView" destination="QDo-AC-Wda" id="ih9-qa-i1W"/>
+                        <outlet property="playitemArrayController" destination="fqr-Ij-jQ9" id="pJ4-3Y-cGG"/>
+                        <outlet property="playitemTableView" destination="QDo-AC-Wda" id="vCV-ds-aif"/>
                         <outlet property="playlistArrayController" destination="79C-nm-Fgg" id="lkj-mu-Vli"/>
                         <outlet property="playlistTableView" destination="PML-r0-Bx7" id="8A5-Ov-NRE"/>
                     </connections>
