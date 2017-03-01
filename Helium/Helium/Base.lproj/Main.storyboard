@@ -610,7 +610,7 @@ Gw
                                     <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lou-k5-Ctb">
                                         <rect key="frame" x="0.0" y="39" width="314" height="233"/>
                                         <clipView key="contentView" ambiguous="YES" id="Ix6-nN-7A8">
-                                            <rect key="frame" x="1" y="23" width="312" height="209"/>
+                                            <rect key="frame" x="1" y="0.0" width="312" height="232"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" autosaveColumns="NO" rowSizeStyle="automatic" headerView="YTX-gj-uhH" viewBased="YES" id="IBh-ZH-TR3">
@@ -744,7 +744,7 @@ Gw
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </clipView>
                                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="1e4-tR-Cc8">
-                                            <rect key="frame" x="1" y="217" width="312" height="15"/>
+                                            <rect key="frame" x="1" y="8" width="0.0" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="aSB-Wi-46z">
