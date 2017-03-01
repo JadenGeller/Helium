@@ -41,6 +41,10 @@ class PlayList: NSObject {
 		self.list = list
 		super.init()
 	}
+
+	func listCount() -> Int {
+		return list.count
+	}
 }
 
 class PlaylistViewController: NSViewController,NSTableViewDelegate {
@@ -52,81 +56,41 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate {
 	@IBOutlet var playitemTableView: NSTableView!
 
 	override func viewDidLoad() {
-		let registeredTypes:[String] = [NSStringPboardType]
-		playlistTableView.registerForDraggedTypes(registeredTypes)
-		playitemTableView.registerForDraggedTypes(registeredTypes)
+		let types = ["public.data",kUTTypeURL as String]
 
-		playlistTableView.registerForDraggedTypes([Constants.PlayList])
-		playitemTableView.registerForDraggedTypes([Constants.PlayItem])
+		playlistTableView.registerForDraggedTypes(types)
+		playitemTableView.registerForDraggedTypes(types)
 
 		// Initially load playlists data
-		if let playData = NSUserDefaults.standardUserDefaults().dataForKey(UserSetting.Playlists.userDefaultsKey) {
-			playlists = NSKeyedUnarchiver.unarchiveObjectWithData(playData) as! Array <PlayList>
-		}
-	}
-/*
-	func tableView(tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
-		let type = (tableView == playlistTableView ? Constants.PlayList : Constants.PlayItem)
-		let item = NSPasteboardItem()
-		item.setString(String(row), forType: type)
-
-		return item
-	}
-*/
-	func tableView(tableView: NSTableView, writeRowsWith rowIndexes: NSIndexSet, to pboard: NSPasteboard) -> Bool {
-		let type = (tableView == playlistTableView ? Constants.PlayList : Constants.PlayItem)
-		let data = NSKeyedArchiver.archivedDataWithRootObject(rowIndexes)
-		pboard.declareTypes([type], owner: self)
-		pboard.setData(data, forType: type)
-		
-		return true
-	}
-
-	func tableView(tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
-		if dropOperation == .Above {
-			return .Move
-		}
-		return .None
-	}
-	
-	func tableView(tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
-		let type = (tableView == playlistTableView ? Constants.PlayList : Constants.PlayItem)
-		var oldIndexes = [Int]()
-		info.enumerateDraggingItemsWithOptions([], forView: tableView, classes: [NSPasteboardItem.self], searchOptions: [:]) {
-			if let str = ($0.0.item as! NSPasteboardItem).stringForType(type), index = Int(str) {
-				oldIndexes.append(index)
+		if let playData = defaults.dataForKey(UserSetting.Playlists.userDefaultsKey) {
+			if let playArray = NSKeyedUnarchiver.unarchiveObjectWithData(playData) {
+				playlists = playArray as! Array <PlayList>
+ 			} else {
+				print("Error reading playlists from user defaults")
 			}
 		}
-		
-		var oldIndexOffset = 0
-		var newIndexOffset = 0
-		
-		// For simplicity, the code below uses `tableView.moveRowAtIndex` to move rows around directly.
-		// You may want to move rows in your content array and then call `tableView.reloadData()` instead.
-		tableView.beginUpdates()
-		for oldIndex in oldIndexes {
-			if oldIndex < row {
-				tableView.moveRowAtIndex(oldIndex + oldIndexOffset, toIndex: row - 1)
-				oldIndexOffset -= 1
-			} else {
-				tableView.moveRowAtIndex(oldIndex, toIndex: row + newIndexOffset)
-				newIndexOffset += 1
-			}
-		}
-		tableView.endUpdates()
-		
-		return true
+	}
+
+	override func viewWillAppear() {
+		// cache our list before editing
+		playCache = playlists
 	}
 
 	//	cache playlists read and saved to defaults
-	dynamic var playlists = [PlayList]()
+	var defaults = NSUserDefaults.standardUserDefaults()
+	var playlists = [PlayList]()
+	var playCache = [PlayList]()
 	
 	@IBAction func addPlaylist(sender: NSButton) {
 		if let play = playlistArrayController.selectedObjects.first as? PlayList {
 			let item = PlayItem(name:"item#",link:NSURL.init(string: "http://")!,rank:play.list.count + 1);
 			let temp = NSString(format:"%p",item) as String
 			item.name += String(temp.characters.suffix(3))
+
+			play.willChangeValueForKey("listCount")
 			playitemArrayController.addObject(item)
+			play.didChangeValueForKey("listCount")
+
 			dispatch_async(dispatch_get_main_queue()) {
 				self.playitemTableView.scrollRowToVisible(play.list.count - 1)
 			}
@@ -134,7 +98,9 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate {
 			let play = PlayList(name:"play#", list:Array <PlayItem>())
 			let temp = NSString(format:"%p",play) as String
 			play.name += String(temp.characters.suffix(3))
+			
 			playlistArrayController.addObject(play)
+
 			dispatch_async(dispatch_get_main_queue()) {
 				self.playlistTableView.scrollRowToVisible(self.playlists.count - 1)
 			}
@@ -143,7 +109,11 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate {
 
 	@IBAction func removePlaylist(sender: NSButton) {
 		if let selectedPlayItem = playitemArrayController.selectedObjects.first as? PlayItem {
+			let selectedPlaylist = playlistArrayController.selectedObjects.first as? PlayList
+
+			selectedPlaylist?.willChangeValueForKey("listCount")
 			playitemArrayController.removeObject(selectedPlayItem)
+			selectedPlaylist?.didChangeValueForKey("listCount")
 		}
 		else
 		if let selectedPlaylist = playlistArrayController.selectedObjects.first as? PlayList {
@@ -151,27 +121,165 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate {
 		}
 	}
 	
+	@IBAction func playPlaylist(sender: AnyObject) {
+		if let selectedPlaylist = playlistArrayController.selectedObjects.first as? PlayList {
+			if selectedPlaylist.list.count > 0 {
+				super.dismissController(sender)
+				
+				print("play \(selectedPlaylist.name) \(selectedPlaylist.list)")
+				for item in selectedPlaylist.list {
+					print("\(item.rank) \(item.name)")
+				}
+			}
+		}
+	}
+	
 	@IBAction func restorePlaylists(sender: NSButton) {
-		if let playData = NSUserDefaults.standardUserDefaults().dataForKey(UserSetting.Playlists.userDefaultsKey) {
+		if let playData = defaults.dataForKey(UserSetting.Playlists.userDefaultsKey) {
 			playlists = NSKeyedUnarchiver.unarchiveObjectWithData(playData) as! Array <PlayList>
 		}
 	}
 
+	@IBAction func savePlaylists(sender: AnyObject) {
+		let playArray = playlistArrayController.arrangedObjects
+		let playData = NSKeyedArchiver.archivedDataWithRootObject(playArray)
+		defaults.setObject(playData, forKey: UserSetting.Playlists.userDefaultsKey)
+		defaults.synchronize()
+	}
+	
 	@IBAction override func dismissController(sender: AnyObject?) {
 		super.dismissController(sender)
 		print(sender?.title)
 		//	Save or go
 		switch sender!.tag == 0 {
 			case true:
-				let playArray = playlistArrayController.arrangedObjects
-				let playData = NSKeyedArchiver.archivedDataWithRootObject(playArray)
-				NSUserDefaults.standardUserDefaults().setObject(playData, forKey: UserSetting.Playlists.userDefaultsKey)
-				NSUserDefaults.standardUserDefaults().synchronize()
 				print("true")
 				break
 			case false:
+				//	Restore from cache
+				playlists = playCache
 				print("false")
 		}
+	}
+	
+	// MARK: Drag-n-Drop
+	
+	func draggingEntered(sender: NSDraggingInfo!) -> NSDragOperation {
+		let pasteboard = sender.draggingPasteboard()
+//		let filteringOptions = [NSPasteboardURLReadingContentsConformToTypesKey:NSImage.imageTypes()]
+
+		print("draggingEntered")
+
+		if pasteboard.canReadItemWithDataConformingToTypes([NSPasteboardURLReadingFileURLsOnlyKey])
+			/*.canReadObject(forClasses: [NSURL.self], options: filteringOptions)*/ {
+			return .Copy
+		}
+		return .Copy
+	}
+	
+	func draggingUpdated(sender: NSDraggingInfo!) -> NSDragOperation  {
+		print("draggingUpdated")
+		return NSDragOperation.Copy
+	}
+	
+	func tableView(tableView: NSTableView, namesOfPromisedFilesDroppedAtDestination dropDestination: NSURL, forDraggedRowsWith indexSet: NSIndexSet) -> [String] {
+		print("drop(s) \(dropDestination)")
+		return ["tom","dick","harry"]
+	}
+
+	func tableView(tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
+//		let type = (tableView == playlistTableView ? Constants.PlayList : Constants.PlayItem)
+		let item = NSPasteboardItem()
+		
+		item.setString(String(row), forType: "public.data")
+		
+		return item
+	}
+
+	func tableView(tableView: NSTableView, writeRowsWith rowIndexes: NSIndexSet, to pboard: NSPasteboard) -> Bool {
+		print("writeRowsWith \(pboard)")
+//		let type = (tableView == playlistTableView ? Constants.PlayList : Constants.PlayItem)
+		let data = NSKeyedArchiver.archivedDataWithRootObject(rowIndexes)
+		let registeredTypes:[String] = ["public.data"]
+
+		pboard.declareTypes(registeredTypes, owner: self)
+		pboard.setData(data, forType: "public.data")
+		
+		return true
+	}
+	
+	func tableView(tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
+
+		if dropOperation == .Above {
+				print("validate Above -> .Move")
+				return .Move
+		}
+		print("validate other -> .None")
+		return .None
+	}
+	
+	func tableView(tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
+//		let type = (tableView == playlistTableView ? Constants.PlayList : Constants.PlayItem)
+		var oldIndexes = [Int]()
+print("acceptDrop")
+
+		info.enumerateDraggingItemsWithOptions([], forView: tableView, classes: [NSPasteboardItem.self], searchOptions: [:]) {
+			if let str = ($0.0.item as! NSPasteboardItem).stringForType("public.data"), index = Int(str) {
+				oldIndexes.append(index)
+			}
+		}
+
+		switch oldIndexes.count {
+		case 0:
+			let pasteboard = info.draggingPasteboard()
+			let options = [NSPasteboardURLReadingFileURLsOnlyKey : true,
+			               NSPasteboardURLReadingContentsConformToTypesKey : [kUTTypeMovie as String]]
+			let items = pasteboard.readObjectsForClasses([NSURL.classForCoder()],
+			                                             options: options)
+			if items!.count > 0 {
+				for item in items! {
+					if item.isFileReferenceURL() {
+						let fileURL : NSURL? = item.filePathURL
+						let path = fileURL!.absoluteString.stringByRemovingPercentEncoding
+						print("file \(path)")
+					} else {
+						print("item -> \(item)")
+					}
+				}
+			}
+			
+		default:
+			// For simplicity, the code below uses `tableView.moveRowAtIndex` to move rows around directly.
+			// You may want to move rows in your content array and then call `tableView.reloadData()` instead.
+			var oldIndexOffset = 0
+			var newIndexOffset = 0
+			
+			tableView.beginUpdates()
+			
+			for oldIndex in oldIndexes {
+				if oldIndex < row {
+					tableView.moveRowAtIndex(oldIndex + oldIndexOffset, toIndex: row - 1)
+					oldIndexOffset -= 1
+				} else {
+					tableView.moveRowAtIndex(oldIndex, toIndex: row + newIndexOffset)
+					newIndexOffset += 1
+				}
+			}
+
+			//	For playlist items renumber the rank
+			if tableView == playitemTableView {
+				var rank = 1
+
+				for item in playitemArrayController.arrangedObjects as! [AnyObject] {
+					print("item.rank \(item.rank) -> \(rank)")
+					item.setValue(rank, forKey: "rank")
+					rank += 1;
+				}
+			}
+			tableView.endUpdates()
+		}
+		
+		return true
 	}
 	
 }
