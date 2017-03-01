@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0FD6C7381E62286000D6F836 /* PlaylistPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD6C7361E62286000D6F836 /* PlaylistPanelController.swift */; };
+		0FD6C7391E62286000D6F836 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD6C7371E62286000D6F836 /* PlaylistViewController.swift */; };
 		27199AB41BE422AC00E02297 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 27199AB31BE422AC00E02297 /* icon.icns */; };
 		27199AB71BE422AC00E02297 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27199AB61BE422AC00E02297 /* ShareViewController.swift */; };
 		27199ABA1BE422AC00E02297 /* ShareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27199AB81BE422AC00E02297 /* ShareViewController.xib */; };
@@ -68,6 +70,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0FD6C7361E62286000D6F836 /* PlaylistPanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistPanelController.swift; sourceTree = "<group>"; };
+		0FD6C7371E62286000D6F836 /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
 		27199AB01BE422AC00E02297 /* HeliumShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = HeliumShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		27199AB31BE422AC00E02297 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		27199AB51BE422AC00E02297 /* HeliumShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = HeliumShareExtension.entitlements; sourceTree = "<group>"; };
@@ -164,6 +168,8 @@
 				4D867CB61AD6781200681331 /* AppDelegate.swift */,
 				4D867CD31AD6796A00681331 /* HeliumPanelController.swift */,
 				4D867CB81AD6781200681331 /* WebViewController.swift */,
+				0FD6C7361E62286000D6F836 /* PlaylistPanelController.swift */,
+				0FD6C7371E62286000D6F836 /* PlaylistViewController.swift */,
 				4DEAB8FE1ADBD98600A2FC2B /* WKWebViewPrivate.h */,
 				4D867CBA1AD6781200681331 /* Images.xcassets */,
 				4D867CBC1AD6781200681331 /* Main.storyboard */,
@@ -370,8 +376,10 @@
 			files = (
 				5B75B5121C9A13D600475921 /* StringHelpers.swift in Sources */,
 				4D867CD41AD6796A00681331 /* HeliumPanelController.swift in Sources */,
+				0FD6C7391E62286000D6F836 /* PlaylistViewController.swift in Sources */,
 				4D8DAEAC1C3A41F300B212EC /* UserSettings.swift in Sources */,
 				4D867CB91AD6781200681331 /* WebViewController.swift in Sources */,
+				0FD6C7381E62286000D6F836 /* PlaylistPanelController.swift in Sources */,
 				4D867CB71AD6781200681331 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -491,7 +499,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -529,7 +537,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
