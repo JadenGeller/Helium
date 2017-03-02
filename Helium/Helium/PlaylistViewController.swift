@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AVFoundation
 
 class PlayItem : NSObject {
 	var name : String = "item"
@@ -211,50 +212,56 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate {
 	func tableView(tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
 
 		if dropOperation == .Above {
-				print("validate Above -> .Move")
-				return .Move
+			let pboard = info.draggingPasteboard();
+			let options = [NSPasteboardURLReadingFileURLsOnlyKey : true,
+			               NSPasteboardURLReadingContentsConformToTypesKey : [kUTTypeMovie as String]]
+			let items = pboard.readObjectsForClasses([NSURL.classForCoder()], options: options)
+			if items!.count > 0 {
+				for item in items! {
+					if item.isFileReferenceURL() {
+						let fileURL : NSURL? = item.filePathURL
+						
+						//	if it's a video file, get and set window content size to its dimentions
+						let track0 = AVURLAsset(URL:fileURL!, options:nil).tracks[0]
+						if track0.mediaType != AVMediaTypeVideo
+						{
+							print("validate nonAV -> .None")
+							return .None
+						}
+						
+						let path = fileURL!.absoluteString.stringByRemovingPercentEncoding
+						print("validate file \(path)")
+					} else {
+						print("validate item -> \(item)")
+					}
+				}
+			}
+			print("validate Above -> .Move")
+			return .Move
 		}
 		print("validate other -> .None")
 		return .None
 	}
 	
 	func tableView(tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
-//		let type = (tableView == playlistTableView ? Constants.PlayList : Constants.PlayItem)
+		let pasteboard = info.draggingPasteboard()
+		let options = [NSPasteboardURLReadingFileURLsOnlyKey : true,
+		               NSPasteboardURLReadingContentsConformToTypesKey : [kUTTypeMovie as String]]
 		var oldIndexes = [Int]()
+		var items : [AnyObject]
 print("acceptDrop")
 
+		tableView.beginUpdates()
+
+		//	we have intra tableView drag-n-drop ?
 		info.enumerateDraggingItemsWithOptions([], forView: tableView, classes: [NSPasteboardItem.self], searchOptions: [:]) {
 			if let str = ($0.0.item as! NSPasteboardItem).stringForType("public.data"), index = Int(str) {
 				oldIndexes.append(index)
 			}
-		}
-
-		switch oldIndexes.count {
-		case 0:
-			let pasteboard = info.draggingPasteboard()
-			let options = [NSPasteboardURLReadingFileURLsOnlyKey : true,
-			               NSPasteboardURLReadingContentsConformToTypesKey : [kUTTypeMovie as String]]
-			let items = pasteboard.readObjectsForClasses([NSURL.classForCoder()],
-			                                             options: options)
-			if items!.count > 0 {
-				for item in items! {
-					if item.isFileReferenceURL() {
-						let fileURL : NSURL? = item.filePathURL
-						let path = fileURL!.absoluteString.stringByRemovingPercentEncoding
-						print("file \(path)")
-					} else {
-						print("item -> \(item)")
-					}
-				}
-			}
-			
-		default:
 			// For simplicity, the code below uses `tableView.moveRowAtIndex` to move rows around directly.
 			// You may want to move rows in your content array and then call `tableView.reloadData()` instead.
 			var oldIndexOffset = 0
 			var newIndexOffset = 0
-			
-			tableView.beginUpdates()
 			
 			for oldIndex in oldIndexes {
 				if oldIndex < row {
@@ -265,20 +272,59 @@ print("acceptDrop")
 					newIndexOffset += 1
 				}
 			}
-
+			
 			//	For playlist items renumber the rank
-			if tableView == playitemTableView {
+			if tableView == self.playitemTableView {
 				var rank = 1
-
-				for item in playitemArrayController.arrangedObjects as! [AnyObject] {
+				
+				for item in self.playitemArrayController.arrangedObjects as! [AnyObject] {
 					print("item.rank \(item.rank) -> \(rank)")
 					item.setValue(rank, forKey: "rank")
 					rank += 1;
 				}
 			}
-			tableView.endUpdates()
 		}
 		
+		//	We have a Finder drag-n-drop of file URLs ?
+		items = pasteboard.readObjectsForClasses([NSURL.classForCoder()], options: options)!
+		if items.count > 0 {
+			var play = playlistArrayController.selectedObjects.first as? PlayList
+			
+			if (play == nil) {
+				let spec = items.first?.URLByDeletingLastPathComponent
+				let head = spec!?.absoluteString
+				let temp = PlayList(name:head!, list:Array <PlayItem>())
+			
+				playlistArrayController.addObject(temp)
+				play = temp
+				
+				dispatch_async(dispatch_get_main_queue()) {
+					self.playlistTableView.scrollRowToVisible(self.playlists.count - 1)
+				}
+			}
+			
+			play!.willChangeValueForKey("listCount")
+			for itemURL in items {
+				if itemURL.isFileReferenceURL() {
+					let file = itemURL.filePathURL?!.absoluteString
+					let item = PlayItem(name:itemURL.lastPathComponent.stringByRemovingPercentEncoding!,
+					                    link:NSURL.init(string: file!)!,
+										rank:play!.list.count + 1)
+//					print("accept \(item.name) -> \(item.link.absoluteString)")
+					playitemArrayController.addObject(item)
+				} else {
+					print("accept item -> \(itemURL.absoluteString)")
+				}
+			}
+			play!.didChangeValueForKey("listCount")
+				
+			dispatch_async(dispatch_get_main_queue()) {
+				self.playitemTableView.scrollRowToVisible(play!.list.count - 1)
+			}
+		}
+			
+		tableView.endUpdates()
+
 		return true
 	}
 	
