@@ -607,9 +607,9 @@ Gw
                                             <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
                                     </stackView>
-                                    <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lou-k5-Ctb">
+                                    <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lou-k5-Ctb">
                                         <rect key="frame" x="0.0" y="39" width="314" height="233"/>
-                                        <clipView key="contentView" ambiguous="YES" id="Ix6-nN-7A8">
+                                        <clipView key="contentView" id="Ix6-nN-7A8">
                                             <rect key="frame" x="1" y="0.0" width="312" height="232"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -620,7 +620,7 @@ Gw
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                     <tableColumns>
-                                                        <tableColumn identifier="rank" width="40" minWidth="40" maxWidth="100" id="i8h-Lq-4L8">
+                                                        <tableColumn identifier="rank" width="40" minWidth="20" maxWidth="100" id="i8h-Lq-4L8">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="#">
                                                                 <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -637,7 +637,7 @@ Gw
                                                                     <rect key="frame" x="1" y="1" width="40" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iiP-La-lvB">
+                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="iiP-La-lvB">
                                                                             <rect key="frame" x="0.0" y="0.0" width="100" height="17"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="1i5-zF-OP1">
                                                                                 <font key="font" metaFont="system"/>
@@ -649,6 +649,11 @@ Gw
                                                                             </textFieldCell>
                                                                         </textField>
                                                                     </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstItem="iiP-La-lvB" firstAttribute="leading" secondItem="KcS-5E-bov" secondAttribute="leading" constant="2" id="1HU-vM-Qt0"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="iiP-La-lvB" secondAttribute="trailing" constant="-58" id="VfY-i5-JaL"/>
+                                                                        <constraint firstItem="iiP-La-lvB" firstAttribute="centerY" secondItem="KcS-5E-bov" secondAttribute="centerY" id="pfr-dl-KJO"/>
+                                                                    </constraints>
                                                                     <connections>
                                                                         <outlet property="textField" destination="iiP-La-lvB" id="ZEE-Ky-grl"/>
                                                                     </connections>
@@ -675,8 +680,8 @@ Gw
                                                                     <rect key="frame" x="44" y="1" width="190" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D2y-8t-32b">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="100" height="17"/>
+                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="D2y-8t-32b">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="188" height="17"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Table View Cell" id="8rW-cn-jvH">
                                                                                 <font key="font" metaFont="system"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -687,6 +692,11 @@ Gw
                                                                             </textFieldCell>
                                                                         </textField>
                                                                     </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="trailing" secondItem="D2y-8t-32b" secondAttribute="trailing" constant="4" id="8RR-F4-7gg"/>
+                                                                        <constraint firstItem="D2y-8t-32b" firstAttribute="centerY" secondItem="MrG-p5-bkT" secondAttribute="centerY" id="sGd-VP-hp1"/>
+                                                                        <constraint firstItem="D2y-8t-32b" firstAttribute="leading" secondItem="MrG-p5-bkT" secondAttribute="leading" constant="2" id="yTg-vR-5Ml"/>
+                                                                    </constraints>
                                                                     <connections>
                                                                         <outlet property="textField" destination="D2y-8t-32b" id="oRL-8u-tWb"/>
                                                                     </connections>
@@ -713,8 +723,8 @@ Gw
                                                                     <rect key="frame" x="237" y="1" width="73" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DsR-YX-6Xg">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="100" height="17"/>
+                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="DsR-YX-6Xg">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="71" height="17"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Table View Cell" id="rqN-ww-tdD">
                                                                                 <font key="font" metaFont="system"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -725,6 +735,11 @@ Gw
                                                                             </textFieldCell>
                                                                         </textField>
                                                                     </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="trailing" secondItem="DsR-YX-6Xg" secondAttribute="trailing" constant="4" id="Gl8-iB-F2x"/>
+                                                                        <constraint firstItem="DsR-YX-6Xg" firstAttribute="centerY" secondItem="Cms-SG-Pnj" secondAttribute="centerY" id="siN-Re-KOL"/>
+                                                                        <constraint firstItem="DsR-YX-6Xg" firstAttribute="leading" secondItem="Cms-SG-Pnj" secondAttribute="leading" constant="2" id="u3c-qf-2fM"/>
+                                                                    </constraints>
                                                                     <connections>
                                                                         <outlet property="textField" destination="DsR-YX-6Xg" id="OqM-AL-pAN"/>
                                                                     </connections>
@@ -744,7 +759,7 @@ Gw
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </clipView>
                                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="1e4-tR-Cc8">
-                                            <rect key="frame" x="1" y="7" width="0.0" height="16"/>
+                                            <rect key="frame" x="1" y="8" width="0.0" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="aSB-Wi-46z">
@@ -758,11 +773,15 @@ Gw
                                     </scrollView>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="WiW-pB-vRx" firstAttribute="top" secondItem="lou-k5-Ctb" secondAttribute="bottom" constant="8" symbolic="YES" id="1d9-6r-Kto"/>
                                     <constraint firstAttribute="trailing" secondItem="R4x-I0-Rvl" secondAttribute="trailing" constant="11" id="Dcf-Gr-G8Y"/>
                                     <constraint firstItem="WiW-pB-vRx" firstAttribute="leading" secondItem="ahD-mY-TSA" secondAttribute="leading" constant="10" id="ILx-c6-Vjx"/>
+                                    <constraint firstItem="lou-k5-Ctb" firstAttribute="top" secondItem="ahD-mY-TSA" secondAttribute="top" id="NhA-gV-xYj"/>
                                     <constraint firstItem="WiW-pB-vRx" firstAttribute="leading" secondItem="ahD-mY-TSA" secondAttribute="leading" constant="10" id="NpO-tb-PPQ"/>
                                     <constraint firstAttribute="bottom" secondItem="WiW-pB-vRx" secondAttribute="bottom" constant="10" id="QAc-oW-WAU"/>
                                     <constraint firstAttribute="bottom" secondItem="R4x-I0-Rvl" secondAttribute="bottom" constant="10" id="WBt-8F-JUI"/>
+                                    <constraint firstItem="lou-k5-Ctb" firstAttribute="leading" secondItem="ahD-mY-TSA" secondAttribute="leading" id="oAM-lt-DJF"/>
+                                    <constraint firstAttribute="trailing" secondItem="lou-k5-Ctb" secondAttribute="trailing" id="zTi-mq-2vm"/>
                                 </constraints>
                             </customView>
                         </subviews>
