@@ -530,7 +530,7 @@ CA
                                     <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WiW-pB-vRx">
                                         <rect key="frame" x="10" y="10" width="134" height="21"/>
                                         <subviews>
-                                            <button toolTip="Revert to saved playlists" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DNq-eF-IsJ">
+                                            <button toolTip="Restore saved playlists" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DNq-eF-IsJ">
                                                 <rect key="frame" x="-6" y="-7" width="80" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Revert" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3XW-t7-vOU">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -540,7 +540,7 @@ CA
                                                     <action selector="restorePlaylists:" target="YAy-lX-dae" id="zhn-cs-UOH"/>
                                                 </connections>
                                             </button>
-                                            <button toolTip="Save to playlists" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zo4-as-HFj">
+                                            <button toolTip="Save playlists to user defaults" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zo4-as-HFj">
                                                 <rect key="frame" x="70" y="-7" width="70" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="x6P-T8-kml">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -548,7 +548,6 @@ CA
                                                 </buttonCell>
                                                 <connections>
                                                     <action selector="savePlaylists:" target="YAy-lX-dae" id="KLq-pb-ZJ7"/>
-                                                    <binding destination="79C-nm-Fgg" name="enabled" keyPath="canRemove" id="rph-8c-Wlc"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -795,6 +794,7 @@ Gw
                         <outlet property="playitemTableView" destination="IBh-ZH-TR3" id="bkT-Zc-tEa"/>
                         <outlet property="playlistArrayController" destination="79C-nm-Fgg" id="lkj-mu-Vli"/>
                         <outlet property="playlistTableView" destination="PML-r0-Bx7" id="8A5-Ov-NRE"/>
+                        <outlet property="restoreButton" destination="DNq-eF-IsJ" id="cg5-Uu-58n"/>
                     </connections>
                 </viewController>
                 <customObject id="Yq6-uq-zTr" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
