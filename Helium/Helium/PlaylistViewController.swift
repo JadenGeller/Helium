@@ -249,7 +249,8 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate {
 		               NSPasteboardURLReadingContentsConformToTypesKey : [kUTTypeMovie as String]]
 		var oldIndexes = [Int]()
 		var items : [AnyObject]
-print("acceptDrop")
+		var oldIndexOffset = 0
+		var newIndexOffset = 0
 
 		tableView.beginUpdates()
 
@@ -260,8 +261,6 @@ print("acceptDrop")
 			}
 			// For simplicity, the code below uses `tableView.moveRowAtIndex` to move rows around directly.
 			// You may want to move rows in your content array and then call `tableView.reloadData()` instead.
-			var oldIndexOffset = 0
-			var newIndexOffset = 0
 			
 			for oldIndex in oldIndexes {
 				if oldIndex < row {
@@ -306,12 +305,13 @@ print("acceptDrop")
 			play!.willChangeValueForKey("listCount")
 			for itemURL in items {
 				if itemURL.isFileReferenceURL() {
-					let file = itemURL.filePathURL?!.absoluteString
+					let fileURL : NSURL? = itemURL.filePathURL
+					let path = fileURL!.absoluteString//.stringByRemovingPercentEncoding
 					let item = PlayItem(name:itemURL.lastPathComponent.stringByRemovingPercentEncoding!,
-					                    link:NSURL.init(string: file!)!,
+					                    link:NSURL.init(string: path)!,
 										rank:play!.list.count + 1)
-//					print("accept \(item.name) -> \(item.link.absoluteString)")
-					playitemArrayController.addObject(item)
+					playitemArrayController.insertObject(item, atArrangedObjectIndex: row + newIndexOffset)
+					newIndexOffset += 1
 				} else {
 					print("accept item -> \(itemURL.absoluteString)")
 				}
@@ -319,7 +319,8 @@ print("acceptDrop")
 			play!.didChangeValueForKey("listCount")
 				
 			dispatch_async(dispatch_get_main_queue()) {
-				self.playitemTableView.scrollRowToVisible(play!.list.count - 1)
+				let rows = NSIndexSet.init(indexesInRange: NSMakeRange(row, newIndexOffset))
+				self.playitemTableView.selectRowIndexes(rows, byExtendingSelection: false)
 			}
 		}
 			
