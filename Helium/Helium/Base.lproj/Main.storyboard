@@ -795,6 +795,7 @@ Gw
                         <outlet property="playlistArrayController" destination="79C-nm-Fgg" id="lkj-mu-Vli"/>
                         <outlet property="playlistTableView" destination="PML-r0-Bx7" id="8A5-Ov-NRE"/>
                         <outlet property="restoreButton" destination="DNq-eF-IsJ" id="cg5-Uu-58n"/>
+                        <outlet property="saveButton" destination="zo4-as-HFj" id="XkG-MV-FKn"/>
                     </connections>
                 </viewController>
                 <customObject id="Yq6-uq-zTr" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
