@@ -9,13 +9,22 @@
 import Foundation
 import AVFoundation
 
+struct k {
+	static let play = "play"
+	static let item = "item"
+	static let name = "name"
+	static let list = "list"
+	static let link = "link"
+	static let rank = "rank"
+}
+
 class PlayItem : NSObject {
-	var name : String = "item"
+	var name : String = k.item
 	var link : NSURL = NSURL.init(string: "http://")!
 	var rank = 0
 	
 	override init() {
-		name = "item"
+		name = k.item
 		link = NSURL.init(string: "http://")!
 		super.init()
 	}
@@ -28,11 +37,11 @@ class PlayItem : NSObject {
 }
 
 class PlayList: NSObject {
-	var name : String = "list"
+	var name : String = k.list
 	var list : Array <PlayItem> = Array()
 	
 	override init() {
-		name = "list"
+		name = k.list
 		list = Array <PlayItem> ()
 		super.init()
 	}
@@ -56,20 +65,18 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate {
 	@IBOutlet var playlistTableView: NSTableView!
 	@IBOutlet var playitemTableView: NSTableView!
 
+	//	cache playlists read and saved to defaults
+	var defaults = NSUserDefaults.standardUserDefaults()
+	var playlists = [PlayList]()
+	var playCache = [PlayList]()
+	
 	override func viewDidLoad() {
 		let types = ["public.data",kUTTypeURL as String]
 
 		playlistTableView.registerForDraggedTypes(types)
 		playitemTableView.registerForDraggedTypes(types)
 
-		// Initially load playlists data
-		if let playData = defaults.dataForKey(UserSetting.Playlists.userDefaultsKey) {
-			if let playArray = NSKeyedUnarchiver.unarchiveObjectWithData(playData) {
-				playlists = playArray as! Array <PlayList>
- 			} else {
-				print("Error reading playlists from user defaults")
-			}
-		}
+		self.restorePlaylists(restoreButton)
 	}
 
 	override func viewWillAppear() {
@@ -77,11 +84,6 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate {
 		playCache = playlists
 	}
 
-	//	cache playlists read and saved to defaults
-	var defaults = NSUserDefaults.standardUserDefaults()
-	var playlists = [PlayList]()
-	var playCache = [PlayList]()
-	
 	@IBAction func addPlaylist(sender: NSButton) {
 		if let play = playlistArrayController.selectedObjects.first as? PlayList {
 			let item = PlayItem(name:"item#",link:NSURL.init(string: "http://")!,rank:play.list.count + 1);
@@ -135,16 +137,48 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate {
 		}
 	}
 	
+	@IBOutlet weak var restoreButton: NSButton!
 	@IBAction func restorePlaylists(sender: NSButton) {
-		if let playData = defaults.dataForKey(UserSetting.Playlists.userDefaultsKey) {
-			playlists = NSKeyedUnarchiver.unarchiveObjectWithData(playData) as! Array <PlayList>
+		if let playArray = defaults.arrayForKey(UserSetting.Playlists.userDefaultsKey) {
+			playlistArrayController.removeObjects(playlistArrayController.arrangedObjects as! [AnyObject])
+//			self.playlists = [PlayList]()
+
+			for playlist in playArray {
+				let play = playlist as! Dictionary<String,AnyObject>
+				let items = play[k.list] as! [Dictionary <String,AnyObject>]
+				var list : [PlayItem] = [PlayItem]()
+				for playitem in items {
+					let item = playitem as Dictionary <String,AnyObject>
+					let name = item[k.name] as! String
+					let path = item[k.link] as! String
+					let link = NSURL.init(string: path)
+					let rank = item[k.rank] as! Int
+					let temp = PlayItem(name:name, link:link!, rank:rank)
+					list.append(temp)
+				}
+				let name = play[k.name] as! String
+				let temp = PlayList(name: name, list: list)
+				playlistArrayController.addObject(temp)
+			}
+			dispatch_async(dispatch_get_main_queue()) {
+				self.playlistTableView.reloadData()
+			}
 		}
 	}
 
+	@IBOutlet weak var saveButton: NSButton!
 	@IBAction func savePlaylists(sender: AnyObject) {
-		let playArray = playlistArrayController.arrangedObjects
-		let playData = NSKeyedArchiver.archivedDataWithRootObject(playArray)
-		defaults.setObject(playData, forKey: UserSetting.Playlists.userDefaultsKey)
+		let playArray = playlistArrayController.arrangedObjects as! [PlayList]
+		var temp = Array<AnyObject>()
+		for playlist in playArray {
+			var list = Array<AnyObject>()
+			for playitem in playlist.list {
+				let item : [String:AnyObject] = [k.name:playitem.name, k.link:playitem.link.absoluteString, k.rank:playitem.rank]
+				list.append(item)
+			}
+			temp.append([k.name:playlist.name, k.list:list])
+		}
+		defaults.setObject(temp, forKey: UserSetting.Playlists.userDefaultsKey)
 		defaults.synchronize()
 	}
 	
@@ -225,21 +259,21 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate {
 						let track0 = AVURLAsset(URL:fileURL!, options:nil).tracks[0]
 						if track0.mediaType != AVMediaTypeVideo
 						{
-							print("validate nonAV -> .None")
+//							print("validate nonAV -> .None")
 							return .None
 						}
 						
-						let path = fileURL!.absoluteString.stringByRemovingPercentEncoding
-						print("validate file \(path)")
+//						let path = fileURL!.absoluteString.stringByRemovingPercentEncoding
+//						print("validate file \(path)")
 					} else {
 						print("validate item -> \(item)")
 					}
 				}
 			}
-			print("validate Above -> .Move")
+//			print("validate Above -> .Move")
 			return .Move
 		}
-		print("validate other -> .None")
+//		print("validate other -> .None")
 		return .None
 	}
 	
