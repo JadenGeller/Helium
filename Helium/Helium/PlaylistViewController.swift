@@ -141,7 +141,6 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate {
 	@IBAction func restorePlaylists(sender: NSButton) {
 		if let playArray = defaults.arrayForKey(UserSetting.Playlists.userDefaultsKey) {
 			playlistArrayController.removeObjects(playlistArrayController.arrangedObjects as! [AnyObject])
-//			self.playlists = [PlayList]()
 
 			for playlist in playArray {
 				let play = playlist as! Dictionary<String,AnyObject>
@@ -201,29 +200,14 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate {
 	
 	func draggingEntered(sender: NSDraggingInfo!) -> NSDragOperation {
 		let pasteboard = sender.draggingPasteboard()
-//		let filteringOptions = [NSPasteboardURLReadingContentsConformToTypesKey:NSImage.imageTypes()]
 
-		print("draggingEntered")
-
-		if pasteboard.canReadItemWithDataConformingToTypes([NSPasteboardURLReadingFileURLsOnlyKey])
-			/*.canReadObject(forClasses: [NSURL.self], options: filteringOptions)*/ {
+		if pasteboard.canReadItemWithDataConformingToTypes([NSPasteboardURLReadingFileURLsOnlyKey]) {
 			return .Copy
 		}
 		return .Copy
 	}
-	
-	func draggingUpdated(sender: NSDraggingInfo!) -> NSDragOperation  {
-		print("draggingUpdated")
-		return NSDragOperation.Copy
-	}
-	
-	func tableView(tableView: NSTableView, namesOfPromisedFilesDroppedAtDestination dropDestination: NSURL, forDraggedRowsWith indexSet: NSIndexSet) -> [String] {
-		print("drop(s) \(dropDestination)")
-		return ["tom","dick","harry"]
-	}
 
 	func tableView(tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
-//		let type = (tableView == playlistTableView ? Constants.PlayList : Constants.PlayItem)
 		let item = NSPasteboardItem()
 		
 		item.setString(String(row), forType: "public.data")
@@ -232,8 +216,6 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate {
 	}
 
 	func tableView(tableView: NSTableView, writeRowsWith rowIndexes: NSIndexSet, to pboard: NSPasteboard) -> Bool {
-		print("writeRowsWith \(pboard)")
-//		let type = (tableView == playlistTableView ? Constants.PlayList : Constants.PlayItem)
 		let data = NSKeyedArchiver.archivedDataWithRootObject(rowIndexes)
 		let registeredTypes:[String] = ["public.data"]
 
@@ -259,21 +241,15 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate {
 						let track0 = AVURLAsset(URL:fileURL!, options:nil).tracks[0]
 						if track0.mediaType != AVMediaTypeVideo
 						{
-//							print("validate nonAV -> .None")
 							return .None
 						}
-						
-//						let path = fileURL!.absoluteString.stringByRemovingPercentEncoding
-//						print("validate file \(path)")
 					} else {
 						print("validate item -> \(item)")
 					}
 				}
 			}
-//			print("validate Above -> .Move")
 			return .Move
 		}
-//		print("validate other -> .None")
 		return .None
 	}
 	
