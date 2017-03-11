@@ -352,9 +352,9 @@ class HeliumPanelController : NSWindowController {
     func didRequestChangeHomepage(){
         let alert = NSAlert()
         alert.alertStyle = NSAlertStyle.informational
-        alert.messageText = "Enter new Home Page URL"
+        alert.messageText = "Enter new Homepage URL"
 
-        let urlField = NSTextField()
+        let urlField = Editing()
         urlField.frame = NSRect(x: 0, y: 0, width: 300, height: 20)
         urlField.lineBreakMode = NSLineBreakMode.byTruncatingHead
         urlField.usesSingleLineMode = true
@@ -383,6 +383,7 @@ class HeliumPanelController : NSWindowController {
                 self.webViewController.loadAlmostURL(UserDefaults.standard.string(forKey: UserSetting.homePageURL.userDefaultsKey)!)
             }
         })
+        urlField.becomeFirstResponder()
     }
 
     func validateURL (_ stringURL : String) -> Bool {
