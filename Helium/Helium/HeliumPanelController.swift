@@ -11,6 +11,7 @@ import AppKit
 let optionKeyCode: UInt16 = 58
 
 class HeliumPanelController : NSWindowController {
+    let userDefaults = UserDefaults.standard
 
     private var webViewController: WebViewController {
         return self.window?.contentViewController as! WebViewController
@@ -288,7 +289,13 @@ class HeliumPanelController : NSWindowController {
         urlField.frame = NSRect(x: 0, y: 0, width: 300, height: 20)
         urlField.lineBreakMode = NSLineBreakMode.byTruncatingHead
         urlField.usesSingleLineMode = true
-        urlField.stringValue = self.webViewController.webView.url?.absoluteString ?? ""
+        // Load from URL before
+        var savedUrl = self.userDefaults.string(forKey: "saveURL")
+        if savedUrl == nil {
+            // default
+            savedUrl = self.webViewController.webView.url?.absoluteString ?? ""
+        }
+        urlField.stringValue = savedUrl!
 
         alert.accessoryView = urlField
         alert.addButton(withTitle: "Load")
@@ -297,6 +304,9 @@ class HeliumPanelController : NSWindowController {
             if response == NSAlertFirstButtonReturn {
                 // Load
                 let text = (alert.accessoryView as! NSTextField).stringValue
+                // Save URL
+                self.userDefaults.set(text, forKey:"saveURL")
+                self.userDefaults.synchronize()
                 self.webViewController.loadAlmostURL(text)
             }
         })
