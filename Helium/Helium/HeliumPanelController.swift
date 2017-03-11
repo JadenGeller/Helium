@@ -304,17 +304,21 @@ class HeliumPanelController : NSWindowController {
             if response == NSAlertFirstButtonReturn {
                 // Load
                 let text = (alert.accessoryView as! NSTextField).stringValue
-                // Save URL
-                self.userDefaults.set(text, forKey:"saveURL")
-                self.userDefaults.synchronize()
+                self.saveURL(text: text)
                 self.webViewController.loadAlmostURL(text)
             }
         })
         urlField.becomeFirstResponder()
     }
 
+    private func saveURL(text:String) {
+        self.userDefaults.set(text, forKey:"saveURL")
+        self.userDefaults.synchronize()
+    }
+
     private func didRequestClipboard() {
         if let contents = NSPasteboard.general().string(forType: NSPasteboardTypeString) {
+            self.saveURL(text: contents)
             self.webViewController.loadAlmostURL(contents)
         }
     }
