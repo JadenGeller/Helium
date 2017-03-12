@@ -16,6 +16,15 @@ struct Constants {
 	static let PlayItem = "PlayItem"
 }
 
+class HeliumTextView : NSTextView {
+	override func viewWillDraw() {
+		dispatch_async(dispatch_get_main_queue()) {
+			self.window?.makeFirstResponder(self)
+//			self.lockFocus()
+		}
+	}
+}
+
 class HeliumPanelController : NSWindowController {
 
     private var webViewController: WebViewController {
@@ -235,41 +244,53 @@ class HeliumPanelController : NSWindowController {
         let alert = NSAlert()
         alert.alertStyle = NSAlertStyle.InformationalAlertStyle
         alert.messageText = "Enter Destination URL"
-        
-        let urlField = NSTextField()
-        urlField.frame = NSRect(x: 0, y: 0, width: 300, height: 20)
-        urlField.lineBreakMode = NSLineBreakMode.ByTruncatingHead
-        urlField.usesSingleLineMode = true
-        
-        alert.accessoryView = urlField
-        alert.addButtonWithTitle("Load")
+		
+		let urlField = HeliumTextView.init(frame: NSMakeRect(0,0,300,28))
+		let urlScroll = NSScrollView.init(frame: NSMakeRect(0,0,300,28))
+		urlScroll.hasVerticalScroller = true
+		urlScroll.autohidesScrollers = true
+		urlField.drawsBackground = true
+		urlField.editable = true
+
+		urlScroll.documentView = urlField
+        alert.accessoryView = urlScroll
+
+		alert.addButtonWithTitle("Load")
         alert.addButtonWithTitle("Cancel")
-        alert.beginSheetModalForWindow(self.window!, completionHandler: { response in
+
+		alert.beginSheetModalForWindow(self.window!, completionHandler: { response in
             if response == NSAlertFirstButtonReturn {
                 // Load
-                let text = (alert.accessoryView as! NSTextField).stringValue
+				let view = (alert.accessoryView as! NSScrollView).documentView as! NSTextView
+				let text = view.string! as String
                 self.webViewController.loadAlmostURL(text)
             }
         })
     }
-    
-    func didRequestChangeHomepage(){
-        let alert = NSAlert()
+	
+	func didRequestChangeHomepage(){
+		let alert = NSAlert()
         alert.alertStyle = NSAlertStyle.InformationalAlertStyle
         alert.messageText = "Enter new Home Page URL"
         
-        let urlField = NSTextField()
-		urlField.stringValue = NSUserDefaults.standardUserDefaults().stringForKey(UserSetting.HomePageURL.userDefaultsKey)!
-        urlField.frame = NSRect(x: 0, y: 0, width: 300, height: 20)
-        urlField.lineBreakMode = NSLineBreakMode.ByTruncatingHead
-        urlField.usesSingleLineMode = true
-        
-        alert.accessoryView = urlField
-        alert.addButtonWithTitle("Set")
+		let urlField = HeliumTextView.init(frame: NSMakeRect(0,0,300,28))
+		let urlScroll = NSScrollView.init(frame: NSMakeRect(0,0,300,28))
+		let urlFont = NSFont.systemFontOfSize(NSFont.systemFontSize())
+		let urlAttr = [NSFontAttributeName : urlFont]
+		let urlString = NSUserDefaults.standardUserDefaults().stringForKey(UserSetting.HomePageURL.userDefaultsKey)!
+		urlField.insertText(NSAttributedString.init(string: urlString, attributes: urlAttr), replacementRange: NSMakeRange(0, 0))
+		urlField.drawsBackground = true
+		urlField.editable = true
+
+		urlScroll.documentView = urlField
+		alert.accessoryView = urlScroll
+
+		alert.addButtonWithTitle("Set")
         alert.addButtonWithTitle("Cancel")
 		let defaultButton = alert.addButtonWithTitle("Default")
 		defaultButton.toolTip = Constants.defaultURL
-        alert.beginSheetModalForWindow(self.window!, completionHandler: { response in
+
+		alert.beginSheetModalForWindow(self.window!, completionHandler: { response in
 			var text : String
 			switch response {
 			case NSAlertThirdButtonReturn:
@@ -277,7 +298,8 @@ class HeliumPanelController : NSWindowController {
 				break
 
 			case NSAlertFirstButtonReturn:
-				text = (alert.accessoryView as! NSTextField).stringValue
+				let view = (alert.accessoryView as! NSScrollView).documentView as! NSTextView
+				text = view.string! as String
 				break
 				
 			case NSAlertSecondButtonReturn:
