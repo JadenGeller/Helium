@@ -10,7 +10,42 @@ import AppKit
 
 let optionKeyCode: UInt16 = 58
 
+// editable NSTextField
+class Editing: NSTextField {
+    private let commandKey = NSEventModifierFlags.command.rawValue
+    private let commandShiftKey = NSEventModifierFlags.command.rawValue | NSEventModifierFlags.shift.rawValue
+
+    override func performKeyEquivalent(with event: NSEvent) -> Bool {
+        if event.type == NSEventType.keyDown {
+            if (event.modifierFlags.rawValue &
+                NSEventModifierFlags.deviceIndependentFlagsMask.rawValue) == commandKey {
+                switch event.charactersIgnoringModifiers! {
+                case "x":
+                    if NSApp.sendAction(#selector(NSText.cut(_:)), to:nil, from:self) { return true }
+                case "c":
+                    if NSApp.sendAction(#selector(NSText.copy(_:)), to:nil, from:self) { return true }
+                case "v":
+                    if NSApp.sendAction(#selector(NSText.paste(_:)), to:nil, from:self) { return true }
+                case "z":
+                    if NSApp.sendAction(Selector(("undo:")), to:nil, from:self) { return true }
+                case "a":
+                    if NSApp.sendAction(#selector(NSResponder.selectAll(_:)), to:nil, from:self) { return true }
+                default:
+                    break
+                }
+            }
+            else if (event.modifierFlags.rawValue & NSEventModifierFlags.deviceIndependentFlagsMask.rawValue) == commandShiftKey {
+                if event.charactersIgnoringModifiers == "Z" {
+                    if NSApp.sendAction(Selector(("redo:")), to:nil, from:self) { return true }
+                }
+            }
+        }
+        return super.performKeyEquivalent(with: event)
+    }
+}
+
 class HeliumPanelController : NSWindowController {
+    let userDefaults = UserDefaults.standard
 
     private var webViewController: WebViewController {
         return self.window?.contentViewController as! WebViewController
@@ -27,26 +62,25 @@ class HeliumPanelController : NSWindowController {
             updateTranslucency()
         }
     }
-    
+
     private var translucencyPreference: TranslucencyPreference = .always {
         didSet {
             updateTranslucency()
         }
     }
-    
+
     private var translucencyEnabled: Bool = false {
         didSet {
             updateTranslucency()
         }
     }
 
-    
     private  enum TranslucencyPreference {
         case always
         case mouseOver
         case mouseOutside
     }
-    
+
     private var currentlyTranslucent: Bool = false {
         didSet {
             if !NSApplication.shared().isActive {
@@ -62,21 +96,19 @@ class HeliumPanelController : NSWindowController {
             }
         }
     }
-    
-    
+
     private var panel: NSPanel! {
         get {
             return (self.window as! NSPanel)
         }
     }
-    
-    
+
     // MARK: Window lifecycle
     override func windowDidLoad() {
         panel.isFloatingPanel = true
-        
+
         let _ = AppleMediaKeyController.init()
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.didBecomeActive), name: NSNotification.Name.NSApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.willResignActive), name: NSNotification.Name.NSApplicationWillResignActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.didUpdateTitle(_:)), name: NSNotification.Name(rawValue: "HeliumUpdateTitle"), object: nil)
@@ -97,7 +129,7 @@ class HeliumPanelController : NSWindowController {
         mouseOver = true
         updateTranslucency()
     }
-    
+
     override func mouseExited(with theEvent: NSEvent) {
         mouseOver = false
         updateTranslucency()
@@ -115,21 +147,21 @@ class HeliumPanelController : NSWindowController {
     func seekBackwardNotification(_ notification: Notification) {
         self.heliumPanel.fireControlEvent(of: .left)
     }
-    
+
     // MARK : Translucency
     private func updateTranslucency() {
         currentlyTranslucent = shouldBeTranslucent()
     }
-    
+
     private func shouldBeTranslucent() -> Bool {
         /* Implicit Arguments
          * - mouseOver
          * - translucencyPreference
          * - tranlucencyEnalbed
          */
-        
+
         guard translucencyEnabled else { return false }
-        
+
         switch translucencyPreference {
         case .always:
             return true
@@ -139,8 +171,7 @@ class HeliumPanelController : NSWindowController {
             return !mouseOver
         }
     }
-    
-    
+
     private func setFloatOverFullScreenApps() {
         if UserDefaults.standard.bool(forKey: UserSetting.disabledFullScreenFloat.userDefaultsKey) {
             panel.collectionBehavior = [.moveToActiveSpace, .fullScreenAuxiliary]
@@ -149,16 +180,15 @@ class HeliumPanelController : NSWindowController {
             panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
         }
     }
-    
+
     //MARK: IBActions
-    
     private func disabledAllMouseOverPreferences(_ allMenus: [NSMenuItem]) {
         // GROSS HARD CODED
         for x in allMenus.dropFirst(2) {
             x.state = NSOffState
         }
     }
-    
+
     @IBAction private func alwaysPreferencePress(_ sender: NSMenuItem) {
         disabledAllMouseOverPreferences(sender.menu!.items)
         translucencyPreference = .always
@@ -170,13 +200,13 @@ class HeliumPanelController : NSWindowController {
         translucencyPreference = .mouseOver
         sender.state = NSOnState
     }
-    
+
     @IBAction private func outsidePreferencePress(_ sender: NSMenuItem) {
         disabledAllMouseOverPreferences(sender.menu!.items)
         translucencyPreference = .mouseOutside
         sender.state = NSOnState
     }
-    
+
     @IBAction private func translucencyPress(_ sender: NSMenuItem) {
         if sender.state == NSOnState {
             sender.state = NSOffState
@@ -187,7 +217,7 @@ class HeliumPanelController : NSWindowController {
             didEnableTranslucency()
         }
     }
-    
+
     @IBAction private func percentagePress(_ sender: NSMenuItem) {
         for button in sender.menu!.items{
             (button ).state = NSOffState
@@ -199,11 +229,11 @@ class HeliumPanelController : NSWindowController {
              UserDefaults.standard.set(alpha, forKey: UserSetting.opacityPercentage.userDefaultsKey)
         }
     }
-    
+
     @IBAction private func openLocationPress(_ sender: AnyObject) {
         didRequestLocation()
     }
-    
+
     @IBAction private func openFilePress(_ sender: AnyObject) {
         didRequestFile()
     }
@@ -211,11 +241,11 @@ class HeliumPanelController : NSWindowController {
     @IBAction private func openClipboard(_ sender: AnyObject) {
         didRequestClipboard()
     }
-    
+
     @IBAction private func floatOverFullScreenAppsToggled(_ sender: NSMenuItem) {
         sender.state = (sender.state == NSOnState) ? NSOffState : NSOnState
         UserDefaults.standard.set((sender.state == NSOffState), forKey: UserSetting.disabledFullScreenFloat.userDefaultsKey)
-        
+
         setFloatOverFullScreenApps()
     }
 
@@ -251,21 +281,19 @@ class HeliumPanelController : NSWindowController {
             panel.styleMask.insert(NSNonactivatingPanelMask)
         }
     }
-    
+
     @IBAction func setHomePage(_ sender: AnyObject){
         didRequestChangeHomepage()
     }
 
     //MARK: Actual functionality
-    
     @objc private func didUpdateTitle(_ notification: Notification) {
         if let title = notification.object as? String {
             panel.title = title
         }
     }
-    
+
     private func didRequestFile() {
-        
         let open = NSOpenPanel()
         open.allowsMultipleSelection = false
         open.canChooseFiles = true
@@ -277,18 +305,23 @@ class HeliumPanelController : NSWindowController {
             }
         }
     }
-    
-    
+
     private func didRequestLocation() {
         let alert = NSAlert()
         alert.alertStyle = NSAlertStyle.informational
         alert.messageText = "Enter Destination URL"
-        
-        let urlField = NSTextField()
+
+        let urlField = Editing()
         urlField.frame = NSRect(x: 0, y: 0, width: 300, height: 20)
         urlField.lineBreakMode = NSLineBreakMode.byTruncatingHead
         urlField.usesSingleLineMode = true
-        urlField.stringValue = self.webViewController.webView.url?.absoluteString ?? ""
+        // Load from URL before
+        var savedUrl = self.userDefaults.string(forKey: "saveURL")
+        if savedUrl == nil {
+            // default
+            savedUrl = self.webViewController.webView.url?.absoluteString ?? ""
+        }
+        urlField.stringValue = savedUrl!
 
         alert.accessoryView = urlField
         alert.addButton(withTitle: "Load")
@@ -297,35 +330,42 @@ class HeliumPanelController : NSWindowController {
             if response == NSAlertFirstButtonReturn {
                 // Load
                 let text = (alert.accessoryView as! NSTextField).stringValue
+                self.saveURL(text: text)
                 self.webViewController.loadAlmostURL(text)
             }
         })
         urlField.becomeFirstResponder()
     }
 
+    private func saveURL(text:String) {
+        self.userDefaults.set(text, forKey:"saveURL")
+        self.userDefaults.synchronize()
+    }
+
     private func didRequestClipboard() {
         if let contents = NSPasteboard.general().string(forType: NSPasteboardTypeString) {
+            self.saveURL(text: contents)
             self.webViewController.loadAlmostURL(contents)
         }
     }
-    
+
     func didRequestChangeHomepage(){
         let alert = NSAlert()
         alert.alertStyle = NSAlertStyle.informational
-        alert.messageText = "Enter new Home Page URL"
-        
-        let urlField = NSTextField()
+        alert.messageText = "Enter new Homepage URL"
+
+        let urlField = Editing()
         urlField.frame = NSRect(x: 0, y: 0, width: 300, height: 20)
         urlField.lineBreakMode = NSLineBreakMode.byTruncatingHead
         urlField.usesSingleLineMode = true
-        
+
         alert.accessoryView = urlField
         alert.addButton(withTitle: "Set")
         alert.addButton(withTitle: "Cancel")
         alert.beginSheetModal(for: self.window!, completionHandler: { response in
             if response == NSAlertFirstButtonReturn {
                 var text = (alert.accessoryView as! NSTextField).stringValue
-                
+
                 // Add prefix if necessary
                 if !(text.lowercased().hasPrefix("http://") || text.lowercased().hasPrefix("https://")) {
                     text = "http://" + text
@@ -338,13 +378,14 @@ class HeliumPanelController : NSWindowController {
                 else{
                     UserDefaults.standard.set("https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html", forKey: UserSetting.homePageURL.userDefaultsKey)
                 }
-                
+
                 // Load new Home page
                 self.webViewController.loadAlmostURL(UserDefaults.standard.string(forKey: UserSetting.homePageURL.userDefaultsKey)!)
             }
         })
+        urlField.becomeFirstResponder()
     }
-    
+
     func validateURL (_ stringURL : String) -> Bool {
         
         let urlRegEx = "((https|http)://)((\\w|-)+)(([.]|[/])((\\w|-)+))+"
@@ -352,25 +393,25 @@ class HeliumPanelController : NSWindowController {
         
         return predicate.evaluate(with: stringURL)
     }
-        
+
     @objc private func didBecomeActive() {
         panel.ignoresMouseEvents = false
     }
-    
+
     @objc private func willResignActive() {
         if currentlyTranslucent {
             panel.ignoresMouseEvents = true
         }
     }
-    
+
     private func didEnableTranslucency() {
         translucencyEnabled = true
     }
-    
+
     private func didDisableTranslucency() {
         translucencyEnabled = false
     }
-    
+
     private func didUpdateAlpha(_ newAlpha: CGFloat) {
         alpha = newAlpha / 100
     }

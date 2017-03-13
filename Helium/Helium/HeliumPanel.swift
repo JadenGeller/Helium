@@ -70,6 +70,24 @@ class HeliumPanel : NSPanel {
                 }
                 
                 self.beingDragged = false
+            case .keyDown:
+                var isSendEvent = false
+                var type: ControlEventType? = nil
+                let keyCode = event.keyCode
+                if keyCode == 123 { //Left
+                } else if keyCode == 124 { //Right
+                } else if keyCode == 125 {//Down
+                    type = .down
+                    isSendEvent = true
+                } else if keyCode == 126 { //Up
+                    type = .up
+                    isSendEvent = true
+                }
+                if isSendEvent {
+                    self.fireControlEvent(of: type!)
+                } else{
+                    super.sendEvent(event)
+                }
             default:
                 super.sendEvent(event)
             }
