@@ -57,13 +57,14 @@ class PlayList: NSObject {
 	}
 }
 
-class PlaylistViewController: NSViewController,NSTableViewDelegate {
+class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableViewDelegate {
 
 	@IBOutlet var playlistArrayController: NSArrayController!
 	@IBOutlet var playitemArrayController: NSArrayController!
 
 	@IBOutlet var playlistTableView: NSTableView!
 	@IBOutlet var playitemTableView: NSTableView!
+	@IBOutlet var playlistSplitView: NSSplitView!
 
 	//	cache playlists read and saved to defaults
 	var defaults = NSUserDefaults.standardUserDefaults()
@@ -82,6 +83,8 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate {
 	override func viewWillAppear() {
 		// cache our list before editing
 		playCache = playlists
+
+		self.playlistSplitView.setPosition(120, ofDividerAtIndex: 0)
 	}
 
 	@IBAction func addPlaylist(sender: NSButton) {
@@ -159,10 +162,10 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate {
 				let temp = PlayList(name: name, list: list)
 				playlistArrayController.addObject(temp)
 			}
-			dispatch_async(dispatch_get_main_queue()) {
+/*			dispatch_async(dispatch_get_main_queue()) {
 				self.playlistTableView.reloadData()
 			}
-		}
+*/		}
 	}
 
 	@IBOutlet weak var saveButton: NSButton!
@@ -253,6 +256,14 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate {
 		return .None
 	}
 	
+	func rearrange<T>(array: Array<T>, fromIndex: Int, toIndex: Int) -> Array<T> {
+		var arr = array
+		let element = arr.removeAtIndex(fromIndex)
+		arr.insert(element, atIndex: toIndex)
+		
+		return arr
+	}
+	
 	func tableView(tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
 		let pasteboard = info.draggingPasteboard()
 		let options = [NSPasteboardURLReadingFileURLsOnlyKey : true,
@@ -262,10 +273,10 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate {
 		var oldIndexOffset = 0
 		var newIndexOffset = 0
 
-		tableView.beginUpdates()
-
 		//	we have intra tableView drag-n-drop ?
 		info.enumerateDraggingItemsWithOptions([], forView: tableView, classes: [NSPasteboardItem.self], searchOptions: [:]) {
+			tableView.beginUpdates()
+
 			if let str = ($0.0.item as! NSPasteboardItem).stringForType("public.data"), index = Int(str) {
 				oldIndexes.append(index)
 			}
@@ -275,23 +286,51 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate {
 			for oldIndex in oldIndexes {
 				if oldIndex < row {
 					tableView.moveRowAtIndex(oldIndex + oldIndexOffset, toIndex: row - 1)
+					print("move \(oldIndex+oldIndexOffset) +> \(row-1)")
+					if tableView == self.playlistTableView {
+						self.playlists = self.rearrange(self.playlists, fromIndex: (oldIndex+oldIndexOffset), toIndex: (row-1))
+					} else {
+						let playlist = self.playlistArrayController.selectedObjects.first as! PlayList
+						let list = playlist.list
+						playlist.list = self.rearrange(list, fromIndex: (oldIndex+oldIndexOffset), toIndex: (row-1))
+					}
 					oldIndexOffset -= 1
 				} else {
 					tableView.moveRowAtIndex(oldIndex, toIndex: row + newIndexOffset)
+					print("move \(oldIndex) -> \(row+newIndexOffset)")
+					if tableView == self.playlistTableView {
+						self.playlists = self.rearrange(self.playlists, fromIndex: (oldIndex), toIndex: (row+newIndexOffset))
+					} else {
+						let playlist = self.playlistArrayController.selectedObjects.first as! PlayList
+						let list = playlist.list
+						playlist.list = self.rearrange(list, fromIndex: (oldIndex), toIndex: (row+newIndexOffset))
+					}
 					newIndexOffset += 1
 				}
 			}
 			
 			//	For playlist items renumber the rank
 			if tableView == self.playitemTableView {
-				var rank = 1
-				
+				let list = (self.playlistArrayController.selectedObjects.first as! PlayList).list as Array
+
+				for (rank, item) in list.enumerate() {
+					print("Item \(rank): \(item.rank) -> \(rank + 1)")
+					item.rank = (rank + 1)
+				}
+				tableView.reloadData()
+/*				for (item in list as! PlayItem)
+					print("(rank) -> \(item[rank].rank)")
+					rank += 1
+				}
+
 				for item in self.playitemArrayController.arrangedObjects as! [AnyObject] {
 					print("item.rank \(item.rank) -> \(rank)")
-					item.setValue(rank, forKey: "rank")
+//					item.setValue(rank, forKey: "rank")
 					rank += 1;
 				}
-			}
+*/			}
+
+			tableView.endUpdates()
 		}
 		
 		//	We have a Finder drag-n-drop of file URLs ?
@@ -334,9 +373,29 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate {
 			}
 		}
 			
-		tableView.endUpdates()
-
 		return true
 	}
-	
+
+	// MARK: TableView Datasource for playitem.rank column
+/*
+	func numberOfRowsInTableView(tableView: NSTableView) -> Int {
+		if tableView == self.playlistTableView {
+			return playitemArrayController.arrangedObjects.count
+		} else {
+			return playitemArrayController.arrangedObjects.count
+		}
+	}
+
+	func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn?, row: Int) -> AnyObject? {
+		if tableView == self.playlistTableView {
+			let name = self.playlists[row].name
+//			print("\(row).\(tableColumn?.identifier) -> \(name)")
+			return name
+		} else {
+			let rank = NSNumber.init(long: row);
+//			print("\(row).\(tableColumn?.identifier) -> \(rank)")
+			return rank
+		}
+	}
+*/
 }

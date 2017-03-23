@@ -793,6 +793,7 @@ Gw
                         <outlet property="playitemArrayController" destination="fqr-Ij-jQ9" id="pJ4-3Y-cGG"/>
                         <outlet property="playitemTableView" destination="IBh-ZH-TR3" id="bkT-Zc-tEa"/>
                         <outlet property="playlistArrayController" destination="79C-nm-Fgg" id="lkj-mu-Vli"/>
+                        <outlet property="playlistSplitView" destination="1fw-gA-tie" id="qsH-X3-vUD"/>
                         <outlet property="playlistTableView" destination="PML-r0-Bx7" id="8A5-Ov-NRE"/>
                         <outlet property="restoreButton" destination="DNq-eF-IsJ" id="cg5-Uu-58n"/>
                         <outlet property="saveButton" destination="zo4-as-HFj" id="XkG-MV-FKn"/>
@@ -806,7 +807,7 @@ Gw
                         <string>listCount</string>
                     </declaredKeys>
                     <connections>
-                        <binding destination="YAy-lX-dae" name="contentArray" keyPath="self.playlists" id="GwV-q2-3HI"/>
+                        <binding destination="YAy-lX-dae" name="contentArray" keyPath="playlists" id="jja-Kz-6IK"/>
                     </connections>
                 </arrayController>
                 <arrayController objectClassName="PlayItem" id="fqr-Ij-jQ9">
