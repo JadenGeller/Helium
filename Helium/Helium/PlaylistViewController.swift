@@ -126,15 +126,22 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
 			playlistArrayController.removeObject(selectedPlaylist)
 		}
 	}
-	
+
 	@IBAction func playPlaylist(sender: AnyObject) {
+		if let selectedPlayItem = playitemArrayController.selectedObjects.first as? PlayItem {
+			let selectedPlaylist = playlistArrayController.selectedObjects.first as? PlayList
+//			super.dismissController(sender)
+
+			print("play \(selectedPlayItem.name) from \(selectedPlaylist!.name)")
+		}
+		else
 		if let selectedPlaylist = playlistArrayController.selectedObjects.first as? PlayList {
 			if selectedPlaylist.list.count > 0 {
-				super.dismissController(sender)
-				
-				print("play \(selectedPlaylist.name) \(selectedPlaylist.list)")
-				for item in selectedPlaylist.list {
-					print("\(item.rank) \(item.name)")
+//				super.dismissController(sender)
+
+				print("play \(selectedPlaylist.name) \(selectedPlaylist.list.count)")
+				for (i,item) in selectedPlaylist.list.enumerate() {
+					print("\(i) \(item.rank) \(item.name)")
 				}
 			}
 		}
@@ -286,7 +293,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
 			for oldIndex in oldIndexes {
 				if oldIndex < row {
 					tableView.moveRowAtIndex(oldIndex + oldIndexOffset, toIndex: row - 1)
-					print("move \(oldIndex+oldIndexOffset) +> \(row-1)")
+//					print("move \(oldIndex+oldIndexOffset) +> \(row-1)")
 					if tableView == self.playlistTableView {
 						self.playlists = self.rearrange(self.playlists, fromIndex: (oldIndex+oldIndexOffset), toIndex: (row-1))
 					} else {
@@ -297,7 +304,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
 					oldIndexOffset -= 1
 				} else {
 					tableView.moveRowAtIndex(oldIndex, toIndex: row + newIndexOffset)
-					print("move \(oldIndex) -> \(row+newIndexOffset)")
+//					print("move \(oldIndex) -> \(row+newIndexOffset)")
 					if tableView == self.playlistTableView {
 						self.playlists = self.rearrange(self.playlists, fromIndex: (oldIndex), toIndex: (row+newIndexOffset))
 					} else {
@@ -308,8 +315,8 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
 					newIndexOffset += 1
 				}
 			}
-			
-			//	For playlist items renumber the rank
+
+/*			//	For playlist items renumber the rank
 			if tableView == self.playitemTableView {
 				let list = (self.playlistArrayController.selectedObjects.first as! PlayList).list as Array
 
@@ -318,18 +325,18 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
 					item.rank = (rank + 1)
 				}
 				tableView.reloadData()
-/*				for (item in list as! PlayItem)
+				for (item in list as! PlayItem)
 					print("(rank) -> \(item[rank].rank)")
 					rank += 1
 				}
 
 				for item in self.playitemArrayController.arrangedObjects as! [AnyObject] {
 					print("item.rank \(item.rank) -> \(rank)")
-//					item.setValue(rank, forKey: "rank")
+					item.setValue(rank, forKey: "rank")
 					rank += 1;
 				}
-*/			}
-
+			}
+*/
 			tableView.endUpdates()
 		}
 		
@@ -376,6 +383,18 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
 		return true
 	}
 
+/*
+	override func mouseEntered(theEvent: NSEvent) {
+		let location = theEvent.l {
+			if lastStyle == 0 { lastStyle = (self.view.window?.styleMask)! }
+			self.view.window!.titleVisibility = NSWindowTitleVisibility.Visible;
+			self.view.window?.styleMask = lastStyle
+			
+			let notif = NSNotification(name: "HeliumUpdateTitle", object: lastTitle);
+			NSNotificationCenter.defaultCenter().postNotification(notif)
+		}
+	}
+*/
 	// MARK: TableView Datasource for playitem.rank column
 /*
 	func numberOfRowsInTableView(tableView: NSTableView) -> Int {
