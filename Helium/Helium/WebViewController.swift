@@ -154,7 +154,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     
     internal func loadAlmostURL( text_in: String) {
 		var text = text_in
-        if !(text.lowercaseString.hasPrefix("http://") || text.lowercaseString.hasPrefix("https://")) {
+        if !(text.lowercaseString.hasPrefix("http://") || text.lowercaseString.hasPrefix("https://") || text.lowercaseString.hasPrefix("file://")) {
             text = "http://" + text
         }
         

@@ -91,7 +91,8 @@ class HeliumPanelController : NSWindowController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HeliumPanelController.didBecomeActive), name: NSApplicationDidBecomeActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HeliumPanelController.willResignActive), name: NSApplicationWillResignActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HeliumPanelController.didUpdateTitle(_:)), name: "HeliumUpdateTitle", object: nil)
-        
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HeliumPanelController.doPlaylistItem(_:)), name: "HeliumPlaylistItem", object: nil)
+
         setFloatOverFullScreenApps()
         if let alpha = NSUserDefaults.standardUserDefaults().objectForKey(UserSetting.OpacityPercentage.userDefaultsKey) {
             didUpdateAlpha(CGFloat(alpha as! Int))
@@ -328,7 +329,14 @@ class HeliumPanelController : NSWindowController {
 			}
         })
     }
-	
+
+	@objc private func doPlaylistItem(notification: NSNotification) {
+		if let playlist = notification.object {
+			let playlistText = (playlist as! NSURL).absoluteString
+			self.webViewController.loadAlmostURL(playlistText)
+		}
+	}
+
 	func validateURL (stringURL : String) -> Bool {
         
         let urlRegEx = "((https|http)://)((\\w|-)+)(([.]|[/])((\\w|-)+))+"

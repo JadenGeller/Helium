@@ -130,14 +130,17 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
 	@IBAction func playPlaylist(sender: AnyObject) {
 		if let selectedPlayItem = playitemArrayController.selectedObjects.first as? PlayItem {
 			let selectedPlaylist = playlistArrayController.selectedObjects.first as? PlayList
-//			super.dismissController(sender)
+			super.dismissController(sender)
 
 			print("play \(selectedPlayItem.name) from \(selectedPlaylist!.name)")
+
+			let notif = NSNotification(name: "HeliumPlaylistItem", object: selectedPlayItem.link);
+			NSNotificationCenter.defaultCenter().postNotification(notif)
 		}
 		else
 		if let selectedPlaylist = playlistArrayController.selectedObjects.first as? PlayList {
 			if selectedPlaylist.list.count > 0 {
-//				super.dismissController(sender)
+				super.dismissController(sender)
 
 				print("play \(selectedPlaylist.name) \(selectedPlaylist.list.count)")
 				for (i,item) in selectedPlaylist.list.enumerate() {
@@ -169,10 +172,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
 				let temp = PlayList(name: name, list: list)
 				playlistArrayController.addObject(temp)
 			}
-/*			dispatch_async(dispatch_get_main_queue()) {
-				self.playlistTableView.reloadData()
-			}
-*/		}
+		}
 	}
 
 	@IBOutlet weak var saveButton: NSButton!
@@ -316,27 +316,6 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
 				}
 			}
 
-/*			//	For playlist items renumber the rank
-			if tableView == self.playitemTableView {
-				let list = (self.playlistArrayController.selectedObjects.first as! PlayList).list as Array
-
-				for (rank, item) in list.enumerate() {
-					print("Item \(rank): \(item.rank) -> \(rank + 1)")
-					item.rank = (rank + 1)
-				}
-				tableView.reloadData()
-				for (item in list as! PlayItem)
-					print("(rank) -> \(item[rank].rank)")
-					rank += 1
-				}
-
-				for item in self.playitemArrayController.arrangedObjects as! [AnyObject] {
-					print("item.rank \(item.rank) -> \(rank)")
-					item.setValue(rank, forKey: "rank")
-					rank += 1;
-				}
-			}
-*/
 			tableView.endUpdates()
 		}
 		
@@ -380,41 +359,20 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
 			}
 		}
 			
+		if let selectedPlaylist = playlistArrayController.selectedObjects.first as? PlayList {
+			if selectedPlaylist.list.count > 0 {
+			
+				tableView.beginUpdates()
+				print("list \(selectedPlaylist.name) \(selectedPlaylist.list.count)")
+				for (i,item) in selectedPlaylist.list.enumerate() {
+					item.rank = (i+1)
+					print("\(i) \(item.rank) \(item.name)")
+				}
+				tableView.endUpdates()
+			}
+		}
+
 		return true
 	}
 
-/*
-	override func mouseEntered(theEvent: NSEvent) {
-		let location = theEvent.l {
-			if lastStyle == 0 { lastStyle = (self.view.window?.styleMask)! }
-			self.view.window!.titleVisibility = NSWindowTitleVisibility.Visible;
-			self.view.window?.styleMask = lastStyle
-			
-			let notif = NSNotification(name: "HeliumUpdateTitle", object: lastTitle);
-			NSNotificationCenter.defaultCenter().postNotification(notif)
-		}
-	}
-*/
-	// MARK: TableView Datasource for playitem.rank column
-/*
-	func numberOfRowsInTableView(tableView: NSTableView) -> Int {
-		if tableView == self.playlistTableView {
-			return playitemArrayController.arrangedObjects.count
-		} else {
-			return playitemArrayController.arrangedObjects.count
-		}
-	}
-
-	func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn?, row: Int) -> AnyObject? {
-		if tableView == self.playlistTableView {
-			let name = self.playlists[row].name
-//			print("\(row).\(tableColumn?.identifier) -> \(name)")
-			return name
-		} else {
-			let rank = NSNumber.init(long: row);
-//			print("\(row).\(tableColumn?.identifier) -> \(rank)")
-			return rank
-		}
-	}
-*/
 }
