@@ -395,11 +395,11 @@ CA
                                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KRs-AT-9D8">
                                         <rect key="frame" x="0.0" y="39" width="126" height="233"/>
                                         <clipView key="contentView" id="Noe-Za-eMO">
-                                            <rect key="frame" x="0.66003425488952416" y="0.038152328394971846" width="124" height="232"/>
+                                            <rect key="frame" x="1" y="0.0" width="124" height="232"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" autosaveColumns="NO" rowSizeStyle="automatic" headerView="tha-4C-kVE" viewBased="YES" id="PML-r0-Bx7">
-                                                    <rect key="frame" x="0.0" y="0.0" width="124" height="0.0"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="124" height="209"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -609,11 +609,11 @@ Gw
                                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lou-k5-Ctb">
                                         <rect key="frame" x="0.0" y="39" width="314" height="233"/>
                                         <clipView key="contentView" id="Ix6-nN-7A8">
-                                            <rect key="frame" x="0.66003425488952416" y="0.038152328394971846" width="312" height="217"/>
+                                            <rect key="frame" x="1" y="0.0" width="312" height="232"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" autosaveColumns="NO" rowSizeStyle="automatic" headerView="YTX-gj-uhH" viewBased="YES" id="IBh-ZH-TR3">
-                                                    <rect key="frame" x="0.0" y="0.0" width="312" height="0.0"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="312" height="209"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
