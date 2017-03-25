@@ -77,6 +77,16 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         if let tag = trackingTag {
             view.removeTrackingRect(tag)
         }
+        if videoFileReferencedURL {
+            let newSize = webView.bounds.size
+			let aspect = webSize.height / webSize.width
+            let magnify = newSize.width / webSize.width
+			let newHeight = newSize.width * aspect
+			let adjSize = NSMakeSize(newSize.width-1,newHeight-1)
+
+            webView.setMagnification(magnify, centeredAtPoint: NSMakePoint(adjSize.width/2.0, adjSize.height/2.0))
+			view.bounds.size = adjSize
+        }
 
         trackingTag = view.addTrackingRect(view.bounds, owner: self, userData: nil, assumeInside: false)
     }
@@ -169,7 +179,12 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     internal func loadURL(url:NSURL) {
         webView.loadRequest(NSURLRequest(URL: url))
     }
-    
+
+    func playerDidFinishPlaying(note: NSNotification) {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: AVPlayerItemDidPlayToEndTimeNotification, object: note.object)
+        print("Video Finished")
+    }
+
     func loadURLObject(urlObject : NSNotification) {
         if let url = urlObject.object as? NSURL {
             loadAlmostURL(url.absoluteString);
@@ -192,6 +207,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     }
 
     var webView = WKWebView()
+    var webSize = CGSize(width: 0,height: 0)
     var shouldRedirect: Bool {
         get {
             return !NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledMagicURLs.userDefaultsKey)
@@ -238,6 +254,9 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         }
     }
     
+    func webView(webView: WKWebView, didFinishLoad navigation: WKNavigation) {
+    }
+    
 	var videoFileReferencedURL = false
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         
@@ -246,30 +265,38 @@ class WebViewController: NSViewController, WKNavigationDelegate {
                 let percent = progress * 100
                 var title = NSString(format: "Loading... %.2f%%", percent)
                 if percent == 100 {
-					// once loaded update window title,size with video name,dimension
-					if ((self.webView.URL?.absoluteString) == nil) {
-						title = "Helium"
-					} else {
-						let url = (self.webView.URL)
-						videoFileReferencedURL = false
-						if ((url?.isFileReferenceURL()) != nil) {
-							title = url!.lastPathComponent!
-	
-							//	if it's a video file, get and set window content size to its dimentions
-							let track0 = AVURLAsset(URL:url!, options:nil).tracks[0]
-							if track0.mediaType == AVMediaTypeVideo
-							{
-								webView.window?.setContentSize(track0.naturalSize)
-								videoFileReferencedURL = true
-							}
+                    videoFileReferencedURL = false
+                    let url = (self.webView.URL)
 
-						} else {
-							title = (url?.absoluteString)!
+					// once loaded update window title,size with video name,dimension
+					if let urlTitle = (self.webView.URL?.absoluteString) {
+                        title = urlTitle
+
+                        if ((url?.isFileReferenceURL()) != nil) {
+
+                            //	if it's a video file, get and set window content size to its dimentions
+                            if let track0 : AVAssetTrack = AVURLAsset(URL:url!, options:nil).tracks[0] {
+                                if track0.mediaType == AVMediaTypeVideo {
+                                    title = url!.lastPathComponent!
+                                    webSize = track0.naturalSize
+                                    webView.window?.setContentSize(webSize)
+									webView.bounds.size = webSize
+                                    videoFileReferencedURL = true
+                                }
+                            }
+                            
+                            //  Wait for URL to finish
+                            let videoPlayer = AVPlayer(URL: url!)
+                            let item = videoPlayer.currentItem
+                            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WebViewController.playerDidFinishPlaying(_:)),
+                                                                             name: AVPlayerItemDidPlayToEndTimeNotification, object: item)
 						}
-					}
+					} else {
+                        title = "Helium"
+                    }
 					lastTitle = title as String
                 }
-                
+
                 let notif = NSNotification(name: "HeliumUpdateTitle", object: title);
                 NSNotificationCenter.defaultCenter().postNotification(notif)
             }
