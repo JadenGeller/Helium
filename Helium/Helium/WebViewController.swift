@@ -15,6 +15,14 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     var trackingTag: NSTrackingRectTag?
 
     // MARK: View lifecycle
+    func fit(childView: NSView, parentView: NSView) {
+        childView.translatesAutoresizingMaskIntoConstraints = false
+        childView.topAnchor.constraintEqualToAnchor(parentView.topAnchor).active = true
+        childView.leadingAnchor.constraintEqualToAnchor(parentView.leadingAnchor).active = true
+        childView.trailingAnchor.constraintEqualToAnchor(parentView.trailingAnchor).active = true
+        childView.bottomAnchor.constraintEqualToAnchor(parentView.bottomAnchor).active = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,6 +30,8 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         
         // Layout webview
         view.addSubview(webView)
+        fit(webView, parentView: view)
+
         webView.frame = view.bounds
         webView.autoresizingMask = [NSAutoresizingMaskOptions.ViewHeightSizable, NSAutoresizingMaskOptions.ViewWidthSizable]
         
@@ -43,32 +53,32 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         // Listen for load progress
         webView.addObserver(self, forKeyPath: "estimatedProgress", options: NSKeyValueObservingOptions.New, context: nil)
 
-		// Listen for auto hide title changes
-		NSUserDefaults.standardUserDefaults().addObserver(self, forKeyPath: UserSetting.AutoHideTitle.userDefaultsKey, options: NSKeyValueObservingOptions.New, context: nil)
+        // Listen for auto hide title changes
+        NSUserDefaults.standardUserDefaults().addObserver(self, forKeyPath: UserSetting.AutoHideTitle.userDefaultsKey, options: NSKeyValueObservingOptions.New, context: nil)
 
         clear()
     }
-	
-	var lastStyle : Int = 0
-	var lastTitle = "Helium"
-	var autoHideTitle : Bool = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.AutoHideTitle.userDefaultsKey)
+    
+    var lastStyle : Int = 0
+    var lastTitle = "Helium"
+    var autoHideTitle : Bool = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.AutoHideTitle.userDefaultsKey)
 
-	override func mouseExited(theEvent: NSEvent) {
-		if autoHideTitle {
-			if lastStyle == 0 { lastStyle = (self.view.window?.styleMask)! }
-			self.view.window!.titleVisibility = NSWindowTitleVisibility.Hidden;
-			self.view.window?.styleMask = NSBorderlessWindowMask
-		}
-	}
-	override func mouseEntered(theEvent: NSEvent) {
-		if autoHideTitle {
-			if lastStyle == 0 { lastStyle = (self.view.window?.styleMask)! }
-			self.view.window!.titleVisibility = NSWindowTitleVisibility.Visible;
-			self.view.window?.styleMask = lastStyle
+    override func mouseExited(theEvent: NSEvent) {
+        if autoHideTitle {
+            if lastStyle == 0 { lastStyle = (self.view.window?.styleMask)! }
+            self.view.window!.titleVisibility = NSWindowTitleVisibility.Hidden;
+            self.view.window?.styleMask = NSBorderlessWindowMask
+        }
+    }
+    override func mouseEntered(theEvent: NSEvent) {
+        if autoHideTitle {
+            if lastStyle == 0 { lastStyle = (self.view.window?.styleMask)! }
+            self.view.window!.titleVisibility = NSWindowTitleVisibility.Visible;
+            self.view.window?.styleMask = lastStyle
 
-			let notif = NSNotification(name: "HeliumUpdateTitle", object: lastTitle);
-			NSNotificationCenter.defaultCenter().postNotification(notif)
-		}
+            let notif = NSNotification(name: "HeliumUpdateTitle", object: lastTitle);
+            NSNotificationCenter.defaultCenter().postNotification(notif)
+        }
     }
 
     override func viewDidLayout() {
@@ -79,13 +89,13 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         }
         if videoFileReferencedURL {
             let newSize = webView.bounds.size
-			let aspect = webSize.height / webSize.width
+            let aspect = webSize.height / webSize.width
             let magnify = newSize.width / webSize.width
-			let newHeight = newSize.width * aspect
-			let adjSize = NSMakeSize(newSize.width-1,newHeight-1)
+            let newHeight = newSize.width * aspect
+            let adjSize = NSMakeSize(newSize.width-1,newHeight-1)
 
             webView.setMagnification(magnify, centeredAtPoint: NSMakePoint(adjSize.width/2.0, adjSize.height/2.0))
-			view.bounds.size = adjSize
+//            view.bounds.size = adjSize
         }
 
         trackingTag = view.addTrackingRect(view.bounds, owner: self, userData: nil, assumeInside: false)
@@ -112,21 +122,21 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     }
     
     private func zoomIn() {
-		if !videoFileReferencedURL {
-			webView.magnification += 0.1
-		}
+        if !videoFileReferencedURL {
+            webView.magnification += 0.1
+        }
      }
     
     private func zoomOut() {
-		if !videoFileReferencedURL {
-			webView.magnification -= 0.1
-		}
+        if !videoFileReferencedURL {
+            webView.magnification -= 0.1
+        }
     }
     
     private func resetZoom() {
-		if !videoFileReferencedURL {
-			webView.magnification = 1
-		}
+        if !videoFileReferencedURL {
+            webView.magnification = 1
+        }
     }
 
     @IBAction private func reloadPress(sender: AnyObject) {
@@ -146,15 +156,15 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     @IBAction private func zoomOut(sender: AnyObject) {
         zoomOut()
     }
-	
-	lazy var playlistViewController: PlaylistViewController = {
-		return self.storyboard!.instantiateControllerWithIdentifier("PlaylistViewController")
-			as! PlaylistViewController
-	}()
-	
-	@IBAction private func presentPlaylistSheet(sender: AnyObject) {
-		self.presentViewControllerAsSheet(playlistViewController)
-	}
+    
+    lazy var playlistViewController: PlaylistViewController = {
+        return self.storyboard!.instantiateControllerWithIdentifier("PlaylistViewController")
+            as! PlaylistViewController
+    }()
+    
+    @IBAction private func presentPlaylistSheet(sender: AnyObject) {
+        self.presentViewControllerAsSheet(playlistViewController)
+    }
 
     override var representedObject: AnyObject? {
         didSet {
@@ -163,7 +173,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     }
     
     internal func loadAlmostURL( text_in: String) {
-		var text = text_in
+        var text = text_in
         if !(text.lowercaseString.hasPrefix("http://") || text.lowercaseString.hasPrefix("https://") || text.lowercaseString.hasPrefix("file://")) {
             text = "http://" + text
         }
@@ -227,12 +237,12 @@ class WebViewController: NSViewController, WKNavigationDelegate {
             modified = modified.replacePrefix("http://www.dailymotion.com/video/", replacement: "http://www.dailymotion.com/embed/video/")
             modified = modified.replacePrefix("http://dai.ly/", replacement: "http://www.dailymotion.com/embed/video/")
  
-			if modified.containsString("https://youtu.be") {
-				modified = "https://www.youtube.com/embed/" + getVideoHash(urlString)
-				if urlString.containsString("?t=") {
-						modified += makeCustomStartTimeURL(urlString)
-				}
-			}
+            if modified.containsString("https://youtu.be") {
+                modified = "https://www.youtube.com/embed/" + getVideoHash(urlString)
+                if urlString.containsString("?t=") {
+                        modified += makeCustomStartTimeURL(urlString)
+                }
+            }
             
             if urlString != modified {
                 decisionHandler(WKNavigationActionPolicy.Cancel)
@@ -250,14 +260,14 @@ class WebViewController: NSViewController, WKNavigationDelegate {
             if title.isEmpty { title = "Helium" }
             let notif = NSNotification(name: "HeliumUpdateTitle", object: title);
             NSNotificationCenter.defaultCenter().postNotification(notif)
-			lastTitle = title
+            lastTitle = title
         }
     }
     
     func webView(webView: WKWebView, didFinishLoad navigation: WKNavigation) {
     }
     
-	var videoFileReferencedURL = false
+    var videoFileReferencedURL = false
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         
         if object as! NSObject == webView && keyPath == "estimatedProgress" {
@@ -268,19 +278,19 @@ class WebViewController: NSViewController, WKNavigationDelegate {
                     videoFileReferencedURL = false
                     let url = (self.webView.URL)
 
-					// once loaded update window title,size with video name,dimension
-					if let urlTitle = (self.webView.URL?.absoluteString) {
+                    // once loaded update window title,size with video name,dimension
+                    if let urlTitle = (self.webView.URL?.absoluteString) {
                         title = urlTitle
 
                         if ((url?.isFileReferenceURL()) != nil) {
 
-                            //	if it's a video file, get and set window content size to its dimentions
+                            //    if it's a video file, get and set window content size to its dimentions
                             if let track0 : AVAssetTrack = AVURLAsset(URL:url!, options:nil).tracks[0] {
                                 if track0.mediaType == AVMediaTypeVideo {
                                     title = url!.lastPathComponent!
                                     webSize = track0.naturalSize
                                     webView.window?.setContentSize(webSize)
-									webView.bounds.size = webSize
+                                    webView.bounds.size = webSize
                                     videoFileReferencedURL = true
                                 }
                             }
@@ -290,11 +300,11 @@ class WebViewController: NSViewController, WKNavigationDelegate {
                             let item = videoPlayer.currentItem
                             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WebViewController.playerDidFinishPlaying(_:)),
                                                                              name: AVPlayerItemDidPlayToEndTimeNotification, object: item)
-						}
-					} else {
+                        }
+                    } else {
                         title = "Helium"
                     }
-					lastTitle = title as String
+                    lastTitle = title as String
                 }
 
                 let notif = NSNotification(name: "HeliumUpdateTitle", object: title);
@@ -302,22 +312,22 @@ class WebViewController: NSViewController, WKNavigationDelegate {
             }
         }
 
-		if (keyPath == UserSetting.AutoHideTitle.userDefaultsKey) {
-			autoHideTitle = NSUserDefaults.standardUserDefaults().boolForKey(keyPath!)
-			if autoHideTitle {
-				if lastStyle == 0 { lastStyle = (self.view.window?.styleMask)! }
-				self.view.window!.titleVisibility = NSWindowTitleVisibility.Hidden;
-				self.view.window?.styleMask = NSBorderlessWindowMask
-			} else {
-				if lastStyle == 0 { lastStyle = (self.view.window?.styleMask)! }
-				self.view.window!.titleVisibility = NSWindowTitleVisibility.Visible;
-				self.view.window?.styleMask = lastStyle
-			}
+        if (keyPath == UserSetting.AutoHideTitle.userDefaultsKey) {
+            autoHideTitle = NSUserDefaults.standardUserDefaults().boolForKey(keyPath!)
+            if autoHideTitle {
+                if lastStyle == 0 { lastStyle = (self.view.window?.styleMask)! }
+                self.view.window!.titleVisibility = NSWindowTitleVisibility.Hidden;
+                self.view.window?.styleMask = NSBorderlessWindowMask
+            } else {
+                if lastStyle == 0 { lastStyle = (self.view.window?.styleMask)! }
+                self.view.window!.titleVisibility = NSWindowTitleVisibility.Visible;
+                self.view.window?.styleMask = lastStyle
+            }
 
-			let notif = NSNotification(name: "HeliumUpdateTitle", object: lastTitle);
-			NSNotificationCenter.defaultCenter().postNotification(notif)
-		}
-		
+            let notif = NSNotification(name: "HeliumUpdateTitle", object: lastTitle);
+            NSNotificationCenter.defaultCenter().postNotification(notif)
+        }
+        
     }
     
     //Convert a YouTube video url that starts at a certian point to popup/embedded design

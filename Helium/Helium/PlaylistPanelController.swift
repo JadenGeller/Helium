@@ -9,11 +9,11 @@
 import Foundation
 
 class PlaylistPanelController : NSWindowController {
-	
-	private var panel: NSPanel! {
-		get {
-			return (self.window as! NSPanel)
-		}
-	}
+    
+    private var panel: NSPanel! {
+        get {
+            return (self.window as! NSPanel)
+        }
+    }
 
 }

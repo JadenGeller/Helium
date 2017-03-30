@@ -11,18 +11,18 @@ import AppKit
 let optionKeyCode: UInt16 = 58
 
 struct Constants {
-	static let defaultURL = "https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html"
-	static let PlayList = "PlayList"
-	static let PlayItem = "PlayItem"
+    static let defaultURL = "https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html"
+    static let PlayList = "PlayList"
+    static let PlayItem = "PlayItem"
 }
 
 class HeliumTextView : NSTextView {
-	override func viewWillDraw() {
-		dispatch_async(dispatch_get_main_queue()) {
-			self.window?.makeFirstResponder(self)
-//			self.lockFocus()
-		}
-	}
+    override func viewWillDraw() {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.window?.makeFirstResponder(self)
+//            self.lockFocus()
+        }
+    }
 }
 
 class HeliumPanelController : NSWindowController {
@@ -91,7 +91,7 @@ class HeliumPanelController : NSWindowController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HeliumPanelController.didBecomeActive), name: NSApplicationDidBecomeActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HeliumPanelController.willResignActive), name: NSApplicationWillResignActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HeliumPanelController.didUpdateTitle(_:)), name: "HeliumUpdateTitle", object: nil)
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HeliumPanelController.doPlaylistItem(_:)), name: "HeliumPlaylistItem", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HeliumPanelController.doPlaylistItem(_:)), name: "HeliumPlaylistItem", object: nil)
 
         setFloatOverFullScreenApps()
         if let alpha = NSUserDefaults.standardUserDefaults().objectForKey(UserSetting.OpacityPercentage.userDefaultsKey) {
@@ -219,8 +219,8 @@ class HeliumPanelController : NSWindowController {
         didRequestChangeHomepage()
     }
 
-	//MARK: Actual functionality
-	
+    //MARK: Actual functionality
+    
     @objc private func didUpdateTitle(notification: NSNotification) {
         if let title = notification.object as? String {
             panel.title = title
@@ -240,104 +240,104 @@ class HeliumPanelController : NSWindowController {
             }
         }
     }
-	
+    
     private func didRequestLocation() {
         let alert = NSAlert()
         alert.alertStyle = NSAlertStyle.InformationalAlertStyle
         alert.messageText = "Enter Destination URL"
-		
-		let urlField = HeliumTextView.init(frame: NSMakeRect(0,0,300,28))
-		let urlScroll = NSScrollView.init(frame: NSMakeRect(0,0,300,28))
-		urlScroll.hasVerticalScroller = true
-		urlScroll.autohidesScrollers = true
-		urlField.drawsBackground = true
-		urlField.editable = true
+        
+        let urlField = HeliumTextView.init(frame: NSMakeRect(0,0,300,28))
+        let urlScroll = NSScrollView.init(frame: NSMakeRect(0,0,300,28))
+        urlScroll.hasVerticalScroller = true
+        urlScroll.autohidesScrollers = true
+        urlField.drawsBackground = true
+        urlField.editable = true
 
-		urlScroll.documentView = urlField
+        urlScroll.documentView = urlField
         alert.accessoryView = urlScroll
 
-		alert.addButtonWithTitle("Load")
+        alert.addButtonWithTitle("Load")
         alert.addButtonWithTitle("Cancel")
 
-		alert.beginSheetModalForWindow(self.window!, completionHandler: { response in
+        alert.beginSheetModalForWindow(self.window!, completionHandler: { response in
             if response == NSAlertFirstButtonReturn {
                 // Load
-				let view = (alert.accessoryView as! NSScrollView).documentView as! NSTextView
-				let text = view.string! as String
+                let view = (alert.accessoryView as! NSScrollView).documentView as! NSTextView
+                let text = view.string! as String
                 self.webViewController.loadAlmostURL(text)
             }
         })
     }
-	
-	func didRequestChangeHomepage(){
-		let alert = NSAlert()
+    
+    func didRequestChangeHomepage(){
+        let alert = NSAlert()
         alert.alertStyle = NSAlertStyle.InformationalAlertStyle
         alert.messageText = "Enter new Home Page URL"
         
-		let urlField = HeliumTextView.init(frame: NSMakeRect(0,0,300,28))
-		let urlScroll = NSScrollView.init(frame: NSMakeRect(0,0,300,28))
-		let urlFont = NSFont.systemFontOfSize(NSFont.systemFontSize())
-		let urlAttr = [NSFontAttributeName : urlFont]
-		let urlString = NSUserDefaults.standardUserDefaults().stringForKey(UserSetting.HomePageURL.userDefaultsKey)!
-		urlField.insertText(NSAttributedString.init(string: urlString, attributes: urlAttr), replacementRange: NSMakeRange(0, 0))
-		urlField.drawsBackground = true
-		urlField.editable = true
+        let urlField = HeliumTextView.init(frame: NSMakeRect(0,0,300,28))
+        let urlScroll = NSScrollView.init(frame: NSMakeRect(0,0,300,28))
+        let urlFont = NSFont.systemFontOfSize(NSFont.systemFontSize())
+        let urlAttr = [NSFontAttributeName : urlFont]
+        let urlString = NSUserDefaults.standardUserDefaults().stringForKey(UserSetting.HomePageURL.userDefaultsKey)!
+        urlField.insertText(NSAttributedString.init(string: urlString, attributes: urlAttr), replacementRange: NSMakeRange(0, 0))
+        urlField.drawsBackground = true
+        urlField.editable = true
 
-		urlScroll.documentView = urlField
-		alert.accessoryView = urlScroll
+        urlScroll.documentView = urlField
+        alert.accessoryView = urlScroll
 
-		alert.addButtonWithTitle("Set")
+        alert.addButtonWithTitle("Set")
         alert.addButtonWithTitle("Cancel")
-		let defaultButton = alert.addButtonWithTitle("Default")
-		defaultButton.toolTip = Constants.defaultURL
+        let defaultButton = alert.addButtonWithTitle("Default")
+        defaultButton.toolTip = Constants.defaultURL
 
-		alert.beginSheetModalForWindow(self.window!, completionHandler: { response in
-			var text : String
-			switch response {
-			case NSAlertThirdButtonReturn:
-				text = Constants.defaultURL
-				break
+        alert.beginSheetModalForWindow(self.window!, completionHandler: { response in
+            var text : String
+            switch response {
+            case NSAlertThirdButtonReturn:
+                text = Constants.defaultURL
+                break
 
-			case NSAlertFirstButtonReturn:
-				let view = (alert.accessoryView as! NSScrollView).documentView as! NSTextView
-				text = view.string! as String
-				break
-				
-			case NSAlertSecondButtonReturn:
-				return
+            case NSAlertFirstButtonReturn:
+                let view = (alert.accessoryView as! NSScrollView).documentView as! NSTextView
+                text = view.string! as String
+                break
+                
+            case NSAlertSecondButtonReturn:
+                return
 
-			default:
-				text = ""
-			}
+            default:
+                text = ""
+            }
 
-			if !text.isEmpty {
-				
-				// Add prefix if necessary
-				if !(text.lowercaseString.hasPrefix("http://") || text.lowercaseString.hasPrefix("https://")) {
-					text = "http://" + text
-				}
+            if !text.isEmpty {
+                
+                // Add prefix if necessary
+                if !(text.lowercaseString.hasPrefix("http://") || text.lowercaseString.hasPrefix("https://")) {
+                    text = "http://" + text
+                }
 
-				// Save to defaults if valid. Else, use Helium default page
-				if self.validateURL(text) {
-					NSUserDefaults.standardUserDefaults().setObject(text, forKey: UserSetting.HomePageURL.userDefaultsKey)
-				} else {
-					NSUserDefaults.standardUserDefaults().setObject(Constants.defaultURL, forKey: UserSetting.HomePageURL.userDefaultsKey)
-				}
-				
+                // Save to defaults if valid. Else, use Helium default page
+                if self.validateURL(text) {
+                    NSUserDefaults.standardUserDefaults().setObject(text, forKey: UserSetting.HomePageURL.userDefaultsKey)
+                } else {
+                    NSUserDefaults.standardUserDefaults().setObject(Constants.defaultURL, forKey: UserSetting.HomePageURL.userDefaultsKey)
+                }
+                
                 // Load new Home page
                 self.webViewController.loadAlmostURL(NSUserDefaults.standardUserDefaults().stringForKey(UserSetting.HomePageURL.userDefaultsKey)!)
-			}
+            }
         })
     }
 
-	@objc private func doPlaylistItem(notification: NSNotification) {
-		if let playlist = notification.object {
-			let playlistText = (playlist as! NSURL).absoluteString
-			self.webViewController.loadAlmostURL(playlistText)
-		}
-	}
+    @objc private func doPlaylistItem(notification: NSNotification) {
+        if let playlist = notification.object {
+            let playlistText = (playlist as! NSURL).absoluteString
+            self.webViewController.loadAlmostURL(playlistText)
+        }
+    }
 
-	func validateURL (stringURL : String) -> Bool {
+    func validateURL (stringURL : String) -> Bool {
         
         let urlRegEx = "((https|http)://)((\\w|-)+)(([.]|[/])((\\w|-)+))+"
         let predicate = NSPredicate(format:"SELF MATCHES %@", argumentArray:[urlRegEx])
