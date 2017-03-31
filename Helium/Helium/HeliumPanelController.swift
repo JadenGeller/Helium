@@ -20,7 +20,6 @@ class HeliumTextView : NSTextView {
     override func viewWillDraw() {
         dispatch_async(dispatch_get_main_queue()) {
             self.window?.makeFirstResponder(self)
-//            self.lockFocus()
         }
     }
 }
