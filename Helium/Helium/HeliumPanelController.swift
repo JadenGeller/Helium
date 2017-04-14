@@ -242,6 +242,7 @@ class HeliumPanelController : NSWindowController {
         urlField.usesSingleLineMode = true
         
         alert.accessoryView = urlField
+        alert.accessoryView.becomeFirstResponder()
         alert.addButtonWithTitle("Load")
         alert.addButtonWithTitle("Cancel")
         alert.beginSheetModalForWindow(self.window!, completionHandler: { response in
