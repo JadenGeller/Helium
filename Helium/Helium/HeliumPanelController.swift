@@ -240,6 +240,7 @@ class HeliumPanelController : NSWindowController {
         urlField.frame = NSRect(x: 0, y: 0, width: 300, height: 20)
         urlField.lineBreakMode = NSLineBreakMode.ByTruncatingHead
         urlField.usesSingleLineMode = true
+        urlField.becomeFirstResponder()
         
         alert.accessoryView = urlField
         alert.accessoryView.becomeFirstResponder()
