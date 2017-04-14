@@ -14,6 +14,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @IBOutlet weak var magicURLMenu: NSMenuItem!
     @IBOutlet weak var percentageMenu: NSMenuItem!
     @IBOutlet weak var fullScreenFloatMenu: NSMenuItem!
+	@IBOutlet weak var autoHideTitleMenu: NSMenuItem!
 
     func applicationWillFinishLaunching(notification: NSNotification) {
         NSAppleEventManager.sharedAppleEventManager().setEventHandler(
@@ -35,6 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 (button ).state = (offset == index) ? NSOnState : NSOffState
             }
         }
+		autoHideTitleMenu.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.AutoHideTitle.userDefaultsKey) ? NSOnState : NSOffState
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {

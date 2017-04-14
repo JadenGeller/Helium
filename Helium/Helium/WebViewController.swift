@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  WebViewController.swift
 //  Helium
 //
 //  Created by Jaden Geller on 4/9/15.
@@ -8,6 +8,7 @@
 
 import Cocoa
 import WebKit
+import AVFoundation
 
 class WebViewController: NSViewController, WKNavigationDelegate {
 
@@ -41,8 +42,33 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         
         // Listen for load progress
         webView.addObserver(self, forKeyPath: "estimatedProgress", options: NSKeyValueObservingOptions.New, context: nil)
-        
+
+		// Listen for auto hide title changes
+		NSUserDefaults.standardUserDefaults().addObserver(self, forKeyPath: UserSetting.AutoHideTitle.userDefaultsKey, options: NSKeyValueObservingOptions.New, context: nil)
+		
         clear()
+    }
+	
+	var lastStyle : Int = 0
+	var lastTitle = "Helium"
+	var autoHideTitle : Bool = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.AutoHideTitle.userDefaultsKey)
+
+	override func mouseExited(theEvent: NSEvent) {
+		if autoHideTitle {
+			if lastStyle == 0 { lastStyle = (self.view.window?.styleMask)! }
+			self.view.window!.titleVisibility = NSWindowTitleVisibility.Hidden;
+			self.view.window?.styleMask = NSBorderlessWindowMask
+		}
+	}
+	override func mouseEntered(theEvent: NSEvent) {
+		if autoHideTitle {
+			if lastStyle == 0 { lastStyle = (self.view.window?.styleMask)! }
+			self.view.window!.titleVisibility = NSWindowTitleVisibility.Visible;
+			self.view.window?.styleMask = lastStyle
+
+			let notif = NSNotification(name: "HeliumUpdateTitle", object: lastTitle);
+			NSNotificationCenter.defaultCenter().postNotification(notif)
+		}
     }
 
     override func viewDidLayout() {
@@ -76,17 +102,23 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     }
     
     private func zoomIn() {
-        webView.magnification += 0.1
-    }
+		if !videoFileReferencedURL {
+			webView.magnification += 0.1
+		}
+     }
     
     private func zoomOut() {
-        webView.magnification -= 0.1
+		if !videoFileReferencedURL {
+			webView.magnification -= 0.1
+		}
     }
     
     private func resetZoom() {
-        webView.magnification = 1
+		if !videoFileReferencedURL {
+			webView.magnification = 1
+		}
     }
-    
+
     @IBAction private func reloadPress(sender: AnyObject) {
         requestedReload()
     }
@@ -104,9 +136,15 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     @IBAction private func zoomOut(sender: AnyObject) {
         zoomOut()
     }
+
+    override var representedObject: AnyObject? {
+        didSet {
+        // Update the view, if already loaded.
+        }
+    }
     
-    internal func loadAlmostURL(text: String) {
-        var text = text
+    internal func loadAlmostURL( text_in: String) {
+		var text = text_in
         if !(text.lowercaseString.hasPrefix("http://") || text.lowercaseString.hasPrefix("https://")) {
             text = "http://" + text
         }
@@ -168,8 +206,8 @@ class WebViewController: NSViewController, WKNavigationDelegate {
             modified = "https://www.youtube.com/embed/" + getVideoHash(urlString)
             if urlString.containsString("?t=") {
                     modified += makeCustomStartTimeURL(urlString)
-                }
             }
+        }
             
             if urlString != modified {
                 decisionHandler(WKNavigationActionPolicy.Cancel)
@@ -187,9 +225,11 @@ class WebViewController: NSViewController, WKNavigationDelegate {
             if title.isEmpty { title = "Helium" }
             let notif = NSNotification(name: "HeliumUpdateTitle", object: title);
             NSNotificationCenter.defaultCenter().postNotification(notif)
+			lastTitle = title
         }
     }
     
+	var videoFileReferencedURL = false
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         
         if object as! NSObject == webView && keyPath == "estimatedProgress" {
@@ -197,13 +237,50 @@ class WebViewController: NSViewController, WKNavigationDelegate {
                 let percent = progress * 100
                 var title = NSString(format: "Loading... %.2f%%", percent)
                 if percent == 100 {
-                    title = "Helium"
+					// once loaded update window title,size with video name,dimension
+					if ((self.webView.URL?.absoluteString) == nil) {
+						title = "Helium"
+					} else {
+						let url = (self.webView.URL)
+						videoFileReferencedURL = false
+						if ((url?.isFileReferenceURL()) != nil) {
+							title = url!.lastPathComponent!
+	
+							//	if it's a video file, get and set window content size to its dimentions
+							let track0 = AVURLAsset(URL:url!, options:nil).tracks[0]
+							if track0.mediaType == AVMediaTypeVideo
+							{
+								webView.window?.setContentSize(track0.naturalSize)
+								videoFileReferencedURL = true
+							}
+
+						} else {
+							title = (url?.absoluteString)!
+						}
+					}
+					lastTitle = title as String
                 }
                 
                 let notif = NSNotification(name: "HeliumUpdateTitle", object: title);
                 NSNotificationCenter.defaultCenter().postNotification(notif)
             }
         }
+
+		if (keyPath == UserSetting.AutoHideTitle.userDefaultsKey) {
+			autoHideTitle = NSUserDefaults.standardUserDefaults().boolForKey(keyPath!)
+			if autoHideTitle {
+				if lastStyle == 0 { lastStyle = (self.view.window?.styleMask)! }
+				self.view.window!.titleVisibility = NSWindowTitleVisibility.Hidden;
+				self.view.window?.styleMask = NSBorderlessWindowMask
+			} else {
+				if lastStyle == 0 { lastStyle = (self.view.window?.styleMask)! }
+				self.view.window!.titleVisibility = NSWindowTitleVisibility.Visible;
+				self.view.window?.styleMask = lastStyle
+			}
+
+			let notif = NSNotification(name: "HeliumUpdateTitle", object: lastTitle);
+			NSNotificationCenter.defaultCenter().postNotification(notif)
+		}
     }
     
     //Convert a YouTube video url that starts at a certian point to popup/embedded design
@@ -269,4 +346,3 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         return hash
     }
 }
-

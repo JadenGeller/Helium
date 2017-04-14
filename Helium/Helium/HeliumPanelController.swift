@@ -193,16 +193,11 @@ class HeliumPanelController : NSWindowController {
         setFloatOverFullScreenApps()
     }
 
-	@IBAction private func hideTitle(sender: NSMenuItem) {
-	   if sender.state == NSOnState {
-	       sender.state = NSOffState
-	       panel.styleMask = NSBorderlessWindowMask
-	   }
-	   else {
-	       sender.state = NSOnState
-	       panel.styleMask = 8345
-	   }
-	}
+    var autoHideTitle : Bool = false
+    @IBAction private func autoHideTitle(sender: NSMenuItem) {
+        sender.state = (sender.state == NSOnState) ? NSOffState : NSOnState
+        NSUserDefaults.standardUserDefaults().setBool((sender.state == NSOffState), forKey: UserSetting.AutoHideTitle.userDefaultsKey)
+    }
     
     @IBAction func setHomePage(sender: AnyObject){
         didRequestChangeHomepage()
@@ -267,26 +262,44 @@ class HeliumPanelController : NSWindowController {
         alert.accessoryView = urlField
         alert.addButtonWithTitle("Set")
         alert.addButtonWithTitle("Cancel")
+		alert.addButtonWithTitle("Default")
         alert.beginSheetModalForWindow(self.window!, completionHandler: { response in
-            if response == NSAlertFirstButtonReturn {
-                var text = (alert.accessoryView as! NSTextField).stringValue
-                
-                // Add prefix if necessary
-                if !(text.lowercaseString.hasPrefix("http://") || text.lowercaseString.hasPrefix("https://")) {
-                    text = "http://" + text
-                }
+			let defaultURL = "https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html"
+			var text : String
+			switch response {
+			case NSAlertThirdButtonReturn:
+				text = defaultURL
+				break
 
-                // Save to defaults if valid. Else, use Helium default page
-                if self.validateURL(text) {
-                    NSUserDefaults.standardUserDefaults().setObject(text, forKey: UserSetting.HomePageURL.userDefaultsKey)
-                }
-                else{
-                    NSUserDefaults.standardUserDefaults().setObject("https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html", forKey: UserSetting.HomePageURL.userDefaultsKey)
-                }
-                
+			case NSAlertFirstButtonReturn:
+				text = (alert.accessoryView as! NSTextField).stringValue
+				break
+				
+			case NSAlertSecondButtonReturn:
+				text = NSUserDefaults.standardUserDefaults().stringForKey(UserSetting.HomePageURL.userDefaultsKey)!
+				break
+
+			default:
+				text = ""
+			}
+
+			if !text.isEmpty {
+				
+				// Add prefix if necessary
+				if !(text.lowercaseString.hasPrefix("http://") || text.lowercaseString.hasPrefix("https://")) {
+					text = "http://" + text
+				}
+
+				// Save to defaults if valid. Else, use Helium default page
+				if self.validateURL(text) {
+					NSUserDefaults.standardUserDefaults().setObject(text, forKey: UserSetting.HomePageURL.userDefaultsKey)
+				} else {
+					NSUserDefaults.standardUserDefaults().setObject(defaultURL, forKey: UserSetting.HomePageURL.userDefaultsKey)
+				}
+				
                 // Load new Home page
                 self.webViewController.loadAlmostURL(NSUserDefaults.standardUserDefaults().stringForKey(UserSetting.HomePageURL.userDefaultsKey)!)
-            }
+			}
         })
     }
     
