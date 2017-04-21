@@ -15,22 +15,27 @@ struct k {
     static let name = "name"
     static let list = "list"
     static let link = "link"
+	static let time = "time"
     static let rank = "rank"
 }
 
 class PlayItem : NSObject {
     var name : String = k.item
     var link : NSURL = NSURL.init(string: "http://")!
-    var rank = 0
+	var time : NSTimeInterval
+	var rank : Int
     
     override init() {
         name = k.item
         link = NSURL.init(string: "http://")!
+		time = 0.0
+		rank = 0
         super.init()
     }
-    init(name:String, link:NSURL, rank:Int) {
+	init(name:String, link:NSURL, time:NSTimeInterval, rank:Int) {
         self.name = name
         self.link = link
+		self.time = time
         self.rank = rank
         super.init()
     }
@@ -89,7 +94,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
 
     @IBAction func addPlaylist(sender: NSButton) {
         if let play = playlistArrayController.selectedObjects.first as? PlayList {
-            let item = PlayItem(name:"item#",link:NSURL.init(string: "http://")!,rank:play.list.count + 1);
+			let item = PlayItem(name:"item#",link:NSURL.init(string: "http://")!,time:0.0,rank:play.list.count + 1);
             let temp = NSString(format:"%p",item) as String
             item.name += String(temp.characters.suffix(3))
 
@@ -163,9 +168,10 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                     let item = playitem as Dictionary <String,AnyObject>
                     let name = item[k.name] as! String
                     let path = item[k.link] as! String
+					let time = item[k.time] as? NSTimeInterval
                     let link = NSURL.init(string: path)
                     let rank = item[k.rank] as! Int
-                    let temp = PlayItem(name:name, link:link!, rank:rank)
+					let temp = PlayItem(name:name, link:link!, time:time!, rank:rank)
                     list.append(temp)
                 }
                 let name = play[k.name] as! String
@@ -182,7 +188,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         for playlist in playArray {
             var list = Array<AnyObject>()
             for playitem in playlist.list {
-                let item : [String:AnyObject] = [k.name:playitem.name, k.link:playitem.link.absoluteString, k.rank:playitem.rank]
+				let item : [String:AnyObject] = [k.name:playitem.name, k.link:playitem.link.absoluteString, k.time:playitem.time, k.rank:playitem.rank]
                 list.append(item)
             }
             temp.append([k.name:playlist.name, k.list:list])
@@ -271,7 +277,17 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         return arr
     }
     
-    func tableView(tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
+	func metadataDictionaryForFileAt(fileName: String) -> Dictionary<NSObject,AnyObject>? {
+
+		let item = MDItemCreate(kCFAllocatorDefault, fileName)
+		if ( item == nil) { return nil };
+		
+		let list = MDItemCopyAttributeNames(item)
+		let resDict = MDItemCopyAttributes(item,list) as Dictionary
+		return resDict
+	}
+
+	func tableView(tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
         let pasteboard = info.draggingPasteboard()
         let options = [NSPasteboardURLReadingFileURLsOnlyKey : true,
                        NSPasteboardURLReadingContentsConformToTypesKey : [kUTTypeMovie as String]]
@@ -342,8 +358,12 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                 if itemURL.isFileReferenceURL() {
                     let fileURL : NSURL? = itemURL.filePathURL
                     let path = fileURL!.absoluteString//.stringByRemovingPercentEncoding
-                    let item = PlayItem(name:itemURL.lastPathComponent.stringByRemovingPercentEncoding!,
+					let attr = metadataDictionaryForFileAt((fileURL?.path)!)
+//					print("attr \(attr)")
+					let time = attr?[kMDItemDurationSeconds] as! NSTimeInterval
+                    let item = PlayItem(name:(itemURL.URLByDeletingPathExtension!!.lastPathComponent!.stringByRemovingPercentEncoding!),
                                         link:NSURL.init(string: path)!,
+                                        time:time,
                                         rank:play!.list.count + 1)
                     playitemArrayController.insertObject(item, atArrangedObjectIndex: row + newIndexOffset)
                     newIndexOffset += 1
