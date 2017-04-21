@@ -16,7 +16,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @IBOutlet weak var fullScreenFloatMenu: NSMenuItem!
     @IBOutlet weak var autoHideTitleMenu: NSMenuItem!
 
-    func applicationWillFinishLaunching(notification: NSNotification) {
+	override class func initialize() {
+		let toHMS = hmsTransformer()
+		NSValueTransformer.setValueTransformer(toHMS, forName: "hmsTransformer")
+	}
+
+	func applicationWillFinishLaunching(notification: NSNotification) {
         NSAppleEventManager.sharedAppleEventManager().setEventHandler(
             self,
             andSelector: #selector(AppDelegate.handleURLEvent(_:withReply:)),
@@ -25,6 +30,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         )
     }
 
+	var mdQuery = NSMetadataQuery()
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         magicURLMenu.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledMagicURLs.userDefaultsKey) ? NSOffState : NSOnState
         
