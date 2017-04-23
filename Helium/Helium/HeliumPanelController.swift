@@ -252,17 +252,17 @@ class HeliumPanelController : NSWindowController {
         setFloatOverFullScreenApps()
     }
 
-	@IBAction private func hideTitle(_ sender: NSMenuItem) {
-	   if sender.state == NSOnState {
-	       sender.state = NSOffState
-	   } else {
-	       sender.state = NSOnState
-	   }
+    @IBAction private func hideTitle(_ sender: NSMenuItem) {
+        if sender.state == NSOnState {
+            sender.state = NSOffState
+        } else {
+            sender.state = NSOnState
+        }
 
-       UserDefaults.standard.set(sender.state, forKey: UserSetting.hideTitle.userDefaultsKey)
-       self.setupTitleVisibility()
-	}
-    
+        UserDefaults.standard.set(sender.state, forKey: UserSetting.hideTitle.userDefaultsKey)
+        self.setupTitleVisibility()
+    }
+
     @IBAction private func openFullScreen(_ sender: NSMenuItem) {
         NSLog("Fatal Error: Event Tap could not be created");
         if let screen = window?.screen ?? NSScreen.main() {
