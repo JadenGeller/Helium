@@ -45,6 +45,9 @@ class Editing: NSTextField {
 }
 
 class HeliumPanelController : NSWindowController {
+    var isFullScreen = false
+    var backupFrame : NSRect = NSRect.zero
+
     let userDefaults = UserDefaults.standard
 
     private var webViewController: WebViewController {
@@ -259,6 +262,19 @@ class HeliumPanelController : NSWindowController {
        UserDefaults.standard.set(sender.state, forKey: UserSetting.hideTitle.userDefaultsKey)
        self.setupTitleVisibility()
 	}
+    
+    @IBAction private func openFullScreen(_ sender: NSMenuItem) {
+        NSLog("Fatal Error: Event Tap could not be created");
+        if let screen = window?.screen ?? NSScreen.main() {
+            self.isFullScreen = !self.isFullScreen
+            if self.isFullScreen {
+                self.backupFrame = (window?.frame)!
+                window?.setFrame(screen.visibleFrame, display: true, animate: true)
+            } else {
+                window?.setFrame(self.backupFrame, display: true, animate: true)
+            }
+        }
+    }
 
     @IBAction func activateByWindowToggled(_ sender: NSMenuItem) {
         sender.state = (sender.state == NSOnState) ? NSOffState : NSOnState
