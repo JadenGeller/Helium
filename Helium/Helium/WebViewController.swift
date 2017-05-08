@@ -151,34 +151,75 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         }
     }
     
-    // Redirect Hulu and YouTube to pop-out videos
+    // MARK: - Redirect magic urls
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
-        if shouldRedirect, let url = navigationAction.request.url {
-            let urlString = url.absoluteString
-            var modified = urlString
-            modified = modified.replacePrefix("https://www.youtube.com/watch?v=", replacement: modified.contains("list") ? "https://www.youtube.com/embed/?v=" : "https://www.youtube.com/embed/")
-            modified = modified.replacePrefix("https://vimeo.com/", replacement: "http://player.vimeo.com/video/")
-            modified = modified.replacePrefix("http://v.youku.com/v_show/id_", replacement: "http://player.youku.com/embed/")
-            modified = modified.replacePrefix("https://www.twitch.tv/", replacement: "https://player.twitch.tv?html5&channel=")
-            modified = modified.replacePrefix("http://www.dailymotion.com/video/", replacement: "http://www.dailymotion.com/embed/video/")
-            modified = modified.replacePrefix("http://dai.ly/", replacement: "http://www.dailymotion.com/embed/video/")
- 
-        if modified.contains("https://youtu.be") {
-            modified = "https://www.youtube.com/embed/" + getVideoHash(urlString)
-            if urlString.contains("?t=") {
-                    modified += makeCustomStartTimeURL(urlString)
-                }
-            }
-            
-            if urlString != modified {
-                decisionHandler(WKNavigationActionPolicy.cancel)
-                loadURL(URL(string: modified)!)
-                return
-            }
-        }
-        
-        decisionHandler(WKNavigationActionPolicy.allow)
+		if shouldRedirect {
+			if let url = navigationAction.request.url, let host = url.host {
+				let urlString = url.absoluteString
+				var modified = URLComponents()
+				modified.scheme = url.scheme
+
+				// MARK: YouTube
+				if host.contains("youtu") {
+					// (video id) (hours)?(minutes)?(seconds)
+					let YTRegExp = try! NSRegularExpression(pattern: "(?:https?://)?(?:www\\.)?(?:youtube\\.com/watch\\?v=|youtu.be/)([\\w\\_\\-]+)(?:[&?]t=(?:(\\d+)h)?(?:(\\d+)m)?(?:(\\d+)s?))?")
+					if let match = YTRegExp.firstMatch(in: urlString, range: urlString.nsrange) {
+						modified.host = "youtube.com"
+						modified.path = "/embed/" + urlString.substring(with: match.rangeAt(1))!
+
+						var start = 0
+						var multiplier = 60 * 60
+						for idx in 2...4 {
+							if let tStr = urlString.substring(with: match.rangeAt(idx)), let tInt = Int(tStr) {
+								start += tInt * multiplier
+							}
+							multiplier /= 60
+						}
+						if start != 0 {
+							modified.query = "start=" + String(start)
+						}
+					}
+				} else // MARK: Twitch
+					if host.contains("twitch.tv") {
+					let TwitchRegExp = try! NSRegularExpression(pattern: "https?://(?:www\\.)?twitch\\.tv/([\\w\\d\\_]+)(?:/(\\d+))?");
+					if let match = TwitchRegExp.firstMatch(in: urlString, range: urlString.nsrange), let channel = urlString.substring(with:match.rangeAt(1)) {
+						switch(channel) {
+						case "directory", "products", "p", "user":
+							break
+						case "videos":
+							if let idString = urlString.substring(with:match.rangeAt(2)) {
+								modified.host = "player.twitch.tv"
+								modified.query = "html5&video=v" + idString
+							}
+						default:
+							modified.host = "player.twitch.tv"
+							modified.query = "html5&channel=" + channel
+						}
+					}
+				} else {
+					var urlStringModified = urlString
+
+					// MARK: Vimeo, Youku, Dailymotion
+					urlStringModified = urlStringModified.replacingOccurrences(of: "(?:https?://)?(?:www\\.)?vimeo\\.com/(\\d+)", with: "https://player.vimeo.com/video/$1", options: .regularExpression)
+
+					urlStringModified = urlStringModified.replacePrefix("http://v.youku.com/v_show/id_", replacement: "http://player.youku.com/embed/")
+					urlStringModified = urlStringModified.replacePrefix("http://www.dailymotion.com/video/", replacement: "http://www.dailymotion.com/embed/video/")
+					urlStringModified = urlStringModified.replacePrefix("http://dai.ly/", replacement: "http://www.dailymotion.com/embed/video/")
+
+					if urlStringModified != urlString {
+						modified = URLComponents(string: urlStringModified)!
+					}
+				}
+
+				if (modified.host != nil) {
+					decisionHandler(WKNavigationActionPolicy.cancel)
+					loadURL(modified.url!)
+					return
+				}
+			}
+		}
+		decisionHandler(WKNavigationActionPolicy.allow)
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation) {
@@ -204,69 +245,6 @@ class WebViewController: NSViewController, WKNavigationDelegate {
                 NotificationCenter.default.post(notif)
             }
         }
-    }
-    
-    //Convert a YouTube video url that starts at a certian point to popup/embedded design
-    // (i.e. ...?t=1m2s --> ?start=62)
-    fileprivate func makeCustomStartTimeURL(_ url: String) -> String {
-        let startTime = "?t="
-        let idx = url.indexOf(startTime)
-        if idx == -1 {
-            return url
-        } else {
-            var returnURL = url
-            let timing = url.substring(from: url.characters.index(url.startIndex, offsetBy: idx+3))
-            let hoursDigits = timing.indexOf("h")
-            var minutesDigits = timing.indexOf("m")
-            let secondsDigits = timing.indexOf("s")
-            
-            returnURL.removeSubrange(returnURL.characters.index(returnURL.startIndex, offsetBy: idx+1) ..< returnURL.endIndex)
-            returnURL = "?start="
-            
-            //If there are no h/m/s params and only seconds (i.e. ...?t=89)
-            if (hoursDigits == -1 && minutesDigits == -1 && secondsDigits == -1) {
-                let onlySeconds = url.substring(from: url.characters.index(url.startIndex, offsetBy: idx+3))
-                returnURL = returnURL + onlySeconds
-                return returnURL
-            }
-            
-            //Do check to see if there is an hours parameter.
-            var hours = 0
-            if (hoursDigits != -1) {
-                hours = Int(timing.substring(to: timing.characters.index(timing.startIndex, offsetBy: hoursDigits)))!
-            }
-            
-            //Do check to see if there is a minutes parameter.
-            var minutes = 0
-            if (minutesDigits != -1) {
-                minutes = Int(timing.substring(with: timing.characters.index(timing.startIndex, offsetBy: hoursDigits+1) ..< timing.characters.index(timing.startIndex, offsetBy: minutesDigits)))!
-            }
-            
-            if minutesDigits == -1 {
-                minutesDigits = hoursDigits
-            }
-            
-            //Do check to see if there is a seconds parameter.
-            var seconds = 0
-            if (secondsDigits != -1) {
-                seconds = Int(timing.substring(with: timing.characters.index(timing.startIndex, offsetBy: minutesDigits+1) ..< timing.characters.index(timing.startIndex, offsetBy: secondsDigits)))!
-            }
-            
-            //Combine all to make seconds.
-            let secondsFinal = 3600*hours + 60*minutes + seconds
-            returnURL = returnURL + String(secondsFinal)
-            
-            return returnURL
-        }
-    }
-    
-    //Helper function to return the hash of the video for encoding a popout video that has a start time code.
-    fileprivate func getVideoHash(_ url: String) -> String {
-        let startOfHash = url.indexOf(".be/")
-        let endOfHash = url.indexOf("?t")
-        let hash = url.substring(with: url.characters.index(url.startIndex, offsetBy: startOfHash+4) ..<
-                                                        (endOfHash == -1 ? url.endIndex : url.characters.index(url.startIndex, offsetBy: endOfHash)))
-        return hash
     }
 }
 
