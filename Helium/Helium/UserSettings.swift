@@ -13,6 +13,7 @@ internal enum UserSetting {
     case DisabledFullScreenFloat
     case OpacityPercentage
     case HomePageURL
+    case TitleBarAppearence
 
     var userDefaultsKey: String {
         switch self {
@@ -20,6 +21,7 @@ internal enum UserSetting {
         case .DisabledFullScreenFloat: return "disabledFullScreenFloat"
         case .OpacityPercentage: return "opacityPercentage"
         case .HomePageURL: return "homePageURL"
+        case .TitleBarAppearence: return "titleBarAppearence"
         }
     }
 }

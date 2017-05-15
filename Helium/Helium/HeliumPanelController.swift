@@ -37,12 +37,24 @@ class HeliumPanelController : NSWindowController {
             updateTranslucency()
         }
     }
+    
+    private var titleBarAppereance: TitleBarAppearence = .AlwaysShow {
+        didSet {
+            updateTitleBar()
+        }
+    }
 
     
     private  enum TranslucencyPreference {
         case Always
         case MouseOver
         case MouseOutside
+    }
+    
+    private  enum TitleBarAppearence {
+        case AlwaysShow
+        case Nevershow
+        case HoverShow
     }
     
     private var currentlyTranslucent: Bool = false {
@@ -81,17 +93,33 @@ class HeliumPanelController : NSWindowController {
         if let alpha = NSUserDefaults.standardUserDefaults().objectForKey(UserSetting.OpacityPercentage.userDefaultsKey) {
             didUpdateAlpha(CGFloat(alpha as! Int))
         }
+        self.window!.styleMask |= NSFullSizeContentViewWindowMask;
+    }
+    
+    private func updateTitleBar() {
+        if(titleBarAppereance == .AlwaysShow) {
+            self.window!.titleVisibility = .Visible
+            self.window!.titlebarAppearsTransparent = false
+        } else if(titleBarAppereance == .Nevershow) {
+            self.window!.titleVisibility = .Hidden
+            self.window!.titlebarAppearsTransparent = true
+        } else {
+            self.window!.titleVisibility = mouseOver ? .Visible : .Hidden
+            self.window!.titlebarAppearsTransparent = !mouseOver
+        }
     }
 
     // MARK : Mouse events
     override func mouseEntered(theEvent: NSEvent) {
         mouseOver = true
         updateTranslucency()
+        updateTitleBar()
     }
     
     override func mouseExited(theEvent: NSEvent) {
         mouseOver = false
         updateTranslucency()
+        updateTitleBar()
     }
     
     // MARK : Translucency
@@ -137,6 +165,12 @@ class HeliumPanelController : NSWindowController {
         }
     }
     
+    private func disabledAllTitleBarPreferences(allMenus: [NSMenuItem]) {
+        // GROSS HARD CODED :(
+        for x in allMenus.dropFirst(0) {
+            x.state = NSOffState
+        }
+    }
     @IBAction private func alwaysPreferencePress(sender: NSMenuItem) {
         disabledAllMouseOverPreferences(sender.menu!.itemArray)
         translucencyPreference = .Always
@@ -176,6 +210,24 @@ class HeliumPanelController : NSWindowController {
              didUpdateAlpha(CGFloat(alpha))
              NSUserDefaults.standardUserDefaults().setInteger(alpha, forKey: UserSetting.OpacityPercentage.userDefaultsKey)
         }
+    }
+    
+    @IBAction private func alwaysTitlePreferencePress(sender: NSMenuItem) {
+        disabledAllTitleBarPreferences(sender.menu!.itemArray)
+        titleBarAppereance = TitleBarAppearence.AlwaysShow
+        sender.state = NSOnState
+    }
+    
+    @IBAction private func neverTitlePreferencePress(sender: NSMenuItem) {
+        disabledAllTitleBarPreferences(sender.menu!.itemArray)
+        titleBarAppereance = TitleBarAppearence.Nevershow
+        sender.state = NSOnState
+    }
+    
+    @IBAction private func onHoverTitlePreferencePress(sender: NSMenuItem) {
+        disabledAllTitleBarPreferences(sender.menu!.itemArray)
+        titleBarAppereance = TitleBarAppearence.HoverShow
+        sender.state = NSOnState
     }
     
     @IBAction private func openLocationPress(sender: AnyObject) {
@@ -242,7 +294,7 @@ class HeliumPanelController : NSWindowController {
         urlField.usesSingleLineMode = true
         
         alert.accessoryView = urlField
-        alert.accessoryView.becomeFirstResponder()
+        alert.accessoryView!.becomeFirstResponder()
         alert.addButtonWithTitle("Load")
         alert.addButtonWithTitle("Cancel")
         alert.beginSheetModalForWindow(self.window!, completionHandler: { response in

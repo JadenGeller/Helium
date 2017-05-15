@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16E195" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -129,12 +129,28 @@ CA
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Appearance" id="HyV-fh-RgO">
                                     <items>
- <menuItem title="Title Bar" state="on" keyEquivalent="b" id="ADo-ja-cxb" userLabel="Title Bar">
-                                            <connections>
-                                                <action selector="hideTitle:" target="Ady-hI-5gd" id="dlp-Lh-5pz"/>
-                                            </connections>
+                                        <menuItem title="Title Bar" id="IAB-l6-1vq">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Title Bar" id="fLD-NV-8f3">
+                                                <items>
+                                                    <menuItem title="Always Show" state="on" keyEquivalent="G" id="GCi-xy-L8Z">
+                                                        <connections>
+                                                            <action selector="alwaysTitlePreferencePress:" target="Ady-hI-5gd" id="zAK-gI-niT"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Always Hide" keyEquivalent="H" id="npW-su-qns">
+                                                        <connections>
+                                                            <action selector="neverTitlePreferencePress:" target="Ady-hI-5gd" id="OIO-cj-6gQ"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Show On Hover" keyEquivalent="J" id="iQL-Uk-9kb">
+                                                        <connections>
+                                                            <action selector="onHoverTitlePreferencePress:" target="Ady-hI-5gd" id="AHd-wH-W4D"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
                                         </menuItem>
-
                                         <menuItem title="Translucency" id="RVf-yr-XjB" userLabel="Translucency">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Translucency" systemMenu="window" id="fPu-ZA-vuX">
@@ -326,7 +342,7 @@ CA
                 <customObject id="sQQ-SA-Rgm" customClass="SUUpdater"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="0.0"/>
+            <point key="canvasLocation" x="66" y="-99"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
