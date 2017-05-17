@@ -87,16 +87,16 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         if let tag = trackingTag {
             view.removeTrackingRect(tag)
         }
+
         if videoFileReferencedURL {
             let newSize = webView.bounds.size
             let aspect = webSize.height / webSize.width
             let magnify = newSize.width / webSize.width
             let newHeight = newSize.width * aspect
             let adjSize = NSMakeSize(newSize.width-1,newHeight-1)
-
-            webView.setMagnification(magnify, centeredAtPoint: NSMakePoint(adjSize.width/2.0, adjSize.height/2.0))
-//            view.bounds.size = adjSize
-        }
+			webView.setMagnification((magnify > 1 ? magnify : 1), centeredAtPoint: NSMakePoint(adjSize.width/2.0, adjSize.height/2.0))
+            view.setBoundsSize(adjSize)
+		}
 
         trackingTag = view.addTrackingRect(view.bounds, owner: self, userData: nil, assumeInside: false)
     }
