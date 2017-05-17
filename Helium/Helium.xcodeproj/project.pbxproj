@@ -18,12 +18,11 @@
 		4D867CD41AD6796A00681331 /* HeliumPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D867CD31AD6796A00681331 /* HeliumPanelController.swift */; };
 		4D8DAEAC1C3A41F300B212EC /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA3EA011BE4CEC9001A471F /* UserSettings.swift */; };
 		4D8DAEB31C3A427D00B212EC /* HeliumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8DAEB11C3A427D00B212EC /* HeliumTests.swift */; };
-		4D8DAEB41C3A427D00B212EC /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4D8DAEB21C3A427D00B212EC /* Info.plist */; };
 		5B75B5121C9A13D600475921 /* StringHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B75B5111C9A13D600475921 /* StringHelpers.swift */; };
 		5B75B5131C9A13D600475921 /* StringHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B75B5111C9A13D600475921 /* StringHelpers.swift */; };
 		B34C1EC31ADE3B520094ADBA /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B34C1EC21ADE3B520094ADBA /* Sparkle.framework */; };
 		B34C1EC61ADE3CBE0094ADBA /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = B34C1EC51ADE3CBE0094ADBA /* dsa_pub.pem */; };
-		B34C1EC91ADE3F980094ADBA /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B34C1EC21ADE3B520094ADBA /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B34C1EC91ADE3F980094ADBA /* Sparkle.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = B34C1EC21ADE3B520094ADBA /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,14 +54,15 @@
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B34C1EC81ADE3F870094ADBA /* CopyFiles */ = {
+		B34C1EC81ADE3F870094ADBA /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B34C1EC91ADE3F980094ADBA /* Sparkle.framework in CopyFiles */,
+				B34C1EC91ADE3F980094ADBA /* Sparkle.framework in Copy Files */,
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -191,8 +191,7 @@
 				4D8DAEB11C3A427D00B212EC /* HeliumTests.swift */,
 				4D8DAEB21C3A427D00B212EC /* Info.plist */,
 			);
-			name = HeliumTests;
-			path = "../../../../Downloads/Helium-master/Helium/HeliumTests";
+			path = HeliumTests;
 			sourceTree = "<group>";
 		};
 		B34C1EC41ADE3B5E0094ADBA /* Frameworks */ = {
@@ -238,7 +237,7 @@
 				4D867CAD1AD6781200681331 /* Sources */,
 				4D867CAE1AD6781200681331 /* Frameworks */,
 				4D867CAF1AD6781200681331 /* Resources */,
-				B34C1EC81ADE3F870094ADBA /* CopyFiles */,
+				B34C1EC81ADE3F870094ADBA /* Copy Files */,
 				27199AC21BE422AC00E02297 /* Embed App Extensions */,
 			);
 			buildRules = (
@@ -277,12 +276,13 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Jaden Geller";
 				TargetAttributes = {
 					27199AAF1BE422AC00E02297 = {
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = PLYLXBYCEQ;
+						LastSwiftMigration = 0830;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
 								enabled = 1;
@@ -291,7 +291,7 @@
 					};
 					4D867CB01AD6781200681331 = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = PLYLXBYCEQ;
+						LastSwiftMigration = 0830;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
 								enabled = 0;
@@ -300,6 +300,8 @@
 					};
 					4D867CC21AD6781200681331 = {
 						CreatedOnToolsVersion = 6.3;
+						DevelopmentTeam = S45U87UZN5;
+						LastSwiftMigration = 0830;
 						TestTargetID = 4D867CB01AD6781200681331;
 					};
 				};
@@ -348,7 +350,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D8DAEB41C3A427D00B212EC /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -434,6 +435,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -451,6 +453,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -467,8 +470,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
@@ -512,8 +517,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
@@ -532,18 +539,19 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
 		};
 		4D867CCE1AD6781200681331 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "3rd Party Mac Developer Application";
 				COMBINE_HIDPI_IMAGES = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Helium",
@@ -556,18 +564,19 @@
 				PROVISIONING_PROFILE = "270b78d3-965c-43ac-abb1-1c22612b453c";
 				SWIFT_OBJC_BRIDGING_HEADER = "Helium/Helium-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		4D867CCF1AD6781200681331 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "3rd Party Mac Developer Application";
 				COMBINE_HIDPI_IMAGES = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Helium",
@@ -579,6 +588,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "270b78d3-965c-43ac-abb1-1c22612b453c";
 				SWIFT_OBJC_BRIDGING_HEADER = "Helium/Helium-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -601,6 +611,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.JadenGeller.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Helium.app/Contents/MacOS/Helium";
 			};
 			name = Debug;
@@ -619,6 +630,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.JadenGeller.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Helium.app/Contents/MacOS/Helium";
 			};
 			name = Release;
