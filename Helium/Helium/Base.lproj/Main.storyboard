@@ -142,14 +142,13 @@ CA
                                                     <menuItem title="Auto-hide" keyEquivalent="b" id="4b7-4E-I4E">
                                                         <connections>
                                                             <action selector="autoHideTitle:" target="Ady-hI-5gd" id="GhW-xc-Upg"/>
-                                                            <binding destination="H0D-H0-Cmz" name="value" keyPath="values.autoHideTitle" id="VIq-Be-HlC"/>
+                                                            <binding destination="H0D-H0-Cmz" name="value" keyPath="values.autoHideTitle" id="Muj-yF-mGf"/>
                                                         </connections>
                                                     </menuItem>
                                                 </items>
                                             </menu>
                                             <connections>
                                                 <action selector="hideTitle:" target="Ady-hI-5gd" id="dlp-Lh-5pz"/>
-                                                <binding destination="H0D-H0-Cmz" name="value" keyPath="values.autoHideTitle" id="LJF-zz-gf5"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Translucency" id="RVf-yr-XjB" userLabel="Translucency">
