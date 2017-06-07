@@ -266,21 +266,21 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     }
     
     private func zoomIn() {
-//        if !videoFileReferencedURL {
+        if !videoFileReferencedURL {
             webView.magnification += 0.1
-  //      }
+        }
      }
     
     private func zoomOut() {
-//        if !videoFileReferencedURL {
+        if !videoFileReferencedURL {
             webView.magnification -= 0.1
-//        }
+        }
     }
     
     private func resetZoom() {
-//        if !videoFileReferencedURL {
+        if !videoFileReferencedURL {
             webView.magnification = 1
-//        }
+        }
     }
 
     @IBAction private func reloadPress(sender: AnyObject) {
