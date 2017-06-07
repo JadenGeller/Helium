@@ -26,7 +26,7 @@ class HeliumTextView : NSTextView {
 
 class HeliumPanelController : NSWindowController {
 
-    private var webViewController: WebViewController {
+    var webViewController: WebViewController {
         get {
             return self.window?.contentViewController as! WebViewController
         }
