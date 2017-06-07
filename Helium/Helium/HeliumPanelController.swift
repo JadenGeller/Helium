@@ -40,26 +40,26 @@ class HeliumPanelController : NSWindowController {
         }
     }
     
-    private var translucencyPreference: TranslucencyPreference = .Always {
+    var translucencyPreference: TranslucencyPreference = .Always {
         didSet {
             updateTranslucency()
         }
     }
     
-    private var translucencyEnabled: Bool = false {
+    var translucencyEnabled: Bool = false {
         didSet {
             updateTranslucency()
         }
     }
 
     
-    private  enum TranslucencyPreference {
+    enum TranslucencyPreference {
         case Always
         case MouseOver
         case MouseOutside
     }
     
-    private var currentlyTranslucent: Bool = false {
+    var currentlyTranslucent: Bool = false {
         didSet {
             if !NSApplication.sharedApplication().active {
                 panel.ignoresMouseEvents = currentlyTranslucent
@@ -96,6 +96,9 @@ class HeliumPanelController : NSWindowController {
         if let alpha = NSUserDefaults.standardUserDefaults().objectForKey(UserSetting.OpacityPercentage.userDefaultsKey) {
             didUpdateAlpha(CGFloat(alpha as! Int))
         }
+
+		//	Sync translucencyEnabled to preference; all delegate sync'd the menu state
+		translucencyEnabled = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.Translucency.userDefaultsKey)
     }
 
     // MARK : Mouse events
@@ -152,36 +155,38 @@ class HeliumPanelController : NSWindowController {
         }
     }
     
-    @IBAction private func alwaysPreferencePress(sender: NSMenuItem) {
+    @IBAction func alwaysPreferencePress(sender: NSMenuItem) {
         disabledAllMouseOverPreferences(sender.menu!.itemArray)
         translucencyPreference = .Always
         sender.state = NSOnState
     }
     
-    @IBAction private func overPreferencePress(sender: NSMenuItem) {
+    @IBAction func overPreferencePress(sender: NSMenuItem) {
         disabledAllMouseOverPreferences(sender.menu!.itemArray)
         translucencyPreference = .MouseOver
         sender.state = NSOnState
     }
     
-    @IBAction private func outsidePreferencePress(sender: NSMenuItem) {
+    @IBAction func outsidePreferencePress(sender: NSMenuItem) {
         disabledAllMouseOverPreferences(sender.menu!.itemArray)
         translucencyPreference = .MouseOutside
         sender.state = NSOnState
     }
     
-    @IBAction private func translucencyPress(sender: NSMenuItem) {
-        if sender.state == NSOnState {
-            sender.state = NSOffState
+    @IBAction func translucencyPress(sender: NSMenuItem) {
+        if translucencyEnabled == true {
             didDisableTranslucency()
         }
         else {
-            sender.state = NSOnState
-            didEnableTranslucency()
+             didEnableTranslucency()
         }
+		//	Sync preference and internal flag and state
+		sender.state = translucencyEnabled == true ? NSOnState : NSOffState
+		NSUserDefaults.standardUserDefaults().setBool((translucencyEnabled), forKey: UserSetting.Translucency.userDefaultsKey)
+		print("translucencyEnabled \(translucencyEnabled) state \(sender.state)")
     }
     
-    @IBAction private func percentagePress(sender: NSMenuItem) {
+    @IBAction func percentagePress(sender: NSMenuItem) {
         for button in sender.menu!.itemArray{
             (button ).state = NSOffState
         }
@@ -193,15 +198,15 @@ class HeliumPanelController : NSWindowController {
         }
     }
     
-    @IBAction private func openLocationPress(sender: AnyObject) {
+    @IBAction func openLocationPress(sender: AnyObject) {
         didRequestLocation()
     }
     
-    @IBAction private func openFilePress(sender: AnyObject) {
+    @IBAction func openFilePress(sender: AnyObject) {
         didRequestFile()
     }
     
-    @IBAction private func floatOverFullScreenAppsToggled(sender: NSMenuItem) {
+    @IBAction func floatOverFullScreenAppsToggled(sender: NSMenuItem) {
         sender.state = (sender.state == NSOnState) ? NSOffState : NSOnState
         NSUserDefaults.standardUserDefaults().setBool((sender.state == NSOffState), forKey: UserSetting.DisabledFullScreenFloat.userDefaultsKey)
         
@@ -209,7 +214,7 @@ class HeliumPanelController : NSWindowController {
     }
 
     var autoHideTitle : Bool = false
-    @IBAction private func autoHideTitle(sender: NSMenuItem) {
+    @IBAction func autoHideTitle(sender: NSMenuItem) {
         sender.state = (sender.state == NSOnState) ? NSOffState : NSOnState
         NSUserDefaults.standardUserDefaults().setBool((sender.state == NSOffState), forKey: UserSetting.AutoHideTitle.userDefaultsKey)
     }
