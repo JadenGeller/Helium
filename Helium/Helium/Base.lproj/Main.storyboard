@@ -337,6 +337,7 @@ CA
                     <connections>
                         <outlet property="autoHideTitleMenu" destination="4b7-4E-I4E" id="j5g-JZ-3jG"/>
                         <outlet property="fullScreenFloatMenu" destination="J8Z-sv-9PI" id="8gu-KT-nBS"/>
+                        <outlet property="heliumMenu" destination="aho-AB-RLH" id="8dP-9f-sJM"/>
                         <outlet property="magicURLMenu" destination="GQ3-Bi-0IJ" id="1Kj-Qu-x6d"/>
                         <outlet property="percentageMenu" destination="wlj-XI-Lng" id="9dj-5p-3sa"/>
                         <outlet property="translucencyMenu" destination="wnn-Wb-fUq" id="p1R-2o-k0T"/>
@@ -345,6 +346,22 @@ CA
                 <customObject id="sQQ-SA-Rgm" customClass="SUUpdater"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <userDefaultsController representsSharedInstance="YES" id="H0D-H0-Cmz"/>
+                <menu id="aho-AB-RLH">
+                    <items>
+                        <menuItem title="Playlists" id="9eJ-Aj-jcs">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="playlistsPress:" target="Voe-Tx-rLC" id="c79-y4-Ff6"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem title="Quit" id="aWy-Mb-S33">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="quitPress:" target="Voe-Tx-rLC" id="QQq-Gz-KX5"/>
+                            </connections>
+                        </menuItem>
+                    </items>
+                </menu>
             </objects>
             <point key="canvasLocation" x="75" y="0.0"/>
         </scene>
@@ -395,11 +412,11 @@ CA
                                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KRs-AT-9D8">
                                         <rect key="frame" x="0.0" y="39" width="126" height="233"/>
                                         <clipView key="contentView" id="Noe-Za-eMO">
-                                            <rect key="frame" x="1" y="0.0" width="124" height="232"/>
+                                            <rect key="frame" x="1.5" y="0.0" width="124" height="217"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" autosaveColumns="NO" rowSizeStyle="automatic" headerView="tha-4C-kVE" viewBased="YES" id="PML-r0-Bx7">
-                                                    <rect key="frame" x="0.0" y="0.0" width="124" height="209"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="124.5" height="194"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -457,7 +474,7 @@ CA
                                             </subviews>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </clipView>
-                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="atn-XO-QDu">
+                                        <scroller key="horizontalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="atn-XO-QDu">
                                             <rect key="frame" x="1" y="217" width="124" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
@@ -466,7 +483,7 @@ CA
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <tableHeaderView key="headerView" id="tha-4C-kVE">
-                                            <rect key="frame" x="0.0" y="0.0" width="124" height="23"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="124.5" height="23"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableHeaderView>
                                     </scrollView>
