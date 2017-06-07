@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16E195" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16F73" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
@@ -24,7 +24,6 @@
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
                                         <menuItem title="Preferences..." id="MMM-uX-MFR">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Preferences..." id="BdD-B4-azf">
                                                 <items>
                                                     <menuItem title="Homepage" id="Vn0-wi-SSU" userLabel="Homepage">
@@ -160,6 +159,7 @@ CA
                                                     <menuItem title="Enabled" keyEquivalent="t" id="wnn-Wb-fUq">
                                                         <connections>
                                                             <action selector="translucencyPress:" target="Ady-hI-5gd" id="orR-QV-BPD"/>
+                                                            <binding destination="H0D-H0-Cmz" name="value" keyPath="values.translucency" id="fau-DG-eeR"/>
                                                         </connections>
                                                     </menuItem>
                                                     <menuItem title="Opacity" id="wlj-XI-Lng">
@@ -261,7 +261,7 @@ CA
                                                             <action selector="zoomOut:" target="Ady-hI-5gd" id="B27-BH-sc0"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="Reset Zoom Level" keyEquivalent="0" id="CkG-jI-gbw">
+                                                    <menuItem title="Reset Zoom Level" keyEquivalent="=" id="CkG-jI-gbw">
                                                         <connections>
                                                             <action selector="resetZoomLevel:" target="Ady-hI-5gd" id="fjs-3Q-hPk"/>
                                                         </connections>
@@ -340,6 +340,7 @@ CA
                         <outlet property="fullScreenFloatMenu" destination="J8Z-sv-9PI" id="8gu-KT-nBS"/>
                         <outlet property="magicURLMenu" destination="GQ3-Bi-0IJ" id="1Kj-Qu-x6d"/>
                         <outlet property="percentageMenu" destination="wlj-XI-Lng" id="9dj-5p-3sa"/>
+                        <outlet property="translucencyMenu" destination="wnn-Wb-fUq" id="p1R-2o-k0T"/>
                     </connections>
                 </customObject>
                 <customObject id="sQQ-SA-Rgm" customClass="SUUpdater"/>
