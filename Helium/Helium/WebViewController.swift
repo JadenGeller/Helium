@@ -10,6 +10,146 @@ import Cocoa
 import WebKit
 import AVFoundation
 
+class MyWebView : WKWebView {
+	internal func menuClicked(sender: AnyObject) {
+		if let menuItem = sender as? NSMenuItem {
+			Swift.print("Menu \(menuItem.title) clicked")
+		}
+	}
+
+	override func willOpenMenu(menu: NSMenu, withEvent event: NSEvent) {
+		let wc = self.window?.windowController as! HeliumPanelController
+		menu.addItem(NSMenuItem.separatorItem())
+		var item = NSMenuItem()
+		item.title = "Preferences"
+		item.indentationLevel = 0
+		item.target = self
+		menu.addItem(item)
+
+		// Switch to submenu
+		let subMenu = NSMenu()
+		item.submenu = subMenu
+
+		item = NSMenuItem(title: "Home Page", action: #selector(HeliumPanelController.setHomePage(_:)), keyEquivalent: "")
+		item.target = wc
+		subMenu.addItem(item)
+
+		item = NSMenuItem(title: "Open", action: #selector(menuClicked(_:)), keyEquivalent: "")
+		subMenu.addItem(item)
+		let subOpen = NSMenu()
+		item.submenu = subOpen
+
+		item = NSMenuItem(title: "File", action: #selector(HeliumPanelController.openFilePress(_:)), keyEquivalent: "")
+		item.target = wc
+		subOpen.addItem(item)
+
+		item = NSMenuItem(title: "Location", action: #selector(HeliumPanelController.openLocationPress(_:)), keyEquivalent: "")
+		item.target = self.window?.windowController
+		subOpen.addItem(item)
+
+		subMenu.addItem(NSMenuItem.separatorItem())
+
+		item = NSMenuItem(title: "Float Above All Spaces", action: #selector(HeliumPanelController.floatOverFullScreenAppsToggled(_:)), keyEquivalent: "")
+		item.state = 1 - NSUserDefaults.standardUserDefaults().integerForKey(UserSetting.DisabledFullScreenFloat.userDefaultsKey)
+		item.target = wc
+		subMenu.addItem(item)
+		
+		item = NSMenuItem(title: "Magic URL Redirects", action: #selector(AppDelegate.magicURLRedirectToggled(_:)), keyEquivalent: "")
+		item.state = 1 - NSUserDefaults.standardUserDefaults().integerForKey(UserSetting.DisabledMagicURLs.userDefaultsKey)
+		item.target = NSApp.delegate
+		subMenu.addItem(item)
+
+		item = NSMenuItem(title: "Title Bar", action: #selector(menuClicked(_:)), keyEquivalent: "")
+		subMenu.addItem(item)
+		let subTitleBar = NSMenu()
+		item.submenu = subTitleBar
+
+		item = NSMenuItem(title: "Auto Hide", action: #selector(HeliumPanelController.autoHideTitle(_:)), keyEquivalent: "b")
+		item.state = NSUserDefaults.standardUserDefaults().integerForKey(UserSetting.AutoHideTitle.userDefaultsKey)
+		item.target = wc
+		subTitleBar.addItem(item)
+
+		item = NSMenuItem(title: "Translucency", action: #selector(menuClicked(_:)), keyEquivalent: "")
+		subMenu.addItem(item)
+		let subTranslucency = NSMenu()
+		item.submenu = subTranslucency
+
+		item = NSMenuItem(title: "Enabled", action: #selector(HeliumPanelController.translucencyPress(_:)), keyEquivalent: "t")
+		item.state = wc.translucencyEnabled == true ? NSOnState : NSOffState
+		item.target = wc
+		subTranslucency.addItem(item)
+
+		item = NSMenuItem(title: "Opacity", action: #selector(menuClicked(_:)), keyEquivalent: "")
+		let opacity = NSUserDefaults.standardUserDefaults().integerForKey(UserSetting.OpacityPercentage.userDefaultsKey)
+		subTranslucency.addItem(item)
+		let subOpacity = NSMenu()
+		item.submenu = subOpacity
+
+		item = NSMenuItem(title: "10%", action: #selector(HeliumPanelController.percentagePress(_:)), keyEquivalent: "1")
+		item.state = (10 == opacity ? NSOnState : NSOffState)
+		item.target = wc
+		subOpacity.addItem(item)
+		item = NSMenuItem(title: "20%", action: #selector(HeliumPanelController.percentagePress(_:)), keyEquivalent: "2")
+		item.state = (20 == opacity ? NSOnState : NSOffState)
+		item.target = wc
+		subOpacity.addItem(item)
+		item = NSMenuItem(title: "30%", action: #selector(HeliumPanelController.percentagePress(_:)), keyEquivalent: "3")
+		item.state = (30 == opacity ? NSOnState : NSOffState)
+		item.target = wc
+		subOpacity.addItem(item)
+		item = NSMenuItem(title: "40%", action: #selector(HeliumPanelController.percentagePress(_:)), keyEquivalent: "4")
+		item.state = (40 == opacity ? NSOnState : NSOffState)
+		item.target = wc
+		subOpacity.addItem(item)
+		item = NSMenuItem(title: "50%", action: #selector(HeliumPanelController.percentagePress(_:)), keyEquivalent: "5")
+		item.state = (50 == opacity ? NSOnState : NSOffState)
+		item.target = wc
+		subOpacity.addItem(item)
+		item = NSMenuItem(title: "60%", action: #selector(HeliumPanelController.percentagePress(_:)), keyEquivalent: "6")
+		item.state = (60 == opacity ? NSOnState : NSOffState)
+		item.target = wc
+		subOpacity.addItem(item)
+		item = NSMenuItem(title: "70%", action: #selector(HeliumPanelController.percentagePress(_:)), keyEquivalent: "7")
+		item.state = (70 == opacity ? NSOnState : NSOffState)
+		item.target = wc
+		subOpacity.addItem(item)
+		item = NSMenuItem(title: "80%", action: #selector(HeliumPanelController.percentagePress(_:)), keyEquivalent: "8")
+		item.state = (80 == opacity ? NSOnState : NSOffState)
+		item.target = wc
+		subOpacity.addItem(item)
+		item = NSMenuItem(title: "90%", action: #selector(HeliumPanelController.percentagePress(_:)), keyEquivalent: "9")
+		item.state = (90 == opacity ? NSOnState : NSOffState)
+		item.target = wc
+		subOpacity.addItem(item)
+		item = NSMenuItem(title: "100%", action: #selector(HeliumPanelController.percentagePress(_:)), keyEquivalent: "0")
+		item.state = (100 == opacity ? NSOnState : NSOffState)
+		item.target = wc
+		subOpacity.addItem(item)
+
+		subTranslucency.addItem(NSMenuItem.separatorItem())
+		let translucency: HeliumPanelController.TranslucencyPreference = wc.translucencyPreference
+
+		item = NSMenuItem(title: "Always", action: #selector(HeliumPanelController.alwaysPreferencePress(_:)), keyEquivalent: "")
+		item.state = translucency == .Always ? NSOnState : NSOffState
+		item.target = wc
+		subTranslucency.addItem(item)
+		item = NSMenuItem(title: "Mouse Over", action: #selector(HeliumPanelController.overPreferencePress(_:)), keyEquivalent: "")
+		item.state = translucency == .MouseOver ? NSOnState : NSOffState
+		item.target = wc
+		subTranslucency.addItem(item)
+		item = NSMenuItem(title: "Mouse Outside", action: #selector(HeliumPanelController.outsidePreferencePress(_:)), keyEquivalent: "")
+		item.state = translucency == .MouseOutside ? NSOnState : NSOffState
+		item.target = wc
+		subTranslucency.addItem(item)
+
+		subMenu.addItem(NSMenuItem.separatorItem())
+
+		item = NSMenuItem(title: "Playlists", action: #selector(WebViewController.presentPlaylistSheet(_:)), keyEquivalent: "")
+		item.target = self.UIDelegate
+		subMenu.addItem(item)
+	}	
+}
+
 class WebViewController: NSViewController, WKNavigationDelegate {
 
     var trackingTag: NSTrackingRectTag?
@@ -112,7 +252,11 @@ class WebViewController: NSViewController, WKNavigationDelegate {
             return true
         }
     }
-    
+
+	@IBAction func perferences(sender: AnyObject) {
+		print("show preferences sheet")
+	}
+	
     @IBAction func backPress(sender: AnyObject) {
         webView.goBack()
     }
@@ -122,21 +266,21 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     }
     
     private func zoomIn() {
-        if !videoFileReferencedURL {
+//        if !videoFileReferencedURL {
             webView.magnification += 0.1
-        }
+  //      }
      }
     
     private func zoomOut() {
-        if !videoFileReferencedURL {
+//        if !videoFileReferencedURL {
             webView.magnification -= 0.1
-        }
+//        }
     }
     
     private func resetZoom() {
-        if !videoFileReferencedURL {
+//        if !videoFileReferencedURL {
             webView.magnification = 1
-        }
+//        }
     }
 
     @IBAction private func reloadPress(sender: AnyObject) {
@@ -162,7 +306,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
             as! PlaylistViewController
     }()
     
-    @IBAction private func presentPlaylistSheet(sender: AnyObject) {
+    @IBAction func presentPlaylistSheet(sender: AnyObject) {
         self.presentViewControllerAsSheet(playlistViewController)
     }
 
@@ -216,7 +360,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         }
     }
 
-    var webView = WKWebView()
+    var webView = MyWebView()
     var webSize = CGSize(width: 0,height: 0)
     var shouldRedirect: Bool {
         get {
