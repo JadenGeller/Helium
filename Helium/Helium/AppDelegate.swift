@@ -15,6 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @IBOutlet weak var percentageMenu: NSMenuItem!
     @IBOutlet weak var fullScreenFloatMenu: NSMenuItem!
     @IBOutlet weak var autoHideTitleMenu: NSMenuItem!
+	@IBOutlet weak var translucencyMenu: NSMenuItem!
 
 	override class func initialize() {
 		let toHMS = hmsTransformer()
@@ -43,12 +44,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             }
         }
         autoHideTitleMenu.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.AutoHideTitle.userDefaultsKey) ? NSOnState : NSOffState
-    }
+		translucencyMenu.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.Translucency.userDefaultsKey) ? NSOnState : NSOffState
+   }
 
     func applicationWillTerminate(aNotification: NSNotification) {
         // Insert code here to tear down your application
     }
-    
     
     @IBAction func magicURLRedirectToggled(sender: NSMenuItem) {
         sender.state = (sender.state == NSOnState) ? NSOffState : NSOnState
