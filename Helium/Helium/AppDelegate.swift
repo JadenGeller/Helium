@@ -17,6 +17,30 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @IBOutlet weak var autoHideTitleMenu: NSMenuItem!
 	@IBOutlet weak var translucencyMenu: NSMenuItem!
 
+	@IBOutlet weak var heliumMenu: NSMenu!
+	let heliumItem = NSStatusBar.systemStatusBar().statusItemWithLength(NSVariableStatusItemLength)
+
+	@IBAction func playlistsPress(sender: AnyObject) {
+		NSApp.activateIgnoringOtherApps(true);
+	
+		if let wc : HeliumPanelController = NSApp.keyWindow?.windowController as? HeliumPanelController {
+			wc.window?.makeKeyAndOrderFront(sender)
+
+			
+			if let webView : WebViewController = wc.webViewController {
+				webView.presentPlaylistSheet(sender)
+			}
+		}
+	}
+	@IBAction func quitPress(sender: AnyObject) {
+		NSApplication.sharedApplication().terminate(self)
+	}
+
+	override func validateMenuItem(menuItem: NSMenuItem) -> Bool {
+		Swift.print("item \(menuItem)")
+		return true;
+	}
+
 	override class func initialize() {
 		let toHMS = hmsTransformer()
 		NSValueTransformer.setValueTransformer(toHMS, forName: "hmsTransformer")
@@ -29,7 +53,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             forEventClass: AEEventClass(kInternetEventClass),
             andEventID: AEEventID(kAEGetURL)
         )
-    }
+
+		//	So they can interact everywhere with us without focus
+		heliumItem.image = NSImage.init(named: "statusIcon")
+		heliumItem.menu = heliumMenu
+	}
 
 	var mdQuery = NSMetadataQuery()
     func applicationDidFinishLaunching(aNotification: NSNotification) {
@@ -55,8 +83,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         sender.state = (sender.state == NSOnState) ? NSOffState : NSOnState
         NSUserDefaults.standardUserDefaults().setBool((sender.state == NSOffState), forKey: UserSetting.DisabledMagicURLs.userDefaultsKey)
     }
-    
-    
+
     //MARK: - handleURLEvent
     // Called when the App opened via URL.
     @objc func handleURLEvent(event: NSAppleEventDescriptor, withReply reply: NSAppleEventDescriptor) {
@@ -70,7 +97,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         
         NSNotificationCenter.defaultCenter().postNotificationName("HeliumLoadURL", object: urlObject)
-        
     }
 }
 
