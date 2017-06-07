@@ -183,7 +183,6 @@ class HeliumPanelController : NSWindowController {
 		//	Sync preference and internal flag and state
 		sender.state = translucencyEnabled == true ? NSOnState : NSOffState
 		NSUserDefaults.standardUserDefaults().setBool((translucencyEnabled), forKey: UserSetting.Translucency.userDefaultsKey)
-		print("translucencyEnabled \(translucencyEnabled) state \(sender.state)")
     }
     
     @IBAction func percentagePress(sender: NSMenuItem) {
