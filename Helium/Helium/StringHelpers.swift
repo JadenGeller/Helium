@@ -26,4 +26,12 @@ extension String {
             return -1
         }
     }
+
+	func isValidURL() -> Bool {
+		
+		let urlRegEx = "((https|http)()://)((\\w|-)+)(([.]|[/])((\\w|-)+))+"
+		let predicate = NSPredicate(format:"SELF MATCHES %@", argumentArray:[urlRegEx])
+		
+		return predicate.evaluateWithObject(self)
+	}
 }
