@@ -91,6 +91,7 @@ class HeliumPanelController : NSWindowController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HeliumPanelController.willResignActive), name: NSApplicationWillResignActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HeliumPanelController.didUpdateTitle(_:)), name: "HeliumUpdateTitle", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HeliumPanelController.doPlaylistItem(_:)), name: "HeliumPlaylistItem", object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HeliumPanelController.setFloatOverFullScreenApps), name: UserSetting.DisabledFullScreenFloat.userDefaultsKey, object:nil)
 
         setFloatOverFullScreenApps()
         if let alpha = NSUserDefaults.standardUserDefaults().objectForKey(UserSetting.OpacityPercentage.userDefaultsKey) {
@@ -135,17 +136,7 @@ class HeliumPanelController : NSWindowController {
             return !mouseOver
         }
     }
-    
-    
-    private func setFloatOverFullScreenApps() {
-        if NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledFullScreenFloat.userDefaultsKey) {
-            panel.collectionBehavior = [.MoveToActiveSpace, .FullScreenAuxiliary]
-
-        } else {
-            panel.collectionBehavior = [.CanJoinAllSpaces, .FullScreenAuxiliary]
-        }
-    }
-    
+	
     //MARK: IBActions
     
     private func disabledAllMouseOverPreferences(allMenus: [NSMenuItem]) {
@@ -178,10 +169,10 @@ class HeliumPanelController : NSWindowController {
             didDisableTranslucency()
         }
         else {
-             didEnableTranslucency()
+            didEnableTranslucency()
         }
 		//	Sync preference and internal flag and state
-		sender.state = translucencyEnabled == true ? NSOnState : NSOffState
+//		sender.state = translucencyEnabled == true ? NSOnState : NSOffState
 		NSUserDefaults.standardUserDefaults().setBool((translucencyEnabled), forKey: UserSetting.Translucency.userDefaultsKey)
     }
     
@@ -205,26 +196,42 @@ class HeliumPanelController : NSWindowController {
         didRequestFile()
     }
     
-    @IBAction func floatOverFullScreenAppsToggled(sender: NSMenuItem) {
-        sender.state = (sender.state == NSOnState) ? NSOffState : NSOnState
-        NSUserDefaults.standardUserDefaults().setBool((sender.state == NSOffState), forKey: UserSetting.DisabledFullScreenFloat.userDefaultsKey)
-        
-        setFloatOverFullScreenApps()
-    }
+	override func validateMenuItem(menuItem: NSMenuItem) -> Bool {
+		switch menuItem.title {
+		case "Preferences":
+			break
+		case "Float Above All Spaces":
+			menuItem.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledFullScreenFloat.userDefaultsKey) ? NSOffState : NSOnState
+			break;
+		case "Magic URL Redirects":
+			menuItem.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledMagicURLs.userDefaultsKey) ? NSOffState : NSOnState
+			break
+		case "Auto-hide Title Bar":
+			menuItem.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.AutoHideTitle.userDefaultsKey) ? NSOnState : NSOffState
+			break
+		case "Enabled": //Transluceny Menu
+			menuItem.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.Translucency.userDefaultsKey) ? NSOnState : NSOffState
+			break
+			
+		default:
+			break
+		}
+		Swift.print("wc.item \(menuItem) is \(menuItem.state)")
+		return true
+	}
 
-    var autoHideTitle : Bool = false
-    @IBAction func autoHideTitle(sender: NSMenuItem) {
-        sender.state = (sender.state == NSOnState) ? NSOffState : NSOnState
-        NSUserDefaults.standardUserDefaults().setBool((sender.state == NSOnState), forKey: UserSetting.AutoHideTitle.userDefaultsKey)
-    }
+	//MARK: Actual functionality
     
-    @IBAction func setHomePage(sender: AnyObject){
-        didRequestChangeHomepage()
-    }
+	@objc private func setFloatOverFullScreenApps() {
+		if NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledFullScreenFloat.userDefaultsKey) {
+			panel.collectionBehavior = [.MoveToActiveSpace, .FullScreenAuxiliary]
+			
+		} else {
+			panel.collectionBehavior = [.CanJoinAllSpaces, .FullScreenAuxiliary]
+		}
+	}
 
-    //MARK: Actual functionality
-    
-    @objc private func didUpdateTitle(notification: NSNotification) {
+	@objc private func didUpdateTitle(notification: NSNotification) {
         if let title = notification.object as? String {
             panel.title = title
         }
@@ -246,6 +253,7 @@ class HeliumPanelController : NSWindowController {
     
     private func didRequestLocation() {
         let alert = NSAlert()
+		var text: String = ""
         alert.alertStyle = NSAlertStyle.InformationalAlertStyle
         alert.messageText = "Enter Destination URL"
         
@@ -261,75 +269,23 @@ class HeliumPanelController : NSWindowController {
 
         alert.addButtonWithTitle("Load")
         alert.addButtonWithTitle("Cancel")
+		let defaultButton = alert.addButtonWithTitle("Home")
+		defaultButton.toolTip = Constants.defaultURL
 
         alert.beginSheetModalForWindow(self.window!, completionHandler: { response in
-            if response == NSAlertFirstButtonReturn {
-                // Load
-                let view = (alert.accessoryView as! NSScrollView).documentView as! NSTextView
-                let text = view.string! as String
-                self.webViewController.loadAlmostURL(text)
-            }
-        })
-    }
-    
-    func didRequestChangeHomepage(){
-        let alert = NSAlert()
-        alert.alertStyle = NSAlertStyle.InformationalAlertStyle
-        alert.messageText = "Enter new Home Page URL"
-        
-        let urlField = HeliumTextView.init(frame: NSMakeRect(0,0,300,28))
-        let urlScroll = NSScrollView.init(frame: NSMakeRect(0,0,300,28))
-        let urlFont = NSFont.systemFontOfSize(NSFont.systemFontSize())
-        let urlAttr = [NSFontAttributeName : urlFont]
-        let urlString = NSUserDefaults.standardUserDefaults().stringForKey(UserSetting.HomePageURL.userDefaultsKey)!
-        urlField.insertText(NSAttributedString.init(string: urlString, attributes: urlAttr), replacementRange: NSMakeRange(0, 0))
-        urlField.drawsBackground = true
-        urlField.editable = true
-
-        urlScroll.documentView = urlField
-        alert.accessoryView = urlScroll
-
-        alert.addButtonWithTitle("Set")
-        alert.addButtonWithTitle("Cancel")
-        let defaultButton = alert.addButtonWithTitle("Default")
-        defaultButton.toolTip = Constants.defaultURL
-
-        alert.beginSheetModalForWindow(self.window!, completionHandler: { response in
-            var text : String
-            switch response {
-            case NSAlertThirdButtonReturn:
-                text = Constants.defaultURL
-                break
-
-            case NSAlertFirstButtonReturn:
-                let view = (alert.accessoryView as! NSScrollView).documentView as! NSTextView
-                text = view.string! as String
-                break
-                
-            case NSAlertSecondButtonReturn:
-                return
-
-            default:
-                text = ""
-            }
-
-            if !text.isEmpty {
-                
-                // Add prefix if necessary
-                if !(text.lowercaseString.hasPrefix("http://") || text.lowercaseString.hasPrefix("https://")) {
-                    text = "http://" + text
-                }
-
-                // Save to defaults if valid. Else, use Helium default page
-                if self.validateURL(text) {
-                    NSUserDefaults.standardUserDefaults().setObject(text, forKey: UserSetting.HomePageURL.userDefaultsKey)
-                } else {
-                    NSUserDefaults.standardUserDefaults().setObject(Constants.defaultURL, forKey: UserSetting.HomePageURL.userDefaultsKey)
-                }
-                
-                // Load new Home page
-                self.webViewController.loadAlmostURL(NSUserDefaults.standardUserDefaults().stringForKey(UserSetting.HomePageURL.userDefaultsKey)!)
-            }
+			switch (response) {
+			case NSAlertFirstButtonReturn:
+				// Load
+				let view = (alert.accessoryView as! NSScrollView).documentView as! NSTextView
+				text = view.string! as String
+				break
+			case NSAlertThirdButtonReturn:
+				text = Constants.defaultURL as String
+				break
+			default:
+				return
+			}
+			self.webViewController.loadAlmostURL(text)
         })
     }
 
@@ -340,14 +296,6 @@ class HeliumPanelController : NSWindowController {
         }
     }
 
-    func validateURL (stringURL : String) -> Bool {
-        
-        let urlRegEx = "((https|http)://)((\\w|-)+)(([.]|[/])((\\w|-)+))+"
-        let predicate = NSPredicate(format:"SELF MATCHES %@", argumentArray:[urlRegEx])
-        
-        return predicate.evaluateWithObject(stringURL)
-    }
-        
     @objc private func didBecomeActive() {
         panel.ignoresMouseEvents = false
     }
