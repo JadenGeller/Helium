@@ -147,7 +147,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 		appStatusItem.menu = appMenu
 
         //  Initialize our h:m:s transformer
-         ValueTransformer.setValueTransformer(toHMS, forName: NSValueTransformerName(rawValue: "hmsTransformer"))
+        ValueTransformer.setValueTransformer(toHMS, forName: NSValueTransformerName(rawValue: "hmsTransformer"))
 	}
 
 	var mdQuery = NSMetadataQuery()
