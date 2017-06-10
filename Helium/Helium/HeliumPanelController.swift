@@ -18,7 +18,7 @@ struct Constants {
 
 class HeliumTextView : NSTextView {
     override func viewWillDraw() {
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.window?.makeFirstResponder(self)
         }
     }
@@ -32,15 +32,15 @@ class HeliumPanelController : NSWindowController {
         }
     }
 
-    private var mouseOver: Bool = false
+    fileprivate var mouseOver: Bool = false
     
-    private var alpha: CGFloat = 0.6 { //default
+    fileprivate var alpha: CGFloat = 0.6 { //default
         didSet {
             updateTranslucency()
         }
     }
     
-    var translucencyPreference: TranslucencyPreference = .Always {
+    var translucencyPreference: TranslucencyPreference = .always {
         didSet {
             updateTranslucency()
         }
@@ -54,29 +54,29 @@ class HeliumPanelController : NSWindowController {
 
     
     enum TranslucencyPreference {
-        case Always
-        case MouseOver
-        case MouseOutside
+        case always
+        case mouseOver
+        case mouseOutside
     }
     
     var currentlyTranslucent: Bool = false {
         didSet {
-            if !NSApplication.sharedApplication().active {
+            if !NSApplication.shared().isActive {
                 panel.ignoresMouseEvents = currentlyTranslucent
             }
             if currentlyTranslucent {
                 panel.animator().alphaValue = alpha
-                panel.opaque = false
+                panel.isOpaque = false
             }
             else {
-                panel.opaque = true
+                panel.isOpaque = true
                 panel.animator().alphaValue = 1
             }
         }
     }
     
     
-    private var panel: NSPanel! {
+    fileprivate var panel: NSPanel! {
         get {
             return (self.window as! NSPanel)
         }
@@ -85,40 +85,40 @@ class HeliumPanelController : NSWindowController {
     
     // MARK: Window lifecycle
     override func windowDidLoad() {
-        panel.floatingPanel = true
+        panel.isFloatingPanel = true
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HeliumPanelController.didBecomeActive), name: NSApplicationDidBecomeActiveNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HeliumPanelController.willResignActive), name: NSApplicationWillResignActiveNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HeliumPanelController.didUpdateTitle(_:)), name: "HeliumUpdateTitle", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HeliumPanelController.doPlaylistItem(_:)), name: "HeliumPlaylistItem", object: nil)
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HeliumPanelController.setFloatOverFullScreenApps), name: UserSetting.DisabledFullScreenFloat.userDefaultsKey, object:nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.didBecomeActive), name: NSNotification.Name.NSApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.willResignActive), name: NSNotification.Name.NSApplicationWillResignActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.didUpdateTitle(_:)), name: NSNotification.Name(rawValue: "HeliumUpdateTitle"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.doPlaylistItem(_:)), name: NSNotification.Name(rawValue: "HeliumPlaylistItem"), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.setFloatOverFullScreenApps), name: NSNotification.Name(rawValue: UserSetting.disabledFullScreenFloat.userDefaultsKey), object:nil)
 
         setFloatOverFullScreenApps()
-        if let alpha = NSUserDefaults.standardUserDefaults().objectForKey(UserSetting.OpacityPercentage.userDefaultsKey) {
+        if let alpha = UserDefaults.standard.object(forKey: UserSetting.opacityPercentage.userDefaultsKey) {
             didUpdateAlpha(CGFloat(alpha as! Int))
         }
 
 		//	Sync translucencyEnabled to preference; all delegate sync'd the menu state
-		translucencyEnabled = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.Translucency.userDefaultsKey)
+		translucencyEnabled = UserDefaults.standard.bool(forKey: UserSetting.translucency.userDefaultsKey)
     }
 
     // MARK : Mouse events
-    override func mouseEntered(theEvent: NSEvent) {
+    override func mouseEntered(with theEvent: NSEvent) {
         mouseOver = true
         updateTranslucency()
     }
     
-    override func mouseExited(theEvent: NSEvent) {
+    override func mouseExited(with theEvent: NSEvent) {
         mouseOver = false
         updateTranslucency()
     }
     
     // MARK : Translucency
-    private func updateTranslucency() {
+    fileprivate func updateTranslucency() {
         currentlyTranslucent = shouldBeTranslucent()
     }
     
-    private func shouldBeTranslucent() -> Bool {
+    fileprivate func shouldBeTranslucent() -> Bool {
         /* Implicit Arguments
          * - mouseOver
          * - translucencyPreference
@@ -128,43 +128,43 @@ class HeliumPanelController : NSWindowController {
         guard translucencyEnabled else { return false }
         
         switch translucencyPreference {
-        case .Always:
+        case .always:
             return true
-        case .MouseOver:
+        case .mouseOver:
             return mouseOver
-        case .MouseOutside:
+        case .mouseOutside:
             return !mouseOver
         }
     }
 	
     //MARK: IBActions
     
-    private func disabledAllMouseOverPreferences(allMenus: [NSMenuItem]) {
+    fileprivate func disabledAllMouseOverPreferences(_ allMenus: [NSMenuItem]) {
         // GROSS HARD CODED
         for x in allMenus.dropFirst(2) {
             x.state = NSOffState
         }
     }
     
-    @IBAction func alwaysPreferencePress(sender: NSMenuItem) {
-        disabledAllMouseOverPreferences(sender.menu!.itemArray)
-        translucencyPreference = .Always
+    @IBAction func alwaysPreferencePress(_ sender: NSMenuItem) {
+        disabledAllMouseOverPreferences(sender.menu!.items)
+        translucencyPreference = .always
         sender.state = NSOnState
     }
     
-    @IBAction func overPreferencePress(sender: NSMenuItem) {
-        disabledAllMouseOverPreferences(sender.menu!.itemArray)
-        translucencyPreference = .MouseOver
+    @IBAction func overPreferencePress(_ sender: NSMenuItem) {
+        disabledAllMouseOverPreferences(sender.menu!.items)
+        translucencyPreference = .mouseOver
         sender.state = NSOnState
     }
     
-    @IBAction func outsidePreferencePress(sender: NSMenuItem) {
-        disabledAllMouseOverPreferences(sender.menu!.itemArray)
-        translucencyPreference = .MouseOutside
+    @IBAction func outsidePreferencePress(_ sender: NSMenuItem) {
+        disabledAllMouseOverPreferences(sender.menu!.items)
+        translucencyPreference = .mouseOutside
         sender.state = NSOnState
     }
     
-    @IBAction func translucencyPress(sender: NSMenuItem) {
+    @IBAction func translucencyPress(_ sender: NSMenuItem) {
         if translucencyEnabled == true {
             didDisableTranslucency()
         }
@@ -173,44 +173,44 @@ class HeliumPanelController : NSWindowController {
         }
 		//	Sync preference and internal flag and state
 //		sender.state = translucencyEnabled == true ? NSOnState : NSOffState
-		NSUserDefaults.standardUserDefaults().setBool((translucencyEnabled), forKey: UserSetting.Translucency.userDefaultsKey)
+		UserDefaults.standard.set((translucencyEnabled), forKey: UserSetting.translucency.userDefaultsKey)
     }
     
-    @IBAction func percentagePress(sender: NSMenuItem) {
-        for button in sender.menu!.itemArray{
+    @IBAction func percentagePress(_ sender: NSMenuItem) {
+        for button in sender.menu!.items{
             (button ).state = NSOffState
         }
         sender.state = NSOnState
-        let value = sender.title.substringToIndex(sender.title.endIndex.advancedBy(-1))
+        let value = sender.title.substring(to: sender.title.characters.index(sender.title.endIndex, offsetBy: -1))
         if let alpha = Int(value) {
              didUpdateAlpha(CGFloat(alpha))
-             NSUserDefaults.standardUserDefaults().setInteger(alpha, forKey: UserSetting.OpacityPercentage.userDefaultsKey)
+             UserDefaults.standard.set(alpha, forKey: UserSetting.opacityPercentage.userDefaultsKey)
         }
     }
     
-    @IBAction func openLocationPress(sender: AnyObject) {
+    @IBAction func openLocationPress(_ sender: AnyObject) {
         didRequestLocation()
     }
     
-    @IBAction func openFilePress(sender: AnyObject) {
+    @IBAction func openFilePress(_ sender: AnyObject) {
         didRequestFile()
     }
     
-	override func validateMenuItem(menuItem: NSMenuItem) -> Bool {
+	override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
 		switch menuItem.title {
 		case "Preferences":
 			break
 		case "Float Above All Spaces":
-			menuItem.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledFullScreenFloat.userDefaultsKey) ? NSOffState : NSOnState
+			menuItem.state = UserDefaults.standard.bool(forKey: UserSetting.disabledFullScreenFloat.userDefaultsKey) ? NSOffState : NSOnState
 			break;
 		case "Magic URL Redirects":
-			menuItem.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledMagicURLs.userDefaultsKey) ? NSOffState : NSOnState
+			menuItem.state = UserDefaults.standard.bool(forKey: UserSetting.disabledMagicURLs.userDefaultsKey) ? NSOffState : NSOnState
 			break
 		case "Auto-hide Title Bar":
-			menuItem.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.AutoHideTitle.userDefaultsKey) ? NSOnState : NSOffState
+			menuItem.state = UserDefaults.standard.bool(forKey: UserSetting.autoHideTitle.userDefaultsKey) ? NSOnState : NSOffState
 			break
 		case "Enabled": //Transluceny Menu
-			menuItem.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.Translucency.userDefaultsKey) ? NSOnState : NSOffState
+			menuItem.state = UserDefaults.standard.bool(forKey: UserSetting.translucency.userDefaultsKey) ? NSOnState : NSOffState
 			break
 			
 		default:
@@ -222,22 +222,22 @@ class HeliumPanelController : NSWindowController {
 
 	//MARK: Actual functionality
     
-	@objc private func setFloatOverFullScreenApps() {
-		if NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledFullScreenFloat.userDefaultsKey) {
-			panel.collectionBehavior = [.MoveToActiveSpace, .FullScreenAuxiliary]
+	@objc fileprivate func setFloatOverFullScreenApps() {
+		if UserDefaults.standard.bool(forKey: UserSetting.disabledFullScreenFloat.userDefaultsKey) {
+			panel.collectionBehavior = [.moveToActiveSpace, .fullScreenAuxiliary]
 			
 		} else {
-			panel.collectionBehavior = [.CanJoinAllSpaces, .FullScreenAuxiliary]
+			panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
 		}
 	}
 
-	@objc private func didUpdateTitle(notification: NSNotification) {
+	@objc fileprivate func didUpdateTitle(_ notification: Notification) {
         if let title = notification.object as? String {
             panel.title = title
         }
     }
     
-    private func didRequestFile() {
+    fileprivate func didRequestFile() {
         
         let open = NSOpenPanel()
         open.allowsMultipleSelection = false
@@ -245,16 +245,16 @@ class HeliumPanelController : NSWindowController {
         open.canChooseDirectories = false
         
         if open.runModal() == NSModalResponseOK {
-            if let url = open.URL {
+            if let url = open.url {
                 webViewController.loadURL(url)
             }
         }
     }
     
-    private func didRequestLocation() {
+    fileprivate func didRequestLocation() {
         let alert = NSAlert()
 		var text: String = ""
-        alert.alertStyle = NSAlertStyle.InformationalAlertStyle
+        alert.alertStyle = NSAlertStyle.informational
         alert.messageText = "Enter Destination URL"
         
         let urlField = HeliumTextView.init(frame: NSMakeRect(0,0,300,28))
@@ -262,17 +262,17 @@ class HeliumPanelController : NSWindowController {
         urlScroll.hasVerticalScroller = true
         urlScroll.autohidesScrollers = true
         urlField.drawsBackground = true
-        urlField.editable = true
+        urlField.isEditable = true
 
         urlScroll.documentView = urlField
         alert.accessoryView = urlScroll
 
-        alert.addButtonWithTitle("Load")
-        alert.addButtonWithTitle("Cancel")
-		let defaultButton = alert.addButtonWithTitle("Home")
+        alert.addButton(withTitle: "Load")
+        alert.addButton(withTitle: "Cancel")
+		let defaultButton = alert.addButton(withTitle: "Home")
 		defaultButton.toolTip = Constants.defaultURL
 
-        alert.beginSheetModalForWindow(self.window!, completionHandler: { response in
+        alert.beginSheetModal(for: self.window!, completionHandler: { response in
 			switch (response) {
 			case NSAlertFirstButtonReturn:
 				// Load
@@ -289,32 +289,32 @@ class HeliumPanelController : NSWindowController {
         })
     }
 
-    @objc private func doPlaylistItem(notification: NSNotification) {
+    @objc fileprivate func doPlaylistItem(_ notification: Notification) {
         if let playlist = notification.object {
-            let playlistText = (playlist as! NSURL).absoluteString
+            let playlistText = (playlist as! URL).absoluteString
             self.webViewController.loadAlmostURL(playlistText)
         }
     }
 
-    @objc private func didBecomeActive() {
+    @objc fileprivate func didBecomeActive() {
         panel.ignoresMouseEvents = false
     }
     
-    @objc private func willResignActive() {
+    @objc fileprivate func willResignActive() {
         if currentlyTranslucent {
             panel.ignoresMouseEvents = true
         }
     }
     
-    private func didEnableTranslucency() {
+    fileprivate func didEnableTranslucency() {
         translucencyEnabled = true
     }
     
-    private func didDisableTranslucency() {
+    fileprivate func didDisableTranslucency() {
         translucencyEnabled = false
     }
     
-    private func didUpdateAlpha(newAlpha: CGFloat) {
+    fileprivate func didUpdateAlpha(_ newAlpha: CGFloat) {
         alpha = newAlpha / 100
     }
 }

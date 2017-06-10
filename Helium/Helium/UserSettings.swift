@@ -9,23 +9,23 @@
 import Foundation
 
 internal enum UserSetting {
-    case DisabledMagicURLs
-    case DisabledFullScreenFloat
-    case OpacityPercentage
-    case HomePageURL
-	case AutoHideTitle
-	case Translucency
-	case Playlists
+    case disabledMagicURLs
+    case disabledFullScreenFloat
+    case opacityPercentage
+    case homePageURL
+	case autoHideTitle
+	case translucency
+	case playlists
 
     var userDefaultsKey: String {
         switch self {
-        case .DisabledMagicURLs: return "disabledMagicURLs"
-        case .DisabledFullScreenFloat: return "disabledFullScreenFloat"
-        case .OpacityPercentage: return "opacityPercentage"
-        case .HomePageURL: return "homePageURL"
-		case .AutoHideTitle: return "autoHideTitle"
-		case .Translucency: return "translucency"
-		case .Playlists: return "playlists"
+        case .disabledMagicURLs: return "disabledMagicURLs"
+        case .disabledFullScreenFloat: return "disabledFullScreenFloat"
+        case .opacityPercentage: return "opacityPercentage"
+        case .homePageURL: return "homePageURL"
+		case .autoHideTitle: return "autoHideTitle"
+		case .translucency: return "translucency"
+		case .playlists: return "playlists"
         }
     }
 }

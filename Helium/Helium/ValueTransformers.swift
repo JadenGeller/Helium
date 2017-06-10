@@ -9,7 +9,7 @@
 import Foundation
 
 // Convert a numeric to an HMS string and back
-class hmsTransformer: NSValueTransformer {
+class hmsTransformer: ValueTransformer {
 	
 	// flag indicating transformation is read-write
 	internal override class func allowsReverseTransformation() -> Bool {
@@ -17,12 +17,12 @@ class hmsTransformer: NSValueTransformer {
 	}
 
 	// by default returns value
-	internal override func transformedValue(value: AnyObject?) -> AnyObject? {
-		if var secs : NSTimeInterval = value as? NSTimeInterval {
+	internal override func transformedValue(_ value: Any?) -> Any? {
+		if var secs : TimeInterval = value as? TimeInterval {
 			let h = Int(secs / 3600)
-			secs -= NSTimeInterval(h*3600)
+			secs -= TimeInterval(h*3600)
 			let m = Int(secs / 60)
-			secs -= NSTimeInterval(m*60)
+			secs -= TimeInterval(m*60)
 
 			//	return optional hms components
 			return String(format:"%@%@%02.f",
@@ -34,7 +34,7 @@ class hmsTransformer: NSValueTransformer {
 	}
 
 	// by default raises an exception if +allowsReverseTransformation returns NO and otherwise invokes transformedValue:
-	internal override func reverseTransformedValue(value: AnyObject?) -> AnyObject? {
+	internal override func reverseTransformedValue(_ value: Any?) -> Any? {
 		return value
 	}
 }

@@ -16,46 +16,46 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @IBOutlet weak var fullScreenFloatMenu: NSMenuItem!
 
 	@IBOutlet weak var autoHideTitleMenu: NSMenuItem!
-	var autoHideTitle : Bool = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.AutoHideTitle.userDefaultsKey)
+	var autoHideTitle : Bool = UserDefaults.standard.bool(forKey: UserSetting.autoHideTitle.userDefaultsKey)
 
 	@IBOutlet weak var translucencyMenu: NSMenuItem!
 	@IBOutlet var window: NSWindow!
 	@IBOutlet weak var appMenu: NSMenu!
 	@IBOutlet weak var appItem: NSMenuItem!
-	let appStatusItem = NSStatusBar.systemStatusBar().statusItemWithLength(NSVariableStatusItemLength)
+	let appStatusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
 	
-	internal func menuClicked(sender: AnyObject) {
+	internal func menuClicked(_ sender: AnyObject) {
 		if let menuItem = sender as? NSMenuItem {
 			Swift.print("Menu '\(menuItem.title)' clicked")
 		}
 	}
-	@IBAction func floatOverFullScreenAppsPress(sender: NSMenuItem) {
-		let keyPath = UserSetting.DisabledFullScreenFloat.userDefaultsKey
+	@IBAction func floatOverFullScreenAppsPress(_ sender: NSMenuItem) {
+		let keyPath = UserSetting.disabledFullScreenFloat.userDefaultsKey
 		sender.state = (sender.state == NSOnState) ? NSOffState : NSOnState
-		NSUserDefaults.standardUserDefaults().setBool((sender.state == NSOffState), forKey: keyPath)
-		NSNotificationCenter.defaultCenter().postNotificationName(keyPath, object: nil)
+		UserDefaults.standard.set((sender.state == NSOffState), forKey: keyPath)
+		NotificationCenter.default.post(name: Notification.Name(rawValue: keyPath), object: nil)
 	}
 	
-	@IBAction func homePagePress(sender: AnyObject) {
+	@IBAction func homePagePress(_ sender: AnyObject) {
 		let alert = NSAlert()
-		alert.alertStyle = NSAlertStyle.InformationalAlertStyle
+		alert.alertStyle = NSAlertStyle.informational
 		alert.messageText = "Enter new Home Page URL"
 		
 		let urlField = HeliumTextView.init(frame: NSMakeRect(0,0,300,28))
 		let urlScroll = NSScrollView.init(frame: NSMakeRect(0,0,300,28))
-		let urlFont = NSFont.systemFontOfSize(NSFont.systemFontSize())
+		let urlFont = NSFont.systemFont(ofSize: NSFont.systemFontSize())
 		let urlAttr = [NSFontAttributeName : urlFont]
-		let urlString = NSUserDefaults.standardUserDefaults().stringForKey(UserSetting.HomePageURL.userDefaultsKey)!
+		let urlString = UserDefaults.standard.string(forKey: UserSetting.homePageURL.userDefaultsKey)!
 		urlField.insertText(NSAttributedString.init(string: urlString, attributes: urlAttr), replacementRange: NSMakeRange(0, 0))
 		urlField.drawsBackground = true
-		urlField.editable = true
+		urlField.isEditable = true
 		
 		urlScroll.documentView = urlField
 		alert.accessoryView = urlScroll
 		
-		alert.addButtonWithTitle("Set")
-		alert.addButtonWithTitle("Cancel")
-		let defaultButton = alert.addButtonWithTitle("Default")
+		alert.addButton(withTitle: "Set")
+		alert.addButton(withTitle: "Cancel")
+		let defaultButton = alert.addButton(withTitle: "Default")
 		defaultButton.toolTip = Constants.defaultURL
 	
 		//	Run alert modally allowing non-active usage
@@ -80,40 +80,40 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 		if !text.isEmpty {
 			
 			// Add prefix if necessary
-			if !(text.lowercaseString.hasPrefix("http://") || text.lowercaseString.hasPrefix("https://")) {
+			if !(text.lowercased().hasPrefix("http://") || text.lowercased().hasPrefix("https://")) {
 				text = "http://" + text
 			}
 			
 			// Save to defaults if valid. Else, use Helium default page
 			if text.isValidURL() {
-				NSUserDefaults.standardUserDefaults().setObject(text, forKey: UserSetting.HomePageURL.userDefaultsKey)
+				UserDefaults.standard.set(text, forKey: UserSetting.homePageURL.userDefaultsKey)
 			} else {
-				NSUserDefaults.standardUserDefaults().setObject(Constants.defaultURL, forKey: UserSetting.HomePageURL.userDefaultsKey)
+				UserDefaults.standard.set(Constants.defaultURL, forKey: UserSetting.homePageURL.userDefaultsKey)
 			}
 		}
 	}
-	@IBAction func autoHideTitle(sender: NSMenuItem) {
+	@IBAction func autoHideTitle(_ sender: NSMenuItem) {
 		sender.state = (sender.state == NSOnState) ? NSOffState : NSOnState
-		NSUserDefaults.standardUserDefaults().setBool((sender.state == NSOnState), forKey: UserSetting.AutoHideTitle.userDefaultsKey)
+		UserDefaults.standard.set((sender.state == NSOnState), forKey: UserSetting.autoHideTitle.userDefaultsKey)
 	}
 
-	override func validateMenuItem(menuItem: NSMenuItem) -> Bool {
+	override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
 		switch menuItem.title {
 		case "Preferences":
 			break
 		case "Auto-hide Title Bar":
-			menuItem.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.AutoHideTitle.userDefaultsKey) ? NSOnState : NSOffState
+			menuItem.state = UserDefaults.standard.bool(forKey: UserSetting.autoHideTitle.userDefaultsKey) ? NSOnState : NSOffState
 			break
 		case "Enabled": //Transluceny Menu
-			menuItem.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.Translucency.userDefaultsKey) ? NSOnState : NSOffState
+			menuItem.state = UserDefaults.standard.bool(forKey: UserSetting.translucency.userDefaultsKey) ? NSOnState : NSOffState
 			break
 		case "Float Above All Spaces":
-			menuItem.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledFullScreenFloat.userDefaultsKey) ? NSOffState : NSOnState
+			menuItem.state = UserDefaults.standard.bool(forKey: UserSetting.disabledFullScreenFloat.userDefaultsKey) ? NSOffState : NSOnState
 			break;
 		case "Home Page":
 			break
 		case "Magic URL Redirects":
-			menuItem.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledMagicURLs.userDefaultsKey) ? NSOffState : NSOnState
+			menuItem.state = UserDefaults.standard.bool(forKey: UserSetting.disabledMagicURLs.userDefaultsKey) ? NSOffState : NSOnState
 			break
 		case "Quit":
 			break
@@ -123,46 +123,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 		}
 		Swift.print("item \(menuItem) is \(menuItem.state)")
 
-/*
-			// Switch to a submenu if we can
-			if let wc : HeliumPanelController = NSApp.keyWindow?.windowController as? HeliumPanelController {
-				if let webViewController : WebViewController = wc.webViewController {
-					if let webView: MyWebView = webViewController.view.subviews[0] as? MyWebView {
-						let subMenu: NSMenu = NSMenu()
-						//	Publish a custom menu
-						webView.publishApplicationMenu(subMenu)
-						Swift.print(subMenu)
-						menuItem.submenu = subMenu
-					}
-				}
-			}
-*/
 		return true;
 	}
-	@IBAction func appPress(sender: NSMenuItem) {
+	@IBAction func appPress(_ sender: NSMenuItem) {
 		Swift.print("Menu '\(sender.title)' clicked")
 	}
-/*		if let wc : HeliumPanelController = NSApp.keyWindow?.windowController as? HeliumPanelController {
-			if let webViewController : WebViewController = wc.webViewController {
-				if let webView: MyWebView = webViewController.view.subviews[0] as? MyWebView {
-					let event: NSEvent = NSApp.currentEvent!
-					NSMenu.popUpContextMenu(sender.submenu!, withEvent: event, forView: webView)
-				}
-			}
-		}
-	}
-*/
-	@IBAction func quitPress(sender: AnyObject) {
-		NSApplication.sharedApplication().terminate(self)
+
+	@IBAction func quitPress(_ sender: AnyObject) {
+		NSApplication.shared().terminate(self)
 	}
 
-	override class func initialize() {
-		let toHMS = hmsTransformer()
-		NSValueTransformer.setValueTransformer(toHMS, forName: "hmsTransformer")
-	}
-
-	func applicationWillFinishLaunching(notification: NSNotification) {
-        NSAppleEventManager.sharedAppleEventManager().setEventHandler(
+    let toHMS = hmsTransformer()
+	func applicationWillFinishLaunching(_ notification: Notification) {
+        NSAppleEventManager.shared().setEventHandler(
             self,
             andSelector: #selector(AppDelegate.handleURLEvent(_:withReply:)),
             forEventClass: AEEventClass(kInternetEventClass),
@@ -172,17 +145,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 		//	So they can interact everywhere with us without focus
 		appStatusItem.image = NSImage.init(named: "statusIcon")
 		appStatusItem.menu = appMenu
+
+        //  Initialize our h:m:s transformer
+         ValueTransformer.setValueTransformer(toHMS, forName: NSValueTransformerName(rawValue: "hmsTransformer"))
 	}
 
 	var mdQuery = NSMetadataQuery()
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
-        magicURLMenu.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledMagicURLs.userDefaultsKey) ? NSOffState : NSOnState
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
+        magicURLMenu.state = UserDefaults.standard.bool(forKey: UserSetting.disabledMagicURLs.userDefaultsKey) ? NSOffState : NSOnState
         
-        fullScreenFloatMenu.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledFullScreenFloat.userDefaultsKey) ? NSOffState : NSOnState
+        fullScreenFloatMenu.state = UserDefaults.standard.bool(forKey: UserSetting.disabledFullScreenFloat.userDefaultsKey) ? NSOffState : NSOnState
       
-        if let alpha = NSUserDefaults.standardUserDefaults().objectForKey(UserSetting.OpacityPercentage.userDefaultsKey) {
+        if let alpha = UserDefaults.standard.object(forKey: UserSetting.opacityPercentage.userDefaultsKey) {
             let offset = (alpha as! Int)/10 - 1
-            for (index, button) in percentageMenu.submenu!.itemArray.enumerate() {
+            for (index, button) in percentageMenu.submenu!.items.enumerated() {
                 (button ).state = (offset == index) ? NSOnState : NSOffState
             }
         }
@@ -190,32 +166,33 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 		//	Our status item needs this
 		window = NSApp.windows.first
 
-        autoHideTitleMenu.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.AutoHideTitle.userDefaultsKey) ? NSOnState : NSOffState
-		translucencyMenu.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.Translucency.userDefaultsKey) ? NSOnState : NSOffState
+        autoHideTitleMenu.state = UserDefaults.standard.bool(forKey: UserSetting.autoHideTitle.userDefaultsKey) ? NSOnState : NSOffState
+		translucencyMenu.state = UserDefaults.standard.bool(forKey: UserSetting.translucency.userDefaultsKey) ? NSOnState : NSOffState
    }
 
-    func applicationWillTerminate(aNotification: NSNotification) {
+    func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
     
-    @IBAction func magicURLRedirectToggled(sender: NSMenuItem) {
+    @IBAction func magicURLRedirectToggled(_ sender: NSMenuItem) {
         sender.state = (sender.state == NSOnState) ? NSOffState : NSOnState
-        NSUserDefaults.standardUserDefaults().setBool((sender.state == NSOffState), forKey: UserSetting.DisabledMagicURLs.userDefaultsKey)
+        UserDefaults.standard.set((sender.state == NSOffState), forKey: UserSetting.disabledMagicURLs.userDefaultsKey)
     }
 
     //MARK: - handleURLEvent
     // Called when the App opened via URL.
-    @objc func handleURLEvent(event: NSAppleEventDescriptor, withReply reply: NSAppleEventDescriptor) {
+    @objc func handleURLEvent(_ event: NSAppleEventDescriptor, withReply reply: NSAppleEventDescriptor) {
         
-        guard let keyDirectObject = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject)), let urlString = keyDirectObject.stringValue,
-            let url : String = urlString.substringFromIndex(urlString.startIndex.advancedBy(9)),
-            let urlObject = NSURL(string:url) else {
-            
+        guard let keyDirectObject = event.paramDescriptor(forKeyword: AEKeyword(keyDirectObject)),
+            let urlString = keyDirectObject.stringValue else {
                 return print("No valid URL to handle")
-                
         }
-        
-        NSNotificationCenter.defaultCenter().postNotificationName("HeliumLoadURL", object: urlObject)
+
+        //  strip helium://
+        let index = urlString.index(urlString.startIndex, offsetBy: 9)
+        let url = urlString.substring(from: index)
+
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "HeliumLoadURL"), object: url)
     }
 }
 

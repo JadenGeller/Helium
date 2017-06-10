@@ -9,19 +9,19 @@
 import Foundation
 
 extension String {
-    func replacePrefix(prefix: String, replacement: String) -> String {
+    func replacePrefix(_ prefix: String, replacement: String) -> String {
         if hasPrefix(prefix) {
-            return replacement + substringFromIndex(prefix.endIndex)
+            return replacement + substring(from: prefix.endIndex)
         }
         else {
             return self
         }
     }
     
-    func indexOf(target: String) -> Int {
-        let range = self.rangeOfString(target)
+    func indexOf(_ target: String) -> Int {
+        let range = self.range(of: target)
         if let range = range {
-            return self.startIndex.distanceTo(range.startIndex)
+            return self.characters.distance(from: self.startIndex, to: range.lowerBound)
         } else {
             return -1
         }
@@ -32,6 +32,6 @@ extension String {
 		let urlRegEx = "((https|http)()://)((\\w|-)+)(([.]|[/])((\\w|-)+))+"
 		let predicate = NSPredicate(format:"SELF MATCHES %@", argumentArray:[urlRegEx])
 		
-		return predicate.evaluateWithObject(self)
+		return predicate.evaluate(with: self)
 	}
 }

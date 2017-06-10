@@ -21,18 +21,18 @@ struct k {
 
 class PlayItem : NSObject {
     var name : String = k.item
-    var link : NSURL = NSURL.init(string: "http://")!
-	var time : NSTimeInterval
+    var link : URL = URL.init(string: "http://")!
+	var time : TimeInterval
 	var rank : Int
     
     override init() {
         name = k.item
-        link = NSURL.init(string: "http://")!
+        link = URL.init(string: "http://")!
 		time = 0.0
 		rank = 0
         super.init()
     }
-	init(name:String, link:NSURL, time:NSTimeInterval, rank:Int) {
+	init(name:String, link:URL, time:TimeInterval, rank:Int) {
         self.name = name
         self.link = link
 		self.time = time
@@ -72,15 +72,15 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
     @IBOutlet var playlistSplitView: NSSplitView!
 
     //    cache playlists read and saved to defaults
-    var defaults = NSUserDefaults.standardUserDefaults()
+    var defaults = UserDefaults.standard
     var playlists = [PlayList]()
     var playCache = [PlayList]()
     
     override func viewDidLoad() {
         let types = ["public.data",kUTTypeURL as String]
 
-        playlistTableView.registerForDraggedTypes(types)
-        playitemTableView.registerForDraggedTypes(types)
+        playlistTableView.register(forDraggedTypes: types)
+        playitemTableView.register(forDraggedTypes: types)
 
         self.restorePlaylists(restoreButton)
     }
@@ -89,20 +89,20 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         // cache our list before editing
         playCache = playlists
 
-        self.playlistSplitView.setPosition(120, ofDividerAtIndex: 0)
+        self.playlistSplitView.setPosition(120, ofDividerAt: 0)
     }
 
-    @IBAction func addPlaylist(sender: NSButton) {
+    @IBAction func addPlaylist(_ sender: NSButton) {
         if let play = playlistArrayController.selectedObjects.first as? PlayList {
-			let item = PlayItem(name:"item#",link:NSURL.init(string: "http://")!,time:0.0,rank:play.list.count + 1);
+			let item = PlayItem(name:"item#",link:URL.init(string: "http://")!,time:0.0,rank:play.list.count + 1);
             let temp = NSString(format:"%p",item) as String
             item.name += String(temp.characters.suffix(3))
 
-            play.willChangeValueForKey("listCount")
+            play.willChangeValue(forKey: "listCount")
             playitemArrayController.addObject(item)
-            play.didChangeValueForKey("listCount")
+            play.didChangeValue(forKey: "listCount")
 
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 self.playitemTableView.scrollRowToVisible(play.list.count - 1)
             }
         } else {
@@ -112,19 +112,19 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
             
             playlistArrayController.addObject(play)
 
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 self.playlistTableView.scrollRowToVisible(self.playlists.count - 1)
             }
         }
     }
 
-    @IBAction func removePlaylist(sender: NSButton) {
+    @IBAction func removePlaylist(_ sender: NSButton) {
         if let selectedPlayItem = playitemArrayController.selectedObjects.first as? PlayItem {
             let selectedPlaylist = playlistArrayController.selectedObjects.first as? PlayList
 
-            selectedPlaylist?.willChangeValueForKey("listCount")
+            selectedPlaylist?.willChangeValue(forKey: "listCount")
             playitemArrayController.removeObject(selectedPlayItem)
-            selectedPlaylist?.didChangeValueForKey("listCount")
+            selectedPlaylist?.didChangeValue(forKey: "listCount")
         }
         else
         if let selectedPlaylist = playlistArrayController.selectedObjects.first as? PlayList {
@@ -132,23 +132,23 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         }
     }
 
-    @IBAction func playPlaylist(sender: AnyObject) {
+    @IBAction func playPlaylist(_ sender: AnyObject) {
         if let selectedPlayItem = playitemArrayController.selectedObjects.first as? PlayItem {
             let selectedPlaylist = playlistArrayController.selectedObjects.first as? PlayList
-            super.dismissController(sender)
+            super.dismiss(sender)
 
             print("play \(selectedPlayItem.name) from \(selectedPlaylist!.name)")
 
-            let notif = NSNotification(name: "HeliumPlaylistItem", object: selectedPlayItem.link);
-            NSNotificationCenter.defaultCenter().postNotification(notif)
+            let notif = Notification(name: Notification.Name(rawValue: "HeliumPlaylistItem"), object: selectedPlayItem.link);
+            NotificationCenter.default.post(notif)
         }
         else
         if let selectedPlaylist = playlistArrayController.selectedObjects.first as? PlayList {
             if selectedPlaylist.list.count > 0 {
-                super.dismissController(sender)
+                super.dismiss(sender)
 
                 print("play \(selectedPlaylist.name) \(selectedPlaylist.list.count)")
-                for (i,item) in selectedPlaylist.list.enumerate() {
+                for (i,item) in selectedPlaylist.list.enumerated() {
                     print("\(i) \(item.rank) \(item.name)")
                 }
             }
@@ -156,9 +156,9 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
     }
     
     @IBOutlet weak var restoreButton: NSButton!
-    @IBAction func restorePlaylists(sender: NSButton) {
-        if let playArray = defaults.arrayForKey(UserSetting.Playlists.userDefaultsKey) {
-            playlistArrayController.removeObjects(playlistArrayController.arrangedObjects as! [AnyObject])
+    @IBAction func restorePlaylists(_ sender: NSButton) {
+        if let playArray = defaults.array(forKey: UserSetting.playlists.userDefaultsKey) {
+            playlistArrayController.remove(contentsOf: playlistArrayController.arrangedObjects as! [AnyObject])
 
             for playlist in playArray {
                 let play = playlist as! Dictionary<String,AnyObject>
@@ -168,8 +168,8 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                     let item = playitem as Dictionary <String,AnyObject>
                     let name = item[k.name] as! String
                     let path = item[k.link] as! String
-					let time = item[k.time] as? NSTimeInterval
-                    let link = NSURL.init(string: path)
+					let time = item[k.time] as? TimeInterval
+                    let link = URL.init(string: path)
                     let rank = item[k.rank] as! Int
 					let temp = PlayItem(name:name, link:link!, time:time!, rank:rank)
                     list.append(temp)
@@ -182,26 +182,26 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
     }
 
     @IBOutlet weak var saveButton: NSButton!
-    @IBAction func savePlaylists(sender: AnyObject) {
+    @IBAction func savePlaylists(_ sender: AnyObject) {
         let playArray = playlistArrayController.arrangedObjects as! [PlayList]
-        var temp = Array<AnyObject>()
+        var temp = [Dictionary<String,AnyObject>]()
         for playlist in playArray {
             var list = Array<AnyObject>()
             for playitem in playlist.list {
-				let item : [String:AnyObject] = [k.name:playitem.name, k.link:playitem.link.absoluteString, k.time:playitem.time, k.rank:playitem.rank]
-                list.append(item)
+				let item : [String:AnyObject] = [k.name:playitem.name as AnyObject, k.link:playitem.link.absoluteString as AnyObject, k.time:playitem.time as AnyObject, k.rank:playitem.rank as AnyObject]
+                list.append(item as AnyObject)
             }
-            temp.append([k.name:playlist.name, k.list:list])
+            temp.append([k.name:playlist.name as AnyObject, k.list:list as AnyObject])
         }
-        defaults.setObject(temp, forKey: UserSetting.Playlists.userDefaultsKey)
+        defaults.set(temp, forKey: UserSetting.playlists.userDefaultsKey)
         defaults.synchronize()
     }
     
-    @IBAction override func dismissController(sender: AnyObject?) {
-        super.dismissController(sender)
-        print(sender?.title)
+    @IBAction override func dismiss(_ sender: Any?) {
+        super.dismiss(sender)
+
         //    Save or go
-        switch sender!.tag == 0 {
+        switch (sender! as AnyObject).tag == 0 {
             case true:
                 print("true")
                 break
@@ -214,16 +214,16 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
     
     // MARK: Drag-n-Drop
     
-    func draggingEntered(sender: NSDraggingInfo!) -> NSDragOperation {
+    func draggingEntered(_ sender: NSDraggingInfo!) -> NSDragOperation {
         let pasteboard = sender.draggingPasteboard()
 
-        if pasteboard.canReadItemWithDataConformingToTypes([NSPasteboardURLReadingFileURLsOnlyKey]) {
-            return .Copy
+        if pasteboard.canReadItem(withDataConformingToTypes: [NSPasteboardURLReadingFileURLsOnlyKey]) {
+            return .copy
         }
-        return .Copy
+        return .copy
     }
 
-    func tableView(tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
+    func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
         let item = NSPasteboardItem()
         
         item.setString(String(row), forType: "public.data")
@@ -231,8 +231,8 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         return item
     }
 
-    func tableView(tableView: NSTableView, writeRowsWith rowIndexes: NSIndexSet, to pboard: NSPasteboard) -> Bool {
-        let data = NSKeyedArchiver.archivedDataWithRootObject(rowIndexes)
+    func tableView(_ tableView: NSTableView, writeRowsWith rowIndexes: IndexSet, to pboard: NSPasteboard) -> Bool {
+        let data = NSKeyedArchiver.archivedData(withRootObject: rowIndexes)
         let registeredTypes:[String] = ["public.data"]
 
         pboard.declareTypes(registeredTypes, owner: self)
@@ -241,45 +241,45 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         return true
     }
     
-    func tableView(tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
+    func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
 
-        if dropOperation == .Above {
+        if dropOperation == .above {
             let pboard = info.draggingPasteboard();
             let options = [NSPasteboardURLReadingFileURLsOnlyKey : true,
-                           NSPasteboardURLReadingContentsConformToTypesKey : [kUTTypeMovie as String]]
-            let items = pboard.readObjectsForClasses([NSURL.classForCoder()], options: options)
+                           NSPasteboardURLReadingContentsConformToTypesKey : [kUTTypeMovie as String]] as [String : Any]
+            let items = pboard.readObjects(forClasses: [NSURL.classForCoder()], options: options)
             if items!.count > 0 {
                 for item in items! {
-                    if item.isFileReferenceURL() {
-                        let fileURL : NSURL? = item.filePathURL
+                    if (item as! NSURL).isFileReferenceURL() {
+                        let fileURL : NSURL? = (item as AnyObject).filePathURL!! as NSURL
                         
                         //    if it's a video file, get and set window content size to its dimentions
-                        let track0 = AVURLAsset(URL:fileURL!, options:nil).tracks[0]
+                        let track0 = AVURLAsset(url:fileURL! as URL, options:nil).tracks[0]
                         if track0.mediaType != AVMediaTypeVideo
                         {
-                            return .None
+                            return NSDragOperation()
                         }
                     } else {
                         print("validate item -> \(item)")
                     }
                 }
             }
-            return .Move
+            return .move
         }
-        return .None
+        return NSDragOperation()
     }
     
-    func rearrange<T>(array: Array<T>, fromIndex: Int, toIndex: Int) -> Array<T> {
+    func rearrange<T>(_ array: Array<T>, fromIndex: Int, toIndex: Int) -> Array<T> {
         var arr = array
-        let element = arr.removeAtIndex(fromIndex)
-        arr.insert(element, atIndex: toIndex)
+        let element = arr.remove(at: fromIndex)
+        arr.insert(element, at: toIndex)
         
         return arr
     }
     
-	func metadataDictionaryForFileAt(fileName: String) -> Dictionary<NSObject,AnyObject>? {
+	func metadataDictionaryForFileAt(_ fileName: String) -> Dictionary<NSObject,AnyObject>? {
 
-		let item = MDItemCreate(kCFAllocatorDefault, fileName)
+		let item = MDItemCreate(kCFAllocatorDefault, fileName as CFString)
 		if ( item == nil) { return nil };
 		
 		let list = MDItemCopyAttributeNames(item)
@@ -287,20 +287,19 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
 		return resDict
 	}
 
-	func tableView(tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
+	func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
         let pasteboard = info.draggingPasteboard()
         let options = [NSPasteboardURLReadingFileURLsOnlyKey : true,
-                       NSPasteboardURLReadingContentsConformToTypesKey : [kUTTypeMovie as String]]
+                       NSPasteboardURLReadingContentsConformToTypesKey : [kUTTypeMovie as String]] as [String : Any]
         var oldIndexes = [Int]()
-        var items : [AnyObject]
         var oldIndexOffset = 0
         var newIndexOffset = 0
 
         //    we have intra tableView drag-n-drop ?
-        info.enumerateDraggingItemsWithOptions([], forView: tableView, classes: [NSPasteboardItem.self], searchOptions: [:]) {
+        info.enumerateDraggingItems(options: [], for: tableView, classes: [NSPasteboardItem.self], searchOptions: [:]) {
             tableView.beginUpdates()
 
-            if let str = ($0.0.item as! NSPasteboardItem).stringForType("public.data"), index = Int(str) {
+            if let str = ($0.0.item as! NSPasteboardItem).string(forType: "public.data"), let index = Int(str) {
                 oldIndexes.append(index)
             }
             // For simplicity, the code below uses `tableView.moveRowAtIndex` to move rows around directly.
@@ -308,7 +307,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
             
             for oldIndex in oldIndexes {
                 if oldIndex < row {
-                    tableView.moveRowAtIndex(oldIndex + oldIndexOffset, toIndex: row - 1)
+                    tableView.moveRow(at: oldIndex + oldIndexOffset, to: row - 1)
 //                    print("move \(oldIndex+oldIndexOffset) +> \(row-1)")
                     if tableView == self.playlistTableView {
                         self.playlists = self.rearrange(self.playlists, fromIndex: (oldIndex+oldIndexOffset), toIndex: (row-1))
@@ -319,7 +318,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                     }
                     oldIndexOffset -= 1
                 } else {
-                    tableView.moveRowAtIndex(oldIndex, toIndex: row + newIndexOffset)
+                    tableView.moveRow(at: oldIndex, to: row + newIndexOffset)
 //                    print("move \(oldIndex) -> \(row+newIndexOffset)")
                     if tableView == self.playlistTableView {
                         self.playlists = self.rearrange(self.playlists, fromIndex: (oldIndex), toIndex: (row+newIndexOffset))
@@ -336,45 +335,48 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         }
         
         //    We have a Finder drag-n-drop of file URLs ?
-        items = pasteboard.readObjectsForClasses([NSURL.classForCoder()], options: options)!
+//      items = pasteboard.readObjectsForClasses([NSURL.classForCoder()], options: options)!
+        let items = pasteboard.readObjects(forClasses: [NSURL.classForCoder()], options: options)!
         if items.count > 0 {
             var play = playlistArrayController.selectedObjects.first as? PlayList
             
             if (play == nil) {
-                let spec = items.first?.URLByDeletingLastPathComponent
-                let head = spec!?.absoluteString
-                let temp = PlayList(name:head!, list:Array <PlayItem>())
+                let spec = (items.first as! URL).deletingLastPathComponent
+                let head = spec().absoluteString
+                let temp = PlayList(name:head, list:Array <PlayItem>())
             
                 playlistArrayController.addObject(temp)
                 play = temp
                 
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     self.playlistTableView.scrollRowToVisible(self.playlists.count - 1)
                 }
             }
             
-            play!.willChangeValueForKey("listCount")
+            play!.willChangeValue(forKey: "listCount")
             for itemURL in items {
-                if itemURL.isFileReferenceURL() {
-                    let fileURL : NSURL? = itemURL.filePathURL
+                if (itemURL as AnyObject).isFileReferenceURL() {
+                    let fileURL : URL? = (itemURL as AnyObject).filePathURL
                     let path = fileURL!.absoluteString//.stringByRemovingPercentEncoding
 					let attr = metadataDictionaryForFileAt((fileURL?.path)!)
 //					print("attr \(attr)")
-					let time = attr?[kMDItemDurationSeconds] as! NSTimeInterval
-                    let item = PlayItem(name:(itemURL.URLByDeletingPathExtension!!.lastPathComponent!.stringByRemovingPercentEncoding!),
-                                        link:NSURL.init(string: path)!,
+					let time = attr?[kMDItemDurationSeconds] as! TimeInterval
+                    let fuzz = (itemURL as AnyObject).deletingPathExtension!!.lastPathComponent as NSString
+                    let name = fuzz.removingPercentEncoding
+                    let item = PlayItem(name:name!,
+                                        link:URL.init(string: path)!,
                                         time:time,
                                         rank:play!.list.count + 1)
-                    playitemArrayController.insertObject(item, atArrangedObjectIndex: row + newIndexOffset)
+                    playitemArrayController.insert(item, atArrangedObjectIndex: row + newIndexOffset)
                     newIndexOffset += 1
                 } else {
-                    print("accept item -> \(itemURL.absoluteString)")
+                    print("accept item -> \((itemURL as AnyObject).absoluteString)")
                 }
             }
-            play!.didChangeValueForKey("listCount")
+            play!.didChangeValue(forKey: "listCount")
                 
-            dispatch_async(dispatch_get_main_queue()) {
-                let rows = NSIndexSet.init(indexesInRange: NSMakeRange(row, newIndexOffset))
+            DispatchQueue.main.async {
+                let rows = IndexSet.init(integersIn: NSMakeRange(row, newIndexOffset).toRange() ?? 0..<0)
                 self.playitemTableView.selectRowIndexes(rows, byExtendingSelection: false)
             }
         }
@@ -384,7 +386,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
             
                 tableView.beginUpdates()
                 print("list \(selectedPlaylist.name) \(selectedPlaylist.list.count)")
-                for (i,item) in selectedPlaylist.list.enumerate() {
+                for (i,item) in selectedPlaylist.list.enumerated() {
                     item.rank = (i+1)
                     print("\(i) \(item.rank) \(item.name)")
                 }
