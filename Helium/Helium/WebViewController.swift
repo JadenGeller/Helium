@@ -40,13 +40,9 @@ class MyWebView : WKWebView {
 		item.target = wc
 		subOpen.addItem(item)
 
-		menu.addItem(NSMenuItem.separatorItem())
-
 		item = NSMenuItem(title: "Playlists", action: #selector(WebViewController.presentPlaylistSheet(_:)), keyEquivalent: "")
 		item.target = self.UIDelegate
 		menu.addItem(item)
-
-		menu.addItem(NSMenuItem.separatorItem())
 
 		item = NSMenuItem(title: "Preferences", action: #selector(menuClicked(_:)), keyEquivalent: "")
 		menu.addItem(item)
@@ -129,7 +125,6 @@ class MyWebView : WKWebView {
 		item.target = wc
 		subOpacity.addItem(item)
 
-		subTranslucency.addItem(NSMenuItem.separatorItem())
 		let translucency: HeliumPanelController.TranslucencyPreference = wc.translucencyPreference
 
 		item = NSMenuItem(title: "Always", action: #selector(HeliumPanelController.alwaysPreferencePress(_:)), keyEquivalent: "")
@@ -144,6 +139,10 @@ class MyWebView : WKWebView {
 		item.state = translucency == .MouseOutside ? NSOnState : NSOffState
 		item.target = wc
 		subTranslucency.addItem(item)
+
+		item = NSMenuItem(title: "Quit", action: #selector(AppDelegate.quitPress(_:)), keyEquivalent: "")
+		item.target = appDelegate
+		menu.addItem(item)
 	}
 }
 
