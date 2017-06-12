@@ -17,6 +17,7 @@ struct k {
     static let link = "link"
 	static let time = "time"
     static let rank = "rank"
+    static let hist = "History"
 }
 
 class PlayItem : NSObject {
@@ -157,7 +158,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
     
     @IBOutlet weak var restoreButton: NSButton!
     @IBAction func restorePlaylists(_ sender: NSButton) {
-        if let playArray = defaults.array(forKey: UserSetting.playlists.userDefaultsKey) {
+        if let playArray = defaults.array(forKey: UserSettings.Playlists.keyPath) {
             playlistArrayController.remove(contentsOf: playlistArrayController.arrangedObjects as! [AnyObject])
 
             for playlist in playArray {
@@ -193,7 +194,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
             }
             temp.append([k.name:playlist.name as AnyObject, k.list:list as AnyObject])
         }
-        defaults.set(temp, forKey: UserSetting.playlists.userDefaultsKey)
+        defaults.set(temp, forKey: UserSettings.Playlists.keyPath)
         defaults.synchronize()
     }
     
@@ -212,7 +213,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         }
     }
     
-    // MARK: Drag-n-Drop
+    // MARK:- Drag-n-Drop
     
     func draggingEntered(_ sender: NSDraggingInfo!) -> NSDragOperation {
         let pasteboard = sender.draggingPasteboard()

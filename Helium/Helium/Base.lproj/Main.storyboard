@@ -48,7 +48,7 @@
                                                     <menuItem title="Magic URL Redirects" state="on" id="GQ3-Bi-0IJ">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
-                                                            <action selector="magicURLRedirectToggled:" target="Voe-Tx-rLC" id="hxD-Ce-j7Z"/>
+                                                            <action selector="magicURLRedirectPress:" target="Voe-Tx-rLC" id="dGe-Ut-ADQ"/>
                                                         </connections>
                                                     </menuItem>
                                                     <menuItem isSeparatorItem="YES" id="agM-n6-9Km"/>
@@ -147,18 +147,13 @@ CA
                                     <items>
                                         <menuItem title="Auto-hide Title Bar" keyEquivalent="b" id="fpG-6V-xxb">
                                             <connections>
-                                                <action selector="autoHideTitle:" target="Voe-Tx-rLC" id="sY0-cg-ZCY"/>
+                                                <action selector="autoHideTitlePress:" target="Voe-Tx-rLC" id="zU5-PO-8QS"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Translucency" id="RVf-yr-XjB" userLabel="Translucency">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Translucency" systemMenu="window" id="fPu-ZA-vuX">
                                                 <items>
-                                                    <menuItem title="Enabled" keyEquivalent="t" id="wnn-Wb-fUq">
-                                                        <connections>
-                                                            <action selector="translucencyPress:" target="Ady-hI-5gd" id="orR-QV-BPD"/>
-                                                        </connections>
-                                                    </menuItem>
                                                     <menuItem title="Opacity" id="wlj-XI-Lng">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <menu key="submenu" title="Opacity" systemMenu="window" id="5ao-Bb-P10">
@@ -220,25 +215,25 @@ CA
                                                         </menu>
                                                     </menuItem>
                                                     <menuItem isSeparatorItem="YES" id="52B-gm-nq5"/>
-                                                    <menuItem title="Always" state="on" id="DDN-6r-tbV" userLabel="Never">
+                                                    <menuItem title="Never" state="on" id="DDN-6r-tbV" userLabel="Never">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
                                                             <action selector="neverPreferencePress:" target="Ady-hI-5gd" id="6Nv-SR-FjM"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="Always" id="UhQ-aG-PEv" userLabel="Always">
+                                                    <menuItem title="Always" tag="1" id="UhQ-aG-PEv" userLabel="Always">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
                                                             <action selector="alwaysPreferencePress:" target="Ady-hI-5gd" id="HmW-j0-3Nx"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="Mouse Over" id="Tdi-1w-idY">
+                                                    <menuItem title="Mouse Over" tag="2" id="Tdi-1w-idY">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
                                                             <action selector="overPreferencePress:" target="Ady-hI-5gd" id="mAm-Yw-rQF"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="Mouse Outside" id="keL-ga-Rmv">
+                                                    <menuItem title="Mouse Outside" tag="3" id="keL-ga-Rmv">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
                                                             <action selector="outsidePreferencePress:" target="Ady-hI-5gd" id="9TA-nd-SjS"/>
@@ -344,7 +339,6 @@ CA
                         <outlet property="fullScreenFloatMenu" destination="J8Z-sv-9PI" id="8gu-KT-nBS"/>
                         <outlet property="magicURLMenu" destination="GQ3-Bi-0IJ" id="1Kj-Qu-x6d"/>
                         <outlet property="percentageMenu" destination="wlj-XI-Lng" id="9dj-5p-3sa"/>
-                        <outlet property="translucencyMenu" destination="wnn-Wb-fUq" id="p1R-2o-k0T"/>
                     </connections>
                 </customObject>
                 <customObject id="sQQ-SA-Rgm" customClass="SUUpdater"/>
@@ -385,7 +379,7 @@ CA
                                     <menuItem title="Auto-hide Title Bar" id="Tpr-Be-Saa">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                         <connections>
-                                            <action selector="autoHideTitle:" target="Voe-Tx-rLC" id="39C-b5-ckD"/>
+                                            <action selector="autoHideTitlePress:" target="Voe-Tx-rLC" id="s4v-QD-tuS"/>
                                         </connections>
                                     </menuItem>
                                     <menuItem title="Float Above All Spaces" id="4Lx-l2-xwH">
@@ -403,19 +397,13 @@ CA
                                     <menuItem title="Magic URL Redirects" id="iyu-Wn-umk">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                         <connections>
-                                            <action selector="magicURLRedirectToggled:" target="Voe-Tx-rLC" id="mwL-M8-qOP"/>
+                                            <action selector="magicURLRedirectPress:" target="Voe-Tx-rLC" id="DUb-Jc-Weo"/>
                                         </connections>
                                     </menuItem>
                                     <menuItem title="Translucency" id="JEh-0f-gsX">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                         <menu key="submenu" title="Translucency" id="0Lo-4S-2Ic">
                                             <items>
-                                                <menuItem title="Enabled" id="Ug7-73-SB8" userLabel="Translucency Menu">
-                                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                                    <connections>
-                                                        <action selector="translucencyPress:" target="Ady-hI-5gd" id="cMg-mJ-awq"/>
-                                                    </connections>
-                                                </menuItem>
                                                 <menuItem title="Opacity" id="5Cn-08-3QP" userLabel="Percentage Menu">
                                                     <modifierMask key="keyEquivalentModifierMask"/>
                                                     <menu key="submenu" title="Opacity" systemMenu="window" id="FOP-ge-VpZ">
@@ -487,22 +475,28 @@ CA
                                                     </menu>
                                                 </menuItem>
                                                 <menuItem isSeparatorItem="YES" id="3kH-I6-lnj"/>
-                                                <menuItem title="Always" state="on" id="E7u-n2-bML" userLabel="Always">
+                                                <menuItem title="Never" id="Ug7-73-SB8" userLabel="Never">
                                                     <modifierMask key="keyEquivalentModifierMask"/>
                                                     <connections>
-                                                        <action selector="alwaysPreferencePress:" target="Ady-hI-5gd" id="NH4-RS-mmM"/>
+                                                        <action selector="translucencyPress:" target="Voe-Tx-rLC" id="gTw-k0-pbh"/>
                                                     </connections>
                                                 </menuItem>
-                                                <menuItem title="Mouse Over" id="NXO-1v-BRR">
+                                                <menuItem title="Always" state="on" tag="1" id="E7u-n2-bML" userLabel="Always">
                                                     <modifierMask key="keyEquivalentModifierMask"/>
                                                     <connections>
-                                                        <action selector="overPreferencePress:" target="Ady-hI-5gd" id="nvQ-MM-Pb2"/>
+                                                        <action selector="translucencyPress:" target="Voe-Tx-rLC" id="9Og-lU-Emt"/>
                                                     </connections>
                                                 </menuItem>
-                                                <menuItem title="Mouse Outside" id="d9E-iu-Dbr">
+                                                <menuItem title="Mouse Over" tag="2" id="NXO-1v-BRR">
                                                     <modifierMask key="keyEquivalentModifierMask"/>
                                                     <connections>
-                                                        <action selector="outsidePreferencePress:" target="Ady-hI-5gd" id="bij-0F-kCz"/>
+                                                        <action selector="translucencyPress:" target="Voe-Tx-rLC" id="rQP-Bp-fuz"/>
+                                                    </connections>
+                                                </menuItem>
+                                                <menuItem title="Mouse Outside" tag="3" id="d9E-iu-Dbr">
+                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                    <connections>
+                                                        <action selector="translucencyPress:" target="Voe-Tx-rLC" id="yoX-aw-MYT"/>
                                                     </connections>
                                                 </menuItem>
                                             </items>
@@ -520,7 +514,7 @@ CA
                     </items>
                 </menu>
             </objects>
-            <point key="canvasLocation" x="75" y="0.0"/>
+            <point key="canvasLocation" x="33" y="-414"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="3rF-Wl-9by">
@@ -541,10 +535,10 @@ CA
             </objects>
             <point key="canvasLocation" x="612" y="293"/>
         </scene>
-        <!--Playlist View Controller-->
+        <!--Helium Playlists-->
         <scene sceneID="wcG-7U-Dt5">
             <objects>
-                <viewController storyboardIdentifier="PlaylistViewController" id="YAy-lX-dae" customClass="PlaylistViewController" customModule="Helium" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Helium Playlists" storyboardIdentifier="PlaylistViewController" id="YAy-lX-dae" customClass="PlaylistViewController" customModule="Helium" customModuleProvider="target" sceneMemberID="viewController">
                     <splitView key="view" arrangesAllSubviews="NO" dividerStyle="paneSplitter" vertical="YES" id="1fw-gA-tie">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="272"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>

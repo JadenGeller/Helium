@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0FD57FDE1EEC89F400A0F84D /* HeliumPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD57FDD1EEC89F400A0F84D /* HeliumPanel.swift */; };
+		0FD57FE01EECF0FF00A0F84D /* UrlHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD57FDF1EECF0FF00A0F84D /* UrlHelpers.swift */; };
 		0FD6C7381E62286000D6F836 /* PlaylistPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD6C7361E62286000D6F836 /* PlaylistPanelController.swift */; };
 		0FD6C7391E62286000D6F836 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD6C7371E62286000D6F836 /* PlaylistViewController.swift */; };
 		0FF0BB3A1EAA25FE009952D4 /* ValueTransformers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF0BB391EAA25FE009952D4 /* ValueTransformers.swift */; };
@@ -71,6 +73,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0FD57FDD1EEC89F400A0F84D /* HeliumPanel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeliumPanel.swift; sourceTree = "<group>"; };
+		0FD57FDF1EECF0FF00A0F84D /* UrlHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlHelpers.swift; sourceTree = "<group>"; };
 		0FD6C7361E62286000D6F836 /* PlaylistPanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistPanelController.swift; sourceTree = "<group>"; };
 		0FD6C7371E62286000D6F836 /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
 		0FF0BB391EAA25FE009952D4 /* ValueTransformers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueTransformers.swift; sourceTree = "<group>"; };
@@ -167,6 +171,7 @@
 		4D867CB31AD6781200681331 /* Helium */ = {
 			isa = PBXGroup;
 			children = (
+				0FD57FDD1EEC89F400A0F84D /* HeliumPanel.swift */,
 				4D867CB61AD6781200681331 /* AppDelegate.swift */,
 				4D867CD31AD6796A00681331 /* HeliumPanelController.swift */,
 				4D867CB81AD6781200681331 /* WebViewController.swift */,
@@ -189,6 +194,7 @@
 				4D867CB51AD6781200681331 /* Info.plist */,
 				AAA3EA011BE4CEC9001A471F /* UserSettings.swift */,
 				5B75B5111C9A13D600475921 /* StringHelpers.swift */,
+				0FD57FDF1EECF0FF00A0F84D /* UrlHelpers.swift */,
 				0FF0BB391EAA25FE009952D4 /* ValueTransformers.swift */,
 			);
 			name = "Supporting Files";
@@ -387,6 +393,8 @@
 				4D867CB91AD6781200681331 /* WebViewController.swift in Sources */,
 				0FF0BB3A1EAA25FE009952D4 /* ValueTransformers.swift in Sources */,
 				0FD6C7381E62286000D6F836 /* PlaylistPanelController.swift in Sources */,
+				0FD57FE01EECF0FF00A0F84D /* UrlHelpers.swift in Sources */,
+				0FD57FDE1EEC89F400A0F84D /* HeliumPanel.swift in Sources */,
 				4D867CB71AD6781200681331 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

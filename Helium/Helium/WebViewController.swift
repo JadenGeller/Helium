@@ -49,13 +49,13 @@ class MyWebView : WKWebView {
 		let subPref = NSMenu()
 		item.submenu = subPref
 
-		item = NSMenuItem(title: "Auto-hide Title Bar", action: #selector(appDelegate.autoHideTitle(_:)), keyEquivalent: "")
-		item.state = UserDefaults.standard.integer(forKey: UserSetting.autoHideTitle.userDefaultsKey)
+		item = NSMenuItem(title: "Auto-hide Title Bar", action: #selector(appDelegate.autoHideTitlePress(_:)), keyEquivalent: "")
+        item.state = UserSettings.autoHideTitle.value ? NSOnState : NSOffState
 		item.target = appDelegate
 		subPref.addItem(item)
 
 		item = NSMenuItem(title: "Float Above All Spaces", action: #selector(AppDelegate.floatOverFullScreenAppsPress(_:)), keyEquivalent: "")
-		item.state = 1 - UserDefaults.standard.integer(forKey: UserSetting.disabledFullScreenFloat.userDefaultsKey)
+        item.state = (UserSettings.disabledFullScreenFloat.value == true) ? NSOffState : NSOnState
 		item.target = appDelegate
 		subPref.addItem(item)
 		
@@ -63,9 +63,9 @@ class MyWebView : WKWebView {
 		item.target = appDelegate
 		subPref.addItem(item)
 
-		item = NSMenuItem(title: "Magic URL Redirects", action: #selector(AppDelegate.magicURLRedirectToggled(_:)), keyEquivalent: "")
-		item.state = 1 - UserDefaults.standard.integer(forKey: UserSetting.disabledMagicURLs.userDefaultsKey)
-		item.target = NSApp.delegate
+		item = NSMenuItem(title: "Magic URL Redirects", action: #selector(AppDelegate.magicURLRedirectPress(_:)), keyEquivalent: "")
+        item.state = (UserSettings.disabledMagicURLs.value == true) ? NSOffState : NSOnState
+		item.target = appDelegate
 		subPref.addItem(item)
 
 		item = NSMenuItem(title: "Translucency", action: #selector(menuClicked(_:)), keyEquivalent: "")
@@ -73,71 +73,77 @@ class MyWebView : WKWebView {
 		let subTranslucency = NSMenu()
 		item.submenu = subTranslucency
 
-		item = NSMenuItem(title: "Enabled", action: #selector(HeliumPanelController.translucencyPress(_:)), keyEquivalent: "")
-		item.state = wc.translucencyEnabled == true ? NSOnState : NSOffState
-		item.target = wc
-		subTranslucency.addItem(item)
-
 		item = NSMenuItem(title: "Opacity", action: #selector(menuClicked(_:)), keyEquivalent: "")
-		let opacity = UserDefaults.standard.integer(forKey: UserSetting.opacityPercentage.userDefaultsKey)
+        item.isEnabled = UserSettings.translucencyPreference.value > 0
+		let opacity = UserSettings.opacityPercentage.value
 		subTranslucency.addItem(item)
 		let subOpacity = NSMenu()
 		item.submenu = subOpacity
 
-		item = NSMenuItem(title: "10%", action: #selector(HeliumPanelController.percentagePress(_:)), keyEquivalent: "")
+		item = NSMenuItem(title: "10%", action: #selector(AppDelegate.percentagePress(_:)), keyEquivalent: "")
+        item.isEnabled = UserSettings.translucencyPreference.value > 0
 		item.state = (10 == opacity ? NSOnState : NSOffState)
-		item.target = wc
+        item.target = appDelegate
 		subOpacity.addItem(item)
-		item = NSMenuItem(title: "20%", action: #selector(HeliumPanelController.percentagePress(_:)), keyEquivalent: "")
+		item = NSMenuItem(title: "20%", action: #selector(AppDelegate.percentagePress(_:)), keyEquivalent: "")
+        item.isEnabled = UserSettings.translucencyPreference.value > 0
 		item.state = (20 == opacity ? NSOnState : NSOffState)
-		item.target = wc
+        item.target = appDelegate
 		subOpacity.addItem(item)
-		item = NSMenuItem(title: "30%", action: #selector(HeliumPanelController.percentagePress(_:)), keyEquivalent: "")
+		item = NSMenuItem(title: "30%", action: #selector(AppDelegate.percentagePress(_:)), keyEquivalent: "")
 		item.state = (30 == opacity ? NSOnState : NSOffState)
-		item.target = wc
+        item.target = appDelegate
 		subOpacity.addItem(item)
-		item = NSMenuItem(title: "40%", action: #selector(HeliumPanelController.percentagePress(_:)), keyEquivalent: "")
+		item = NSMenuItem(title: "40%", action: #selector(AppDelegate.percentagePress(_:)), keyEquivalent: "")
 		item.state = (40 == opacity ? NSOnState : NSOffState)
-		item.target = wc
+        item.target = appDelegate
 		subOpacity.addItem(item)
-		item = NSMenuItem(title: "50%", action: #selector(HeliumPanelController.percentagePress(_:)), keyEquivalent: "")
+		item = NSMenuItem(title: "50%", action: #selector(AppDelegate.percentagePress(_:)), keyEquivalent: "")
 		item.state = (50 == opacity ? NSOnState : NSOffState)
-		item.target = wc
+        item.target = appDelegate
 		subOpacity.addItem(item)
-		item = NSMenuItem(title: "60%", action: #selector(HeliumPanelController.percentagePress(_:)), keyEquivalent: "")
+		item = NSMenuItem(title: "60%", action: #selector(AppDelegate.percentagePress(_:)), keyEquivalent: "")
 		item.state = (60 == opacity ? NSOnState : NSOffState)
-		item.target = wc
+        item.target = appDelegate
 		subOpacity.addItem(item)
-		item = NSMenuItem(title: "70%", action: #selector(HeliumPanelController.percentagePress(_:)), keyEquivalent: "")
+		item = NSMenuItem(title: "70%", action: #selector(AppDelegate.percentagePress(_:)), keyEquivalent: "")
 		item.state = (70 == opacity ? NSOnState : NSOffState)
-		item.target = wc
+        item.target = appDelegate
 		subOpacity.addItem(item)
-		item = NSMenuItem(title: "80%", action: #selector(HeliumPanelController.percentagePress(_:)), keyEquivalent: "")
+		item = NSMenuItem(title: "80%", action: #selector(AppDelegate.percentagePress(_:)), keyEquivalent: "")
 		item.state = (80 == opacity ? NSOnState : NSOffState)
-		item.target = wc
+        item.target = appDelegate
 		subOpacity.addItem(item)
-		item = NSMenuItem(title: "90%", action: #selector(HeliumPanelController.percentagePress(_:)), keyEquivalent: "")
+		item = NSMenuItem(title: "90%", action: #selector(AppDelegate.percentagePress(_:)), keyEquivalent: "")
 		item.state = (90 == opacity ? NSOnState : NSOffState)
-		item.target = wc
+        item.target = appDelegate
 		subOpacity.addItem(item)
-		item = NSMenuItem(title: "100%", action: #selector(HeliumPanelController.percentagePress(_:)), keyEquivalent: "")
+		item = NSMenuItem(title: "100%", action: #selector(AppDelegate.percentagePress(_:)), keyEquivalent: "")
 		item.state = (100 == opacity ? NSOnState : NSOffState)
-		item.target = wc
+        item.target = appDelegate
 		subOpacity.addItem(item)
 
-		let translucency: HeliumPanelController.TranslucencyPreference = wc.translucencyPreference
-
-		item = NSMenuItem(title: "Always", action: #selector(HeliumPanelController.alwaysPreferencePress(_:)), keyEquivalent: "")
+		let translucency = HeliumPanelController.TranslucencyPreference(rawValue: UserSettings.translucencyPreference.value)
+        
+        item = NSMenuItem(title: "Never", action: #selector(AppDelegate.translucencyPress(_:)), keyEquivalent: "")
+        item.tag = HeliumPanelController.TranslucencyPreference.never.rawValue
+        item.state = translucency == .never ? NSOnState : NSOffState
+        item.target = appDelegate
+        subTranslucency.addItem(item)
+		item = NSMenuItem(title: "Always", action: #selector(AppDelegate.translucencyPress(_:)), keyEquivalent: "")
+        item.tag = HeliumPanelController.TranslucencyPreference.always.rawValue
 		item.state = translucency == .always ? NSOnState : NSOffState
-		item.target = wc
+        item.target = appDelegate
 		subTranslucency.addItem(item)
-		item = NSMenuItem(title: "Mouse Over", action: #selector(HeliumPanelController.overPreferencePress(_:)), keyEquivalent: "")
+		item = NSMenuItem(title: "Mouse Over", action: #selector(AppDelegate.translucencyPress(_:)), keyEquivalent: "")
+        item.tag = HeliumPanelController.TranslucencyPreference.mouseOver.rawValue
 		item.state = translucency == .mouseOver ? NSOnState : NSOffState
-		item.target = wc
+        item.target = appDelegate
 		subTranslucency.addItem(item)
-		item = NSMenuItem(title: "Mouse Outside", action: #selector(HeliumPanelController.outsidePreferencePress(_:)), keyEquivalent: "")
+		item = NSMenuItem(title: "Mouse Outside", action: #selector(AppDelegate.translucencyPress(_:)), keyEquivalent: "")
+        item.tag = HeliumPanelController.TranslucencyPreference.mouseOutside.rawValue
 		item.state = translucency == .mouseOutside ? NSOnState : NSOffState
-		item.target = wc
+        item.target = appDelegate
 		subTranslucency.addItem(item)
 
 		item = NSMenuItem(title: "Quit", action: #selector(AppDelegate.quitPress(_:)), keyEquivalent: "")
@@ -162,7 +168,11 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(WebViewController.loadURLObject(_:)), name: NSNotification.Name(rawValue: "HeliumLoadURL"), object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(WebViewController.loadURL(urlObject:)),
+            name: NSNotification.Name(rawValue: "HeliumLoadURLString"),
+            object: nil)
         
         // Layout webview
         view.addSubview(webView)
@@ -190,32 +200,12 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         webView.addObserver(self, forKeyPath: "estimatedProgress", options: NSKeyValueObservingOptions.new, context: nil)
 
         // Listen for auto hide title changes
-        UserDefaults.standard.addObserver(self, forKeyPath: UserSetting.autoHideTitle.userDefaultsKey, options: NSKeyValueObservingOptions.new, context: nil)
+        UserDefaults.standard.addObserver(self, forKeyPath: UserSettings.autoHideTitle.keyPath, options: NSKeyValueObservingOptions.new, context: nil)
 
         clear()
     }
     
-    var lastStyle : Int = 0
-    var lastTitle = "Helium"
 	var appDelegate: AppDelegate = NSApp.delegate as! AppDelegate
-
-    override func mouseExited(with theEvent: NSEvent) {
-        if appDelegate.autoHideTitle {
-            if lastStyle == 0 { lastStyle = Int((self.view.window?.styleMask)!.rawValue) }
-            self.view.window!.titleVisibility = NSWindowTitleVisibility.hidden;
-            self.view.window?.styleMask = NSBorderlessWindowMask
-        }
-    }
-    override func mouseEntered(with theEvent: NSEvent) {
-        if appDelegate.autoHideTitle {
-            if lastStyle == 0 { lastStyle = Int((self.view.window?.styleMask)!.rawValue) }
-            self.view.window!.titleVisibility = NSWindowTitleVisibility.visible;
-            self.view.window?.styleMask = NSWindowStyleMask(rawValue: UInt(lastStyle))
-
-            let notif = Notification(name: Notification.Name(rawValue: "HeliumUpdateTitle"), object: lastTitle);
-            NotificationCenter.default.post(notif)
-        }
-    }
 
     override func viewDidLayout() {
         super.viewDidLayout()
@@ -297,6 +287,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         zoomOut()
     }
     
+    //  MARK: Playlists
     lazy var playlistViewController: PlaylistViewController = {
         return self.storyboard!.instantiateController(withIdentifier: "PlaylistViewController")
             as! PlaylistViewController
@@ -312,33 +303,32 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         }
     }
     
-    internal func loadAlmostURL( _ text_in: String) {
-        var text = text_in
-        if !(text.lowercased().hasPrefix("http://") || text.lowercased().hasPrefix("https://") || text.lowercased().hasPrefix("file://")) {
-            text = "http://" + text
-        }
-        
-        if let url = URL(string: text) {
-            loadURL(url)
-        }
-        
-    }
-    
     // MARK: Loading
     
-    internal func loadURL(_ url:URL) {
+    internal var currentURL: String? {
+        return webView.url?.absoluteString
+    }
+
+    internal func loadURL(text: String) {
+        let text = UrlHelpers.ensureScheme(text)
+        if let url = URL(string: text) {
+            loadURL(url: url)
+        }
+    }
+
+    internal func loadURL(url:URL) {
         webView.load(URLRequest(url: url))
+    }
+
+    func loadURL(urlObject: Notification) {
+        if let string = urlObject.object as? String {
+            loadURL(text: string)
+        }
     }
 
     func playerDidFinishPlaying(_ note: Notification) {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: note.object)
         print("Video Finished")
-    }
-
-    func loadURLObject(_ urlObject : Notification) {
-        if let url = urlObject.object as? URL {
-            loadAlmostURL(url.absoluteString);
-        }
     }
     
     fileprivate func requestedReload() {
@@ -348,59 +338,43 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     // MARK: Webview functions
     func clear() {
         // Reload to home page (or default if no URL stored in UserDefaults)
-        if let homePage = UserDefaults.standard.string(forKey: UserSetting.homePageURL.userDefaultsKey) {
-            loadAlmostURL(homePage)
-        }
-        else{
-            loadURL(URL(string: Constants.defaultURL)!)
-        }
+        loadURL(text: UserSettings.homePageURL.value)
     }
 
     var webView = MyWebView()
     var webSize = CGSize(width: 0,height: 0)
     var shouldRedirect: Bool {
         get {
-            return !UserDefaults.standard.bool(forKey: UserSetting.disabledMagicURLs.userDefaultsKey)
+            return !UserSettings.disabledMagicURLs.value
         }
     }
     
     // Redirect Hulu and YouTube to pop-out videos
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+    func webView(_ webView: WKWebView,
+                 decidePolicyFor navigationAction: WKNavigationAction,
+                 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
-        if shouldRedirect, let url = navigationAction.request.url {
-            let urlString = url.absoluteString
-            var modified = urlString
-            modified = modified.replacePrefix("https://www.youtube.com/watch?v=", replacement: modified.contains("list") ? "https://www.youtube.com/embed/?v=" : "https://www.youtube.com/embed/")
-            modified = modified.replacePrefix("https://vimeo.com/", replacement: "http://player.vimeo.com/video/")
-            modified = modified.replacePrefix("http://v.youku.com/v_show/id_", replacement: "http://player.youku.com/embed/")
-            modified = modified.replacePrefix("https://www.twitch.tv/", replacement: "https://player.twitch.tv?html5&channel=")
-            modified = modified.replacePrefix("http://www.dailymotion.com/video/", replacement: "http://www.dailymotion.com/embed/video/")
-            modified = modified.replacePrefix("http://dai.ly/", replacement: "http://www.dailymotion.com/embed/video/")
- 
-            if modified.contains("https://youtu.be") {
-                modified = "https://www.youtube.com/embed/" + getVideoHash(urlString)
-                if urlString.contains("?t=") {
-                        modified += makeCustomStartTimeURL(urlString)
-                }
-            }
-            
-            if urlString != modified {
-                decisionHandler(WKNavigationActionPolicy.cancel)
-                loadURL(URL(string: modified)!)
+        guard !UserSettings.disabledMagicURLs.value,
+            let url = navigationAction.request.url else {
+                decisionHandler(WKNavigationActionPolicy.allow)
                 return
-            }
         }
-        
-        decisionHandler(WKNavigationActionPolicy.allow)
+
+        if let newUrl = UrlHelpers.doMagic(url) {
+            decisionHandler(WKNavigationActionPolicy.cancel)
+            loadURL(url: newUrl)
+        } else {
+            decisionHandler(WKNavigationActionPolicy.allow)
+        }
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation) {
         if let pageTitle = webView.title {
             var title = pageTitle;
-            if title.isEmpty { title = "Helium" }
+            if title.isEmpty { title = UserSettings.windowTitle.default }
             let notif = Notification(name: Notification.Name(rawValue: "HeliumUpdateTitle"), object: title);
             NotificationCenter.default.post(notif)
-            lastTitle = title
+            UserSettings.windowTitle.value = title
         }
     }
     
@@ -410,7 +384,9 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     var videoFileReferencedURL = false
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
-        if object as! NSObject == webView && keyPath == "estimatedProgress" {
+        if keyPath == "estimatedProgress",
+            let view = object as? WKWebView, view == webView {
+
             if let progress = change?[NSKeyValueChangeKey(rawValue: "new")] as? Float {
                 let percent = progress * 100
                 var title = NSString(format: "Loading... %.2f%%", percent)
@@ -442,30 +418,13 @@ class WebViewController: NSViewController, WKNavigationDelegate {
                     } else {
                         title = "Helium"
                     }
-                    lastTitle = title as String
-                }
+                    UserSettings.windowTitle.value = title as String
+                 }
 
                 let notif = Notification(name: Notification.Name(rawValue: "HeliumUpdateTitle"), object: title);
                 NotificationCenter.default.post(notif)
             }
         }
-
-        if (keyPath == UserSetting.autoHideTitle.userDefaultsKey) {
-            appDelegate.autoHideTitle = UserDefaults.standard.bool(forKey: keyPath!)
-            if appDelegate.autoHideTitle {
-                if lastStyle == 0 { lastStyle = Int((self.view.window?.styleMask)!.rawValue) }
-                self.view.window!.titleVisibility = NSWindowTitleVisibility.hidden;
-                self.view.window?.styleMask = NSBorderlessWindowMask
-            } else {
-                if lastStyle == 0 { lastStyle = Int((self.view.window?.styleMask)!.rawValue) }
-                self.view.window!.titleVisibility = NSWindowTitleVisibility.visible;
-                self.view.window?.styleMask = NSWindowStyleMask(rawValue: UInt(lastStyle))
-            }
-
-            let notif = Notification(name: Notification.Name(rawValue: "HeliumUpdateTitle"), object: lastTitle);
-            NotificationCenter.default.post(notif)
-        }
-        
     }
     
     //Convert a YouTube video url that starts at a certian point to popup/embedded design
