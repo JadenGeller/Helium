@@ -322,7 +322,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
 
     func loadURL(urlObject: Notification) {
         if let string = urlObject.object as? String {
-            loadURL(text: string)
+            _ = loadURL(text: string)
         }
     }
 
