@@ -103,7 +103,7 @@ class HeliumPanelController : NSWindowController {
 
         if UserSettings.autoHideTitle.value == true {
             panel.titleVisibility = NSWindowTitleVisibility.hidden;
-            panel.styleMask = NSBorderlessWindowMask
+            panel.styleMask = NSWindowStyleMask.borderless
         }
     }
     
@@ -280,7 +280,7 @@ class HeliumPanelController : NSWindowController {
     @objc func willUpdateTitleBar() {
         if UserSettings.autoHideTitle.value == true {
             panel.titleVisibility = NSWindowTitleVisibility.hidden;
-            panel.styleMask = NSBorderlessWindowMask
+            panel.styleMask = NSWindowStyleMask.borderless
         } else {
             panel.titleVisibility = NSWindowTitleVisibility.visible;
             panel.styleMask = NSWindowStyleMask(rawValue: UInt(lastStyle))
