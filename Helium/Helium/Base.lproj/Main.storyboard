@@ -30,7 +30,7 @@
                                                     <menuItem title="Auto-hide Title Bar" id="bwA-Ka-6Ou">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
-                                                            <action selector="autoHideTitle:" target="Voe-Tx-rLC" id="Q0X-4Y-sHZ"/>
+                                                            <action selector="autoHideTitlePress:" target="Voe-Tx-rLC" id="MOy-rg-jzx"/>
                                                         </connections>
                                                     </menuItem>
                                                     <menuItem title="Float Above All Spaces" state="on" id="J8Z-sv-9PI" userLabel="Float over Full Screen Apps Menu">
@@ -1079,6 +1079,6 @@ Gw
         <image name="NSRemoveTemplate" width="11" height="11"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="UQR-x0-MeW"/>
+        <segue reference="Ujs-EW-Ya2"/>
     </inferredMetricsTieBreakers>
 </document>
