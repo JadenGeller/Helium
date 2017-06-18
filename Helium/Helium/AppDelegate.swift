@@ -214,9 +214,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         //  Initialize our h:m:s transformer
         ValueTransformer.setValueTransformer(toHMS, forName: NSValueTransformerName(rawValue: "hmsTransformer"))
+		
+		// Maintain a history of titles
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(AppDelegate.didUpdateTitle(_:)),
+			name: NSNotification.Name(rawValue: "HeliumNewURL"),
+			object: nil)
 	}
 
-	var mdQuery = NSMetadataQuery()
+	var histories: PlayList = PlayList.init(name: "History", list: Array<PlayItem>())
+	var defaults = UserDefaults.standard
+
     func applicationDidFinishLaunching(_ aNotification: Notification) {
 
         let alpha = UserSettings.opacityPercentage.value
@@ -224,14 +233,74 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         for (index, button) in percentageMenu.submenu!.items.enumerated() {
             (button).state = (offset == index) ? NSOnState : NSOffState
         }
+		
+		// Load histories from defaults
+		if let items = defaults.array(forKey: UserSettings.Histories.keyPath) {
+			for playitem in items {
+				let item = playitem as! Dictionary <String,AnyObject>
+				let name = item[k.name] as! String
+				let path = item[k.link] as! String
+				let time = item[k.time] as? TimeInterval
+				let link = URL.init(string: path)
+				let rank = item[k.rank] as! Int
+				let temp = PlayItem(name:name, link:link!, time:time!, rank:rank)
+				histories.list.append(temp)
+			}
+		}
    }
 
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
+
+		// Save histories to defaults
+		var temp = [Dictionary<String,AnyObject>]()
+		for histitem in histories.list {
+			let item : [String:AnyObject] = [k.name:histitem.name as AnyObject, k.link:histitem.link.absoluteString as AnyObject, k.time:histitem.time as AnyObject, k.rank:histitem.rank as AnyObject]
+			temp.append((item as AnyObject) as! Dictionary<String, AnyObject>)
+		}
+		defaults.set(temp, forKey: UserSettings.Histories.keyPath)
+		defaults.synchronize()
     }
 
     //MARK: - handleURLEvent(s)
 
+	func metadataDictionaryForFileAt(_ fileName: String) -> Dictionary<NSObject,AnyObject>? {
+		
+		let item = MDItemCreate(kCFAllocatorDefault, fileName as CFString)
+		if ( item == nil) { return nil };
+		
+		let list = MDItemCopyAttributeNames(item)
+		let resDict = MDItemCopyAttributes(item,list) as Dictionary
+		return resDict
+	}
+
+	@objc fileprivate func didUpdateTitle(_ notification: Notification) {
+		if let itemURL = notification.object as? URL {
+
+			if (itemURL as AnyObject).isFileReferenceURL() {
+				let fileURL : URL? = (itemURL as AnyObject).filePathURL
+				let path = fileURL!.absoluteString//.stringByRemovingPercentEncoding
+				let attr = metadataDictionaryForFileAt((fileURL?.path)!)
+				let time = attr?[kMDItemDurationSeconds] as! TimeInterval
+				let fuzz = (itemURL as AnyObject).deletingPathExtension!!.lastPathComponent as NSString
+				let name = fuzz.removingPercentEncoding
+				let item = PlayItem(name:name!,
+									link:URL.init(string: path)!,
+									time:time,
+									rank:histories.list.count + 1)
+				histories.list.append(item)
+			}
+			else
+			{
+				let fuzz = (itemURL as AnyObject).deletingPathExtension!!.lastPathComponent as NSString
+				let name = fuzz.removingPercentEncoding
+
+				histories.list.append(PlayItem(name: name!, link: itemURL, time: 0, rank: histories.list.count + 1))
+			}
+			print("\(histories.list.count) -> \(String(describing: histories.list.last?.name))")
+		}
+	}
+	
     /// Shows alert asking user to input URL on their window or floating.
     /// Process response locally, validate, dispatch via supplied handler
     func didRequestUserUrl(_ strings: RequestUserUrlStrings,
