@@ -73,6 +73,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
     @IBOutlet var playlistSplitView: NSSplitView!
 
     //    cache playlists read and saved to defaults
+	var appDelegate: AppDelegate = NSApp.delegate as! AppDelegate
     var defaults = UserDefaults.standard
     var playlists = [PlayList]()
     var playCache = [PlayList]()
@@ -90,6 +91,9 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         // cache our list before editing
         playCache = playlists
 
+		// overlay in history
+		playlistArrayController.addObject(appDelegate.histories)
+		
         self.playlistSplitView.setPosition(120, ofDividerAt: 0)
     }
 
@@ -278,16 +282,6 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         return arr
     }
     
-	func metadataDictionaryForFileAt(_ fileName: String) -> Dictionary<NSObject,AnyObject>? {
-
-		let item = MDItemCreate(kCFAllocatorDefault, fileName as CFString)
-		if ( item == nil) { return nil };
-		
-		let list = MDItemCopyAttributeNames(item)
-		let resDict = MDItemCopyAttributes(item,list) as Dictionary
-		return resDict
-	}
-
 	func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
         let pasteboard = info.draggingPasteboard()
         let options = [NSPasteboardURLReadingFileURLsOnlyKey : true,
@@ -359,7 +353,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                 if (itemURL as AnyObject).isFileReferenceURL() {
                     let fileURL : URL? = (itemURL as AnyObject).filePathURL
                     let path = fileURL!.absoluteString//.stringByRemovingPercentEncoding
-					let attr = metadataDictionaryForFileAt((fileURL?.path)!)
+					let attr = appDelegate.metadataDictionaryForFileAt((fileURL?.path)!)
 //					print("attr \(attr)")
 					let time = attr?[kMDItemDurationSeconds] as! TimeInterval
                     let fuzz = (itemURL as AnyObject).deletingPathExtension!!.lastPathComponent as NSString
