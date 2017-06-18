@@ -394,7 +394,10 @@ class WebViewController: NSViewController, WKNavigationDelegate {
                     videoFileReferencedURL = false
                     let url = (self.webView.url)
 
-                    // once loaded update window title,size with video name,dimension
+					let notif = Notification(name: Notification.Name(rawValue: "HeliumNewURL"), object: url);
+					NotificationCenter.default.post(notif)
+
+					// once loaded update window title,size with video name,dimension
                     if let urlTitle = (self.webView.url?.absoluteString) {
                         title = urlTitle as NSString
 
