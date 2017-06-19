@@ -223,7 +223,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 			object: nil)
 	}
 
-	var histories: PlayList = PlayList.init(name: "History", list: Array<PlayItem>())
+	var histories = Array<PlayItem>()
 	var defaults = UserDefaults.standard
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -244,7 +244,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 				let link = URL.init(string: path)
 				let rank = item[k.rank] as! Int
 				let temp = PlayItem(name:name, link:link!, time:time!, rank:rank)
-				histories.list.append(temp)
+				histories.append(temp)
 			}
 		}
    }
@@ -253,10 +253,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // Insert code here to tear down your application
 
 		// Save histories to defaults
-		var temp = [Dictionary<String,AnyObject>]()
-		for histitem in histories.list {
-			let item : [String:AnyObject] = [k.name:histitem.name as AnyObject, k.link:histitem.link.absoluteString as AnyObject, k.time:histitem.time as AnyObject, k.rank:histitem.rank as AnyObject]
-			temp.append((item as AnyObject) as! Dictionary<String, AnyObject>)
+		var temp = Array<AnyObject>()
+		for item in histories {
+			let item : [String:AnyObject] = [k.name:item.name as AnyObject, k.link:item.link.absoluteString as AnyObject, k.time:item.time as AnyObject, k.rank:item.rank as AnyObject]
+			temp.append(item as AnyObject)
 		}
 		defaults.set(temp, forKey: UserSettings.Histories.keyPath)
 		defaults.synchronize()
@@ -287,17 +287,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 				let item = PlayItem(name:name!,
 									link:URL.init(string: path)!,
 									time:time,
-									rank:histories.list.count + 1)
-				histories.list.append(item)
+									rank:histories.count + 1)
+				histories.append(item)
 			}
 			else
 			{
 				let fuzz = (itemURL as AnyObject).deletingPathExtension!!.lastPathComponent as NSString
 				let name = fuzz.removingPercentEncoding
 
-				histories.list.append(PlayItem(name: name!, link: itemURL, time: 0, rank: histories.list.count + 1))
+				histories.append(PlayItem(name: name!, link: itemURL, time: 0, rank: histories.count + 1))
 			}
-			print("\(histories.list.count) -> \(String(describing: histories.list.last?.name))")
+			print("\(histories.count) -> \(String(describing: histories.last?.name))")
 		}
 	}
 	
