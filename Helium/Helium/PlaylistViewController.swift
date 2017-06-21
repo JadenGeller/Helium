@@ -42,13 +42,72 @@ class PlayItem : NSObject {
     }
 }
 
+class PlayTableView : NSTableView {
+	override func keyDown(with event: NSEvent) {
+		if event.charactersIgnoringModifiers! == String(Character(UnicodeScalar(NSDeleteCharacter)!)) ||
+		   event.charactersIgnoringModifiers! == String(Character(UnicodeScalar(NSDeleteFunctionKey)!)) {
+			// Take action in the delegate.
+			let delegate: PlaylistViewController = self.delegate as! PlaylistViewController
+			
+			delegate.removePlaylist(self)
+		}
+		else
+		{
+			// still here?
+			super.keyDown(with: event)
+		}
+	}
+	
+	func tableViewColumnDidResize(notification: NSNotification ) {
+		// Pay attention to column resizes and aggressively force the tableview's
+		// cornerview to redraw.
+		self.cornerView?.needsDisplay = true
+	}
+
+}
+
+class PlayItemCornerView : NSView {
+	@IBOutlet weak var playitemTableView: PlayTableView!
+	override func draw(_ dirtyRect: NSRect) {
+		let tote = NSImage.init(imageLiteralResourceName: "NSRefreshTemplate")
+		let alignRect = tote.alignmentRect
+		
+		NSGraphicsContext.saveGraphicsState()
+		tote.draw(in: NSMakeRect(2, 5, 7, 11), from: alignRect, operation: .sourceOver, fraction: 1)
+		NSGraphicsContext.restoreGraphicsState()
+	}
+	
+	override func mouseDown(with event: NSEvent) {
+		playitemTableView.beginUpdates()
+		// Renumber playlist items
+		for row in 0...playitemTableView.numberOfRows {
+			for col in 0...playitemTableView.numberOfColumns {
+				if let cell = playitemTableView.view(atColumn: col, row: row, makeIfNecessary: true) {
+					Swift.print("cell is \(cell)")
+					if cell.identifier == "rank" {
+						Swift.print("cell is \(cell)")
+					}
+				}
+			}
+		}
+		playitemTableView.endUpdates()
+	}
+}
+
+extension NSURL {
+	
+	func compare(_ other: URL ) -> ComparisonResult {
+		return (self.absoluteString?.compare(other.absoluteString))!
+	}
+}
+
 class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableViewDelegate {
 
 	@IBOutlet var playlistArrayController: NSDictionaryController!
     @IBOutlet var playitemArrayController: NSArrayController!
 
-    @IBOutlet var playlistTableView: NSTableView!
-    @IBOutlet var playitemTableView: NSTableView!
+    @IBOutlet var playlistTableView: PlayTableView!
+    @IBOutlet var playitemTableView: PlayTableView!
     @IBOutlet var playlistSplitView: NSSplitView!
 
     //    cache playlists read and saved to defaults
@@ -71,6 +130,9 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         playCache = playlists
 
 		// overlay in history using NSDictionaryControllerKeyValuePair Protocol setKey
+		if let old_histories = playlists["History"] {
+			playlistArrayController.removeObject(old_histories)
+		}
 		let temp = playlistArrayController.newObject()
 		temp.setValue("History", forKey: "key")
 		temp.setValue(appDelegate.histories, forKey: "value")
@@ -80,8 +142,8 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
     }
 
     @IBAction func addPlaylist(_ sender: NSButton) {
-        if let selectedPlaylist = playlistArrayController.selectedObjects.first as? String {
-			let list: Array<PlayItem> = playlists[selectedPlaylist] as! Array
+        if let selectedPlaylist = playlistArrayController.selectedObjects.first as? NSDictionaryControllerKeyValuePair {
+			let list: Array<PlayItem> = selectedPlaylist.value as! Array
 			let item = PlayItem(name:"item#",link:URL.init(string: "http://")!,time:0.0,rank:list.count + 1);
             let temp = NSString(format:"%p",item) as String
             item.name += String(temp.characters.suffix(3))
@@ -105,19 +167,31 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         }
     }
 
-    @IBAction func removePlaylist(_ sender: NSButton) {
-        if let selectedPlayItem = playitemArrayController.selectedObjects.first as? PlayItem {
-            playitemArrayController.removeObject(selectedPlayItem)
-        }
-        else
-        if let selectedPlaylist = playlistArrayController.selectedObjects.first as? Dictionary<String,AnyObject> {
-            playlistArrayController.removeObject(selectedPlaylist)
-        }
+    @IBAction func removePlaylist(_ sender: AnyObject) {
+		if sender as! NSObject == playlistTableView, let selectedPlaylist = playlistArrayController.selectedObjects.first as? NSDictionaryControllerKeyValuePair {
+			playlistArrayController.removeObject(selectedPlaylist)
+		}
+		else
+		if sender as! NSObject == playitemTableView, let selectedPlayItem = playitemArrayController.selectedObjects.first as? PlayItem {
+			playitemArrayController.removeObject(selectedPlayItem)
+		}
+		else
+		if let selectedPlayItem = playitemArrayController.selectedObjects.first as? PlayItem {
+			playitemArrayController.removeObject(selectedPlayItem)
+		}
+		else
+		if let selectedPlaylist = playlistArrayController.selectedObjects.first as? Dictionary<String,AnyObject> {
+			playlistArrayController.removeObject(selectedPlaylist)
+		}
+		else
+		{
+			 AudioServicesPlaySystemSound(1051);
+		}
     }
 
     @IBAction func playPlaylist(_ sender: AnyObject) {
         if let selectedPlayItem = playitemArrayController.selectedObjects.first as? PlayItem {
-            let selectedPlaylist = playlistArrayController.selectedObjects.first as? String
+            let selectedPlaylist = playlistArrayController.selectedObjects.first as? NSDictionaryControllerKeyValuePair
             super.dismiss(sender)
 
             print("play \(selectedPlayItem.name) from \(String(describing: selectedPlaylist))")
@@ -126,8 +200,8 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
             NotificationCenter.default.post(notif)
         }
         else
-        if let selectedPlaylist = playlistArrayController.selectedObjects.first as? String {
-			let list: Array<PlayItem> = playlists[selectedPlaylist] as! Array
+        if let selectedPlaylist = playlistArrayController.selectedObjects.first as? NSDictionaryControllerKeyValuePair {
+			let list: Array<PlayItem> = selectedPlaylist.value as! Array
 			
             if list.count > 0 {
                 super.dismiss(sender)
@@ -202,7 +276,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
     }
     
     // MARK:- Drag-n-Drop
-    
+	
     func draggingEntered(_ sender: NSDraggingInfo!) -> NSDragOperation {
         let pasteboard = sender.draggingPasteboard()
 
@@ -361,8 +435,8 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
             }
         }
             
-        if let selectedPlaylist = playlistArrayController.selectedObjects.first as? String {
-			if let list: Array<PlayItem> = playlists[selectedPlaylist] as? Array<PlayItem> {
+        if let selectedPlaylist = playlistArrayController.selectedObjects.first as? NSDictionaryControllerKeyValuePair {
+			if let list: Array<PlayItem> = selectedPlaylist.value as? Array<PlayItem> {
 				if list.count > 0 {
 					
 					tableView.beginUpdates()
