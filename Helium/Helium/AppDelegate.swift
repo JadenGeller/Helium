@@ -276,18 +276,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
 	@objc fileprivate func didUpdateTitle(_ notification: Notification) {
 		if let itemURL = notification.object as? URL {
+			let item: PlayItem = PlayItem.init()
 
 			if (itemURL as AnyObject).isFileReferenceURL() {
 				let fileURL : URL? = (itemURL as AnyObject).filePathURL
 				let path = fileURL!.absoluteString//.stringByRemovingPercentEncoding
 				let attr = metadataDictionaryForFileAt((fileURL?.path)!)
-				let time = attr?[kMDItemDurationSeconds] as! TimeInterval
 				let fuzz = (itemURL as AnyObject).deletingPathExtension!!.lastPathComponent as NSString
-				let name = fuzz.removingPercentEncoding
-				let item = PlayItem(name:name!,
-									link:URL.init(string: path)!,
-									time:time,
-									rank:histories.count + 1)
+				item.name = fuzz.removingPercentEncoding!
+				item.link = URL.init(string: path)!
+				item.time = attr?[kMDItemDurationSeconds] as! TimeInterval
+				item.rank = histories.count + 1
 				histories.append(item)
 			}
 			else
@@ -295,9 +294,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 				let fuzz = (itemURL as AnyObject).deletingPathExtension!!.lastPathComponent as NSString
 				let name = fuzz.removingPercentEncoding
 
-				histories.append(PlayItem(name: name!, link: itemURL, time: 0, rank: histories.count + 1))
+				item.name = name!
+				item.link = itemURL
+				item.time = 0
+				item.rank = histories.count + 1
 			}
 			print("\(histories.count) -> \(String(describing: histories.last?.name))")
+			histories.append(item)
 		}
 	}
 	
