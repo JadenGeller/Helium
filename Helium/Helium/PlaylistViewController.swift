@@ -129,7 +129,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
 
 		// overlay in history using NSDictionaryControllerKeyValuePair Protocol setKey
 		let temp = playlistArrayController.newObject() as NSDictionaryControllerKeyValuePair
-		temp.key = "History"
+		temp.key = k.hist
 		temp.value = appDelegate.histories
 		playlistArrayController.addObject(temp)
 		
