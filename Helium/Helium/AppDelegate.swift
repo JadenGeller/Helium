@@ -117,7 +117,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     @IBAction func magicURLRedirectPress(_ sender: NSMenuItem) {
         let keyPath = UserSettings.disabledMagicURLs.keyPath
-//        sender.state = (sender.state == NSOnState) ? NSOffState : NSOnState
         UserSettings.disabledMagicURLs.value = (sender.state == NSOnState)
         NotificationCenter.default.post(name: Notification.Name(rawValue: keyPath), object: nil)
     }
