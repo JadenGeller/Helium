@@ -521,7 +521,7 @@ CA
             <objects>
                 <windowController storyboardIdentifier="PlaylistPanelController" id="o3w-13-r8w" customClass="PlaylistPanelController" customModule="Helium" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="9Nm-Xe-vMy" customClass="HeliumPanel" customModule="Helium" customModuleProvider="target">
-                        <windowStyleMask key="styleMask" titled="YES" resizable="YES" utility="YES" nonactivatingPanel="YES" HUD="YES"/>
+                        <windowStyleMask key="styleMask" titled="YES" resizable="YES" nonactivatingPanel="YES"/>
                         <windowCollectionBehavior key="collectionBehavior" moveToActiveSpace="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="425" y="461" width="480" height="270"/>
@@ -566,7 +566,7 @@ CA
                                             <rect key="frame" x="1" y="0.0" width="124" height="232"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" autosaveColumns="NO" rowSizeStyle="automatic" headerView="tha-4C-kVE" viewBased="YES" id="PML-r0-Bx7">
+                                                <tableView identifier="playlists" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" autosaveColumns="NO" rowSizeStyle="automatic" headerView="tha-4C-kVE" viewBased="YES" id="PML-r0-Bx7" userLabel="Playlist Table View" customClass="PlayTableView" customModule="Helium" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="124" height="209"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -769,13 +769,13 @@ Gw
                                             <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
                                     </stackView>
-                                    <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lou-k5-Ctb">
+                                    <scrollView horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lou-k5-Ctb">
                                         <rect key="frame" x="0.0" y="39" width="314" height="233"/>
                                         <clipView key="contentView" id="Ix6-nN-7A8">
-                                            <rect key="frame" x="1" y="0.0" width="312" height="217"/>
+                                            <rect key="frame" x="1" y="0.0" width="297" height="217"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" autosaveColumns="NO" rowSizeStyle="automatic" headerView="YTX-gj-uhH" viewBased="YES" id="IBh-ZH-TR3">
+                                                <tableView identifier="playitems" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" autosaveColumns="NO" rowSizeStyle="automatic" headerView="YTX-gj-uhH" viewBased="YES" id="IBh-ZH-TR3" customClass="PlayTableView" customModule="Helium" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="194"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -948,6 +948,7 @@ Gw
                                                         </tableColumn>
                                                     </tableColumns>
                                                     <connections>
+                                                        <outlet property="cornerView" destination="sMV-Oo-qve" id="Cf2-dM-Lol"/>
                                                         <outlet property="dataSource" destination="YAy-lX-dae" id="lVh-zQ-0l9"/>
                                                         <outlet property="delegate" destination="YAy-lX-dae" id="IZJ-Ly-FFW"/>
                                                     </connections>
@@ -955,11 +956,11 @@ Gw
                                             </subviews>
                                         </clipView>
                                         <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="1e4-tR-Cc8">
-                                            <rect key="frame" x="1" y="217" width="312" height="15"/>
+                                            <rect key="frame" x="1" y="217" width="297" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
-                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="aSB-Wi-46z">
-                                            <rect key="frame" x="224" y="17" width="15" height="102"/>
+                                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="aSB-Wi-46z">
+                                            <rect key="frame" x="298" y="23" width="15" height="194"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <tableHeaderView key="headerView" id="YTX-gj-uhH">
@@ -987,6 +988,8 @@ Gw
                         </holdingPriorities>
                     </splitView>
                     <connections>
+                        <outlet property="currentTablView" destination="PML-r0-Bx7" id="qga-Yf-A4U"/>
+                        <outlet property="currentTableView" destination="PML-r0-Bx7" id="Fk6-dk-vCY"/>
                         <outlet property="playitemArrayController" destination="fqr-Ij-jQ9" id="pJ4-3Y-cGG"/>
                         <outlet property="playitemTableView" destination="IBh-ZH-TR3" id="bkT-Zc-tEa"/>
                         <outlet property="playlistArrayController" destination="9J8-mw-mAx" id="aLZ-iX-mMT"/>
@@ -997,6 +1000,13 @@ Gw
                     </connections>
                 </viewController>
                 <customObject id="Yq6-uq-zTr" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <customView toolTip="Renumber playlist items" id="sMV-Oo-qve" customClass="PlayItemCornerView" customModule="Helium" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="163" height="96"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <connections>
+                        <outlet property="playitemTableView" destination="IBh-ZH-TR3" id="LPo-ZJ-0YM"/>
+                    </connections>
+                </customView>
                 <dictionaryController objectClassName="_NSDictionaryControllerKeyValuePair" id="9J8-mw-mAx">
                     <connections>
                         <binding destination="YAy-lX-dae" name="contentDictionary" keyPath="playlists" id="HkP-di-YXh"/>
@@ -1053,6 +1063,6 @@ Gw
         <image name="NSRemoveTemplate" width="11" height="11"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Ujs-EW-Ya2"/>
+        <segue reference="UQR-x0-MeW"/>
     </inferredMetricsTieBreakers>
 </document>
