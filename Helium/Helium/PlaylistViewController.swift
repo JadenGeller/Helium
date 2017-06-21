@@ -40,6 +40,9 @@ class PlayItem : NSObject {
         self.rank = rank
         super.init()
     }
+	override var description : String {
+		return String(format: "%@: %p '%@'", self.className, self, name)
+	}
 }
 
 class PlayTableView : NSTableView {
@@ -80,15 +83,10 @@ class PlayItemCornerView : NSView {
 	override func mouseDown(with event: NSEvent) {
 		playitemTableView.beginUpdates()
 		// Renumber playlist items
-		for row in 0...playitemTableView.numberOfRows {
-			for col in 0...playitemTableView.numberOfColumns {
-				if let cell = playitemTableView.view(atColumn: col, row: row, makeIfNecessary: true) {
-					Swift.print("cell is \(cell)")
-					if cell.identifier == "rank" {
-						Swift.print("cell is \(cell)")
-					}
-				}
-			}
+		let col = playitemTableView.column(withIdentifier: "rank")
+		for row in 0...playitemTableView.numberOfRows-1 {
+			let cell = playitemTableView.view(atColumn: col, row: row, makeIfNecessary: true) as! NSTableCellView
+			cell.textField?.integerValue = row + 1
 		}
 		playitemTableView.endUpdates()
 	}
@@ -130,12 +128,9 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         playCache = playlists
 
 		// overlay in history using NSDictionaryControllerKeyValuePair Protocol setKey
-		if let old_histories = playlists["History"] {
-			playlistArrayController.removeObject(old_histories)
-		}
-		let temp = playlistArrayController.newObject()
-		temp.setValue("History", forKey: "key")
-		temp.setValue(appDelegate.histories, forKey: "value")
+		let temp = playlistArrayController.newObject() as NSDictionaryControllerKeyValuePair
+		temp.key = "History"
+		temp.value = appDelegate.histories
 		playlistArrayController.addObject(temp)
 		
         self.playlistSplitView.setPosition(120, ofDividerAt: 0)
@@ -194,7 +189,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
             let selectedPlaylist = playlistArrayController.selectedObjects.first as? NSDictionaryControllerKeyValuePair
             super.dismiss(sender)
 
-            print("play \(selectedPlayItem.name) from \(String(describing: selectedPlaylist))")
+            Swift.print("play \(selectedPlayItem.name) from \(String(describing: selectedPlaylist?.key!))")
 
             let notif = Notification(name: Notification.Name(rawValue: "HeliumPlaylistItem"), object: selectedPlayItem.link);
             NotificationCenter.default.post(notif)
@@ -233,12 +228,12 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
 					let temp = PlayItem(name:name, link:link!, time:time!, rank:rank)
                     list.append(temp)
                 }
-                let name = play[k.name] as! NSString
+                let name = play[k.name] as? String
 
 				// Use NSDictionaryControllerKeyValuePair Protocol setKey
-				let temp = playlistArrayController.newObject()
-				temp.setValue(name, forKey: "key")
-				temp.setValue(list, forKey: "value")
+				let temp = playlistArrayController.newObject() as NSDictionaryControllerKeyValuePair
+				temp.key = name
+				temp.value = list
                 playlistArrayController.addObject(temp)
             }
         }
@@ -363,7 +358,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                     tableView.moveRow(at: oldIndex + oldIndexOffset, to: row - 1)
 //                    print("move \(oldIndex+oldIndexOffset) +> \(row-1)")
                     if tableView == self.playlistTableView {
-						print("cannot rearrange")
+						print("we cannot rearrange")
 //                        self.playlists = self.rearrange(self.playlists, fromIndex: (oldIndex+oldIndexOffset), toIndex: (row-1))
                     } else {
                         let playlist = self.playlistArrayController.selectedObjects.first as! NSDictionaryControllerKeyValuePair
@@ -375,7 +370,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                     tableView.moveRow(at: oldIndex, to: row + newIndexOffset)
 //                    print("move \(oldIndex) -> \(row+newIndexOffset)")
                     if tableView == self.playlistTableView {
-						print("cannot rearrange")
+						print("we cannot rearrange")
 //                        self.playlists = self.rearrange(self.playlists, fromIndex: (oldIndex), toIndex: (row+newIndexOffset))
                     } else {
                         let playlist = self.playlistArrayController.selectedObjects.first as! NSDictionaryControllerKeyValuePair
@@ -414,7 +409,6 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                     let fileURL : URL? = (itemURL as AnyObject).filePathURL
                     let path = fileURL!.absoluteString//.stringByRemovingPercentEncoding
 					let attr = appDelegate.metadataDictionaryForFileAt((fileURL?.path)!)
-//					print("attr \(attr)")
 					let time = attr?[kMDItemDurationSeconds] as! TimeInterval
                     let fuzz = (itemURL as AnyObject).deletingPathExtension!!.lastPathComponent as NSString
                     let name = fuzz.removingPercentEncoding
@@ -434,21 +428,6 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                 self.playitemTableView.selectRowIndexes(rows, byExtendingSelection: false)
             }
         }
-            
-        if let selectedPlaylist = playlistArrayController.selectedObjects.first as? NSDictionaryControllerKeyValuePair {
-			if let list: [PlayItem] = selectedPlaylist.value as? [PlayItem] {
-				if list.count > 0 {
-					
-					tableView.beginUpdates()
-					print("list \(selectedPlaylist) \(list.count)")
-					for (i,item) in list.enumerated() {
-						item.rank = (i+1)
-						print("\(i) \(item.rank) \(item.name)")
-					}
-					tableView.endUpdates()
-				}
-			}
-		}
         return true
     }
 
