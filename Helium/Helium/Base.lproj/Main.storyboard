@@ -609,7 +609,11 @@ CA
                                                                 </tableCellView>
                                                             </prototypeCellViews>
                                                             <connections>
-                                                                <binding destination="9J8-mw-mAx" name="value" keyPath="arrangedObjects.key" id="V8K-mz-sVF"/>
+                                                                <binding destination="9J8-mw-mAx" name="value" keyPath="arrangedObjects.key" id="bkN-QL-PNa">
+                                                                    <dictionary key="options">
+                                                                        <bool key="NSValidatesImmediately" value="YES"/>
+                                                                    </dictionary>
+                                                                </binding>
                                                             </connections>
                                                         </tableColumn>
                                                     </tableColumns>
