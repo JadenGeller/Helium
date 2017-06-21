@@ -246,15 +246,15 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
 
     @IBOutlet weak var saveButton: NSButton!
     @IBAction func savePlaylists(_ sender: AnyObject) {
-        let playArray = playlistArrayController.arrangedObjects as! [String]
+        let playArray = playlistArrayController.arrangedObjects as! [NSDictionaryControllerKeyValuePair]
         var temp = [Dictionary<String,AnyObject>]()
         for playlist in playArray {
             var list = Array<AnyObject>()
-            for playitem in playlists[playlist] as! Array<PlayItem> {
+            for playitem in playlist.value as! [PlayItem] {
 				let item : [String:AnyObject] = [k.name:playitem.name as AnyObject, k.link:playitem.link.absoluteString as AnyObject, k.time:playitem.time as AnyObject, k.rank:playitem.rank as AnyObject]
                 list.append(item as AnyObject)
             }
-            temp.append([k.name:playlist as AnyObject, k.list:list as AnyObject])
+            temp.append([k.name:playlist.key as AnyObject, k.list:list as AnyObject])
         }
         defaults.set(temp, forKey: UserSettings.Playlists.keyPath)
         defaults.synchronize()
@@ -366,9 +366,9 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
 						print("cannot rearrange")
 //                        self.playlists = self.rearrange(self.playlists, fromIndex: (oldIndex+oldIndexOffset), toIndex: (row-1))
                     } else {
-                        let playlist = self.playlistArrayController.selectedObjects.first as! String
-                        let list = self.playlists[playlist] as! Array<PlayItem>
-                        self.playlists[playlist] = self.rearrange(list, fromIndex: (oldIndex+oldIndexOffset), toIndex: (row-1))
+                        let playlist = self.playlistArrayController.selectedObjects.first as! NSDictionaryControllerKeyValuePair
+                        let list = playlist.value as! [PlayItem]
+                        playlist.value = self.rearrange(list, fromIndex: (oldIndex+oldIndexOffset), toIndex: (row-1))
                     }
                     oldIndexOffset -= 1
                 } else {
@@ -378,9 +378,9 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
 						print("cannot rearrange")
 //                        self.playlists = self.rearrange(self.playlists, fromIndex: (oldIndex), toIndex: (row+newIndexOffset))
                     } else {
-                        let playlist = self.playlistArrayController.selectedObjects.first as! String
-						let list = self.playlists[playlist] as! Array<PlayItem>
-                        self.playlists[playlist] = self.rearrange(list, fromIndex: (oldIndex), toIndex: (row+newIndexOffset))
+                        let playlist = self.playlistArrayController.selectedObjects.first as! NSDictionaryControllerKeyValuePair
+						let list = playlist.value as! [PlayItem]
+                        playlist.value = self.rearrange(list, fromIndex: (oldIndex), toIndex: (row+newIndexOffset))
                     }
                     newIndexOffset += 1
                 }
@@ -436,7 +436,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         }
             
         if let selectedPlaylist = playlistArrayController.selectedObjects.first as? NSDictionaryControllerKeyValuePair {
-			if let list: Array<PlayItem> = selectedPlaylist.value as? Array<PlayItem> {
+			if let list: [PlayItem] = selectedPlaylist.value as? [PlayItem] {
 				if list.count > 0 {
 					
 					tableView.beginUpdates()
