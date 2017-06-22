@@ -123,15 +123,16 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         self.restorePlaylists(restoreButton)
     }
 
+    var historyCache: NSDictionaryControllerKeyValuePair? = nil
     override func viewWillAppear() {
         // cache our list before editing
         playCache = playlists
 
         // overlay in history using NSDictionaryControllerKeyValuePair Protocol setKey
-        let temp = playlistArrayController.newObject() as NSDictionaryControllerKeyValuePair
-        temp.key = k.hist
-        temp.value = appDelegate.histories
-        playlistArrayController.addObject(temp)
+        historyCache = playlistArrayController.newObject() as NSDictionaryControllerKeyValuePair
+        historyCache!.key = k.hist
+        historyCache!.value = appDelegate.histories
+        playlistArrayController.addObject(historyCache!)
         
         self.playlistSplitView.setPosition(120, ofDividerAt: 0)
     }
@@ -261,11 +262,16 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         //    Save or go
         switch (sender! as AnyObject).tag == 0 {
             case true:
+                // Save history which might have changed
+                appDelegate.histories = historyCache!.value as! Array<PlayItem>
                 break
             case false:
-                //    Restore from cache
+                // Restore from cache
                 playlists = playCache
         }
+        // Destroy the history cell which we refresh on display
+        playlistArrayController.removeObject(historyCache!)
+        historyCache = nil
     }
     
     // MARK:- Drag-n-Drop
@@ -298,7 +304,19 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
     }
     
     func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
+        let sourceTableView = info.draggingSource() as? NSTableView
 
+        if sourceTableView == tableView {
+            Swift.print("drag same")
+        }
+        else
+        if sourceTableView == playlistTableView {
+            Swift.print("drag from playlist")
+        }
+        else
+        if sourceTableView == playitemTableView {
+            Swift.print("drag from playitem")
+        }
         if dropOperation == .above {
             let pboard = info.draggingPasteboard();
             let options = [NSPasteboardURLReadingFileURLsOnlyKey : true,
@@ -320,8 +338,10 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                     }
                 }
             }
+            Swift.print("drag move")
             return .move
         }
+        Swift.print("drag \(NSDragOperation())")
         return NSDragOperation()
     }
     
@@ -329,13 +349,14 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         let pasteboard = info.draggingPasteboard()
         let options = [NSPasteboardURLReadingFileURLsOnlyKey : true,
                        NSPasteboardURLReadingContentsConformToTypesKey : [kUTTypeMovie as String]] as [String : Any]
-        let sourceTableView = info.draggingSource() as! NSTableView
+        let sourceTableView = info.draggingSource() as? NSTableView
         var oldIndexes = [Int]()
         var oldIndexOffset = 0
         var newIndexOffset = 0
 
         // We have intra tableView drag-n-drop ?
         if tableView == sourceTableView {
+            Swift.print("same \(String(describing: tableView.identifier))")
             info.enumerateDraggingItems(options: [], for: tableView, classes: [NSPasteboardItem.self], searchOptions: [:]) {
                 tableView.beginUpdates()
 
@@ -354,10 +375,10 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                         newIndexOffset += 1
                     }
                 }
-
                 tableView.endUpdates()
             }
         }
+        else
 
         // We have inter tableView drag-n-drop ?
         // if source is a playlist, drag its items into the destination via copy
@@ -365,35 +386,51 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         // creating a new playlist item unless, we're dropping onto an existing.
         
         if sourceTableView == playlistTableView {
-            Swift.print("drag from playlist")
+            Swift.print("from \(String(describing: sourceTableView?.identifier)) into \(String(describing: tableView.identifier))")
+            
         }
+        else
         
         if sourceTableView == playitemTableView {
-            Swift.print("drag into playlist")
+            Swift.print("from \(String(describing: sourceTableView?.identifier)) into \(String(describing: tableView.identifier))")
+            
         }
+        else
 
         //    We have a Finder drag-n-drop of file URLs ?
-        let items = pasteboard.readObjects(forClasses: [NSURL.classForCoder()], options: options)!
-        if items.count > 0 {
-            var play = playlistArrayController.selectedObjects.first as? Dictionary<String,Any>
+        if let items: Array<AnyObject> = pasteboard.readObjects(forClasses: [NSURL.classForCoder()], options: options) as Array<AnyObject>? {
+             Swift.print("into \(String(describing: tableView.identifier))")
+            
+            var play = playlistArrayController.selectedObjects.first as? NSDictionaryControllerKeyValuePair
+            var okydoKey = false
             
             if (play == nil) {
-                let spec = (items.first as! URL).deletingLastPathComponent
-                let head = spec().absoluteString
-                let list = Array <PlayItem>()
-                let temp = [head:list]
+                play = playlistArrayController.newObject() as NSDictionaryControllerKeyValuePair
+                play?.value = Array <PlayItem>()
             
-                playlistArrayController.addObject(temp)
-                play = temp
+                playlistArrayController.addObject(play!)
                 
                 DispatchQueue.main.async {
                     self.playlistTableView.scrollRowToVisible(self.playlists.count - 1)
                 }
             }
+            else
+            {
+                okydoKey = true
+            }
             
             for itemURL in items {
                 if (itemURL as AnyObject).isFileReferenceURL() {
                     let fileURL : URL? = (itemURL as AnyObject).filePathURL
+
+                    // Capture playlist name from origin folder of 1st item
+                    if !okydoKey {
+                        let spec = fileURL?.deletingLastPathComponent
+                        let head = spec!().absoluteString
+                        play?.key = head
+                        okydoKey = true
+                    }
+                    
                     let path = fileURL!.absoluteString//.stringByRemovingPercentEncoding
                     let attr = appDelegate.metadataDictionaryForFileAt((fileURL?.path)!)
                     let time = attr?[kMDItemDurationSeconds] as! TimeInterval
@@ -402,7 +439,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                     let item = PlayItem(name:name!,
                                         link:URL.init(string: path)!,
                                         time:time,
-                                        rank:(play?.count)! + 1)
+                                        rank:(playitemArrayController.arrangedObjects as AnyObject).count + 1)
                     playitemArrayController.insert(item, atArrangedObjectIndex: row + newIndexOffset)
                     newIndexOffset += 1
                 } else {
