@@ -261,12 +261,10 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         //    Save or go
         switch (sender! as AnyObject).tag == 0 {
             case true:
-                print("true")
                 break
             case false:
                 //    Restore from cache
                 playlists = playCache
-                print("false")
         }
     }
     
@@ -327,14 +325,6 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         return NSDragOperation()
     }
     
-    func rearrange<T>(_ array: Array<T>, fromIndex: Int, toIndex: Int) -> Array<T> {
-        var arr = array
-        let element = arr.remove(at: fromIndex)
-        arr.insert(element, at: toIndex)
-        
-        return arr
-    }
-    
 	func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
         let pasteboard = info.draggingPasteboard()
         let options = [NSPasteboardURLReadingFileURLsOnlyKey : true,
@@ -356,27 +346,9 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
             for oldIndex in oldIndexes {
                 if oldIndex < row {
                     tableView.moveRow(at: oldIndex + oldIndexOffset, to: row - 1)
-//                    print("move \(oldIndex+oldIndexOffset) +> \(row-1)")
-                    if tableView == self.playlistTableView {
-						print("we cannot rearrange")
-//                        self.playlists = self.rearrange(self.playlists, fromIndex: (oldIndex+oldIndexOffset), toIndex: (row-1))
-                    } else {
-                        let playlist = self.playlistArrayController.selectedObjects.first as! NSDictionaryControllerKeyValuePair
-                        let list = playlist.value as! [PlayItem]
-                        playlist.value = self.rearrange(list, fromIndex: (oldIndex+oldIndexOffset), toIndex: (row-1))
-                    }
                     oldIndexOffset -= 1
                 } else {
                     tableView.moveRow(at: oldIndex, to: row + newIndexOffset)
-//                    print("move \(oldIndex) -> \(row+newIndexOffset)")
-                    if tableView == self.playlistTableView {
-						print("we cannot rearrange")
-//                        self.playlists = self.rearrange(self.playlists, fromIndex: (oldIndex), toIndex: (row+newIndexOffset))
-                    } else {
-                        let playlist = self.playlistArrayController.selectedObjects.first as! NSDictionaryControllerKeyValuePair
-						let list = playlist.value as! [PlayItem]
-                        playlist.value = self.rearrange(list, fromIndex: (oldIndex), toIndex: (row+newIndexOffset))
-                    }
                     newIndexOffset += 1
                 }
             }
@@ -385,7 +357,6 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         }
         
         //    We have a Finder drag-n-drop of file URLs ?
-//      items = pasteboard.readObjectsForClasses([NSURL.classForCoder()], options: options)!
         let items = pasteboard.readObjects(forClasses: [NSURL.classForCoder()], options: options)!
         if items.count > 0 {
             var play = playlistArrayController.selectedObjects.first as? Dictionary<String,Any>
