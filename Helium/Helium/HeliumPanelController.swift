@@ -239,7 +239,8 @@ class HeliumPanelController : NSWindowController {
         }
        updateTranslucency()
     }
-
+    
+    //MARK:- Actual functionality
     
     @objc func willUpdateTitleBar() {
         if UserSettings.autoHideTitle.value == true {
@@ -254,8 +255,6 @@ class HeliumPanelController : NSWindowController {
                                  object: UserSettings.windowTitle.value);
         NotificationCenter.default.post(notif)
     }
-    
-    //MARK:- Actual functionality
     
     @objc fileprivate func setFloatOverFullScreenApps() {
         if UserSettings.disabledFullScreenFloat.value {
