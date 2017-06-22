@@ -291,6 +291,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             {
                 let fuzz = (itemURL as AnyObject).deletingPathExtension!!.lastPathComponent as NSString
                 let name = fuzz.removingPercentEncoding
+                
+                // Ignore our home page from the history queue
+                if name! == UserSettings.homePageName.value { return }
 
                 item.name = name!
                 item.link = itemURL
