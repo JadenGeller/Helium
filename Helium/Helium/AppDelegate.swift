@@ -136,20 +136,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     @IBAction func percentagePress(_ sender: NSMenuItem) {
-        for button in sender.menu!.items {
-            (button).state = NSOffState
-        }
-        sender.state = NSOnState
-        let value = sender.title.substring(to: sender.title.characters.index(sender.title.endIndex, offsetBy: -1))
-        if let alpha = Int(value) {
-            UserSettings.opacityPercentage.value = alpha
-            NotificationCenter.default.post(name: Notification.Name(rawValue: UserSettings.opacityPercentage.keyPath), object: nil)
-        }
+		UserSettings.opacityPercentage.value = sender.tag
+		NotificationCenter.default.post(name: Notification.Name(rawValue: UserSettings.opacityPercentage.keyPath), object: nil)
     }
     
     @IBAction func translucencyPress(_ sender: NSMenuItem) {
         disabledAllMouseOverPreferences(sender.menu!.items)
         UserSettings.translucencyPreference.value = AppDelegate.TranslucencyPreference(rawValue: sender.tag)!.rawValue
+		translucencyPreference = AppDelegate.TranslucencyPreference(rawValue: UserSettings.translucencyPreference.value)! 
         NotificationCenter.default.post(name: Notification.Name(rawValue: UserSettings.translucencyPreference.keyPath), object: nil)
     }
 
@@ -189,6 +183,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 			break
 
 		default:
+			// Opacity menu item have opacity as tag value
+			if menuItem.tag >= 10 {
+				menuItem.state = (menuItem.tag == UserSettings.opacityPercentage.value ? NSOnState : NSOffState)
+			}
 			break
 		}
 		Swift.print("item \(menuItem) is \(menuItem.state)")
@@ -232,7 +230,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         for (index, button) in percentageMenu.submenu!.items.enumerated() {
             (button).state = (offset == index) ? NSOnState : NSOffState
         }
-		
+
+		translucencyPreference = AppDelegate.TranslucencyPreference(rawValue: UserSettings.translucencyPreference.value)!
+
 		// Load histories from defaults
 		if let items = defaults.array(forKey: UserSettings.Histories.keyPath) {
 			for playitem in items {

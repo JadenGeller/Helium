@@ -175,41 +175,6 @@ class HeliumPanelController : NSWindowController {
         }
     }
     
-    @IBAction fileprivate func neverPreferencePress(_ sender: NSMenuItem) {
-        disabledAllMouseOverPreferences(sender.menu!.items)
-        translucencyPreference = .never
-        sender.state = NSOnState
-    }
-    
-    @IBAction func alwaysPreferencePress(_ sender: NSMenuItem) {
-        disabledAllMouseOverPreferences(sender.menu!.items)
-        translucencyPreference = .always
-        sender.state = NSOnState
-    }
-    
-    @IBAction func overPreferencePress(_ sender: NSMenuItem) {
-        disabledAllMouseOverPreferences(sender.menu!.items)
-        translucencyPreference = .mouseOver
-        sender.state = NSOnState
-    }
-    
-    @IBAction func outsidePreferencePress(_ sender: NSMenuItem) {
-        disabledAllMouseOverPreferences(sender.menu!.items)
-        translucencyPreference = .mouseOutside
-        sender.state = NSOnState
-    }
-    
-    @IBAction func percentagePress(_ sender: NSMenuItem) {
-        for button in sender.menu!.items{
-            (button ).state = NSOffState
-        }
-        sender.state = NSOnState
-        let value = sender.title.substring(to: sender.title.characters.index(sender.title.endIndex, offsetBy: -1))
-        if let alpha = Int(value) {
-            UserSettings.opacityPercentage.value = alpha
-        }
-    }
-    
     @IBAction func openLocationPress(_ sender: AnyObject) {
         didRequestLocation()
     }
