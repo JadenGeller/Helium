@@ -239,10 +239,6 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         }
     }
 
-	@IBAction func perferences(_ sender: AnyObject) {
-		print("show preferences sheet")
-	}
-	
     @IBAction func backPress(_ sender: AnyObject) {
         webView.goBack()
     }
