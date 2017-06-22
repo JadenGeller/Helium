@@ -165,7 +165,7 @@ class HeliumPanelController : NSWindowController {
             return !mouseOver
         }
     }
-	
+    
     //MARK:- IBActions
     
     fileprivate func disabledAllMouseOverPreferences(_ allMenus: [NSMenuItem]) {
@@ -183,19 +183,19 @@ class HeliumPanelController : NSWindowController {
         didRequestFile()
     }
     
-	override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-		switch menuItem.title {
-		case "Preferences":
-			break
-		case "Float Above All Spaces":
-			menuItem.state = UserSettings.disabledFullScreenFloat.value ? NSOffState : NSOnState
-			break;
-		case "Magic URL Redirects":
-			menuItem.state = UserSettings.disabledMagicURLs.value ? NSOffState : NSOnState
-			break
-		case "Auto-hide Title Bar":
-			menuItem.state = UserSettings.autoHideTitle.value ? NSOnState : NSOffState
-			break
+    override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        switch menuItem.title {
+        case "Preferences":
+            break
+        case "Float Above All Spaces":
+            menuItem.state = UserSettings.disabledFullScreenFloat.value ? NSOffState : NSOnState
+            break;
+        case "Magic URL Redirects":
+            menuItem.state = UserSettings.disabledMagicURLs.value ? NSOffState : NSOnState
+            break
+        case "Auto-hide Title Bar":
+            menuItem.state = UserSettings.autoHideTitle.value ? NSOnState : NSOffState
+            break
         case "Never": //Transluceny Menu
             menuItem.state = menuItem.tag == HeliumPanelController.TranslucencyPreference.never.rawValue ? NSOnState : NSOffState
             break
@@ -205,15 +205,15 @@ class HeliumPanelController : NSWindowController {
         case "Mouse Over": //Transluceny Menu
             menuItem.state = menuItem.tag == HeliumPanelController.TranslucencyPreference.mouseOver.rawValue ? NSOnState : NSOffState
             break
-		case "Mouse Outside": //Transluceny Menu
-			menuItem.state = menuItem.tag == HeliumPanelController.TranslucencyPreference.mouseOutside.rawValue ? NSOnState : NSOffState
-			break
-			
-		default:
-			break
-		}
-		return true
-	}
+        case "Mouse Outside": //Transluceny Menu
+            menuItem.state = menuItem.tag == HeliumPanelController.TranslucencyPreference.mouseOutside.rawValue ? NSOnState : NSOffState
+            break
+            
+        default:
+            break
+        }
+        return true
+    }
 
     //MARK:- Notifications
     @objc fileprivate func willUpdateAlpha() {
@@ -257,15 +257,15 @@ class HeliumPanelController : NSWindowController {
     
     //MARK:- Actual functionality
     
-	@objc fileprivate func setFloatOverFullScreenApps() {
-		if UserSettings.disabledFullScreenFloat.value {
-			panel.collectionBehavior = [.moveToActiveSpace, .fullScreenAuxiliary]
-		} else {
-			panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
-		}
-	}
+    @objc fileprivate func setFloatOverFullScreenApps() {
+        if UserSettings.disabledFullScreenFloat.value {
+            panel.collectionBehavior = [.moveToActiveSpace, .fullScreenAuxiliary]
+        } else {
+            panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
+        }
+    }
 
-	@objc fileprivate func didUpdateTitle(_ notification: Notification) {
+    @objc fileprivate func didUpdateTitle(_ notification: Notification) {
         if let title = notification.object as? String {
             panel.title = title
         }

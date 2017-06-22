@@ -48,7 +48,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @IBOutlet weak var magicURLMenu: NSMenuItem!
     @IBOutlet weak var percentageMenu: NSMenuItem!
     @IBOutlet weak var fullScreenFloatMenu: NSMenuItem!
-	@IBOutlet weak var autoHideTitleMenu: NSMenuItem!
+    @IBOutlet weak var autoHideTitleMenu: NSMenuItem!
 
     fileprivate var alpha: CGFloat = 60 {
         didSet {
@@ -67,7 +67,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
     
-	@IBOutlet weak var translucencyMenu: NSMenuItem!
+    @IBOutlet weak var translucencyMenu: NSMenuItem!
     fileprivate var translucencyPreference: TranslucencyPreference = .never {
         didSet {
             NotificationCenter.default.post(name: Notification.Name(rawValue: UserSettings.translucencyPreference.keyPath), object: nil)
@@ -82,25 +82,25 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     //  MARK:- Global IBAction
-	@IBOutlet weak var appMenu: NSMenu!
-	@IBOutlet weak var appItem: NSMenuItem!
-	let appStatusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
-	
-	internal func menuClicked(_ sender: AnyObject) {
-		if let menuItem = sender as? NSMenuItem {
-			Swift.print("Menu '\(menuItem.title)' clicked")
-		}
-	}
+    @IBOutlet weak var appMenu: NSMenu!
+    @IBOutlet weak var appItem: NSMenuItem!
+    let appStatusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
+    
+    internal func menuClicked(_ sender: AnyObject) {
+        if let menuItem = sender as? NSMenuItem {
+            Swift.print("Menu '\(menuItem.title)' clicked")
+        }
+    }
     @IBAction func autoHideTitlePress(_ sender: NSMenuItem) {
         let keyPath = UserSettings.autoHideTitle.keyPath
         UserSettings.autoHideTitle.value = (sender.state == NSOffState)
         NotificationCenter.default.post(name: Notification.Name(rawValue: keyPath), object: nil)
     }
     @IBAction func floatOverFullScreenAppsPress(_ sender: NSMenuItem) {
-		let keyPath = UserSettings.disabledFullScreenFloat.keyPath
-		UserSettings.disabledFullScreenFloat.value = (sender.state == NSOnState)
-		NotificationCenter.default.post(name: Notification.Name(rawValue: keyPath), object: nil)
-	}
+        let keyPath = UserSettings.disabledFullScreenFloat.keyPath
+        UserSettings.disabledFullScreenFloat.value = (sender.state == NSOnState)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: keyPath), object: nil)
+    }
     @IBAction func homePagePress(_ sender: AnyObject) {
         didRequestUserUrl(RequestUserUrlStrings (
             currentURL: UserSettings.homePageURL.value,
@@ -136,14 +136,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     @IBAction func percentagePress(_ sender: NSMenuItem) {
-		UserSettings.opacityPercentage.value = sender.tag
-		NotificationCenter.default.post(name: Notification.Name(rawValue: UserSettings.opacityPercentage.keyPath), object: nil)
+        UserSettings.opacityPercentage.value = sender.tag
+        NotificationCenter.default.post(name: Notification.Name(rawValue: UserSettings.opacityPercentage.keyPath), object: nil)
     }
     
     @IBAction func translucencyPress(_ sender: NSMenuItem) {
         disabledAllMouseOverPreferences(sender.menu!.items)
         UserSettings.translucencyPreference.value = AppDelegate.TranslucencyPreference(rawValue: sender.tag)!.rawValue
-		translucencyPreference = AppDelegate.TranslucencyPreference(rawValue: UserSettings.translucencyPreference.value)! 
+        translucencyPreference = AppDelegate.TranslucencyPreference(rawValue: UserSettings.translucencyPreference.value)! 
         NotificationCenter.default.post(name: Notification.Name(rawValue: UserSettings.translucencyPreference.keyPath), object: nil)
     }
 
@@ -152,16 +152,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-		switch menuItem.title {
-		case "Preferences":
-			break
-		case "Auto-hide Title Bar":
-			menuItem.state = UserSettings.autoHideTitle.value ? NSOnState : NSOffState
-			break
+        switch menuItem.title {
+        case "Preferences":
+            break
+        case "Auto-hide Title Bar":
+            menuItem.state = UserSettings.autoHideTitle.value ? NSOnState : NSOffState
+            break
         //Transluceny Menu
-		case "Never":
-			menuItem.state = translucencyPreference == .never ? NSOnState : NSOffState
-			break
+        case "Never":
+            menuItem.state = translucencyPreference == .never ? NSOnState : NSOffState
+            break
         case "Always":
             menuItem.state = translucencyPreference == .always ? NSOnState : NSOffState
             break
@@ -171,32 +171,32 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         case "Mouse Outside":
             menuItem.state = translucencyPreference == .mouseOutside ? NSOnState : NSOffState
             break
-		case "Float Above All Spaces":
-			menuItem.state = UserSettings.disabledFullScreenFloat.value ? NSOffState : NSOnState
-			break;
-		case "Home Page":
-			break
-		case "Magic URL Redirects":
-			menuItem.state = UserSettings.disabledMagicURLs.value ? NSOffState : NSOnState
-			break
-		case "Quit":
-			break
+        case "Float Above All Spaces":
+            menuItem.state = UserSettings.disabledFullScreenFloat.value ? NSOffState : NSOnState
+            break;
+        case "Home Page":
+            break
+        case "Magic URL Redirects":
+            menuItem.state = UserSettings.disabledMagicURLs.value ? NSOffState : NSOnState
+            break
+        case "Quit":
+            break
 
-		default:
-			// Opacity menu item have opacity as tag value
-			if menuItem.tag >= 10 {
-				menuItem.state = (menuItem.tag == UserSettings.opacityPercentage.value ? NSOnState : NSOffState)
-			}
-			break
-		}
+        default:
+            // Opacity menu item have opacity as tag value
+            if menuItem.tag >= 10 {
+                menuItem.state = (menuItem.tag == UserSettings.opacityPercentage.value ? NSOnState : NSOffState)
+            }
+            break
+        }
 
-		return true;
-	}
+        return true;
+    }
 
     //  MARK:- Lifecyle
 
     let toHMS = hmsTransformer()
-	func applicationWillFinishLaunching(_ notification: Notification) {
+    func applicationWillFinishLaunching(_ notification: Notification) {
         NSAppleEventManager.shared().setEventHandler(
             self,
             andSelector: #selector(AppDelegate.handleURLEvent(_:withReply:)),
@@ -204,23 +204,23 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             andEventID: AEEventID(kAEGetURL)
         )
 
-		//	So they can interact everywhere with us without focus
-		appStatusItem.image = NSImage.init(named: "statusIcon")
-		appStatusItem.menu = appMenu
+        //    So they can interact everywhere with us without focus
+        appStatusItem.image = NSImage.init(named: "statusIcon")
+        appStatusItem.menu = appMenu
 
         //  Initialize our h:m:s transformer
         ValueTransformer.setValueTransformer(toHMS, forName: NSValueTransformerName(rawValue: "hmsTransformer"))
-		
-		// Maintain a history of titles
-		NotificationCenter.default.addObserver(
-			self,
-			selector: #selector(AppDelegate.didUpdateTitle(_:)),
-			name: NSNotification.Name(rawValue: "HeliumNewURL"),
-			object: nil)
-	}
+        
+        // Maintain a history of titles
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(AppDelegate.didUpdateTitle(_:)),
+            name: NSNotification.Name(rawValue: "HeliumNewURL"),
+            object: nil)
+    }
 
-	var histories = Array<PlayItem>()
-	var defaults = UserDefaults.standard
+    var histories = Array<PlayItem>()
+    var defaults = UserDefaults.standard
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
 
@@ -230,78 +230,78 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             (button).state = (offset == index) ? NSOnState : NSOffState
         }
 
-		translucencyPreference = AppDelegate.TranslucencyPreference(rawValue: UserSettings.translucencyPreference.value)!
+        translucencyPreference = AppDelegate.TranslucencyPreference(rawValue: UserSettings.translucencyPreference.value)!
 
-		// Load histories from defaults
-		if let items = defaults.array(forKey: UserSettings.Histories.keyPath) {
-			for playitem in items {
-				let item = playitem as! Dictionary <String,AnyObject>
-				let name = item[k.name] as! String
-				let path = item[k.link] as! String
-				let time = item[k.time] as? TimeInterval
-				let link = URL.init(string: path)
-				let rank = item[k.rank] as! Int
-				let temp = PlayItem(name:name, link:link!, time:time!, rank:rank)
-				histories.append(temp)
-			}
-		}
+        // Load histories from defaults
+        if let items = defaults.array(forKey: UserSettings.Histories.keyPath) {
+            for playitem in items {
+                let item = playitem as! Dictionary <String,AnyObject>
+                let name = item[k.name] as! String
+                let path = item[k.link] as! String
+                let time = item[k.time] as? TimeInterval
+                let link = URL.init(string: path)
+                let rank = item[k.rank] as! Int
+                let temp = PlayItem(name:name, link:link!, time:time!, rank:rank)
+                histories.append(temp)
+            }
+        }
    }
 
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
 
-		// Save histories to defaults
-		var temp = Array<AnyObject>()
-		for item in histories {
-			let item : [String:AnyObject] = [k.name:item.name as AnyObject, k.link:item.link.absoluteString as AnyObject, k.time:item.time as AnyObject, k.rank:item.rank as AnyObject]
-			temp.append(item as AnyObject)
-		}
-		defaults.set(temp, forKey: UserSettings.Histories.keyPath)
-		defaults.synchronize()
+        // Save histories to defaults
+        var temp = Array<AnyObject>()
+        for item in histories {
+            let item : [String:AnyObject] = [k.name:item.name as AnyObject, k.link:item.link.absoluteString as AnyObject, k.time:item.time as AnyObject, k.rank:item.rank as AnyObject]
+            temp.append(item as AnyObject)
+        }
+        defaults.set(temp, forKey: UserSettings.Histories.keyPath)
+        defaults.synchronize()
     }
 
     //MARK: - handleURLEvent(s)
 
-	func metadataDictionaryForFileAt(_ fileName: String) -> Dictionary<NSObject,AnyObject>? {
-		
-		let item = MDItemCreate(kCFAllocatorDefault, fileName as CFString)
-		if ( item == nil) { return nil };
-		
-		let list = MDItemCopyAttributeNames(item)
-		let resDict = MDItemCopyAttributes(item,list) as Dictionary
-		return resDict
-	}
+    func metadataDictionaryForFileAt(_ fileName: String) -> Dictionary<NSObject,AnyObject>? {
+        
+        let item = MDItemCreate(kCFAllocatorDefault, fileName as CFString)
+        if ( item == nil) { return nil };
+        
+        let list = MDItemCopyAttributeNames(item)
+        let resDict = MDItemCopyAttributes(item,list) as Dictionary
+        return resDict
+    }
 
-	@objc fileprivate func didUpdateTitle(_ notification: Notification) {
-		if let itemURL = notification.object as? URL {
-			let item: PlayItem = PlayItem.init()
+    @objc fileprivate func didUpdateTitle(_ notification: Notification) {
+        if let itemURL = notification.object as? URL {
+            let item: PlayItem = PlayItem.init()
 
-			if (itemURL as AnyObject).isFileReferenceURL() {
-				let fileURL : URL? = (itemURL as AnyObject).filePathURL
-				let path = fileURL!.absoluteString//.stringByRemovingPercentEncoding
-				let attr = metadataDictionaryForFileAt((fileURL?.path)!)
-				let fuzz = (itemURL as AnyObject).deletingPathExtension!!.lastPathComponent as NSString
-				item.name = fuzz.removingPercentEncoding!
-				item.link = URL.init(string: path)!
-				item.time = attr?[kMDItemDurationSeconds] as! TimeInterval
-				item.rank = histories.count + 1
-				histories.append(item)
-			}
-			else
-			{
-				let fuzz = (itemURL as AnyObject).deletingPathExtension!!.lastPathComponent as NSString
-				let name = fuzz.removingPercentEncoding
+            if (itemURL as AnyObject).isFileReferenceURL() {
+                let fileURL : URL? = (itemURL as AnyObject).filePathURL
+                let path = fileURL!.absoluteString//.stringByRemovingPercentEncoding
+                let attr = metadataDictionaryForFileAt((fileURL?.path)!)
+                let fuzz = (itemURL as AnyObject).deletingPathExtension!!.lastPathComponent as NSString
+                item.name = fuzz.removingPercentEncoding!
+                item.link = URL.init(string: path)!
+                item.time = attr?[kMDItemDurationSeconds] as! TimeInterval
+                item.rank = histories.count + 1
+                histories.append(item)
+            }
+            else
+            {
+                let fuzz = (itemURL as AnyObject).deletingPathExtension!!.lastPathComponent as NSString
+                let name = fuzz.removingPercentEncoding
 
-				item.name = name!
-				item.link = itemURL
-				item.time = 0
-				item.rank = histories.count + 1
-			}
-			print("\(histories.count) -> \(String(describing: histories.last?.name))")
-			histories.append(item)
-		}
-	}
-	
+                item.name = name!
+                item.link = itemURL
+                item.time = 0
+                item.rank = histories.count + 1
+            }
+            print("\(histories.count) -> \(String(describing: histories.last?.name))")
+            histories.append(item)
+        }
+    }
+    
     /// Shows alert asking user to input URL on their window or floating.
     /// Process response locally, validate, dispatch via supplied handler
     func didRequestUserUrl(_ strings: RequestUserUrlStrings,

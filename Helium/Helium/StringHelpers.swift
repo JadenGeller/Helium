@@ -27,13 +27,13 @@ extension String {
         }
     }
 
-	func isValidURL() -> Bool {
-		
-		let urlRegEx = "((https|http)()://)((\\w|-)+)(([.]|[/])((\\w|-)+))+"
-		let predicate = NSPredicate(format:"SELF MATCHES %@", argumentArray:[urlRegEx])
-		
-		return predicate.evaluate(with: self)
-	}
+    func isValidURL() -> Bool {
+        
+        let urlRegEx = "((https|http)()://)((\\w|-)+)(([.]|[/])((\\w|-)+))+"
+        let predicate = NSPredicate(format:"SELF MATCHES %@", argumentArray:[urlRegEx])
+        
+        return predicate.evaluate(with: self)
+    }
 }
 
 // From http://nshipster.com/nsregularexpression/
