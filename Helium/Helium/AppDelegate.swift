@@ -189,7 +189,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 			}
 			break
 		}
-		Swift.print("item \(menuItem) is \(menuItem.state)")
 
 		return true;
 	}
