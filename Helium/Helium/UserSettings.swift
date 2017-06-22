@@ -71,6 +71,7 @@ internal struct UserSettings {
         "homePageURL",
         defaultValue: "https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html"
     )
+    static let homePageName = Setting<String>("homePageName", defaultValue: "helium_start")
     
     static let userAgent = Setting<String>(
         "userAgent",
