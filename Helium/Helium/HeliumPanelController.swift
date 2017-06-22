@@ -212,7 +212,6 @@ class HeliumPanelController : NSWindowController {
 		default:
 			break
 		}
-		Swift.print("wc.item \(menuItem) is \(menuItem.state)")
 		return true
 	}
 
