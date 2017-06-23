@@ -215,7 +215,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
             
             if list.count > 0 {
                 super.dismiss(sender)
-
+                // TODO: For now just log what we would play once we figure out how to determine when an item finishes so we can start the next
                 print("play \(selectedPlaylist) \(list.count)")
                 for (i,item) in list.enumerated() {
                     print("\(i) \(item.rank) \(item.name)")
@@ -276,16 +276,16 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         //    Save or go
         switch (sender! as AnyObject).tag == 0 {
             case true:
-                // Save history which might have changed
-                appDelegate.histories = historyCache!.value as! Array<PlayItem>
+                // Save history info which might have changed
+                if historyCache != nil {
+                    appDelegate.histories = historyCache?.value as! Array<PlayItem>
+                    UserSettings.Histories.value = (historyCache?.key)!
+                }
                 break
             case false:
                 // Restore from cache
                 playlists = playCache
         }
-        // Destroy the history cell which we refresh on display
-        playlistArrayController.removeObject(historyCache!)
-        historyCache = nil
     }
     
     // MARK:- Drag-n-Drop
