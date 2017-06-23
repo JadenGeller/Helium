@@ -131,11 +131,11 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         
         // add existing history entry if any
         if historyCache == nil && appDelegate.histories.count > 0 {
-            playlists[UserSettings.Histories.value] = nil
+            playlists[UserSettings.HistoryName.value] = nil
             
             // overlay in history using NSDictionaryControllerKeyValuePair Protocol setKey
             historyCache = playlistArrayController.newObject() as NSDictionaryControllerKeyValuePair
-            historyCache!.key = UserSettings.Histories.value
+            historyCache!.key = UserSettings.HistoryName.value
             historyCache!.value = appDelegate.histories
             playlistArrayController.addObject(historyCache!)
         }
@@ -279,7 +279,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                 // Save history info which might have changed
                 if historyCache != nil {
                     appDelegate.histories = historyCache?.value as! Array<PlayItem>
-                    UserSettings.Histories.value = (historyCache?.key)!
+                    UserSettings.HistoryName.value = (historyCache?.key)!
                 }
                 break
             case false:

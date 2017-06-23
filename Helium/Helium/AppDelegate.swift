@@ -232,8 +232,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         translucencyPreference = AppDelegate.TranslucencyPreference(rawValue: UserSettings.translucencyPreference.value)!
 
+        // Restore history name change
+        if let historyName = UserDefaults.standard.value(forKey: UserSettings.HistoryName.keyPath) {
+            UserSettings.HistoryName.value = historyName as! String
+        }
+        
         // Load histories from defaults
-        if let items = defaults.array(forKey: UserSettings.Histories.keyPath) {
+        if let items = defaults.array(forKey: UserSettings.HistoryList.keyPath) {
             for playitem in items {
                 let item = playitem as! Dictionary <String,AnyObject>
                 let name = item[k.name] as! String
@@ -256,7 +261,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             let item : [String:AnyObject] = [k.name:item.name as AnyObject, k.link:item.link.absoluteString as AnyObject, k.time:item.time as AnyObject, k.rank:item.rank as AnyObject]
             temp.append(item as AnyObject)
         }
-        defaults.set(temp, forKey: UserSettings.Histories.keyPath)
+        defaults.set(temp, forKey: UserSettings.HistoryList.keyPath)
         defaults.synchronize()
     }
 

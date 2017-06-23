@@ -81,5 +81,6 @@ internal struct UserSettings {
 
     //  User Defaults keys
     static let Playlists = Setting<String>("playlists", defaultValue:"playlists")
-    static let Histories = Setting<String>("histories", defaultValue:"histories")
+    static let HistoryName = Setting<String>("historyName", defaultValue:"History")
+    static let HistoryList = Setting<String>("historyList", defaultValue:"histories")
 }
