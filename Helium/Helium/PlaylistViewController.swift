@@ -17,7 +17,6 @@ struct k {
     static let link = "link"
     static let time = "time"
     static let rank = "rank"
-    static let hist = "History"
 }
 
 class PlayItem : NSObject {
@@ -115,7 +114,9 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
     var playCache = Dictionary<String, Any>()
     
     override func viewDidLoad() {
-        let types = ["public.data",kUTTypeURL as String]
+        let types = ["public.data",kUTTypeURL as String,
+                     NSFilenamesPboardType,
+                     NSURLPboardType]
 
         playlistTableView.register(forDraggedTypes: types)
         playitemTableView.register(forDraggedTypes: types)
@@ -127,12 +128,22 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
     override func viewWillAppear() {
         // cache our list before editing
         playCache = playlists
-
-        // overlay in history using NSDictionaryControllerKeyValuePair Protocol setKey
-        historyCache = playlistArrayController.newObject() as NSDictionaryControllerKeyValuePair
-        historyCache!.key = k.hist
-        historyCache!.value = appDelegate.histories
-        playlistArrayController.addObject(historyCache!)
+        
+        // add existing history entry if any
+        if historyCache == nil && appDelegate.histories.count > 0 {
+            playlists[UserSettings.Histories.value] = nil
+            
+            // overlay in history using NSDictionaryControllerKeyValuePair Protocol setKey
+            historyCache = playlistArrayController.newObject() as NSDictionaryControllerKeyValuePair
+            historyCache!.key = UserSettings.Histories.value
+            historyCache!.value = appDelegate.histories
+            playlistArrayController.addObject(historyCache!)
+        }
+        else
+        if historyCache != nil
+        {
+            historyCache!.value = appDelegate.histories
+        }
         
         self.playlistSplitView.setPosition(120, ofDividerAt: 0)
     }
@@ -150,11 +161,14 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                 self.playitemTableView.scrollRowToVisible(list.count - 1)
             }
         } else {
+            let item = playlistArrayController.newObject()
             let list = Array <PlayItem>()
+
             let temp = NSString(format:"%p",list) as String
             let name = "play#" + String(temp.characters.suffix(3))
-            let item : [String:AnyObject] = [name : list as AnyObject]
-
+            item.key = name
+            item.value = list
+            
             playlistArrayController.addObject(item)
 
             DispatchQueue.main.async {
@@ -397,9 +411,9 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         }
         else
 
-        //    We have a Finder drag-n-drop of file URLs ?
+        //    We have a Finder drag-n-drop of file or location URLs ?
         if let items: Array<AnyObject> = pasteboard.readObjects(forClasses: [NSURL.classForCoder()], options: options) as Array<AnyObject>? {
-             Swift.print("into \(String(describing: tableView.identifier))")
+            Swift.print("into \(String(describing: tableView.identifier))")
             
             var play = playlistArrayController.selectedObjects.first as? NSDictionaryControllerKeyValuePair
             var okydoKey = false
@@ -420,7 +434,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
             }
             
             for itemURL in items {
-                if (itemURL as AnyObject).isFileReferenceURL() {
+                if (itemURL as! NSURL).isFileReferenceURL() {
                     let fileURL : URL? = (itemURL as AnyObject).filePathURL
 
                     // Capture playlist name from origin folder of 1st item
@@ -447,10 +461,43 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                 }
             }
             
+            // Try to pick off whatever they sent us
+            if items.count == 0 {
+                for element in pasteboard.pasteboardItems! {
+                    for type in element.types {
+                        let item = element.string(forType:type)
+                        if type == "public.url" {
+                            if !okydoKey {
+                                play?.key = type
+                            }
+                            let url = URL.init(string: item!)
+                            let fuzz = url?.deletingPathExtension().lastPathComponent
+                            let name = fuzz?.removingPercentEncoding
+                            let temp = PlayItem(name: name!,
+                                                link: url!,
+                                                time: 0,
+                                                rank: (playitemArrayController.arrangedObjects as AnyObject).count + 1)
+                            playitemArrayController.insert(temp, atArrangedObjectIndex: row + newIndexOffset)
+                            newIndexOffset += 1
+                            break
+                        }
+                        else
+                        {
+                            Swift.print("type \(type) \(item!)")
+                        }
+                    }
+                }
+            }
+            
             DispatchQueue.main.async {
                 let rows = IndexSet.init(integersIn: NSMakeRange(row, newIndexOffset).toRange() ?? 0..<0)
                 self.playitemTableView.selectRowIndexes(rows, byExtendingSelection: false)
             }
+        }
+        else
+        {
+            Swift.print("WTF \(info)")
+            return false
         }
         return true
     }
