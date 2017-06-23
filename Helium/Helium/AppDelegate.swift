@@ -275,17 +275,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc fileprivate func didUpdateTitle(_ notification: Notification) {
         if let itemURL = notification.object as? URL {
             let item: PlayItem = PlayItem.init()
+            var fileURL: URL? = nil
 
-            if (itemURL as AnyObject).isFileReferenceURL() {
-                let fileURL : URL? = (itemURL as AnyObject).filePathURL
-                let path = fileURL!.absoluteString//.stringByRemovingPercentEncoding
+            if let testURL: URL = (itemURL as NSURL).filePathURL {
+                fileURL = testURL
+            }
+            else
+            if (itemURL as NSURL).isFileReferenceURL() {
+                fileURL = (itemURL as NSURL).filePathURL
+            }
+            if fileURL != nil {
+                let path = fileURL?.absoluteString//.stringByRemovingPercentEncoding
                 let attr = metadataDictionaryForFileAt((fileURL?.path)!)
                 let fuzz = (itemURL as AnyObject).deletingPathExtension!!.lastPathComponent as NSString
                 item.name = fuzz.removingPercentEncoding!
-                item.link = URL.init(string: path)!
+                item.link = URL.init(string: path!)!
                 item.time = attr?[kMDItemDurationSeconds] as! TimeInterval
-                item.rank = histories.count + 1
-                histories.append(item)
             }
             else
             {
@@ -298,10 +303,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 item.name = name!
                 item.link = itemURL
                 item.time = 0
-                item.rank = histories.count + 1
             }
-            print("\(histories.count) -> \(String(describing: histories.last?.name))")
             histories.append(item)
+            item.rank = histories.count
+            print("\(histories.count) -> \(String(describing: histories.last?.name))")
         }
     }
     
