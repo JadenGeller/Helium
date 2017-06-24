@@ -69,6 +69,7 @@ class PlayTableView : NSTableView {
 }
 
 class PlayItemCornerView : NSView {
+    @IBOutlet weak var playlistArrayController: NSDictionaryController!
     @IBOutlet weak var playitemTableView: PlayTableView!
     override func draw(_ dirtyRect: NSRect) {
         let tote = NSImage.init(imageLiteralResourceName: "NSRefreshTemplate")
@@ -82,10 +83,12 @@ class PlayItemCornerView : NSView {
     override func mouseDown(with event: NSEvent) {
         playitemTableView.beginUpdates()
         // Renumber playlist items
+        let list = (playlistArrayController.selectedObjects.first as! NSDictionaryControllerKeyValuePair).value as! [PlayItem]
         let col = playitemTableView.column(withIdentifier: "rank")
         for row in 0...playitemTableView.numberOfRows-1 {
             let cell = playitemTableView.view(atColumn: col, row: row, makeIfNecessary: true) as! NSTableCellView
             cell.textField?.integerValue = row + 1
+            list[row].rank = row + 1
         }
         playitemTableView.endUpdates()
     }
@@ -402,7 +405,18 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         
         if sourceTableView == playlistTableView {
             Swift.print("from \(String(describing: sourceTableView?.identifier)) into \(String(describing: tableView.identifier))")
+            let selectedRowIndexes = sourceTableView?.selectedRowIndexes
             
+            tableView.beginUpdates()
+            for index in selectedRowIndexes! {
+                let source = (playlistArrayController.arrangedObjects as! [Any])[index] as! NSDictionaryControllerKeyValuePair
+                for playItem in source.value as! [PlayItem] {
+                    
+                    playitemArrayController.addObject(playItem)
+
+                }
+            }
+            tableView.endUpdates()
         }
         else
         
@@ -431,7 +445,6 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                 playlistTableView.reloadData()
             }
             tableView.selectRowIndexes(IndexSet.init(integer: row), byExtendingSelection: false)
-            Swift.print("from \(String(describing: sourceTableView?.identifier)) into \(String(describing: tableView.identifier)) \(String(describing: selectedPlaylist?.key))")
 
             for index in selectedRowIndexes! {
                 playitemArrayController.addObject(items[index])

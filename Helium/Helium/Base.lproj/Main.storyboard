@@ -1011,6 +1011,7 @@ Gw
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <connections>
                         <outlet property="playitemTableView" destination="IBh-ZH-TR3" id="LPo-ZJ-0YM"/>
+                        <outlet property="playlistArrayController" destination="9J8-mw-mAx" id="c8O-Hm-ZLN"/>
                     </connections>
                 </customView>
                 <dictionaryController objectClassName="_NSDictionaryControllerKeyValuePair" id="9J8-mw-mAx">
