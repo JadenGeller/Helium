@@ -83,4 +83,5 @@ internal struct UserSettings {
     static let Playlists = Setting<String>("playlists", defaultValue:"playlists")
     static let HistoryName = Setting<String>("historyName", defaultValue:"History")
     static let HistoryList = Setting<String>("historyList", defaultValue:"histories")
+    static let HideAppMenu = Setting<Bool>("hideAppMenu", defaultValue: false)
 }

@@ -39,6 +39,12 @@
                                                             <action selector="floatOverFullScreenAppsPress:" target="Voe-Tx-rLC" id="zPC-Ot-r08"/>
                                                         </connections>
                                                     </menuItem>
+                                                    <menuItem title="Hide Helium in menu bar" id="2GK-ox-Nku" userLabel="Hide Helium in menu bar">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="hideAppStatusItem:" target="Voe-Tx-rLC" id="qAE-Uy-oG1"/>
+                                                        </connections>
+                                                    </menuItem>
                                                     <menuItem title="Home Page" id="Vn0-wi-SSU">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
@@ -386,6 +392,12 @@ CA
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                         <connections>
                                             <action selector="floatOverFullScreenAppsPress:" target="Voe-Tx-rLC" id="sSn-y2-NwH"/>
+                                        </connections>
+                                    </menuItem>
+                                    <menuItem title="Hide Helium in menu bar" id="ptj-37-2Ce" userLabel="Hide Helium in menu bar">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                        <connections>
+                                            <action selector="hideAppStatusItem:" target="Voe-Tx-rLC" id="C3E-HP-7pj"/>
                                         </connections>
                                     </menuItem>
                                     <menuItem title="Home Page" id="tUR-Fm-13f">

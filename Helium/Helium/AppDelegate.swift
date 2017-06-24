@@ -84,7 +84,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     //  MARK:- Global IBAction
     @IBOutlet weak var appMenu: NSMenu!
     @IBOutlet weak var appItem: NSMenuItem!
-    let appStatusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
+	var appStatusItem:NSStatusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
     
     internal func menuClicked(_ sender: AnyObject) {
         if let menuItem = sender as? NSMenuItem {
@@ -101,6 +101,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         UserSettings.disabledFullScreenFloat.value = (sender.state == NSOnState)
         NotificationCenter.default.post(name: Notification.Name(rawValue: keyPath), object: nil)
     }
+	@IBAction func hideAppStatusItem(_ sender: NSMenuItem) {
+		UserSettings.HideAppMenu.value = (sender.state == NSOffState)
+		if UserSettings.HideAppMenu.value {
+			NSStatusBar.system().removeStatusItem(appStatusItem)
+		}
+		else
+		{
+			appStatusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
+			appStatusItem.image = NSImage.init(named: "statusIcon")
+			appStatusItem.menu = appMenu
+		}
+	}
     @IBAction func homePagePress(_ sender: AnyObject) {
         didRequestUserUrl(RequestUserUrlStrings (
             currentURL: UserSettings.homePageURL.value,
@@ -174,6 +186,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         case "Float Above All Spaces":
             menuItem.state = UserSettings.disabledFullScreenFloat.value ? NSOffState : NSOnState
             break;
+		case "Hide Helium in menu bar":
+			menuItem.state = UserSettings.HideAppMenu.value ? NSOnState : NSOffState
+			break
         case "Home Page":
             break
         case "Magic URL Redirects":
@@ -189,7 +204,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             }
             break
         }
-
+		print("menu \(menuItem.title) \(menuItem.state)");
         return true;
     }
 
