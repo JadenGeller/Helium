@@ -110,11 +110,12 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
     //    cache playlists read and saved to defaults
     var appDelegate: AppDelegate = NSApp.delegate as! AppDelegate
     var defaults = UserDefaults.standard
-    var playlists = Dictionary<String, Any>()
-    var playCache = Dictionary<String, Any>()
+    dynamic var playlists = Dictionary<String, Any>()
+    dynamic var playCache = Dictionary<String, Any>()
     
     override func viewDidLoad() {
         let types = ["public.data",kUTTypeURL as String,
+                     PlayItem.className(),
                      NSFilenamesPboardType,
                      NSURLPboardType]
 
@@ -356,7 +357,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
             return .move
         }
         Swift.print("drag \(NSDragOperation())")
-        return NSDragOperation()
+        return .every
     }
     
     func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
@@ -406,8 +407,36 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         else
         
         if sourceTableView == playitemTableView {
-            Swift.print("from \(String(describing: sourceTableView?.identifier)) into \(String(describing: tableView.identifier))")
-            
+            // These playitems get dropped into a new or append a playlist
+            let items: [PlayItem] = playitemArrayController.arrangedObjects as! [PlayItem]
+            var selectedPlaylist: NSDictionaryControllerKeyValuePair? = playlistArrayController.selectedObjects.first as? NSDictionaryControllerKeyValuePair
+            let selectedRowIndexes = sourceTableView?.selectedRowIndexes
+            var list: [PlayItem]? = nil
+
+            tableView.beginUpdates()
+            if selectedPlaylist != nil && row < tableView.numberOfRows {
+                selectedPlaylist = (playlistArrayController.arrangedObjects as! Array)[row]
+                list = (selectedPlaylist?.value as! [PlayItem])
+            }
+            else
+            {
+                selectedPlaylist = playlistArrayController.newObject()
+                list = [PlayItem]()
+                let temp = NSString(format:"%p",list!) as String
+                let name = "play#" + String(temp.characters.suffix(3))
+                selectedPlaylist?.value = list
+                selectedPlaylist?.key = name
+                playlistArrayController.addObject(selectedPlaylist!)
+                tableView.scrollRowToVisible(row)
+                playlistTableView.reloadData()
+            }
+            tableView.selectRowIndexes(IndexSet.init(integer: row), byExtendingSelection: false)
+            Swift.print("from \(String(describing: sourceTableView?.identifier)) into \(String(describing: tableView.identifier)) \(String(describing: selectedPlaylist?.key))")
+
+            for index in selectedRowIndexes! {
+                playitemArrayController.addObject(items[index])
+            }
+            tableView.endUpdates()
         }
         else
 
