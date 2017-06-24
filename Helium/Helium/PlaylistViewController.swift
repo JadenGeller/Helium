@@ -374,7 +374,6 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
 
         // We have intra tableView drag-n-drop ?
         if tableView == sourceTableView {
-            Swift.print("same \(String(describing: tableView.identifier))")
             info.enumerateDraggingItems(options: [], for: tableView, classes: [NSPasteboardItem.self], searchOptions: [:]) {
                 tableView.beginUpdates()
 
@@ -404,7 +403,6 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         // creating a new playlist item unless, we're dropping onto an existing.
         
         if sourceTableView == playlistTableView {
-            Swift.print("from \(String(describing: sourceTableView?.identifier)) into \(String(describing: tableView.identifier))")
             let selectedRowIndexes = sourceTableView?.selectedRowIndexes
             
             tableView.beginUpdates()
@@ -455,8 +453,6 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
 
         //    We have a Finder drag-n-drop of file or location URLs ?
         if let items: Array<AnyObject> = pasteboard.readObjects(forClasses: [NSURL.classForCoder()], options: options) as Array<AnyObject>? {
-            Swift.print("into \(String(describing: tableView.identifier))")
-            
             var play = playlistArrayController.selectedObjects.first as? NSDictionaryControllerKeyValuePair
             var okydoKey = false
             

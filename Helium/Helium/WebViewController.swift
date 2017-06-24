@@ -322,6 +322,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         }
     }
 
+    // TODO: For now just log what we would play once we figure out how to determine when an item finishes so we can start the next
     func playerDidFinishPlaying(_ note: Notification) {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: note.object)
         print("Video Finished")

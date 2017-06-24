@@ -204,7 +204,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             }
             break
         }
-		print("menu \(menuItem.title) \(menuItem.state)");
         return true;
     }
 
@@ -326,7 +325,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             }
             histories.append(item)
             item.rank = histories.count
-            print("\(histories.count) -> \(String(describing: histories.last?.name))")
         }
     }
     
