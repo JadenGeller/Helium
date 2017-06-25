@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreAudioKit
 
 extension String {
     func replacePrefix(_ prefix: String, replacement: String) -> String {
@@ -65,5 +66,15 @@ extension String {
             else { return nil }
         
         return start..<end
+    }
+}
+
+extension NSAttributedString {
+    class func string(fromAsset: String) -> String {
+        let asset = NSDataAsset.init(name: fromAsset)
+        let data = NSData.init(data: (asset?.data)!)
+        let text = String.init(data: data as Data, encoding: String.Encoding.utf8)
+        
+        return text!
     }
 }
