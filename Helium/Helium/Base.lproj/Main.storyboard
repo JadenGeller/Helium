@@ -7,6 +7,127 @@
         <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
     </dependencies>
     <scenes>
+        <!--Window Controller-->
+        <scene sceneID="t8N-qi-OCo">
+            <objects>
+                <windowController id="1dx-1f-JSH" sceneMemberID="viewController">
+                    <window key="window" title="About Helium" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="kbG-0e-qka" customClass="NSPanel">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES" utility="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="425" y="461" width="285" height="165"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+                    </window>
+                    <connections>
+                        <segue destination="umu-a0-Tfe" kind="relationship" relationship="window.shadowedContentViewController" id="PJs-xX-Tx8"/>
+                    </connections>
+                </windowController>
+                <customObject id="dMr-pj-6Ro" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-157" y="-1078"/>
+        </scene>
+        <!--About Box Controller-->
+        <scene sceneID="S0S-n9-J2C">
+            <objects>
+                <viewController id="umu-a0-Tfe" customClass="AboutBoxController" customModule="Helium" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="kg1-aS-nIq">
+                        <rect key="frame" x="0.0" y="0.0" width="283" height="240"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button toolTip="version information" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rKn-5s-fYK">
+                                <rect key="frame" x="12" y="116" width="259" height="12"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="square" title="&lt;version&gt;" bezelStyle="shadowlessSquare" alignment="center" controlSize="mini" state="on" imageScaling="proportionallyDown" inset="2" id="3Ei-xL-Jwz">
+                                    <behavior key="behavior" lightByContents="YES"/>
+                                    <font key="font" metaFont="system" size="10"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="toggleVersion:" target="umu-a0-Tfe" id="JDc-1p-1EL"/>
+                                </connections>
+                            </button>
+                            <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="ApO-5O-qon">
+                                <rect key="frame" x="12" y="85" width="259" height="5"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            </box>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IV0-Ql-nbs">
+                                <rect key="frame" x="62" y="138" width="161" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Helium" placeholderString="" id="dzr-yS-Vgn">
+                                    <font key="font" size="14" name="Arial-BoldMT"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ISs-R1-bl3">
+                                <rect key="frame" x="112" y="168" width="63" height="63"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="AppIcon" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="yuU-sy-pjW">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="toggleContent:" target="umu-a0-Tfe" id="4Sd-95-PKJ"/>
+                                </connections>
+                            </button>
+                            <button toolTip="version information" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0NX-wg-Xfe">
+                                <rect key="frame" x="12" y="95" width="257" height="12"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="square" title="&lt;copyright&gt;" bezelStyle="shadowlessSquare" alignment="center" controlSize="mini" state="on" imageScaling="proportionallyDown" inset="2" id="XKR-0b-e42">
+                                    <behavior key="behavior" lightByContents="YES"/>
+                                    <font key="font" metaFont="system" size="10"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="toggleCredits:" target="umu-a0-Tfe" id="dNV-9o-RHJ"/>
+                                </connections>
+                            </button>
+                            <scrollView hidden="YES" fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OZR-xn-j0b">
+                                <rect key="frame" x="12" y="6" width="259" height="76"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <clipView key="contentView" ambiguous="YES" id="6A6-Eg-DDC">
+                                    <rect key="frame" x="1" y="1" width="257" height="74"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textView ambiguous="YES" editable="NO" importsGraphics="NO" horizontallyResizable="YES" usesFontPanel="YES" usesRuler="YES" linkDetection="YES" spellingCorrection="YES" smartInsertDelete="YES" id="4IG-nm-Y5X">
+                                            <rect key="frame" x="0.0" y="0.0" width="257" height="74"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <size key="minSize" width="257" height="74"/>
+                                            <size key="maxSize" width="678" height="10000000"/>
+                                            <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        </textView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="kwe-eA-EL8">
+                                    <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="To3-Ed-vTh">
+                                    <rect key="frame" x="-14" y="1" width="15" height="0.0"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                            <customView hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0C4-5f-uW8">
+                                <rect key="frame" x="0.0" y="78" width="283" height="164"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </customView>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="appNameField" destination="IV0-Ql-nbs" id="9UC-Ra-UDn"/>
+                        <outlet property="creditScroll" destination="OZR-xn-j0b" id="QC1-VA-sHp"/>
+                        <outlet property="creditSeparatorBox" destination="ApO-5O-qon" id="eLH-hF-26w"/>
+                        <outlet property="creditsButton" destination="0NX-wg-Xfe" id="2Gg-gO-bji"/>
+                        <outlet property="creditsField" destination="4IG-nm-Y5X" id="j3U-vq-XGc"/>
+                        <outlet property="hideView" destination="0C4-5f-uW8" id="Bko-zB-h48"/>
+                        <outlet property="toggleButton" destination="ISs-R1-bl3" id="AAf-ml-i1p"/>
+                        <outlet property="versionButton" destination="rKn-5s-fYK" id="TgM-LT-FyV"/>
+                    </connections>
+                </viewController>
+                <customObject id="L5Y-eG-1ih" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <userDefaultsController id="7hN-84-z2t"/>
+            </objects>
+            <point key="canvasLocation" x="194.5" y="-1041"/>
+        </scene>
         <!--Application-->
         <scene sceneID="JPo-4y-FX3">
             <objects>
@@ -20,7 +141,7 @@
                                         <menuItem title="About Helium" id="5kV-Vb-QxS">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="orderFrontStandardAboutPanel:" target="Ady-hI-5gd" id="Exp-CZ-Vem"/>
+                                                <segue destination="1dx-1f-JSH" kind="modal" id="EC4-pe-v2x"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
@@ -545,7 +666,7 @@ CA
                 </windowController>
                 <customObject id="jdB-Q2-r1e" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="612" y="293"/>
+            <point key="canvasLocation" x="720" y="-32"/>
         </scene>
         <!--Helium Playlists-->
         <scene sceneID="wcG-7U-Dt5">
@@ -1078,10 +1199,11 @@ Gw
         </scene>
     </scenes>
     <resources>
+        <image name="AppIcon" width="128" height="128"/>
         <image name="NSAddTemplate" width="11" height="11"/>
         <image name="NSRemoveTemplate" width="11" height="11"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Ujs-EW-Ya2"/>
+        <segue reference="UQR-x0-MeW"/>
     </inferredMetricsTieBreakers>
 </document>
