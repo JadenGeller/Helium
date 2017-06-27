@@ -84,6 +84,10 @@ class HeliumPanelController : NSWindowController {
 
     // MARK:- Mouse events
     override func mouseEntered(with theEvent: NSEvent) {
+        if theEvent.modifierFlags.contains(.shift) {
+            NSApp.activate(ignoringOtherApps: true)
+        }
+
         mouseOver = true
         updateTranslucency()
 

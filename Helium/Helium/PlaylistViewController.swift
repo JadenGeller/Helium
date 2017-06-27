@@ -150,6 +150,8 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         }
         
         self.playlistSplitView.setPosition(120, ofDividerAt: 0)
+        NSApp.activate(ignoringOtherApps: true)
+        self.view.window?.makeKeyAndOrderFront(self)
     }
 
     @IBAction func addPlaylist(_ sender: NSButton) {
