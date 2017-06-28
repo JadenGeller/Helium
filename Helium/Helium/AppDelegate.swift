@@ -60,13 +60,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         alpha = newAlpha / 100
     }
     
-    fileprivate func disabledAllMouseOverPreferences(_ allMenus: [NSMenuItem]) {
-        // GROSS HARD CODED
-        for x in allMenus.dropFirst(2) {
-            x.state = NSOffState
-        }
-    }
-    
     @IBOutlet weak var translucencyMenu: NSMenuItem!
     fileprivate var translucencyPreference: TranslucencyPreference = .never {
         didSet {
@@ -153,7 +146,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     @IBAction func translucencyPress(_ sender: NSMenuItem) {
-        disabledAllMouseOverPreferences(sender.menu!.items)
         UserSettings.translucencyPreference.value = AppDelegate.TranslucencyPreference(rawValue: sender.tag)!.rawValue
         translucencyPreference = AppDelegate.TranslucencyPreference(rawValue: UserSettings.translucencyPreference.value)! 
         NotificationCenter.default.post(name: Notification.Name(rawValue: UserSettings.translucencyPreference.keyPath), object: nil)
@@ -208,6 +200,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     //  MARK:- Lifecyle
+
+    func applicationShouldOpenUntitledFile(_ sender: NSApplication) -> Bool {
+        return false
+    }
 
     let toHMS = hmsTransformer()
     func applicationWillFinishLaunching(_ notification: Notification) {
