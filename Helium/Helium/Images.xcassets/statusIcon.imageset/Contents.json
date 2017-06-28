@@ -2,16 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "icon_32-1.png",
+      "filename" : "Helium_18.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "icon_128.png",
+      "filename" : "Helium_18@2.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "Helium_18@3.png",
       "scale" : "3x"
     }
   ],
