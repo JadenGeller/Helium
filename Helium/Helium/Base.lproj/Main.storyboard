@@ -241,6 +241,19 @@
                                                 <action selector="openFilePress:" target="Ady-hI-5gd" id="hS5-ai-It3"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Open Recent" id="awr-xo-jo4">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Open Recent" systemMenu="recentDocuments" id="RSV-Ho-Yzi">
+                                                <items>
+                                                    <menuItem title="Clear Menu" id="CME-f2-iQr">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="clearRecentDocuments:" target="Ady-hI-5gd" id="gbF-fm-tHh"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
                                         <menuItem title="Reload" keyEquivalent="r" id="drw-0K-OAV">
                                             <connections>
                                                 <action selector="reloadPress:" target="Ady-hI-5gd" id="gYL-ny-dkm"/>
@@ -272,6 +285,11 @@ CA
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Appearance" id="HyV-fh-RgO">
                                     <items>
+                                        <menuItem title="New Window" keyEquivalent="n" id="Lba-KG-mgX">
+                                            <connections>
+                                                <action selector="newDocument:" target="Ady-hI-5gd" id="kFI-WF-ngV"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Auto-hide Title Bar" keyEquivalent="b" id="fpG-6V-xxb">
                                             <connections>
                                                 <action selector="autoHideTitlePress:" target="Voe-Tx-rLC" id="zU5-PO-8QS"/>
@@ -1168,9 +1186,9 @@ Gw
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
-                <windowController storyboardIdentifier="HeliumController" showSeguePresentationStyle="single" id="B8D-0N-5wS" customClass="HeliumPanelController" customModule="Helium" customModuleProvider="target" sceneMemberID="viewController">
+                <windowController storyboardIdentifier="HeliumController" id="B8D-0N-5wS" customClass="HeliumPanelController" customModule="Helium" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Helium" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA" customClass="HeliumPanel" customModule="Helium" customModuleProvider="target">
-                        <windowStyleMask key="styleMask" titled="YES" resizable="YES" utility="YES" nonactivatingPanel="YES" HUD="YES"/>
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES" utility="YES" nonactivatingPanel="YES" HUD="YES"/>
                         <windowCollectionBehavior key="collectionBehavior" moveToActiveSpace="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
@@ -1182,7 +1200,7 @@ Gw
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="272"/>
+            <point key="canvasLocation" x="66" y="356"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="hIz-AP-VOD">

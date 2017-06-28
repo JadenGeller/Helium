@@ -19,31 +19,6 @@ struct k {
     static let rank = "rank"
 }
 
-class PlayItem : NSObject {
-    var name : String = k.item
-    var link : URL = URL.init(string: "http://")!
-    var time : TimeInterval
-    var rank : Int
-    
-    override init() {
-        name = k.item
-        link = URL.init(string: "http://")!
-        time = 0.0
-        rank = 0
-        super.init()
-    }
-    init(name:String, link:URL, time:TimeInterval, rank:Int) {
-        self.name = name
-        self.link = link
-        self.time = time
-        self.rank = rank
-        super.init()
-    }
-    override var description : String {
-        return String(format: "%@: %p '%@'", self.className, self, name)
-    }
-}
-
 class PlayTableView : NSTableView {
     override func keyDown(with event: NSEvent) {
         if event.charactersIgnoringModifiers! == String(Character(UnicodeScalar(NSDeleteCharacter)!)) ||

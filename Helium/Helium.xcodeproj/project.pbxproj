@@ -8,10 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		0F05C7EF1EFEC5F3001B5D02 /* AboutHelium.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F05C7EB1EFEC233001B5D02 /* AboutHelium.swift */; };
+		0F1035921F032E6A00327B30 /* Helium.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F10354A1F0300DA00327B30 /* Helium.swift */; };
 		0FD57FDE1EEC89F400A0F84D /* HeliumPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD57FDD1EEC89F400A0F84D /* HeliumPanel.swift */; };
 		0FD57FE01EECF0FF00A0F84D /* UrlHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD57FDF1EECF0FF00A0F84D /* UrlHelpers.swift */; };
 		0FD6C7381E62286000D6F836 /* PlaylistPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD6C7361E62286000D6F836 /* PlaylistPanelController.swift */; };
 		0FD6C7391E62286000D6F836 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD6C7371E62286000D6F836 /* PlaylistViewController.swift */; };
+		0FDE23ED1F040484009D4B16 /* Helium.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0FDE23EC1F040484009D4B16 /* Helium.icns */; };
 		0FF0BB3A1EAA25FE009952D4 /* ValueTransformers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF0BB391EAA25FE009952D4 /* ValueTransformers.swift */; };
 		27199AB41BE422AC00E02297 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 27199AB31BE422AC00E02297 /* icon.icns */; };
 		27199AB71BE422AC00E02297 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27199AB61BE422AC00E02297 /* ShareViewController.swift */; };
@@ -75,10 +77,12 @@
 
 /* Begin PBXFileReference section */
 		0F05C7EB1EFEC233001B5D02 /* AboutHelium.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutHelium.swift; sourceTree = "<group>"; usesTabs = 0; };
+		0F10354A1F0300DA00327B30 /* Helium.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helium.swift; sourceTree = "<group>"; usesTabs = 0; };
 		0FD57FDD1EEC89F400A0F84D /* HeliumPanel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeliumPanel.swift; sourceTree = "<group>"; usesTabs = 0; };
 		0FD57FDF1EECF0FF00A0F84D /* UrlHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlHelpers.swift; sourceTree = "<group>"; usesTabs = 0; };
 		0FD6C7361E62286000D6F836 /* PlaylistPanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistPanelController.swift; sourceTree = "<group>"; usesTabs = 0; };
 		0FD6C7371E62286000D6F836 /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; usesTabs = 0; };
+		0FDE23EC1F040484009D4B16 /* Helium.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Helium.icns; path = Helium/Assets/Helium.icns; sourceTree = "<group>"; };
 		0FF0BB391EAA25FE009952D4 /* ValueTransformers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueTransformers.swift; sourceTree = "<group>"; usesTabs = 0; };
 		27199AB01BE422AC00E02297 /* HeliumShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = HeliumShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		27199AB31BE422AC00E02297 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
@@ -153,6 +157,7 @@
 		4D867CA81AD6781200681331 = {
 			isa = PBXGroup;
 			children = (
+				0FDE23EC1F040484009D4B16 /* Helium.icns */,
 				4D867CB31AD6781200681331 /* Helium */,
 				4D8DAEB01C3A427D00B212EC /* HeliumTests */,
 				27199AB11BE422AC00E02297 /* HeliumShareExtension */,
@@ -173,6 +178,7 @@
 		4D867CB31AD6781200681331 /* Helium */ = {
 			isa = PBXGroup;
 			children = (
+				0F10354A1F0300DA00327B30 /* Helium.swift */,
 				0FD57FDD1EEC89F400A0F84D /* HeliumPanel.swift */,
 				4D867CB61AD6781200681331 /* AppDelegate.swift */,
 				4D867CD31AD6796A00681331 /* HeliumPanelController.swift */,
@@ -362,6 +368,7 @@
 			files = (
 				4D867CBB1AD6781200681331 /* Images.xcassets in Resources */,
 				B34C1EC61ADE3CBE0094ADBA /* dsa_pub.pem in Resources */,
+				0FDE23ED1F040484009D4B16 /* Helium.icns in Resources */,
 				4D867CBE1AD6781200681331 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -418,6 +425,7 @@
 				0FD57FE01EECF0FF00A0F84D /* UrlHelpers.swift in Sources */,
 				0FD57FDE1EEC89F400A0F84D /* HeliumPanel.swift in Sources */,
 				4D867CB71AD6781200681331 /* AppDelegate.swift in Sources */,
+				0F1035921F032E6A00327B30 /* Helium.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

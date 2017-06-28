@@ -8,7 +8,7 @@
 
 import AppKit
 
-class HeliumPanelController : NSWindowController {
+class HeliumPanelController : NSWindowController,NSWindowDelegate {
 
     var webViewController: WebViewController {
         get {
@@ -239,6 +239,19 @@ class HeliumPanelController : NSWindowController {
             break
         }
        updateTranslucency()
+    }
+    
+    func windowShouldClose(_ sender: Any) -> Bool {
+        let webView = self.window?.contentView?.subviews.first as! MyWebView
+        let delegate = webView.navigationDelegate as! NSObject
+
+        // Wind down all observations
+        UserDefaults.standard.removeObserver(delegate, forKeyPath: UserSettings.autoHideTitle.keyPath)
+        webView.removeObserver(delegate, forKeyPath: "estimatedProgress")
+        NotificationCenter.default.removeObserver(delegate)
+        NotificationCenter.default.removeObserver(self)
+        
+        return true
     }
     
     //MARK:- Actual functionality

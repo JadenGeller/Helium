@@ -247,6 +247,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             UserSettings.HistoryName.value = historyName as! String
         }
         
+        // No close box for our 1st window
+        NSApp.keyWindow?.standardWindowButton(NSWindowButton.closeButton)!.isHidden = true
+        
         // Load histories from defaults
         if let items = defaults.array(forKey: UserSettings.HistoryList.keyPath) {
             for playitem in items {
