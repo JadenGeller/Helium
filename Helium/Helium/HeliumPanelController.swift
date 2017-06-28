@@ -22,7 +22,11 @@ class HeliumPanelController : NSWindowController {
         }
     }
     
-    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        shouldCascadeWindows = true
+    }
+
     // MARK: Window lifecycle
     fileprivate var lastStyle : Int = 0
     override func windowDidLoad() {
@@ -171,13 +175,6 @@ class HeliumPanelController : NSWindowController {
     }
     
     //MARK:- IBActions
-    
-    fileprivate func disabledAllMouseOverPreferences(_ allMenus: [NSMenuItem]) {
-        // GROSS HARD CODED
-        for x in allMenus.dropFirst(2) {
-            x.state = NSOffState
-        }
-    }
     
     @IBAction func openLocationPress(_ sender: AnyObject) {
         didRequestLocation()
