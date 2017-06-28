@@ -84,43 +84,53 @@ class MyWebView : WKWebView {
         item.isEnabled = UserSettings.translucencyPreference.value > 0
         item.state = (10 == opacity ? NSOnState : NSOffState)
         item.target = appDelegate
+        item.tag = 10
         subOpacity.addItem(item)
         item = NSMenuItem(title: "20%", action: #selector(AppDelegate.percentagePress(_:)), keyEquivalent: "")
         item.isEnabled = UserSettings.translucencyPreference.value > 0
         item.state = (20 == opacity ? NSOnState : NSOffState)
         item.target = appDelegate
+        item.tag = 20
         subOpacity.addItem(item)
         item = NSMenuItem(title: "30%", action: #selector(AppDelegate.percentagePress(_:)), keyEquivalent: "")
         item.state = (30 == opacity ? NSOnState : NSOffState)
         item.target = appDelegate
+        item.tag = 30
         subOpacity.addItem(item)
         item = NSMenuItem(title: "40%", action: #selector(AppDelegate.percentagePress(_:)), keyEquivalent: "")
         item.state = (40 == opacity ? NSOnState : NSOffState)
         item.target = appDelegate
+        item.tag = 40
         subOpacity.addItem(item)
         item = NSMenuItem(title: "50%", action: #selector(AppDelegate.percentagePress(_:)), keyEquivalent: "")
         item.state = (50 == opacity ? NSOnState : NSOffState)
         item.target = appDelegate
+        item.tag = 50
         subOpacity.addItem(item)
         item = NSMenuItem(title: "60%", action: #selector(AppDelegate.percentagePress(_:)), keyEquivalent: "")
         item.state = (60 == opacity ? NSOnState : NSOffState)
         item.target = appDelegate
+        item.tag = 60
         subOpacity.addItem(item)
         item = NSMenuItem(title: "70%", action: #selector(AppDelegate.percentagePress(_:)), keyEquivalent: "")
         item.state = (70 == opacity ? NSOnState : NSOffState)
         item.target = appDelegate
+        item.tag = 70
         subOpacity.addItem(item)
         item = NSMenuItem(title: "80%", action: #selector(AppDelegate.percentagePress(_:)), keyEquivalent: "")
         item.state = (80 == opacity ? NSOnState : NSOffState)
         item.target = appDelegate
+        item.tag = 80
         subOpacity.addItem(item)
         item = NSMenuItem(title: "90%", action: #selector(AppDelegate.percentagePress(_:)), keyEquivalent: "")
         item.state = (90 == opacity ? NSOnState : NSOffState)
         item.target = appDelegate
+        item.tag = 90
         subOpacity.addItem(item)
         item = NSMenuItem(title: "100%", action: #selector(AppDelegate.percentagePress(_:)), keyEquivalent: "")
         item.state = (100 == opacity ? NSOnState : NSOffState)
         item.target = appDelegate
+        item.tag = 100
         subOpacity.addItem(item)
 
         let translucency = HeliumPanelController.TranslucencyPreference(rawValue: UserSettings.translucencyPreference.value)
