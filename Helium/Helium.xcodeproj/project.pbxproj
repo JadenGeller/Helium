@@ -179,8 +179,8 @@
 			isa = PBXGroup;
 			children = (
 				0F10354A1F0300DA00327B30 /* Helium.swift */,
-				0FD57FDD1EEC89F400A0F84D /* HeliumPanel.swift */,
 				4D867CB61AD6781200681331 /* AppDelegate.swift */,
+				0FD57FDD1EEC89F400A0F84D /* HeliumPanel.swift */,
 				4D867CD31AD6796A00681331 /* HeliumPanelController.swift */,
 				4D867CB81AD6781200681331 /* WebViewController.swift */,
 				0FD6C7361E62286000D6F836 /* PlaylistPanelController.swift */,
@@ -307,7 +307,7 @@
 				TargetAttributes = {
 					27199AAF1BE422AC00E02297 = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = VQYGYPHYGE;
+						DevelopmentTeam = J3VNR8UWPP;
 						LastSwiftMigration = 0830;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
@@ -317,8 +317,9 @@
 					};
 					4D867CB01AD6781200681331 = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = VQYGYPHYGE;
+						DevelopmentTeam = J3VNR8UWPP;
 						LastSwiftMigration = 0830;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
 								enabled = 0;
@@ -479,6 +480,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = J3VNR8UWPP;
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = HeliumShareExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
@@ -498,6 +500,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = J3VNR8UWPP;
 				INFOPLIST_FILE = HeliumShareExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
@@ -601,9 +604,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = J3VNR8UWPP;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Helium",
@@ -614,6 +618,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.JadenGeller.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Helium/Helium-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -629,6 +634,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = J3VNR8UWPP;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Helium",
@@ -639,6 +645,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.JadenGeller.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Helium/Helium-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
