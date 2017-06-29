@@ -58,7 +58,7 @@
                                 </textFieldCell>
                             </textField>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="ISs-R1-bl3">
-                                <rect key="frame" x="112" y="168" width="63" height="63"/>
+                                <rect key="frame" x="110" y="168" width="63" height="63"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="63" id="7Uk-vG-vC2"/>
                                     <constraint firstAttribute="height" constant="63" id="QHL-Z2-r2I"/>
@@ -122,6 +122,7 @@
                             <constraint firstAttribute="bottom" secondItem="OZR-xn-j0b" secondAttribute="bottom" constant="6" id="7yr-FV-MTt"/>
                             <constraint firstItem="rKn-5s-fYK" firstAttribute="leading" secondItem="0NX-wg-Xfe" secondAttribute="leading" id="AyU-6a-NAj"/>
                             <constraint firstItem="0NX-wg-Xfe" firstAttribute="leading" secondItem="ApO-5O-qon" secondAttribute="leading" id="DTR-SJ-l6U"/>
+                            <constraint firstItem="ISs-R1-bl3" firstAttribute="centerX" secondItem="kg1-aS-nIq" secondAttribute="centerX" id="F55-nM-8EA"/>
                             <constraint firstItem="IV0-Ql-nbs" firstAttribute="top" secondItem="ISs-R1-bl3" secondAttribute="bottom" constant="10" id="Gmt-6P-Xdc"/>
                             <constraint firstItem="0C4-5f-uW8" firstAttribute="top" secondItem="kg1-aS-nIq" secondAttribute="top" constant="-1" id="KCm-hN-11F"/>
                             <constraint firstItem="ApO-5O-qon" firstAttribute="leading" secondItem="OZR-xn-j0b" secondAttribute="leading" id="OeC-qj-voD"/>
@@ -134,7 +135,6 @@
                             <constraint firstAttribute="trailing" secondItem="0C4-5f-uW8" secondAttribute="trailing" id="eiv-4E-A2T"/>
                             <constraint firstItem="rKn-5s-fYK" firstAttribute="centerX" secondItem="0C4-5f-uW8" secondAttribute="centerX" id="ndO-pS-EpJ"/>
                             <constraint firstItem="OZR-xn-j0b" firstAttribute="top" secondItem="ApO-5O-qon" secondAttribute="bottom" constant="5" id="pYp-NK-dAV"/>
-                            <constraint firstItem="ISs-R1-bl3" firstAttribute="leading" secondItem="kg1-aS-nIq" secondAttribute="leading" constant="112" id="qgv-uk-Wur"/>
                             <constraint firstItem="ApO-5O-qon" firstAttribute="trailing" secondItem="OZR-xn-j0b" secondAttribute="trailing" id="vqJ-ab-NUP"/>
                             <constraint firstAttribute="trailing" secondItem="0NX-wg-Xfe" secondAttribute="trailing" constant="14" id="zQm-P9-S5C"/>
                         </constraints>
