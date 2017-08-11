@@ -15,8 +15,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @IBOutlet weak var percentageMenu: NSMenuItem!
     @IBOutlet weak var fullScreenFloatMenu: NSMenuItem!
 
-    func applicationWillFinishLaunching(notification: NSNotification) {
-        NSAppleEventManager.sharedAppleEventManager().setEventHandler(
+    func applicationWillFinishLaunching(_ notification: Notification) {
+        NSAppleEventManager.shared().setEventHandler(
             self,
             andSelector: #selector(AppDelegate.handleURLEvent(_:withReply:)),
             forEventClass: AEEventClass(kInternetEventClass),
@@ -24,43 +24,43 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         )
     }
 
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
-        magicURLMenu.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledMagicURLs.userDefaultsKey) ? NSOffState : NSOnState
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
+        magicURLMenu.state = UserDefaults.standard.bool(forKey: UserSetting.disabledMagicURLs.userDefaultsKey) ? NSOffState : NSOnState
         
-        fullScreenFloatMenu.state = NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledFullScreenFloat.userDefaultsKey) ? NSOffState : NSOnState
+        fullScreenFloatMenu.state = UserDefaults.standard.bool(forKey: UserSetting.disabledFullScreenFloat.userDefaultsKey) ? NSOffState : NSOnState
       
-        if let alpha = NSUserDefaults.standardUserDefaults().objectForKey(UserSetting.OpacityPercentage.userDefaultsKey) {
+        if let alpha = UserDefaults.standard.object(forKey: UserSetting.opacityPercentage.userDefaultsKey) {
             let offset = (alpha as! Int)/10 - 1
-            for (index, button) in percentageMenu.submenu!.itemArray.enumerate() {
+            for (index, button) in percentageMenu.submenu!.items.enumerated() {
                 (button ).state = (offset == index) ? NSOnState : NSOffState
             }
         }
     }
 
-    func applicationWillTerminate(aNotification: NSNotification) {
+    func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
     
     
-    @IBAction func magicURLRedirectToggled(sender: NSMenuItem) {
+    @IBAction func magicURLRedirectToggled(_ sender: NSMenuItem) {
         sender.state = (sender.state == NSOnState) ? NSOffState : NSOnState
-        NSUserDefaults.standardUserDefaults().setBool((sender.state == NSOffState), forKey: UserSetting.DisabledMagicURLs.userDefaultsKey)
+        UserDefaults.standard.set((sender.state == NSOffState), forKey: UserSetting.disabledMagicURLs.userDefaultsKey)
     }
     
     
     //MARK: - handleURLEvent
     // Called when the App opened via URL.
-    @objc func handleURLEvent(event: NSAppleEventDescriptor, withReply reply: NSAppleEventDescriptor) {
+    @objc func handleURLEvent(_ event: NSAppleEventDescriptor, withReply reply: NSAppleEventDescriptor) {
         
-        guard let keyDirectObject = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject)), let urlString = keyDirectObject.stringValue,
-            let url : String = urlString.substringFromIndex(urlString.startIndex.advancedBy(9)),
-            let urlObject = NSURL(string:url) else {
+        guard let keyDirectObject = event.paramDescriptor(forKeyword: AEKeyword(keyDirectObject)), let urlString = keyDirectObject.stringValue,
+            let url : String = urlString.substring(from: urlString.characters.index(urlString.startIndex, offsetBy: 9)),
+            let urlObject = URL(string:url) else {
             
                 return print("No valid URL to handle")
                 
         }
         
-        NSNotificationCenter.defaultCenter().postNotificationName("HeliumLoadURL", object: urlObject)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "HeliumLoadURL"), object: urlObject)
         
     }
 }
