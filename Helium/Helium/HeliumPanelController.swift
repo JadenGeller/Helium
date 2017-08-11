@@ -282,7 +282,7 @@ class HeliumPanelController : NSWindowController {
                     UserDefaults.standard.set(text, forKey: UserSetting.homePageURL.userDefaultsKey)
                 }
                 else{
-                    UserDefaults.standard.set("https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html", forKey: UserSetting.homePageURL.userDefaultsKey)
+                    UserDefaults.standard.set("https://cdn.rawgit.com/brorbw/Helium/74121fa2/helium_start.html", forKey: UserSetting.homePageURL.userDefaultsKey)
                 }
                 
                 // Load new Home page
