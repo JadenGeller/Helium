@@ -194,22 +194,17 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         UnsafeMutableRawPointer?) {
         
         if object as! NSObject == webView && keyPath == "estimatedProgress" {
-            let title = "Current progress is beeing updated";
-            let notif = Notification(name: Notification.Name(rawValue: "HeliumUpdateTitle"), object: title);
-            NotificationCenter.default.post(notif);
-            /*
-            //this is the old code, everything above is new
-            if let progress = change?["new"] as? Float {
+            
+            if let progress = change?[NSKeyValueChangeKey(rawValue:"new")] as? Float {
                 let percent = progress * 100
                 var title = NSString(format: "Loading... %.2f%%", percent)
                 if percent == 100 {
                     title = "Helium"
                 }
                 
-                let notif = Notification(name: "HeliumUpdateTitle", object: title);
+                let notif = Notification(name: Notification.Name(rawValue: "HeliumUpdateTitle"), object: title);
                 NotificationCenter.default.post(notif)
             }
-        */
         }
     }
     
