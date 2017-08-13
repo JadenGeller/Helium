@@ -252,7 +252,7 @@ class HeliumPanelController : NSWindowController {
                 self.webViewController.loadAlmostURL(text)
             }
         })
-        urlField.becomeFirstResponder();
+        urlField.becomeFirstResponder()
     }
     
     func didRequestChangeHomepage(){
