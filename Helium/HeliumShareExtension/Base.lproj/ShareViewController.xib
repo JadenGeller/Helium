@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9059"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12121"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ShareViewController" customModule="HeliumShareExtension" customModuleProvider="target">
@@ -17,7 +18,6 @@
             <subviews>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1uM-r7-H1c">
                     <rect key="frame" x="301" y="3" width="82" height="32"/>
-                    <animations/>
                     <buttonCell key="cell" type="push" title="Send" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2l4-PO-we5">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -33,7 +33,6 @@
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="cP1-hK-9ZX"/>
                     </constraints>
-                    <animations/>
                     <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6Up-t3-mwm">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -45,22 +44,20 @@ Gw
                         <action selector="cancel:" target="-2" id="Qav-AK-DGt"/>
                     </connections>
                 </button>
-                <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aNc-0i-CWK">
-                    <rect key="frame" x="138" y="171" width="111" height="16"/>
-                    <animations/>
+                <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aNc-0i-CWK">
+                    <rect key="frame" x="140" y="170" width="108" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="My Service Title" id="0xp-rC-2gr">
                         <font key="font" metaFont="systemBold"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4M6-D5-WIf">
-                    <rect key="frame" x="108" y="171" width="22" height="22"/>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4M6-D5-WIf">
+                    <rect key="frame" x="110" y="171" width="22" height="22"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="22" id="BOe-aZ-Njc"/>
                         <constraint firstAttribute="height" constant="22" id="zLg-1a-wlZ"/>
                     </constraints>
-                    <animations/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="q3u-Am-ZIA"/>
                 </imageView>
             </subviews>
@@ -69,14 +66,13 @@ Gw
                 <constraint firstAttribute="bottom" secondItem="1uM-r7-H1c" secondAttribute="bottom" constant="10" id="4wH-De-nMF"/>
                 <constraint firstAttribute="bottom" secondItem="NVE-vN-dkz" secondAttribute="bottom" constant="10" id="USG-Gg-of3"/>
                 <constraint firstItem="1uM-r7-H1c" firstAttribute="leading" secondItem="NVE-vN-dkz" secondAttribute="trailing" constant="8" id="a8N-vS-Ew9"/>
-                <constraint firstItem="aNc-0i-CWK" firstAttribute="centerY" secondItem="4M6-D5-WIf" secondAttribute="centerY" constant="2.5" id="ilP-G0-GVG"/>
+                <constraint firstItem="aNc-0i-CWK" firstAttribute="centerY" secondItem="4M6-D5-WIf" secondAttribute="centerY" constant="3" id="ilP-G0-GVG"/>
                 <constraint firstItem="NVE-vN-dkz" firstAttribute="width" secondItem="1uM-r7-H1c" secondAttribute="width" id="qPo-ky-Fcw"/>
                 <constraint firstAttribute="trailing" secondItem="1uM-r7-H1c" secondAttribute="trailing" constant="10" id="qfT-cw-QQ2"/>
                 <constraint firstAttribute="centerX" secondItem="aNc-0i-CWK" secondAttribute="centerX" id="uV3-Wn-RA3"/>
                 <constraint firstItem="aNc-0i-CWK" firstAttribute="leading" secondItem="4M6-D5-WIf" secondAttribute="trailing" constant="10" id="vFR-5i-Dvo"/>
                 <constraint firstItem="aNc-0i-CWK" firstAttribute="top" secondItem="1" secondAttribute="top" constant="15" id="vpR-tf-ebx"/>
             </constraints>
-            <animations/>
         </customView>
     </objects>
 </document>

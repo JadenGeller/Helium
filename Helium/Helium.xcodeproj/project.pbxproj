@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F05C7EF1EFEC5F3001B5D02 /* AboutHelium.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F05C7EB1EFEC233001B5D02 /* AboutHelium.swift */; };
+		0FD57FDE1EEC89F400A0F84D /* HeliumPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD57FDD1EEC89F400A0F84D /* HeliumPanel.swift */; };
+		0FD57FE01EECF0FF00A0F84D /* UrlHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD57FDF1EECF0FF00A0F84D /* UrlHelpers.swift */; };
+		0FD6C7381E62286000D6F836 /* PlaylistPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD6C7361E62286000D6F836 /* PlaylistPanelController.swift */; };
+		0FD6C7391E62286000D6F836 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD6C7371E62286000D6F836 /* PlaylistViewController.swift */; };
+		0FDE23ED1F040484009D4B16 /* Helium.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0FDE23EC1F040484009D4B16 /* Helium.icns */; };
+		0FF0BB3A1EAA25FE009952D4 /* ValueTransformers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF0BB391EAA25FE009952D4 /* ValueTransformers.swift */; };
 		27199AB41BE422AC00E02297 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 27199AB31BE422AC00E02297 /* icon.icns */; };
 		27199AB71BE422AC00E02297 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27199AB61BE422AC00E02297 /* ShareViewController.swift */; };
 		27199ABA1BE422AC00E02297 /* ShareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27199AB81BE422AC00E02297 /* ShareViewController.xib */; };
@@ -68,26 +75,34 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0F05C7EB1EFEC233001B5D02 /* AboutHelium.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutHelium.swift; sourceTree = "<group>"; usesTabs = 0; };
+		0F10354A1F0300DA00327B30 /* Helium.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helium.swift; sourceTree = "<group>"; usesTabs = 0; };
+		0FD57FDD1EEC89F400A0F84D /* HeliumPanel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeliumPanel.swift; sourceTree = "<group>"; usesTabs = 0; };
+		0FD57FDF1EECF0FF00A0F84D /* UrlHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlHelpers.swift; sourceTree = "<group>"; usesTabs = 0; };
+		0FD6C7361E62286000D6F836 /* PlaylistPanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistPanelController.swift; sourceTree = "<group>"; usesTabs = 0; };
+		0FD6C7371E62286000D6F836 /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; usesTabs = 0; };
+		0FDE23EC1F040484009D4B16 /* Helium.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Helium.icns; path = Helium/Assets/Helium.icns; sourceTree = "<group>"; };
+		0FF0BB391EAA25FE009952D4 /* ValueTransformers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueTransformers.swift; sourceTree = "<group>"; usesTabs = 0; };
 		27199AB01BE422AC00E02297 /* HeliumShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = HeliumShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		27199AB31BE422AC00E02297 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		27199AB51BE422AC00E02297 /* HeliumShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = HeliumShareExtension.entitlements; sourceTree = "<group>"; };
-		27199AB61BE422AC00E02297 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		27199AB61BE422AC00E02297 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; usesTabs = 0; };
 		27199AB91BE422AC00E02297 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ShareViewController.xib; sourceTree = "<group>"; };
 		27199ABB1BE422AC00E02297 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D867CB11AD6781200681331 /* Helium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Helium.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D867CB51AD6781200681331 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4D867CB61AD6781200681331 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4D867CB81AD6781200681331 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		4D867CB61AD6781200681331 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; usesTabs = 0; };
+		4D867CB81AD6781200681331 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; usesTabs = 0; };
 		4D867CBA1AD6781200681331 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4D867CBD1AD6781200681331 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4D867CC31AD6781200681331 /* HeliumTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HeliumTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4D867CD31AD6796A00681331 /* HeliumPanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeliumPanelController.swift; sourceTree = "<group>"; };
+		4D867CD31AD6796A00681331 /* HeliumPanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeliumPanelController.swift; sourceTree = "<group>"; usesTabs = 0; };
 		4D8DAEB11C3A427D00B212EC /* HeliumTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeliumTests.swift; sourceTree = "<group>"; };
 		4D8DAEB21C3A427D00B212EC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4DEAB8FD1ADBD98600A2FC2B /* Helium-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Helium-Bridging-Header.h"; sourceTree = "<group>"; };
-		4DEAB8FE1ADBD98600A2FC2B /* WKWebViewPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKWebViewPrivate.h; sourceTree = "<group>"; };
-		5B75B5111C9A13D600475921 /* StringHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringHelpers.swift; sourceTree = "<group>"; };
-		AAA3EA011BE4CEC9001A471F /* UserSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		4DEAB8FD1ADBD98600A2FC2B /* Helium-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Helium-Bridging-Header.h"; sourceTree = "<group>"; usesTabs = 0; };
+		4DEAB8FE1ADBD98600A2FC2B /* WKWebViewPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKWebViewPrivate.h; sourceTree = "<group>"; usesTabs = 0; };
+		5B75B5111C9A13D600475921 /* StringHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringHelpers.swift; sourceTree = "<group>"; usesTabs = 0; };
+		AAA3EA011BE4CEC9001A471F /* UserSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; usesTabs = 0; };
 		B34C1EC21ADE3B520094ADBA /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		B34C1EC51ADE3CBE0094ADBA /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,6 +156,7 @@
 		4D867CA81AD6781200681331 = {
 			isa = PBXGroup;
 			children = (
+				0FDE23EC1F040484009D4B16 /* Helium.icns */,
 				4D867CB31AD6781200681331 /* Helium */,
 				4D8DAEB01C3A427D00B212EC /* HeliumTests */,
 				27199AB11BE422AC00E02297 /* HeliumShareExtension */,
@@ -161,18 +177,21 @@
 		4D867CB31AD6781200681331 /* Helium */ = {
 			isa = PBXGroup;
 			children = (
+				0F10354A1F0300DA00327B30 /* Helium.swift */,
 				4D867CB61AD6781200681331 /* AppDelegate.swift */,
+				0FD57FDD1EEC89F400A0F84D /* HeliumPanel.swift */,
 				4D867CD31AD6796A00681331 /* HeliumPanelController.swift */,
 				4D867CB81AD6781200681331 /* WebViewController.swift */,
+				0FD6C7361E62286000D6F836 /* PlaylistPanelController.swift */,
+				0FD6C7371E62286000D6F836 /* PlaylistViewController.swift */,
 				4DEAB8FE1ADBD98600A2FC2B /* WKWebViewPrivate.h */,
 				4D867CBA1AD6781200681331 /* Images.xcassets */,
 				4D867CBC1AD6781200681331 /* Main.storyboard */,
+				0F05C7EB1EFEC233001B5D02 /* AboutHelium.swift */,
 				4D867CB41AD6781200681331 /* Supporting Files */,
 				4DEAB8FD1ADBD98600A2FC2B /* Helium-Bridging-Header.h */,
 				B34C1EC71ADE3CCA0094ADBA /* Resources */,
 				B34C1EC41ADE3B5E0094ADBA /* Frameworks */,
-				AAA3EA011BE4CEC9001A471F /* UserSettings.swift */,
-				5B75B5111C9A13D600475921 /* StringHelpers.swift */,
 			);
 			path = Helium;
 			sourceTree = "<group>";
@@ -181,6 +200,10 @@
 			isa = PBXGroup;
 			children = (
 				4D867CB51AD6781200681331 /* Info.plist */,
+				AAA3EA011BE4CEC9001A471F /* UserSettings.swift */,
+				5B75B5111C9A13D600475921 /* StringHelpers.swift */,
+				0FD57FDF1EECF0FF00A0F84D /* UrlHelpers.swift */,
+				0FF0BB391EAA25FE009952D4 /* ValueTransformers.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -240,6 +263,7 @@
 				4D867CAF1AD6781200681331 /* Resources */,
 				B34C1EC81ADE3F870094ADBA /* CopyFiles */,
 				27199AC21BE422AC00E02297 /* Embed App Extensions */,
+				0F05C8281EFF1B54001B5D02 /* Version */,
 			);
 			buildRules = (
 			);
@@ -277,12 +301,13 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Jaden Geller";
 				TargetAttributes = {
 					27199AAF1BE422AC00E02297 = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = PLYLXBYCEQ;
+						DevelopmentTeam = J3VNR8UWPP;
+						LastSwiftMigration = 0830;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
 								enabled = 1;
@@ -291,7 +316,9 @@
 					};
 					4D867CB01AD6781200681331 = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = PLYLXBYCEQ;
+						DevelopmentTeam = J3VNR8UWPP;
+						LastSwiftMigration = 0830;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
 								enabled = 0;
@@ -300,6 +327,7 @@
 					};
 					4D867CC21AD6781200681331 = {
 						CreatedOnToolsVersion = 6.3;
+						LastSwiftMigration = 0830;
 						TestTargetID = 4D867CB01AD6781200681331;
 					};
 				};
@@ -340,6 +368,7 @@
 			files = (
 				4D867CBB1AD6781200681331 /* Images.xcassets in Resources */,
 				B34C1EC61ADE3CBE0094ADBA /* dsa_pub.pem in Resources */,
+				0FDE23ED1F040484009D4B16 /* Helium.icns in Resources */,
 				4D867CBE1AD6781200681331 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -353,6 +382,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0F05C8281EFF1B54001B5D02 /* Version */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Version;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -x\nbuildPlist=\"Helium/Info.plist\"\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBuildNumber\" $buildPlist)\nbuildDate=$(date \"+%Y%m%d.%H%M%S\")\n\n# Increment the buildNumber\nbuildNumber=$(($buildNumber + 1))\n\n# Set the version numbers in the buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $buildDate\" $buildPlist\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		27199AAC1BE422AC00E02297 /* Sources */ = {
@@ -370,8 +416,14 @@
 			files = (
 				5B75B5121C9A13D600475921 /* StringHelpers.swift in Sources */,
 				4D867CD41AD6796A00681331 /* HeliumPanelController.swift in Sources */,
+				0F05C7EF1EFEC5F3001B5D02 /* AboutHelium.swift in Sources */,
+				0FD6C7391E62286000D6F836 /* PlaylistViewController.swift in Sources */,
 				4D8DAEAC1C3A41F300B212EC /* UserSettings.swift in Sources */,
 				4D867CB91AD6781200681331 /* WebViewController.swift in Sources */,
+				0FF0BB3A1EAA25FE009952D4 /* ValueTransformers.swift in Sources */,
+				0FD6C7381E62286000D6F836 /* PlaylistPanelController.swift in Sources */,
+				0FD57FE01EECF0FF00A0F84D /* UrlHelpers.swift in Sources */,
+				0FD57FDE1EEC89F400A0F84D /* HeliumPanel.swift in Sources */,
 				4D867CB71AD6781200681331 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -423,9 +475,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = HeliumShareExtension/HeliumShareExtension.entitlements;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = J3VNR8UWPP;
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = HeliumShareExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
@@ -434,6 +487,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -441,9 +495,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = HeliumShareExtension/HeliumShareExtension.entitlements;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = J3VNR8UWPP;
 				INFOPLIST_FILE = HeliumShareExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
@@ -451,6 +506,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -467,8 +523,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
@@ -491,7 +549,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -512,8 +570,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
@@ -529,21 +589,23 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
 		};
 		4D867CCE1AD6781200681331 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "3rd Party Mac Developer Application";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				DEVELOPMENT_TEAM = J3VNR8UWPP;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Helium",
@@ -553,21 +615,24 @@
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.JadenGeller.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "270b78d3-965c-43ac-abb1-1c22612b453c";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Helium/Helium-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		4D867CCF1AD6781200681331 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				DEVELOPMENT_TEAM = J3VNR8UWPP;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Helium",
@@ -577,8 +642,10 @@
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.JadenGeller.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "270b78d3-965c-43ac-abb1-1c22612b453c";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Helium/Helium-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -601,6 +668,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.JadenGeller.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Helium.app/Contents/MacOS/Helium";
 			};
 			name = Debug;
@@ -619,6 +687,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.JadenGeller.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Helium.app/Contents/MacOS/Helium";
 			};
 			name = Release;
