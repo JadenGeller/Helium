@@ -3,32 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>CFBuildDate</key>
-	<string>20170628.122623</string>
+	<string>20170702.103208</string>
 	<key>CFBuildNumber</key>
-	<integer>146</integer>
+	<integer>158</integer>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDocumentTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>h2</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>Helium</string>
-			<key>CFBundleTypeName</key>
-			<string>DocumentType</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>????</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>NSDocumentClass</key>
-			<string>$(PRODUCT_MODULE_NAME).Document</string>
-		</dict>
-	</array>
+	<array/>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIconFile</key>

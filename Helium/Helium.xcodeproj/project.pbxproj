@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0F05C7EF1EFEC5F3001B5D02 /* AboutHelium.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F05C7EB1EFEC233001B5D02 /* AboutHelium.swift */; };
-		0F1035921F032E6A00327B30 /* Helium.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F10354A1F0300DA00327B30 /* Helium.swift */; };
 		0FD57FDE1EEC89F400A0F84D /* HeliumPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD57FDD1EEC89F400A0F84D /* HeliumPanel.swift */; };
 		0FD57FE01EECF0FF00A0F84D /* UrlHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD57FDF1EECF0FF00A0F84D /* UrlHelpers.swift */; };
 		0FD6C7381E62286000D6F836 /* PlaylistPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD6C7361E62286000D6F836 /* PlaylistPanelController.swift */; };
@@ -426,7 +425,6 @@
 				0FD57FE01EECF0FF00A0F84D /* UrlHelpers.swift in Sources */,
 				0FD57FDE1EEC89F400A0F84D /* HeliumPanel.swift in Sources */,
 				4D867CB71AD6781200681331 /* AppDelegate.swift in Sources */,
-				0F1035921F032E6A00327B30 /* Helium.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

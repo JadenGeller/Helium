@@ -201,10 +201,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     //  MARK:- Lifecyle
 
-    func applicationShouldOpenUntitledFile(_ sender: NSApplication) -> Bool {
-        return false
-    }
-
     let toHMS = hmsTransformer()
     func applicationWillFinishLaunching(_ notification: Notification) {
         NSAppleEventManager.shared().setEventHandler(
@@ -246,9 +242,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if let historyName = UserDefaults.standard.value(forKey: UserSettings.HistoryName.keyPath) {
             UserSettings.HistoryName.value = historyName as! String
         }
-        
-        // No close box for our 1st window
-        NSApp.keyWindow?.standardWindowButton(NSWindowButton.closeButton)!.isHidden = true
         
         // Load histories from defaults
         if let items = defaults.array(forKey: UserSettings.HistoryList.keyPath) {
