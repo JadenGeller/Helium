@@ -75,18 +75,6 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         webView.goForward()
     }
     
-    fileprivate func zoomIn() {
-        webView.magnification += 0.1
-    }
-    
-    fileprivate func zoomOut() {
-        webView.magnification -= 0.1
-    }
-    
-    fileprivate func resetZoom() {
-        webView.magnification = 1
-    }
-    
     @IBAction fileprivate func reloadPress(_ sender: AnyObject) {
         requestedReload()
     }
@@ -105,32 +93,12 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         zoomOut()
     }
     
-    internal func loadAlmostURL(_ text: String) {
-        var text = text
-        if !(text.lowercased().hasPrefix("http://") || text.lowercased().hasPrefix("https://")) {
-            text = "http://" + text
-        }
-        
-        if let url = URL(string: text) {
-            loadURL(url)
-        }
-        
-    }
-    
     // MARK: Loading
-    
-    internal func loadURL(_ url:URL) {
-        webView.load(URLRequest(url: url))
-    }
     
     func loadURLObject(_ urlObject : Notification) {
         if let url = urlObject.object as? URL {
             loadAlmostURL(url.absoluteString);
         }
-    }
-    
-    fileprivate func requestedReload() {
-        webView.reload()
     }
     
     // MARK: Webview functions
@@ -205,7 +173,63 @@ class WebViewController: NSViewController, WKNavigationDelegate {
 //            }
         }
     }
-    
+}
+
+// MARK: - Internal
+
+internal extension WebViewController {
+    func loadURL(_ url:URL) {
+        webView.load(URLRequest(url: url))
+    }
+
+    func loadAlmostURL(_ text: String) {
+        var text = text.removeWhitespacesAndNewlines()
+        if !schemeIsPresent(in: text) {
+            text = "http://" + text
+        }
+
+        if let url = URL(string: text) {
+            loadURL(url)
+        }
+        
+    }
+}
+
+// MARK: - Private
+
+fileprivate extension WebViewController {
+    // MARK: Loading
+    func requestedReload() {
+        webView.reload()
+    }
+
+    // MARK: Helpers
+    func schemeIsPresent(in text: String) -> Bool {
+        return (text.lowercased().hasPrefix("http://")
+            || text.lowercased().hasPrefix("https://"))
+    }
+
+    //Helper function to return the hash of the video for encoding a popout video that has a start time code.
+    func getVideoHash(_ url: String) -> String {
+        let startOfHash = url.indexOf(".be/")
+        let endOfHash = url.indexOf("?t")
+        let hash = url.substring(with: url.characters.index(url.startIndex, offsetBy: startOfHash+4) ..<
+            (endOfHash == -1 ? url.endIndex : url.characters.index(url.startIndex, offsetBy: endOfHash)))
+        return hash
+    }
+
+    func zoomIn() {
+        webView.magnification += 0.1
+    }
+
+    func zoomOut() {
+        webView.magnification -= 0.1
+    }
+
+    func resetZoom() {
+        webView.magnification = 1
+    }
+
     //Convert a YouTube video url that starts at a certian point to popup/embedded design
     // (i.e. ...?t=1m2s --> ?start=62)
     fileprivate func makeCustomStartTimeURL(_ url: String) -> String {
@@ -219,54 +243,45 @@ class WebViewController: NSViewController, WKNavigationDelegate {
             let hoursDigits = timing.indexOf("h")
             var minutesDigits = timing.indexOf("m")
             let secondsDigits = timing.indexOf("s")
-            
+
             returnURL.removeSubrange(returnURL.characters.index(returnURL.startIndex, offsetBy: idx+1) ..< returnURL.endIndex)
             returnURL = "?start="
-            
+
             //If there are no h/m/s params and only seconds (i.e. ...?t=89)
             if (hoursDigits == -1 && minutesDigits == -1 && secondsDigits == -1) {
                 let onlySeconds = url.substring(from: url.characters.index(url.startIndex, offsetBy: idx+3))
                 returnURL = returnURL + onlySeconds
                 return returnURL
             }
-            
+
             //Do check to see if there is an hours parameter.
             var hours = 0
             if (hoursDigits != -1) {
                 hours = Int(timing.substring(to: timing.characters.index(timing.startIndex, offsetBy: hoursDigits)))!
             }
-            
+
             //Do check to see if there is a minutes parameter.
             var minutes = 0
             if (minutesDigits != -1) {
                 minutes = Int(timing.substring(with: timing.characters.index(timing.startIndex, offsetBy: hoursDigits+1) ..< timing.characters.index(timing.startIndex, offsetBy: minutesDigits)))!
             }
-            
+
             if minutesDigits == -1 {
                 minutesDigits = hoursDigits
             }
-            
+
             //Do check to see if there is a seconds parameter.
             var seconds = 0
             if (secondsDigits != -1) {
                 seconds = Int(timing.substring(with: timing.characters.index(timing.startIndex, offsetBy: minutesDigits+1) ..< timing.characters.index(timing.startIndex, offsetBy: secondsDigits)))!
             }
-            
+
             //Combine all to make seconds.
             let secondsFinal = 3600*hours + 60*minutes + seconds
             returnURL = returnURL + String(secondsFinal)
-            
+
             return returnURL
         }
-    }
-    
-    //Helper function to return the hash of the video for encoding a popout video that has a start time code.
-    fileprivate func getVideoHash(_ url: String) -> String {
-        let startOfHash = url.indexOf(".be/")
-        let endOfHash = url.indexOf("?t")
-        let hash = url.substring(with: url.characters.index(url.startIndex, offsetBy: startOfHash+4) ..<
-                                                        (endOfHash == -1 ? url.endIndex : url.characters.index(url.startIndex, offsetBy: endOfHash)))
-        return hash
     }
 }
 

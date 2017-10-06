@@ -26,4 +26,8 @@ extension String {
             return -1
         }
     }
+
+    func removeWhitespacesAndNewlines() -> String {
+        return components(separatedBy: .whitespacesAndNewlines).joined()
+    }
 }
