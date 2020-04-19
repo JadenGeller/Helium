@@ -9,20 +9,20 @@
 import Cocoa
 import WebKit
 
-class WebViewController: NSViewController, WKNavigationDelegate {
+class WebViewController: NSViewController, WKNavigationDelegate, NSMenuItemValidation {
 
-    var trackingTag: NSTrackingRectTag?
+    var trackingTag: NSView.TrackingRectTag?
 
     // MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WebViewController.loadURLObject(_:)), name: "HeliumLoadURL", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(WebViewController.loadURLObject(_:)), name: NSNotification.Name(rawValue: "HeliumLoadURL"), object: nil)
         
         // Layout webview
         view.addSubview(webView)
         webView.frame = view.bounds
-        webView.autoresizingMask = [NSAutoresizingMaskOptions.ViewHeightSizable, NSAutoresizingMaskOptions.ViewWidthSizable]
+        webView.autoresizingMask = [.width, .height]
         
         // Allow plug-ins such as silverlight
         webView.configuration.preferences.plugInsEnabled = true
@@ -40,7 +40,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         webView.allowsBackForwardNavigationGestures = true
         
         // Listen for load progress
-        webView.addObserver(self, forKeyPath: "estimatedProgress", options: NSKeyValueObservingOptions.New, context: nil)
+        webView.addObserver(self, forKeyPath: "estimatedProgress", options: NSKeyValueObservingOptions.new, context: nil)
         
         clear()
     }
@@ -56,7 +56,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     }
 
     // MARK: Actions
-    override func validateMenuItem(menuItem: NSMenuItem) -> Bool{
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         switch menuItem.title {
         case "Back":
             return webView.canGoBack
@@ -67,11 +67,11 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         }
     }
     
-    @IBAction func backPress(sender: AnyObject) {
+    @IBAction func backPress(_ sender: AnyObject) {
         webView.goBack()
     }
     
-    @IBAction func forwardPress(sender: AnyObject) {
+    @IBAction func forwardPress(_ sender: AnyObject) {
         webView.goForward()
     }
     
@@ -87,31 +87,31 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         webView.magnification = 1
     }
     
-    @IBAction private func reloadPress(sender: AnyObject) {
+    @IBAction private func reloadPress(_ sender: AnyObject) {
         requestedReload()
     }
     
-    @IBAction private func clearPress(sender: AnyObject) {
+    @IBAction private func clearPress(_ sender: AnyObject) {
         clear()
     }
     
-    @IBAction private func resetZoomLevel(sender: AnyObject) {
+    @IBAction private func resetZoomLevel(_ sender: AnyObject) {
         resetZoom()
     }
-    @IBAction private func zoomIn(sender: AnyObject) {
+    @IBAction private func zoomIn(_ sender: AnyObject) {
         zoomIn()
     }
-    @IBAction private func zoomOut(sender: AnyObject) {
+    @IBAction private func zoomOut(_ sender: AnyObject) {
         zoomOut()
     }
     
-    internal func loadAlmostURL(text: String) {
+    internal func loadAlmostURL(_ text: String) {
         var text = text
-        if !(text.lowercaseString.hasPrefix("http://") || text.lowercaseString.hasPrefix("https://")) {
+        if !(text.lowercased().hasPrefix("http://") || text.lowercased().hasPrefix("https://")) {
             text = "http://" + text
         }
         
-        if let url = NSURL(string: text) {
+        if let url = URL(string: text) {
             loadURL(url)
         }
         
@@ -119,12 +119,12 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     
     // MARK: Loading
     
-    internal func loadURL(url:NSURL) {
-        webView.loadRequest(NSURLRequest(URL: url))
+    internal func loadURL(_ url:URL) {
+        webView.load(URLRequest(url: url))
     }
     
-    func loadURLObject(urlObject : NSNotification) {
-        if let url = urlObject.object as? NSURL {
+    @objc func loadURLObject(_ urlObject : Notification) {
+        if let url = urlObject.object as? URL {
             loadAlmostURL(url.absoluteString);
         }
     }
@@ -136,52 +136,51 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     // MARK: Webview functions
     func clear() {
         // Reload to home page (or default if no URL stored in UserDefaults)
-        if let homePage = NSUserDefaults.standardUserDefaults().stringForKey(UserSetting.HomePageURL.userDefaultsKey) {
+        if let homePage = UserDefaults.standard.string(forKey: UserSetting.HomePageURL.userDefaultsKey) {
             loadAlmostURL(homePage)
         }
         else{
-            loadURL(NSURL(string: "https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html")!)
+            loadURL(URL(string: "https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html")!)
         }
     }
 
     var webView = WKWebView()
     var shouldRedirect: Bool {
         get {
-            return !NSUserDefaults.standardUserDefaults().boolForKey(UserSetting.DisabledMagicURLs.userDefaultsKey)
+            return !UserDefaults.standard.bool(forKey: UserSetting.DisabledMagicURLs.userDefaultsKey)
         }
     }
     
     // Redirect Hulu and YouTube to pop-out videos
-    func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
         
-        if shouldRedirect, let url = navigationAction.request.URL {
+        if shouldRedirect {
             fatalError("Magic URL functionality not implemented")
         }
         
-        decisionHandler(WKNavigationActionPolicy.Allow)
+        decisionHandler(WKNavigationActionPolicy.allow)
     }
     
-    func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation) {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation) {
         if let pageTitle = webView.title {
             var title = pageTitle;
             if title.isEmpty { title = "Helium" }
-            let notif = NSNotification(name: "HeliumUpdateTitle", object: title);
-            NSNotificationCenter.defaultCenter().postNotification(notif)
+            let notif = Notification(name: Notification.Name(rawValue: "HeliumUpdateTitle"), object: title);
+            NotificationCenter.default.post(notif)
         }
     }
     
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-        
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if object as! NSObject == webView && keyPath == "estimatedProgress" {
-            if let progress = change?["new"] as? Float {
+            if let progress = change?[NSKeyValueChangeKey.newKey] as? Float {
                 let percent = progress * 100
                 var title = NSString(format: "Loading... %.2f%%", percent)
                 if percent == 100 {
                     title = "Helium"
                 }
                 
-                let notif = NSNotification(name: "HeliumUpdateTitle", object: title);
-                NSNotificationCenter.defaultCenter().postNotification(notif)
+                let notif = Notification(name: Notification.Name(rawValue: "HeliumUpdateTitle"), object: title);
+                NotificationCenter.default.post(notif)
             }
         }
     }
