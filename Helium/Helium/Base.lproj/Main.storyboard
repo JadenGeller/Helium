@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -48,9 +50,6 @@
                                         </menuItem>
                                         <menuItem title="Check for Updates" id="ugT-xN-SoJ">
                                             <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="checkForUpdates:" target="sQQ-SA-Rgm" id="dbi-vN-hI7"/>
-                                            </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
                                         <menuItem title="Services" id="NMo-om-nkz">
@@ -129,12 +128,11 @@ CA
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Appearance" id="HyV-fh-RgO">
                                     <items>
- <menuItem title="Title Bar" state="on" keyEquivalent="b" id="ADo-ja-cxb" userLabel="Title Bar">
+                                        <menuItem title="Title Bar" state="on" keyEquivalent="b" id="ADo-ja-cxb" userLabel="Title Bar">
                                             <connections>
                                                 <action selector="hideTitle:" target="Ady-hI-5gd" id="dlp-Lh-5pz"/>
                                             </connections>
                                         </menuItem>
-
                                         <menuItem title="Translucency" id="RVf-yr-XjB" userLabel="Translucency">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Translucency" systemMenu="window" id="fPu-ZA-vuX">
@@ -323,7 +321,6 @@ CA
                         <outlet property="percentageMenu" destination="wlj-XI-Lng" id="9dj-5p-3sa"/>
                     </connections>
                 </customObject>
-                <customObject id="sQQ-SA-Rgm" customClass="SUUpdater"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="0.0"/>
@@ -332,12 +329,15 @@ CA
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController storyboardIdentifier="HeliumController" showSeguePresentationStyle="single" id="B8D-0N-5wS" customClass="HeliumPanelController" customModule="Helium" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="Helium" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA" customClass="NSPanel">
+                    <window key="window" title="Helium" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA" customClass="NSPanel">
                         <windowStyleMask key="styleMask" titled="YES" resizable="YES" utility="YES" nonactivatingPanel="YES" HUD="YES"/>
                         <windowCollectionBehavior key="collectionBehavior" moveToActiveSpace="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <connections>
+                            <outlet property="delegate" destination="B8D-0N-5wS" id="0rH-rY-ymP"/>
+                        </connections>
                     </window>
                     <connections>
                         <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
