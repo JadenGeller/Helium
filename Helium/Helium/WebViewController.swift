@@ -155,7 +155,7 @@ class WebViewController: NSViewController, WKNavigationDelegate, NSMenuItemValid
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
         
         if shouldRedirect {
-            fatalError("Magic URL functionality not implemented")
+            print("Magic URL functionality not implemented")
         }
         
         decisionHandler(WKNavigationActionPolicy.allow)
