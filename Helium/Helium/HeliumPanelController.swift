@@ -8,8 +8,6 @@
 
 import AppKit
 
-let optionKeyCode: UInt16 = 58
-
 class HeliumPanelController : NSWindowController {
 
     private var webViewController: WebViewController {
