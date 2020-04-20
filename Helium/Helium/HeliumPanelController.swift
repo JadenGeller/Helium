@@ -198,7 +198,13 @@ class HeliumPanelController : NSWindowController {
         }
         else {
             sender.state = .on
-            panel.styleMask = NSWindow.StyleMask(rawValue: 8345)
+            panel.styleMask = [
+                .hudWindow,
+                .nonactivatingPanel,
+                .utilityWindow,
+                .resizable,
+                .titled
+            ]
         }
 	}
     
