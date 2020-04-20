@@ -8,7 +8,7 @@
 
 import AppKit
 
-class HeliumPanelController : NSWindowController {
+class HeliumPanelController : NSWindowController, NSWindowDelegate {
 
     private var webViewController: WebViewController {
         get {
@@ -68,6 +68,10 @@ class HeliumPanelController : NSWindowController {
     
     
     // MARK: Window lifecycle
+    func windowDidResize(_ notification: Notification) {
+        print("UPDATE")
+    }
+    
     override func windowDidLoad() {
         panel.isFloatingPanel = true
         
@@ -125,9 +129,7 @@ class HeliumPanelController : NSWindowController {
             panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
         }
     }
-    
-    //MARK: IBActions
-    
+        
     private func disabledAllMouseOverPreferences(_ allMenus: [NSMenuItem]) {
         // GROSS HARD CODED
         for x in allMenus.dropFirst(2) {
@@ -135,25 +137,25 @@ class HeliumPanelController : NSWindowController {
         }
     }
     
-    @IBAction private func alwaysPreferencePress(_ sender: NSMenuItem) {
+    @objc func alwaysPreferencePress(_ sender: NSMenuItem) {
         disabledAllMouseOverPreferences(sender.menu!.items)
         translucencyPreference = .Always
         sender.state = .on
     }
     
-    @IBAction private func overPreferencePress(_ sender: NSMenuItem) {
+    @objc func overPreferencePress(_ sender: NSMenuItem) {
         disabledAllMouseOverPreferences(sender.menu!.items)
         translucencyPreference = .MouseOver
         sender.state = .on
     }
-    
-    @IBAction private func outsidePreferencePress(_ sender: NSMenuItem) {
+    @objc  
+    func outsidePreferencePress(_ sender: NSMenuItem) {
         disabledAllMouseOverPreferences(sender.menu!.items)
         translucencyPreference = .MouseOutside
         sender.state = .on
     }
     
-    @IBAction private func translucencyPress(_ sender: NSMenuItem) {
+    @objc func translucencyPress(_ sender: NSMenuItem) {
         if sender.state == .on {
             sender.state = .off
             didDisableTranslucency()
@@ -164,7 +166,7 @@ class HeliumPanelController : NSWindowController {
         }
     }
     
-    @IBAction private func percentagePress(_ sender: NSMenuItem) {
+    @objc func percentagePress(_ sender: NSMenuItem) {
         for button in sender.menu!.items{
             (button ).state = .off
         }
@@ -176,22 +178,22 @@ class HeliumPanelController : NSWindowController {
         }
     }
     
-    @IBAction private func openLocationPress(_ sender: AnyObject) {
+    @objc func openLocationPress(_ sender: AnyObject) {
         didRequestLocation()
     }
     
-    @IBAction private func openFilePress(_ sender: AnyObject) {
+    @objc func openFilePress(_ sender: AnyObject) {
         didRequestFile()
     }
     
-    @IBAction private func floatOverFullScreenAppsToggled(_ sender: NSMenuItem) {
+    @objc func floatOverFullScreenAppsToggled(_ sender: NSMenuItem) {
         sender.state = (sender.state == .on) ? .off : .on
         UserDefaults.standard.set((sender.state == .off), forKey: UserSetting.DisabledFullScreenFloat.userDefaultsKey)
         
         setFloatOverFullScreenApps()
     }
 
-	@IBAction private func hideTitle(_ sender: NSMenuItem) {
+    @objc func hideTitle(_ sender: NSMenuItem) {
         if sender.state == .on {
             sender.state = .off
             panel.styleMask = .borderless
@@ -208,7 +210,7 @@ class HeliumPanelController : NSWindowController {
         }
 	}
     
-    @IBAction func setHomePage(_ sender: AnyObject){
+    @objc func setHomePage(_ sender: AnyObject){
         didRequestChangeHomepage()
     }
     

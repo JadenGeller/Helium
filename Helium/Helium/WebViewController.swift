@@ -13,10 +13,14 @@ class WebViewController: NSViewController, WKNavigationDelegate, NSMenuItemValid
 
     var trackingTag: NSView.TrackingRectTag?
 
+    override func loadView() {
+      self.view = NSView()
+    }
+    
     // MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         NotificationCenter.default.addObserver(self, selector: #selector(WebViewController.loadURLObject(_:)), name: NSNotification.Name(rawValue: "HeliumLoadURL"), object: nil)
         
         // Layout webview
@@ -67,11 +71,11 @@ class WebViewController: NSViewController, WKNavigationDelegate, NSMenuItemValid
         }
     }
     
-    @IBAction func backPress(_ sender: AnyObject) {
+    @objc func backPress(_ sender: AnyObject) {
         webView.goBack()
     }
-    
-    @IBAction func forwardPress(_ sender: AnyObject) {
+    @objc  
+    func forwardPress(_ sender: AnyObject) {
         webView.goForward()
     }
     
@@ -87,21 +91,21 @@ class WebViewController: NSViewController, WKNavigationDelegate, NSMenuItemValid
         webView.magnification = 1
     }
     
-    @IBAction private func reloadPress(_ sender: AnyObject) {
+    @objc func reloadPress(_ sender: AnyObject) {
         requestedReload()
     }
     
-    @IBAction private func clearPress(_ sender: AnyObject) {
+    func clearPress(_ sender: AnyObject) {
         clear()
     }
     
-    @IBAction private func resetZoomLevel(_ sender: AnyObject) {
+    @objc func resetZoomLevel(_ sender: AnyObject) {
         resetZoom()
-    }
-    @IBAction private func zoomIn(_ sender: AnyObject) {
+         }
+    @objc func zoomIn(_ sender: AnyObject) {
         zoomIn()
     }
-    @IBAction private func zoomOut(_ sender: AnyObject) {
+    @objc func zoomOut(_ sender: AnyObject) {
         zoomOut()
     }
     

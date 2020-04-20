@@ -8,13 +8,7 @@
 
 import Cocoa
 
-@NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
-
-    @IBOutlet weak var magicURLMenu: NSMenuItem!
-    @IBOutlet weak var percentageMenu: NSMenuItem!
-    @IBOutlet weak var fullScreenFloatMenu: NSMenuItem!
-
     func applicationWillFinishLaunching(_ notification: Notification) {
         NSAppleEventManager.shared().setEventHandler(
             self,
@@ -22,19 +16,26 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             forEventClass: AEEventClass(kInternetEventClass),
             andEventID: AEEventID(kAEGetURL)
         )
+        UserDefaults.standard.set(false, forKey: "NSFullScreenMenuItemEverywhere")
     }
-
+    
+    var panelController: HeliumPanelController!
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        magicURLMenu.state = UserDefaults.standard.bool(forKey: UserSetting.DisabledMagicURLs.userDefaultsKey) ? .off : .on
-
-        fullScreenFloatMenu.state = UserDefaults.standard.bool(forKey: UserSetting.DisabledFullScreenFloat.userDefaultsKey) ? .off : .on
-
-        if let alpha = UserDefaults.standard.object(forKey: UserSetting.OpacityPercentage.userDefaultsKey) {
-            let offset = (alpha as! Int)/10 - 1
-            for (index, button) in percentageMenu.submenu!.items.enumerated() {
-                (button ).state = (offset == index) ? .on : .off
-            }
-        }
+        let webController = WebViewController()
+        webController.view.frame.size = .init(width: 480, height: 300)
+        let panel = NSPanel(contentViewController: webController)
+        panel.styleMask = [
+            .hudWindow,
+            .utilityWindow,
+            .nonactivatingPanel,
+            .titled,
+        ]
+        panel.hasShadow = true
+        panel.center()
+        panelController = HeliumPanelController(window: panel)
+        panel.delegate = panelController
+        panelController.showWindow(self)
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -42,7 +43,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     
-    @IBAction func magicURLRedirectToggled(_ sender: NSMenuItem) {
+    @objc func magicURLRedirectToggled(_ sender: NSMenuItem) {
         sender.state = (sender.state == .on) ? .off : .on
         UserDefaults.standard.set((sender.state == .off), forKey: UserSetting.DisabledMagicURLs.userDefaultsKey)
     }
