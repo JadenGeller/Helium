@@ -71,14 +71,6 @@ class WebViewController: NSViewController, WKNavigationDelegate, NSMenuItemValid
         }
     }
     
-    @objc func backPress(_ sender: AnyObject) {
-        webView.goBack()
-    }
-    @objc  
-    func forwardPress(_ sender: AnyObject) {
-        webView.goForward()
-    }
-    
     private func zoomIn() {
         webView.magnification += 0.1
     }
@@ -89,10 +81,6 @@ class WebViewController: NSViewController, WKNavigationDelegate, NSMenuItemValid
     
     private func resetZoom() {
         webView.magnification = 1
-    }
-    
-    @objc func reloadPress(_ sender: AnyObject) {
-        requestedReload()
     }
     
     func clearPress(_ sender: AnyObject) {
@@ -131,10 +119,6 @@ class WebViewController: NSViewController, WKNavigationDelegate, NSMenuItemValid
         if let url = urlObject.object as? URL {
             loadAlmostURL(url.absoluteString);
         }
-    }
-    
-    private func requestedReload() {
-        webView.reload()
     }
     
     // MARK: Webview functions

@@ -132,7 +132,7 @@ func viewMenu() -> NSMenu {
         
     // FIXME: Add stop functionality
 //    menu.addItem(withTitle: "Stop", action: nil, keyEquivalent: ".")
-    menu.addItem(withTitle: "Reload Page", action: #selector(WebViewController.reloadPress(_:)), keyEquivalent: "r")
+    menu.addItem(withTitle: "Reload Page", action: #selector(WebView.reload(_:)), keyEquivalent: "r")
     menu.addItem(.separator())
 
     menu.addItem(withTitle: "Actual Size", action: #selector(WebViewController.resetZoomLevel(_:)), keyEquivalent: "0")
@@ -145,8 +145,8 @@ func viewMenu() -> NSMenu {
 func historyMenu() -> NSMenu {
     let menu = NSMenu(title: "History")
     
-    menu.addItem(withTitle: "Back", action: #selector(WebViewController.backPress(_:)), keyEquivalent: "[")
-    menu.addItem(withTitle: "Forward", action: #selector(WebViewController.forwardPress(_:)), keyEquivalent: "]")
+    menu.addItem(withTitle: "Back", action: #selector(WebView.goBack(_:)), keyEquivalent: "[")
+    menu.addItem(withTitle: "Forward", action: #selector(WebView.goForward(_:)), keyEquivalent: "]")
 //    menu.addItem(withTitle: "Home", action: nil, keyEquivalent: "h", with: [.command, .shift])
 
     return menu
