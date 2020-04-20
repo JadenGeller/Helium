@@ -120,7 +120,7 @@ class WebViewController: NSViewController, WKNavigationDelegate, NSMenuItemValid
     // MARK: Webview functions
     func clear() {
         // Reload to home page (or default if no URL stored in UserDefaults)
-        if let homePage = UserDefaults.standard.string(forKey: UserSetting.HomePageURL.userDefaultsKey) {
+        if let homePage = UserSetting.homePageURL {
             loadAlmostURL(homePage)
         }
         else{
@@ -129,16 +129,11 @@ class WebViewController: NSViewController, WKNavigationDelegate, NSMenuItemValid
     }
 
     var webView = WKWebView()
-    var shouldRedirect: Bool {
-        get {
-            return !UserDefaults.standard.bool(forKey: UserSetting.DisabledMagicURLs.userDefaultsKey)
-        }
-    }
     
     // Redirect Hulu and YouTube to pop-out videos
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
         
-        if shouldRedirect {
+        if !UserSetting.disabledMagicURLs {
             print("Magic URL functionality not implemented")
         }
         

@@ -45,7 +45,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     @objc func magicURLRedirectToggled(_ sender: NSMenuItem) {
         sender.state = (sender.state == .on) ? .off : .on
-        UserDefaults.standard.set((sender.state == .off), forKey: UserSetting.DisabledMagicURLs.userDefaultsKey)
+        UserSetting.disabledMagicURLs = sender.state == .off
     }
     
     

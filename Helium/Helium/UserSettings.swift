@@ -8,18 +8,37 @@
 
 import Foundation
 
-internal enum UserSetting {
-    case DisabledMagicURLs
-    case DisabledFullScreenFloat
-    case OpacityPercentage
-    case HomePageURL
+@propertyWrapper
+struct UserDefault<Persisted> {
+    let key: String
+    let defaultValue: Persisted
+    var storage: UserDefaults = .standard
 
-    var userDefaultsKey: String {
-        switch self {
-        case .DisabledMagicURLs: return "disabledMagicURLs"
-        case .DisabledFullScreenFloat: return "disabledFullScreenFloat"
-        case .OpacityPercentage: return "opacityPercentage"
-        case .HomePageURL: return "homePageURL"
+    init(wrappedValue: Persisted, key: String) {
+        self.key = key
+        self.defaultValue = wrappedValue
+    }
+    
+    var wrappedValue: Persisted {
+        get {
+            UserDefaults.standard.value(forKey: key) as! Persisted? ?? defaultValue
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: key)
         }
     }
+}
+
+internal enum UserSetting {
+    @UserDefault(key: "disabledMagicURLs")
+    static var disabledMagicURLs = false
+
+    @UserDefault(key: "disabledFullScreenFloat")
+    static var disabledFullScreenFloat = false
+
+    @UserDefault(key: "opacityPercentage")
+    static var opacityPercentage = 100
+    
+    @UserDefault(key: "homePageURL")
+    static var homePageURL: String? = nil
 }

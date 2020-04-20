@@ -80,9 +80,7 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.didUpdateTitle(_:)), name: NSNotification.Name(rawValue: "HeliumUpdateTitle"), object: nil)
         
         setFloatOverFullScreenApps()
-        if let alpha = UserDefaults.standard.object(forKey: UserSetting.OpacityPercentage.userDefaultsKey) {
-            didUpdateAlpha(CGFloat(alpha as! Int))
-        }
+        didUpdateAlpha(CGFloat(UserSetting.opacityPercentage))
     }
 
     // MARK: Mouse events
@@ -122,11 +120,13 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
     
     
     private func setFloatOverFullScreenApps() {
-        if UserDefaults.standard.bool(forKey: UserSetting.DisabledFullScreenFloat.userDefaultsKey) {
-            panel.collectionBehavior = [.moveToActiveSpace, .fullScreenAuxiliary]
+        if UserSetting.disabledFullScreenFloat {
+            panel.collectionBehavior.insert(.moveToActiveSpace)
+            panel.collectionBehavior.remove(.canJoinAllSpaces)
 
         } else {
-            panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
+            panel.collectionBehavior.remove(.moveToActiveSpace)
+            panel.collectionBehavior.insert(.canJoinAllSpaces)
         }
     }
         
@@ -174,7 +174,7 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
         let title = sender.title
         if let alpha = Int(String(title.dropLast())) {
              didUpdateAlpha(CGFloat(alpha))
-            UserDefaults.standard.set(alpha, forKey: UserSetting.OpacityPercentage.userDefaultsKey)
+            UserSetting.opacityPercentage = alpha
         }
     }
     
@@ -188,7 +188,7 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
     
     @objc func floatOverFullScreenAppsToggled(_ sender: NSMenuItem) {
         sender.state = (sender.state == .on) ? .off : .on
-        UserDefaults.standard.set((sender.state == .off), forKey: UserSetting.DisabledFullScreenFloat.userDefaultsKey)
+        UserSetting.disabledFullScreenFloat = sender.state == .off
         
         setFloatOverFullScreenApps()
     }
@@ -284,14 +284,11 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
 
                 // Save to defaults if valid. Else, use Helium default page
                 if self.validateURL(text) {
-                    UserDefaults.standard.set(text, forKey: UserSetting.HomePageURL.userDefaultsKey)
+                    UserSetting.homePageURL = text
                 }
                 else{
-                    UserDefaults.standard.set("https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html", forKey: UserSetting.HomePageURL.userDefaultsKey)
+                    UserSetting.homePageURL = nil
                 }
-                
-                // Load new Home page
-                self.webViewController.loadAlmostURL(UserDefaults.standard.string(forKey: UserSetting.HomePageURL.userDefaultsKey)!)
             }
         })
     }

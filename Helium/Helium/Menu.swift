@@ -31,8 +31,8 @@ func preferencesMenu() -> NSMenu {
     let magicUrlRedirects = menu.addItem(withTitle: "Magic URL Redirects", action: #selector(AppDelegate.magicURLRedirectToggled(_:)), keyEquivalent: "")
     let floatAboveAllSpaces = menu.addItem(withTitle: "Float Above All Spaces", action: #selector(HeliumPanelController.floatOverFullScreenAppsToggled(_:)), keyEquivalent: "")
     
-    magicUrlRedirects.state = UserDefaults.standard.bool(forKey: UserSetting.DisabledMagicURLs.userDefaultsKey) ? .off : .on
-    floatAboveAllSpaces.state = UserDefaults.standard.bool(forKey: UserSetting.DisabledFullScreenFloat.userDefaultsKey) ? .off : .on
+    magicUrlRedirects.state = UserSetting.disabledMagicURLs ? .off : .on
+    floatAboveAllSpaces.state = UserSetting.disabledFullScreenFloat ? .off : .on
     
     return menu
 }
@@ -99,11 +99,9 @@ func opacityMenu() -> NSMenu {
     menu.addItem(withTitle: "90%", action: #selector(HeliumPanelController.percentagePress(_:)), keyEquivalent: "9")
     menu.addItem(withTitle: "100%", action: #selector(HeliumPanelController.percentagePress(_:)), keyEquivalent: "0")
 
-    if let alpha = UserDefaults.standard.object(forKey: UserSetting.OpacityPercentage.userDefaultsKey) {
-        let offset = (alpha as! Int)/10 - 1
-        for (index, button) in menu.items.enumerated() {
-            (button ).state = (offset == index) ? .on : .off
-        }
+    let offset = UserSetting.opacityPercentage / 10 - 1
+    for (index, button) in menu.items.enumerated() {
+        (button ).state = (offset == index) ? .on : .off
     }
     
     return menu
