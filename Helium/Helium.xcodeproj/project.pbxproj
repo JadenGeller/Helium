@@ -78,8 +78,6 @@
 		4D867CD31AD6796A00681331 /* HeliumPanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeliumPanelController.swift; sourceTree = "<group>"; };
 		4D8DAEB11C3A427D00B212EC /* HeliumTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeliumTests.swift; sourceTree = "<group>"; };
 		4D8DAEB21C3A427D00B212EC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4DEAB8FD1ADBD98600A2FC2B /* Helium-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Helium-Bridging-Header.h"; sourceTree = "<group>"; };
-		4DEAB8FE1ADBD98600A2FC2B /* WKWebViewPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKWebViewPrivate.h; sourceTree = "<group>"; };
 		AAA3EA011BE4CEC9001A471F /* UserSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		D769ABD5244D2DB900215C76 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		D769ABD7244D2DDC00215C76 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -158,10 +156,8 @@
 				4D867CB61AD6781200681331 /* AppDelegate.swift */,
 				4D867CD31AD6796A00681331 /* HeliumPanelController.swift */,
 				4D867CB81AD6781200681331 /* WebViewController.swift */,
-				4DEAB8FE1ADBD98600A2FC2B /* WKWebViewPrivate.h */,
 				4D867CBA1AD6781200681331 /* Images.xcassets */,
 				4D867CB41AD6781200681331 /* Supporting Files */,
-				4DEAB8FD1ADBD98600A2FC2B /* Helium-Bridging-Header.h */,
 				B34C1EC71ADE3CCA0094ADBA /* Resources */,
 				B34C1EC41ADE3B5E0094ADBA /* Frameworks */,
 				AAA3EA011BE4CEC9001A471F /* UserSettings.swift */,
@@ -567,7 +563,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "270b78d3-965c-43ac-abb1-1c22612b453c";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Helium/Helium-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -595,7 +590,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "270b78d3-965c-43ac-abb1-1c22612b453c";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Helium/Helium-Bridging-Header.h";
 			};
 			name = Release;
 		};
