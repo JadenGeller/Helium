@@ -83,10 +83,6 @@ class WebViewController: NSViewController, WKNavigationDelegate, NSMenuItemValid
         webView.magnification = 1
     }
     
-    func clearPress(_ sender: AnyObject) {
-        clear()
-    }
-    
     @objc func resetZoomLevel(_ sender: AnyObject) {
         resetZoom()
          }
@@ -111,11 +107,11 @@ class WebViewController: NSViewController, WKNavigationDelegate, NSMenuItemValid
     
     // MARK: Loading
     
-    internal func loadURL(_ url:URL) {
+    internal func loadURL(_ url: URL) {
         webView.load(URLRequest(url: url))
     }
     
-    @objc func loadURLObject(_ urlObject : Notification) {
+    @objc func loadURLObject(_ urlObject: Notification) {
         if let url = urlObject.object as? URL {
             loadAlmostURL(url.absoluteString);
         }

@@ -8,7 +8,7 @@
 
 import AppKit
 
-class HeliumPanelController : NSWindowController, NSWindowDelegate {
+class HeliumPanelController: NSWindowController, NSWindowDelegate {
 
     private var webViewController: WebViewController {
         get {
@@ -85,7 +85,7 @@ class HeliumPanelController : NSWindowController, NSWindowDelegate {
         }
     }
 
-    // MARK : Mouse events
+    // MARK: Mouse events
     override func mouseEntered(with event: NSEvent) {
         mouseOver = true
         updateTranslucency()
@@ -96,7 +96,7 @@ class HeliumPanelController : NSWindowController, NSWindowDelegate {
         updateTranslucency()
     }
     
-    // MARK : Translucency
+    // MARK: Translucency
     private func updateTranslucency() {
         currentlyTranslucent = shouldBeTranslucent()
     }
