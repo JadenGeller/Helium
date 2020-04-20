@@ -179,11 +179,40 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
     }
     
     @objc func openLocationPress(_ sender: AnyObject) {
-        didRequestLocation()
+        let alert = NSAlert()
+        alert.alertStyle = .informational
+        alert.messageText = "Enter Destination URL"
+        
+        let urlField = NSTextField()
+        urlField.frame = NSRect(x: 0, y: 0, width: 300, height: 20)
+        urlField.lineBreakMode = .byTruncatingHead
+        urlField.usesSingleLineMode = true
+        
+        alert.accessoryView = urlField
+        alert.accessoryView!.becomeFirstResponder()
+        alert.addButton(withTitle: "Load")
+        alert.addButton(withTitle: "Cancel")
+        alert.beginSheetModal(for: self.window!, completionHandler: { response in
+            if response == .alertFirstButtonReturn {
+                // Load
+                let text = (alert.accessoryView as! NSTextField).stringValue
+                self.webViewController.loadAlmostURL(text)
+            }
+        })
+        urlField.becomeFirstResponder()
     }
     
     @objc func openFilePress(_ sender: AnyObject) {
-        didRequestFile()
+        let open = NSOpenPanel()
+        open.allowsMultipleSelection = false
+        open.canChooseFiles = true
+        open.canChooseDirectories = false
+        
+        if open.runModal() == .OK {
+            if let url = open.url {
+                webViewController.loadURL(url)
+            }
+        }
     }
     
     @objc func floatOverFullScreenAppsToggled(_ sender: NSMenuItem) {
@@ -211,56 +240,6 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
 	}
     
     @objc func setHomePage(_ sender: AnyObject){
-        didRequestChangeHomepage()
-    }
-    
-    //MARK: Actual functionality
-    
-    @objc private func didUpdateTitle(_ notification: Notification) {
-        if let title = notification.object as? String {
-            panel.title = title
-        }
-    }
-    
-    private func didRequestFile() {
-        
-        let open = NSOpenPanel()
-        open.allowsMultipleSelection = false
-        open.canChooseFiles = true
-        open.canChooseDirectories = false
-        
-        if open.runModal() == .OK {
-            if let url = open.url {
-                webViewController.loadURL(url)
-            }
-        }
-    }
-    
-    
-    private func didRequestLocation() {
-        let alert = NSAlert()
-        alert.alertStyle = .informational
-        alert.messageText = "Enter Destination URL"
-        
-        let urlField = NSTextField()
-        urlField.frame = NSRect(x: 0, y: 0, width: 300, height: 20)
-        urlField.lineBreakMode = .byTruncatingHead
-        urlField.usesSingleLineMode = true
-        
-        alert.accessoryView = urlField
-        alert.accessoryView!.becomeFirstResponder()
-        alert.addButton(withTitle: "Load")
-        alert.addButton(withTitle: "Cancel")
-        alert.beginSheetModal(for: self.window!, completionHandler: { response in
-            if response == .alertFirstButtonReturn {
-                // Load
-                let text = (alert.accessoryView as! NSTextField).stringValue
-                self.webViewController.loadAlmostURL(text)
-            }
-        })
-    }
-    
-    func didRequestChangeHomepage() {
         let alert = NSAlert()
         alert.alertStyle = .informational
         alert.messageText = "Enter new Home Page URL"
@@ -293,6 +272,14 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
         })
     }
     
+    //MARK: Actual functionality
+    
+    @objc private func didUpdateTitle(_ notification: Notification) {
+        if let title = notification.object as? String {
+            panel.title = title
+        }
+    }
+
     func validateURL(_ stringURL: String) -> Bool {
         
         let urlRegEx = "((https|http)://)((\\w|-)+)(([.]|[/])((\\w|-)+))+"
