@@ -18,28 +18,32 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
 
     private var mouseOver: Bool = false
     
-    private var alpha: CGFloat = 0.6 { //default
-        didSet {
-            updateTranslucency()
+    var shouldBeTranslucentForMouseState: Bool {
+        guard UserSetting.translucencyEnabled else { return false }
+        
+        switch UserSetting.translucencyMode {
+        case .always:
+            return true
+        case .mouseOver:
+            return mouseOver
+        case .mouseOutside:
+            return !mouseOver
         }
     }
     
-    private var currentlyTranslucent: Bool = false {
-        didSet {
-            if !NSApplication.shared.isActive {
-                panel.ignoresMouseEvents = currentlyTranslucent
-            }
-            if currentlyTranslucent {
-                panel.animator().alphaValue = alpha
-                panel.isOpaque = false
-            }
-            else {
-                panel.isOpaque = true
-                panel.animator().alphaValue = 1
-            }
+    func updateTranslucency() {
+        if !NSApplication.shared.isActive {
+            panel.ignoresMouseEvents = shouldBeTranslucentForMouseState
+        }
+        if shouldBeTranslucentForMouseState {
+            panel.animator().alphaValue = CGFloat(UserSetting.opacityPercentage) / 100
+            panel.isOpaque = false
+        }
+        else {
+            panel.isOpaque = true
+            panel.animator().alphaValue = 1
         }
     }
-    
     
     private var panel: NSPanel! {
         get {
@@ -60,16 +64,26 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.didBecomeActive), name: NSApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.willResignActive), name: NSApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.didUpdateTitle(_:)), name: NSNotification.Name(rawValue: "HeliumUpdateTitle"), object: nil)
-        
-        setFloatOverFullScreenApps()
-        didUpdateAlpha(CGFloat(UserSetting.opacityPercentage))
-        
-        subscriptions.append(UserSetting.$translucencyMode.subscribe({ [weak self] newValue in
-            self?.updateTranslucency()
+                
+        subscriptions.append(UserSetting.$disabledFullScreenFloat.subscribe({ [unowned self] disabledFullScreenFloat in
+            if disabledFullScreenFloat {
+                self.panel.collectionBehavior.insert(.moveToActiveSpace)
+                self.panel.collectionBehavior.remove(.canJoinAllSpaces)
+
+            } else {
+                self.panel.collectionBehavior.remove(.moveToActiveSpace)
+                self.panel.collectionBehavior.insert(.canJoinAllSpaces)
+            }
         }))
-        subscriptions.append(UserSetting.$translucencyMode.subscribe({ [weak self] newValue in
-            self?.updateTranslucency()
+        subscriptions.append(UserSetting.$translucencyMode.subscribe({ [unowned self] _ in
+            self.updateTranslucency()
         }))
+        subscriptions.append(UserSetting.$translucencyEnabled.subscribe({ [unowned self] _ in
+            self.updateTranslucency()
+        }))
+        subscriptions.append(UserSetting.$opacityPercentage.subscribe(({ [unowned self] _ in
+            self.updateTranslucency()
+        })))
     }
 
     // MARK: Mouse events
@@ -84,70 +98,11 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
     }
     
     // MARK: Translucency
-    private func updateTranslucency() {
-        currentlyTranslucent = shouldBeTranslucent()
-    }
-    
-    private func shouldBeTranslucent() -> Bool {
-        guard UserSetting.translucencyEnabled else { return false }
-        
-        switch UserSetting.translucencyMode {
-        case .always:
-            return true
-        case .mouseOver:
-            return mouseOver
-        case .mouseOutside:
-            return !mouseOver
-        }
-    }
-    
-    
-    private func setFloatOverFullScreenApps() {
-        if UserSetting.disabledFullScreenFloat {
-            panel.collectionBehavior.insert(.moveToActiveSpace)
-            panel.collectionBehavior.remove(.canJoinAllSpaces)
-
-        } else {
-            panel.collectionBehavior.remove(.moveToActiveSpace)
-            panel.collectionBehavior.insert(.canJoinAllSpaces)
-        }
-    }
         
     private func disabledAllMouseOverPreferences(_ allMenus: [NSMenuItem]) {
         // GROSS HARD CODED
         for x in allMenus.dropFirst(2) {
             x.state = .off
-        }
-    }
-    
-    @objc func alwaysPreferencePress(_ sender: NSMenuItem) {
-        UserSetting.translucencyMode = .always
-    }
-    
-    @objc func overPreferencePress(_ sender: NSMenuItem) {
-        UserSetting.translucencyMode = .mouseOver
-    }
-    @objc  
-    func outsidePreferencePress(_ sender: NSMenuItem) {
-        UserSetting.translucencyMode = .mouseOutside
-    }
-    
-    @objc func translucencyPress(_ sender: NSMenuItem) {
-        if sender.state == .on {
-            sender.state = .off
-            didDisableTranslucency()
-        }
-        else {
-            sender.state = .on
-            didEnableTranslucency()
-        }
-    }
-    
-    @objc func percentagePress(_ sender: NSMenuItem) {
-        let title = sender.title
-        if let alpha = Int(String(title.dropLast())) {
-             didUpdateAlpha(CGFloat(alpha))
-            UserSetting.opacityPercentage = alpha
         }
     }
     
@@ -186,11 +141,6 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
                 webViewController.loadURL(url)
             }
         }
-    }
-    
-    @objc func floatOverFullScreenAppsToggled(_ sender: NSMenuItem) {
-        UserSetting.disabledFullScreenFloat.toggle()
-        setFloatOverFullScreenApps()
     }
 
     @objc func hideTitle(_ sender: NSMenuItem) {
@@ -264,20 +214,6 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
     }
     
     @objc private func willResignActive() {
-        if currentlyTranslucent {
-            panel.ignoresMouseEvents = true
-        }
-    }
-    
-    private func didEnableTranslucency() {
-        UserSetting.translucencyEnabled = true
-    }
-    
-    private func didDisableTranslucency() {
-        UserSetting.translucencyEnabled = false
-    }
-    
-    private func didUpdateAlpha(_ newAlpha: CGFloat) {
-        alpha = newAlpha / 100
+        panel.ignoresMouseEvents = !panel.isOpaque
     }
 }

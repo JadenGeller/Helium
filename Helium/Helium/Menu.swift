@@ -20,15 +20,15 @@ func mainMenu() -> NSMenu {
                         NSMenuItem(title: "Set Homepage")
                             .action(#selector(HeliumPanelController.setHomePage(_:))),
                         NSMenuItem(title: "Magic URL Redirects")
-                            .action(#selector(AppDelegate.magicURLRedirectToggled(_:)))
-                            .state(UserSetting.$disabledMagicURLs.map({ $0 ? .off : .on })),
+                            .state(UserSetting.$disabledMagicURLs.map({ $0 ? .off : .on }))
+                            .action({ UserSetting.disabledMagicURLs.toggle() }),
                         NSMenuItem(title: "Float Above All Spaces")
-                            .action(#selector(HeliumPanelController.floatOverFullScreenAppsToggled(_:)))
                             .state(UserSetting.$disabledFullScreenFloat.map({ $0 ? .off : .on }))
+                            .action({ UserSetting.disabledFullScreenFloat.toggle() })
                     ]),
-                
+
                 NSMenuItem.separator(),
-                
+
                 NSMenuItem(title: "Services")
                     .submenu(NSApplication.shared.servicesMenu!),
                 NSMenuItem(title: "Hide \(Bundle.main.name)")
@@ -39,7 +39,7 @@ func mainMenu() -> NSMenu {
                     .keyEquivalent("h", with: [.command, .option]),
                 NSMenuItem(title: "Show All")
                     .action(#selector(NSApplication.unhideAllApplications(_:))),
-                
+
                 NSMenuItem.separator(),
 
                 NSMenuItem(title: "Quit \(Bundle.main.name)")
@@ -55,7 +55,7 @@ func mainMenu() -> NSMenu {
                 .action(#selector(HeliumPanelController.openLocationPress(_:)))
                 .keyEquivalent("l", with: .command)
         ]),
-        
+
         NSMenuItem(title: "Edit").submenu([
              // FIXME: Undo/redo doesn't work!
              NSMenuItem(title: "Undo").action(#selector(UndoManager.undo))
@@ -63,7 +63,7 @@ func mainMenu() -> NSMenu {
              NSMenuItem(title: "Redo")
                  .action(#selector(UndoManager.redo))
                  .keyEquivalent("z", with: [.command, .shift]),
-             
+
              NSMenuItem.separator(),
 
              NSMenuItem(title: "Cut")
@@ -90,30 +90,28 @@ func mainMenu() -> NSMenu {
             NSMenuItem(title: "Translucency")
                 .submenu([
                     NSMenuItem(title: "Enabled")
-                        .action(#selector(HeliumPanelController.translucencyPress(_:)))
-                        .keyEquivalent("t", with: .command)
-                        .state(UserSetting.$translucencyEnabled.map({ $0 ? .on : .off })),
+                        .state(UserSetting.$translucencyEnabled.map({ $0 ? .on : .off }))
+                        .action({ UserSetting.translucencyEnabled.toggle() })
+                        .keyEquivalent("t", with: .command),
                     NSMenuItem(title: "Opacity")
                         .submenu((1...10).map({ (digit: Int) -> NSMenuItem in
                             NSMenuItem(title: "\(digit * 10)%")
-                                .action(#selector(HeliumPanelController.percentagePress(_:)))
+                                .state(UserSetting.$opacityPercentage.map({ $0 / 10 == digit ? .on : .off }))
+                                .action({ UserSetting.opacityPercentage = digit * 10 })
                                 .keyEquivalent(String(digit == 10 ? 0 : digit), with: .command)
-                                .state(UserSetting.$opacityPercentage.map({ value in
-                                    value / 10 == digit ? .on : .off
-                                }))
                         })),
                     
                     NSMenuItem.separator(),
                     
                     NSMenuItem(title: "Always")
-                        .action(#selector(HeliumPanelController.alwaysPreferencePress(_:)))
-                        .state(UserSetting.$translucencyMode.map({ $0 == .always ? .on : .off })),
+                        .state(UserSetting.$translucencyMode.map({ $0 == .always ? .on : .off }))
+                        .action({ UserSetting.translucencyMode = .always }),
                     NSMenuItem(title: "Mouse Over")
-                        .action(#selector(HeliumPanelController.overPreferencePress(_:)))
-                        .state(UserSetting.$translucencyMode.map({ $0 == .mouseOver ? .on : .off })),
+                        .state(UserSetting.$translucencyMode.map({ $0 == .mouseOver ? .on : .off }))
+                        .action({ UserSetting.translucencyMode = .mouseOver }),
                     NSMenuItem(title: "Mouse Outside")
-                        .action(#selector(HeliumPanelController.outsidePreferencePress(_:)))
-                        .state(UserSetting.$translucencyMode.map({ $0 == .mouseOutside ? .on : .off })),
+                        .state(UserSetting.$translucencyMode.map({ $0 == .mouseOutside ? .on : .off }))
+                        .action({ UserSetting.translucencyMode = .mouseOutside }),
                 ]),
             
             NSMenuItem.separator(),

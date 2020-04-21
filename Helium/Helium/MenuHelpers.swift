@@ -50,12 +50,40 @@ extension NSMenuItem {
         submenu = menu
         return self
     }
+}
+
+extension NSMenuItem {
+    class Context {
+        var action: (() -> Void)?
+        var subscription: Any?
+        
+        @objc func performAction(_ sender: NSMenuItem) {
+            action?()
+        }
+    }
+    
+    var context: Context {
+        if let representedObject = representedObject {
+            return representedObject as! Context
+        } else {
+            let context = Context()
+            representedObject = context
+            return context
+        }
+    }
     
     func state<P: Publisher>(_ publisher: P) -> Self where P.Output == NSControl.StateValue {
         // Store reference to subscribtion so it isn't deallocated
-        representedObject = publisher.subscribe({ [weak self] newValue in
+        context.subscription = publisher.subscribe({ [weak self] newValue in
             self!.state = newValue
         })
+        return self
+    }
+    
+    func action(_ block: @escaping () -> Void) -> Self {
+        context.action = block
+        target = context
+        action = #selector(Context.performAction(_:))
         return self
     }
 }

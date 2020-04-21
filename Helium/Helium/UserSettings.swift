@@ -14,7 +14,7 @@ internal enum UserSetting {
     static var disabledFullScreenFloat = false
 
     @UserDefault(key: "opacityPercentage")
-    static var opacityPercentage = 100
+    static var opacityPercentage = 60
     
     @UserDefault(key: "homePageURL")
     static var homePageURL: String? = nil

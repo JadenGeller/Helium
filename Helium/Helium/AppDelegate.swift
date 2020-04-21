@@ -43,12 +43,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // Insert code here to tear down your application
     }
     
-    
-    @objc func magicURLRedirectToggled(_ sender: NSMenuItem) {
-        UserSetting.disabledMagicURLs.toggle()
-    }
-    
-    
     //MARK: - handleURLEvent
     // Called when the App opened via URL.
     @objc func handleURLEvent(_ event: NSAppleEventDescriptor, withReply reply: NSAppleEventDescriptor) {
