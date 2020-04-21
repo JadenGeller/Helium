@@ -18,4 +18,16 @@ internal enum UserSetting {
     
     @UserDefault(key: "homePageURL")
     static var homePageURL: String? = nil
+    
+    enum TranslucencyMode: String {
+        case always
+        case mouseOver
+        case mouseOutside
+    }
+    
+    @UserDefault(key: "translucencyMode")
+    static var translucencyMode: TranslucencyMode = .always
+    
+    @UserDefault(key: "translucencyEnabled")
+    static var translucencyEnabled: Bool = false
 }

@@ -91,7 +91,8 @@ func mainMenu() -> NSMenu {
                 .submenu([
                     NSMenuItem(title: "Enabled")
                         .action(#selector(HeliumPanelController.translucencyPress(_:)))
-                        .keyEquivalent("t", with: .command),
+                        .keyEquivalent("t", with: .command)
+                        .state(UserSetting.$translucencyEnabled.map({ $0 ? .on : .off })),
                     NSMenuItem(title: "Opacity")
                         .submenu((1...10).map({ (digit: Int) -> NSMenuItem in
                             NSMenuItem(title: "\(digit * 10)%")
@@ -105,11 +106,14 @@ func mainMenu() -> NSMenu {
                     NSMenuItem.separator(),
                     
                     NSMenuItem(title: "Always")
-                        .action(#selector(HeliumPanelController.alwaysPreferencePress(_:))),
+                        .action(#selector(HeliumPanelController.alwaysPreferencePress(_:)))
+                        .state(UserSetting.$translucencyMode.map({ $0 == .always ? .on : .off })),
                     NSMenuItem(title: "Mouse Over")
-                        .action(#selector(HeliumPanelController.overPreferencePress(_:))),
+                        .action(#selector(HeliumPanelController.overPreferencePress(_:)))
+                        .state(UserSetting.$translucencyMode.map({ $0 == .mouseOver ? .on : .off })),
                     NSMenuItem(title: "Mouse Outside")
                         .action(#selector(HeliumPanelController.outsidePreferencePress(_:)))
+                        .state(UserSetting.$translucencyMode.map({ $0 == .mouseOutside ? .on : .off })),
                 ]),
             
             NSMenuItem.separator(),
