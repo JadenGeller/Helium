@@ -51,8 +51,11 @@ extension NSMenuItem {
         return self
     }
     
-    func state(_ state: NSControl.StateValue) -> Self {
-        self.state = state
+    func state<P: Publisher>(_ publisher: P) -> Self where P.Output == NSControl.StateValue {
+        // Store reference to subscribtion so it isn't deallocated
+        representedObject = publisher.subscribe({ [weak self] newValue in
+            self!.state = newValue
+        })
         return self
     }
 }

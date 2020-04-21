@@ -21,10 +21,10 @@ func mainMenu() -> NSMenu {
                             .action(#selector(HeliumPanelController.setHomePage(_:))),
                         NSMenuItem(title: "Magic URL Redirects")
                             .action(#selector(AppDelegate.magicURLRedirectToggled(_:)))
-                            .state(UserSetting.disabledMagicURLs ? .off : .on),
+                            .state(UserSetting.$disabledMagicURLs.map({ $0 ? .off : .on })),
                         NSMenuItem(title: "Float Above All Spaces")
                             .action(#selector(HeliumPanelController.floatOverFullScreenAppsToggled(_:)))
-                            .state(UserSetting.disabledFullScreenFloat ? .off : .on)
+                            .state(UserSetting.$disabledFullScreenFloat.map({ $0 ? .off : .on }))
                     ]),
                 
                 NSMenuItem.separator(),
@@ -97,7 +97,9 @@ func mainMenu() -> NSMenu {
                             NSMenuItem(title: "\(digit * 10)%")
                                 .action(#selector(HeliumPanelController.percentagePress(_:)))
                                 .keyEquivalent(String(digit == 10 ? 0 : digit), with: .command)
-                                .state(UserSetting.opacityPercentage / 10 == digit ? .on : .off)
+                                .state(UserSetting.$opacityPercentage.map({ value in
+                                    value / 10 == digit ? .on : .off
+                                }))
                         })),
                     
                     NSMenuItem.separator(),

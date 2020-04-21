@@ -69,7 +69,7 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
     
     // MARK: Window lifecycle
     func windowDidResize(_ notification: Notification) {
-        print("UPDATE")
+
     }
     
     override func windowDidLoad() {
@@ -167,10 +167,6 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
     }
     
     @objc func percentagePress(_ sender: NSMenuItem) {
-        for button in sender.menu!.items{
-            (button ).state = .off
-        }
-        sender.state = .on
         let title = sender.title
         if let alpha = Int(String(title.dropLast())) {
              didUpdateAlpha(CGFloat(alpha))
@@ -216,9 +212,7 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
     }
     
     @objc func floatOverFullScreenAppsToggled(_ sender: NSMenuItem) {
-        sender.state = (sender.state == .on) ? .off : .on
-        UserSetting.disabledFullScreenFloat = sender.state == .off
-        
+        UserSetting.disabledFullScreenFloat.toggle()
         setFloatOverFullScreenApps()
     }
 

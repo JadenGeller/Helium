@@ -30,6 +30,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             .utilityWindow,
             .nonactivatingPanel,
             .titled,
+            .resizable
         ]
         panel.hasShadow = true
         panel.center()
@@ -44,8 +45,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     
     @objc func magicURLRedirectToggled(_ sender: NSMenuItem) {
-        sender.state = (sender.state == .on) ? .off : .on
-        UserSetting.disabledMagicURLs = sender.state == .off
+        UserSetting.disabledMagicURLs.toggle()
     }
     
     
