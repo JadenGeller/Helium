@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -23,6 +23,9 @@
 		D769ABDA244E997B00215C76 /* MenuHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769ABD9244E997B00215C76 /* MenuHelpers.swift */; };
 		D769ABDC244E9DFF00215C76 /* CombineLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769ABDB244E9DFF00215C76 /* CombineLite.swift */; };
 		D769ABDE244F477100215C76 /* UserDefaultHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769ABDD244F477100215C76 /* UserDefaultHelpers.swift */; };
+		D769ABE1244FE33700215C76 /* OpenCombineDispatch in Frameworks */ = {isa = PBXBuildFile; productRef = D769ABE0244FE33700215C76 /* OpenCombineDispatch */; };
+		D769ABE3244FE33700215C76 /* OpenCombineFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = D769ABE2244FE33700215C76 /* OpenCombineFoundation */; };
+		D769ABE5244FE33700215C76 /* OpenCombine in Frameworks */ = {isa = PBXBuildFile; productRef = D769ABE4244FE33700215C76 /* OpenCombine */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +104,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D769ABE1244FE33700215C76 /* OpenCombineDispatch in Frameworks */,
+				D769ABE5244FE33700215C76 /* OpenCombine in Frameworks */,
+				D769ABE3244FE33700215C76 /* OpenCombineFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,6 +248,11 @@
 				27199ABD1BE422AC00E02297 /* PBXTargetDependency */,
 			);
 			name = Helium;
+			packageProductDependencies = (
+				D769ABE0244FE33700215C76 /* OpenCombineDispatch */,
+				D769ABE2244FE33700215C76 /* OpenCombineFoundation */,
+				D769ABE4244FE33700215C76 /* OpenCombine */,
+			);
 			productName = Helium;
 			productReference = 4D867CB11AD6781200681331 /* Helium.app */;
 			productType = "com.apple.product-type.application";
@@ -308,6 +319,9 @@
 				Base,
 			);
 			mainGroup = 4D867CA81AD6781200681331;
+			packageReferences = (
+				D769ABDF244FE33700215C76 /* XCRemoteSwiftPackageReference "OpenCombine" */,
+			);
 			productRefGroup = 4D867CB21AD6781200681331 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -418,7 +432,11 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = HeliumShareExtension/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.JadenGeller.Helium.HeliumShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -437,7 +455,11 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = HeliumShareExtension/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.JadenGeller.Helium.HeliumShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -569,7 +591,10 @@
 					"$(PROJECT_DIR)/Helium",
 				);
 				INFOPLIST_FILE = Helium/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.JadenGeller.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -596,7 +621,10 @@
 					"$(PROJECT_DIR)/Helium",
 				);
 				INFOPLIST_FILE = Helium/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.JadenGeller.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -623,7 +651,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = HeliumTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.JadenGeller.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -646,7 +678,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = HeliumTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.JadenGeller.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -694,6 +730,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D769ABDF244FE33700215C76 /* XCRemoteSwiftPackageReference "OpenCombine" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/broadwaylamb/OpenCombine";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.8.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D769ABE0244FE33700215C76 /* OpenCombineDispatch */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D769ABDF244FE33700215C76 /* XCRemoteSwiftPackageReference "OpenCombine" */;
+			productName = OpenCombineDispatch;
+		};
+		D769ABE2244FE33700215C76 /* OpenCombineFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D769ABDF244FE33700215C76 /* XCRemoteSwiftPackageReference "OpenCombine" */;
+			productName = OpenCombineFoundation;
+		};
+		D769ABE4244FE33700215C76 /* OpenCombine */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D769ABDF244FE33700215C76 /* XCRemoteSwiftPackageReference "OpenCombine" */;
+			productName = OpenCombine;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4D867CA91AD6781200681331 /* Project object */;
 }
