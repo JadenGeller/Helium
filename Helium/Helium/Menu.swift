@@ -119,9 +119,9 @@ func mainMenu() -> NSMenu {
             
             NSMenuItem.separator(),
                 
-//            NSMenuItem(title: "Stop")
-//                .action(???)
-//                .keyEquivalent(".", with: .command)
+            NSMenuItem(title: "Stop")
+                .action(#selector(WKWebView.stopLoading(_:)))
+                .keyEquivalent(".", with: .command),
             NSMenuItem(title: "Reload Page")
                 .action(#selector(WebView.reload(_:)))
                 .keyEquivalent("r", with: .command),
