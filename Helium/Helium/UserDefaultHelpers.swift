@@ -7,64 +7,42 @@
 //
 
 import Foundation
+import OpenCombine
+
+extension UserDefaults {
+    func value<Persisted: RawRepresentable>(of type: Persisted.Type, forKey key: String, withDefault defaultValue: Persisted) -> Persisted {
+        guard let rawValue = UserDefaults.standard.value(forKey: key) as! Persisted.RawValue? else {
+            return defaultValue
+        }
+        return Persisted(rawValue: rawValue)!
+    }
+}
 
 @propertyWrapper
 struct UserDefault<Persisted: RawRepresentable> {
     let key: String
     let defaultValue: Persisted
     var storage: UserDefaults = .standard
+    let subject: CurrentValueSubject<Persisted, Never>
 
     init(wrappedValue: Persisted, key: String) {
         self.key = key
         self.defaultValue = wrappedValue
+        self.subject = .init(UserDefaults.standard.value(of: Persisted.self, forKey: key, withDefault: defaultValue))
     }
     
     var wrappedValue: Persisted {
         get {
-            guard let rawValue = UserDefaults.standard.value(forKey: key) as! Persisted.RawValue? else {
-                return defaultValue
-            }
-            return Persisted(rawValue: rawValue)!
+            UserDefaults.standard.value(of: Persisted.self, forKey: key, withDefault: defaultValue)
         }
         nonmutating set {
             UserDefaults.standard.set(newValue.rawValue, forKey: key)
+            subject.send(newValue)
         }
     }
     
-    var projectedValue: UserDefaultPublisher<Persisted> {
-        UserDefaultPublisher(userDefault: self)
-    }
-}
-
-struct UserDefaultPublisher<Persisted: RawRepresentable>: Publisher {
-    let userDefault: UserDefault<Persisted>
-
-    typealias Output = Persisted
-    
-    class Subscription: NSObject {
-        let userDefault: UserDefault<Persisted>
-        let receiveValue: (Persisted) -> Void
-
-        init(_ userDefault: UserDefault<Persisted>, _ receiveValue: @escaping (Persisted) -> Void) {
-            self.userDefault = userDefault
-            self.receiveValue = receiveValue
-            super.init()
-            userDefault.storage.addObserver(self, forKeyPath: userDefault.key, options: [], context: nil)
-            self.receiveValue(userDefault.wrappedValue)
-        }
-        
-        override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-            precondition(keyPath == userDefault.key)
-            precondition(object as! UserDefaults == userDefault.storage)
-            self.receiveValue(userDefault.wrappedValue)
-        }
-        
-        deinit {
-            userDefault.storage.removeObserver(self, forKeyPath: userDefault.key)
-        }
-    }
-    func subscribe(_ receiveValue: @escaping (Output) -> Void) -> Subscription {
-        return Subscription(userDefault, receiveValue)
+    var projectedValue: CurrentValueSubject<Persisted, Never> {
+       subject
     }
 }
 

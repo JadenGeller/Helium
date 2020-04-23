@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import OpenCombine
 
 extension Bundle {
     var name: String {
@@ -55,10 +56,14 @@ extension NSMenuItem {
 extension NSMenuItem {
     class Context {
         var action: (() -> Void)?
-        var subscription: Any?
+        var cancellable: AnyCancellable?
         
         @objc func performAction(_ sender: NSMenuItem) {
             action?()
+        }
+        
+        deinit {
+            cancellable?.cancel()
         }
     }
     
@@ -72,11 +77,11 @@ extension NSMenuItem {
         }
     }
     
-    func state<P: Publisher>(_ publisher: P) -> Self where P.Output == NSControl.StateValue {
+    func state<P: Publisher>(_ publisher: P) -> Self where P.Output == NSControl.StateValue, P.Failure == Never {
         // Store reference to subscribtion so it isn't deallocated
-        context.subscription = publisher.subscribe({ [weak self] newValue in
-            self!.state = newValue
-        })
+        context.cancellable = publisher.sink { [weak self] newValue in
+            self?.state = newValue
+        }
         return self
     }
     

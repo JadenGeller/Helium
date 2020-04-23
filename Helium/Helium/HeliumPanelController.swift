@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import OpenCombine
 
 class HeliumPanelController: NSWindowController, NSWindowDelegate {
 
@@ -57,7 +58,7 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
 
     }
     
-    var subscriptions: [Any] = []
+    var cancellables: [AnyCancellable] = []
     override func windowDidLoad() {
         panel.isFloatingPanel = true
         
@@ -65,7 +66,7 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.willResignActive), name: NSApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.didUpdateTitle(_:)), name: NSNotification.Name(rawValue: "HeliumUpdateTitle"), object: nil)
                 
-        subscriptions.append(UserSetting.$disabledFullScreenFloat.subscribe({ [unowned self] disabledFullScreenFloat in
+        cancellables.append(UserSetting.$disabledFullScreenFloat.sink { [unowned self] disabledFullScreenFloat in
             if disabledFullScreenFloat {
                 self.panel.collectionBehavior.insert(.moveToActiveSpace)
                 self.panel.collectionBehavior.remove(.canJoinAllSpaces)
@@ -74,16 +75,16 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
                 self.panel.collectionBehavior.remove(.moveToActiveSpace)
                 self.panel.collectionBehavior.insert(.canJoinAllSpaces)
             }
-        }))
-        subscriptions.append(UserSetting.$translucencyMode.subscribe({ [unowned self] _ in
+        })
+        cancellables.append(UserSetting.$translucencyMode.sink { [unowned self] _ in
             self.updateTranslucency()
-        }))
-        subscriptions.append(UserSetting.$translucencyEnabled.subscribe({ [unowned self] _ in
+        })
+        cancellables.append(UserSetting.$translucencyEnabled.sink { [unowned self] _ in
             self.updateTranslucency()
-        }))
-        subscriptions.append(UserSetting.$opacityPercentage.subscribe(({ [unowned self] _ in
+        })
+        cancellables.append(UserSetting.$opacityPercentage.sink { [unowned self] _ in
             self.updateTranslucency()
-        })))
+        })
     }
 
     // MARK: Mouse events

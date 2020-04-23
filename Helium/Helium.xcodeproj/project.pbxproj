@@ -21,7 +21,6 @@
 		D769ABD6244D2DB900215C76 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769ABD5244D2DB900215C76 /* Menu.swift */; };
 		D769ABD8244D2DDD00215C76 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769ABD7244D2DDC00215C76 /* main.swift */; };
 		D769ABDA244E997B00215C76 /* MenuHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769ABD9244E997B00215C76 /* MenuHelpers.swift */; };
-		D769ABDC244E9DFF00215C76 /* CombineLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769ABDB244E9DFF00215C76 /* CombineLite.swift */; };
 		D769ABDE244F477100215C76 /* UserDefaultHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769ABDD244F477100215C76 /* UserDefaultHelpers.swift */; };
 		D769ABE1244FE33700215C76 /* OpenCombineDispatch in Frameworks */ = {isa = PBXBuildFile; productRef = D769ABE0244FE33700215C76 /* OpenCombineDispatch */; };
 		D769ABE3244FE33700215C76 /* OpenCombineFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = D769ABE2244FE33700215C76 /* OpenCombineFoundation */; };
@@ -88,7 +87,6 @@
 		D769ABD5244D2DB900215C76 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		D769ABD7244D2DDC00215C76 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		D769ABD9244E997B00215C76 /* MenuHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHelpers.swift; sourceTree = "<group>"; };
-		D769ABDB244E9DFF00215C76 /* CombineLite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineLite.swift; sourceTree = "<group>"; };
 		D769ABDD244F477100215C76 /* UserDefaultHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHelpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -173,7 +171,6 @@
 				B34C1EC71ADE3CCA0094ADBA /* Resources */,
 				B34C1EC41ADE3B5E0094ADBA /* Frameworks */,
 				AAA3EA011BE4CEC9001A471F /* UserSettings.swift */,
-				D769ABDB244E9DFF00215C76 /* CombineLite.swift */,
 				D769ABDD244F477100215C76 /* UserDefaultHelpers.swift */,
 				D769ABD9244E997B00215C76 /* MenuHelpers.swift */,
 			);
@@ -378,7 +375,6 @@
 				4D8DAEAC1C3A41F300B212EC /* UserSettings.swift in Sources */,
 				D769ABD8244D2DDD00215C76 /* main.swift in Sources */,
 				D769ABDE244F477100215C76 /* UserDefaultHelpers.swift in Sources */,
-				D769ABDC244E9DFF00215C76 /* CombineLite.swift in Sources */,
 				D769ABDA244E997B00215C76 /* MenuHelpers.swift in Sources */,
 				4D867CB91AD6781200681331 /* WebViewController.swift in Sources */,
 				4D867CB71AD6781200681331 /* AppDelegate.swift in Sources */,
