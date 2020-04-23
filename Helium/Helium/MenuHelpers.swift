@@ -85,6 +85,10 @@ extension NSMenuItem {
         return self
     }
     
+    func action(_ block: @escaping (NSMenuItem) -> Void) -> Self {
+        return action({ block(self) })
+    }
+    
     func action(_ block: @escaping () -> Void) -> Self {
         context.action = block
         target = context

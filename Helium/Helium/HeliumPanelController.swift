@@ -10,7 +10,24 @@ import AppKit
 import OpenCombine
 
 class HeliumPanelController: NSWindowController, NSWindowDelegate {
-
+    static func makeController() -> HeliumPanelController {
+        let webController = WebViewController()
+        webController.view.frame.size = .init(width: 480, height: 300)
+        let panel = NSPanel(contentViewController: webController)
+        panel.styleMask = [
+            .hudWindow,
+            .utilityWindow,
+            .nonactivatingPanel,
+            .titled,
+            .resizable
+        ]
+        panel.hasShadow = true
+        panel.center()
+        let panelController = HeliumPanelController(window: panel)
+        panel.delegate = panelController
+        return panelController
+    }
+    
     private var webViewController: WebViewController {
         get {
             return self.window?.contentViewController as! WebViewController

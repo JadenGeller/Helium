@@ -18,25 +18,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         )
         UserDefaults.standard.set(false, forKey: "NSFullScreenMenuItemEverywhere")
     }
-    
-    var panelController: HeliumPanelController!
-    
+        
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        let webController = WebViewController()
-        webController.view.frame.size = .init(width: 480, height: 300)
-        let panel = NSPanel(contentViewController: webController)
-        panel.styleMask = [
-            .hudWindow,
-            .utilityWindow,
-            .nonactivatingPanel,
-            .titled,
-            .resizable
-        ]
-        panel.hasShadow = true
-        panel.center()
-        panelController = HeliumPanelController(window: panel)
-        panel.delegate = panelController
-        panelController.showWindow(self)
+        HeliumPanelController.makeController().showWindow(self)
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

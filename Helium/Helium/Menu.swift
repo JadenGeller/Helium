@@ -48,6 +48,9 @@ func mainMenu() -> NSMenu {
             ]),
         
         NSMenuItem(title: "File").submenu([
+            NSMenuItem(title: "New Window")
+                .action({ HeliumPanelController.makeController().showWindow($0) })
+                .keyEquivalent("n", with: .command),
             NSMenuItem(title: "Open File...")
                 .action(#selector(HeliumPanelController.openFilePress(_:)))
                 .keyEquivalent("f", with: .command),
