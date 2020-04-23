@@ -152,6 +152,19 @@ func mainMenu() -> NSMenu {
 //                    .keyEquivalent("h", with: [.command, .shift])
             ]),
         
+        NSMenuItem(title: "Window")
+            .submenu([
+                NSMenuItem(title: "Minimize")
+                    .action(#selector(NSWindow.performMiniaturize(_:))),
+                NSMenuItem(title: "Zoom")
+                    .action(#selector(NSWindow.performZoom(_:))),
+                
+                NSMenuItem.separator(),
+                
+                NSMenuItem(title: "Bring All to Front")
+                    .action(#selector(NSApplication.arrangeInFront(_:)))
+            ]),
+        
         NSMenuItem(title: "Help")
             .submenu([
                 NSMenuItem(title: "\(Bundle.main.name) Help")
