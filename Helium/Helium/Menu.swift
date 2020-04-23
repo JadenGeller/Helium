@@ -9,8 +9,20 @@
 import Cocoa
 import WebKit
 
-func mainMenu() -> NSMenu {
-    NSMenu(items: [
+func buildMenus() -> (servicesMenu: NSMenu, windowsMenu: NSMenu, mainMenu: NSMenu) {
+    let servicesMenu = NSMenu()
+    let windowsMenu = NSMenu(title: "Window", items: [
+        NSMenuItem(title: "Minimize")
+            .action(#selector(NSWindow.performMiniaturize(_:))),
+        NSMenuItem(title: "Zoom")
+            .action(#selector(NSWindow.performZoom(_:))),
+        
+        NSMenuItem.separator(),
+        
+        NSMenuItem(title: "Bring All to Front")
+            .action(#selector(NSApplication.arrangeInFront(_:)))
+    ])
+    let mainMenu = NSMenu(items: [
         NSMenuItem(title: "\(Bundle.main.name)")
             .submenu([
                 NSMenuItem(title: "About \(Bundle.main.name)")
@@ -30,7 +42,7 @@ func mainMenu() -> NSMenu {
                 NSMenuItem.separator(),
 
                 NSMenuItem(title: "Services")
-                    .submenu(NSApplication.shared.servicesMenu!),
+                    .submenu(servicesMenu),
                 NSMenuItem(title: "Hide \(Bundle.main.name)")
                     .action(#selector(NSApplication.hide(_:)))
                     .keyEquivalent("h", with: .command),
@@ -153,17 +165,7 @@ func mainMenu() -> NSMenu {
             ]),
         
         NSMenuItem(title: "Window")
-            .submenu([
-                NSMenuItem(title: "Minimize")
-                    .action(#selector(NSWindow.performMiniaturize(_:))),
-                NSMenuItem(title: "Zoom")
-                    .action(#selector(NSWindow.performZoom(_:))),
-                
-                NSMenuItem.separator(),
-                
-                NSMenuItem(title: "Bring All to Front")
-                    .action(#selector(NSApplication.arrangeInFront(_:)))
-            ]),
+            .submenu(windowsMenu),
         
         NSMenuItem(title: "Help")
             .submenu([
@@ -171,4 +173,5 @@ func mainMenu() -> NSMenu {
                     .action(#selector(NSApplication.showHelp(_:)))
             ])
     ])
+    return (servicesMenu, windowsMenu, mainMenu)
 }

@@ -10,9 +10,9 @@ import Cocoa
 
 autoreleasepool {
     withExtendedLifetime(AppDelegate()) { delegate in
-        NSApplication.shared.servicesMenu = NSMenu()
-        NSApplication.shared.mainMenu = mainMenu()
-        NSApplication.shared.delegate = delegate
-        NSApplication.shared.run()
+        let app = NSApplication.shared
+        (app.servicesMenu, app.windowsMenu, app.mainMenu) = buildMenus()
+        app.delegate = delegate
+        app.run()
     }
 }
