@@ -18,9 +18,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         )
         UserDefaults.standard.set(false, forKey: "NSFullScreenMenuItemEverywhere")
     }
-        
+    
+    let windowControllerManager = WindowControllerManager()
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        HeliumPanelController.makeController().showWindow(self)
+        windowControllerManager.newWindow().showWindow(self)
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

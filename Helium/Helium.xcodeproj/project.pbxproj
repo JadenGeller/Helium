@@ -25,6 +25,7 @@
 		D769ABE1244FE33700215C76 /* OpenCombineDispatch in Frameworks */ = {isa = PBXBuildFile; productRef = D769ABE0244FE33700215C76 /* OpenCombineDispatch */; };
 		D769ABE3244FE33700215C76 /* OpenCombineFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = D769ABE2244FE33700215C76 /* OpenCombineFoundation */; };
 		D769ABE5244FE33700215C76 /* OpenCombine in Frameworks */ = {isa = PBXBuildFile; productRef = D769ABE4244FE33700215C76 /* OpenCombine */; };
+		D79D520024514123008AC3FF /* WindowControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79D51FF24514123008AC3FF /* WindowControllerManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,7 @@
 		D769ABD7244D2DDC00215C76 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		D769ABD9244E997B00215C76 /* MenuHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHelpers.swift; sourceTree = "<group>"; };
 		D769ABDD244F477100215C76 /* UserDefaultHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHelpers.swift; sourceTree = "<group>"; };
+		D79D51FF24514123008AC3FF /* WindowControllerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowControllerManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +166,7 @@
 				D769ABD7244D2DDC00215C76 /* main.swift */,
 				D769ABD5244D2DB900215C76 /* Menu.swift */,
 				4D867CB61AD6781200681331 /* AppDelegate.swift */,
+				D79D51FF24514123008AC3FF /* WindowControllerManager.swift */,
 				4D867CD31AD6796A00681331 /* HeliumPanelController.swift */,
 				4D867CB81AD6781200681331 /* WebViewController.swift */,
 				4D867CBA1AD6781200681331 /* Images.xcassets */,
@@ -376,6 +379,7 @@
 				D769ABD8244D2DDD00215C76 /* main.swift in Sources */,
 				D769ABDE244F477100215C76 /* UserDefaultHelpers.swift in Sources */,
 				D769ABDA244E997B00215C76 /* MenuHelpers.swift in Sources */,
+				D79D520024514123008AC3FF /* WindowControllerManager.swift in Sources */,
 				4D867CB91AD6781200681331 /* WebViewController.swift in Sources */,
 				4D867CB71AD6781200681331 /* AppDelegate.swift in Sources */,
 				D769ABD6244D2DB900215C76 /* Menu.swift in Sources */,
