@@ -19,7 +19,8 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
             .utilityWindow,
             .nonactivatingPanel,
             .titled,
-            .resizable
+            .resizable,
+            .closable
         ]
         panel.hasShadow = true
         panel.center()

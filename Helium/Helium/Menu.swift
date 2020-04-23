@@ -9,6 +9,14 @@
 import Cocoa
 import WebKit
 
+extension NSApplication {
+    @objc func closeAllWindows(_ sender: Any?) {
+        for window in windows {
+            window.performClose(sender)
+        }
+    }
+}
+
 func buildMenus() -> (servicesMenu: NSMenu, windowsMenu: NSMenu, mainMenu: NSMenu) {
     let servicesMenu = NSMenu()
     let windowsMenu = NSMenu(title: "Window", items: [
@@ -68,7 +76,16 @@ func buildMenus() -> (servicesMenu: NSMenu, windowsMenu: NSMenu, mainMenu: NSMen
                 .keyEquivalent("f", with: .command),
             NSMenuItem(title: "Open Location...")
                 .action(#selector(HeliumPanelController.openLocationPress(_:)))
-                .keyEquivalent("l", with: .command)
+                .keyEquivalent("l", with: .command),
+            
+            NSMenuItem.separator(),
+
+            NSMenuItem(title: "Close Window")
+                .action(#selector(NSWindow.performClose(_:)))
+                .keyEquivalent("w", with: .command),
+            NSMenuItem(title: "Close All Windows")
+                .action(#selector(NSApplication.closeAllWindows(_:)))
+                .keyEquivalent("w", with: [.command, .option]),
         ]),
 
         NSMenuItem(title: "Edit").submenu([
