@@ -33,6 +33,11 @@ class HeliumPanel: NSPanel {
         true
     }
     
+    override func makeKey() {
+        super.makeKey()
+        NSApplication.shared.addWindowsItem(self, title: title, filename: false)
+    }
+    
     override func cancelOperation(_ sender: Any?) {
         // Override default behavior to prevent panel from closing
     }
