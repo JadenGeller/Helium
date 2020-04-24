@@ -9,6 +9,7 @@
 import AppKit
 import OpenCombine
 
+
 class HeliumPanel: NSPanel {
     override init(contentRect: NSRect, styleMask style: NSWindow.StyleMask, backing backingStoreType: NSWindow.BackingStoreType, defer flag: Bool) {
         super.init(contentRect: contentRect, styleMask: style, backing: backingStoreType, defer: flag)
@@ -53,6 +54,75 @@ class HeliumPanel: NSPanel {
     }
 }
 
+extension NSToolbarItem.Identifier {
+    static var heliumSearchField = NSToolbarItem.Identifier("heliumSearchField")
+    static var heliumNavigationButtons = NSToolbarItem.Identifier("heliumNavigationButtons")
+}
+
+class HeliumSearchFieldToolbarItem: NSToolbarItem {
+    override init(itemIdentifier: NSToolbarItem.Identifier) {
+        precondition(itemIdentifier == .heliumSearchField)
+        super.init(itemIdentifier: itemIdentifier)
+        view = NSSearchField()
+    }
+}
+
+class HeliumNavigationButtonsToolbarItem: NSToolbarItem {
+    override init(itemIdentifier: NSToolbarItem.Identifier) {
+        precondition(itemIdentifier == .heliumNavigationButtons)
+        super.init(itemIdentifier: itemIdentifier)
+        let control = NSSegmentedControl()
+        control.segmentStyle = .separated
+        if #available(macOS 10.13, *) {
+            // FIXME: This is super whacky in old versions of macOS
+            control.trackingMode = .momentary
+        }
+        control.segmentCount = 2
+        view = control
+    }
+}
+
+class HeliumToolbar: NSToolbar, NSToolbarDelegate {
+    convenience init() {
+        self.init(identifier: "HeliumToolbar")
+    }
+    private override init(identifier: NSToolbar.Identifier) {
+        precondition(identifier == "HeliumToolbar")
+        super.init(identifier: identifier)
+        self.delegate = self
+        sizeMode = .small
+    }
+    
+    func toolbarAllowedItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
+        [
+            .space,
+            .flexibleSpace,
+            .heliumSearchField,
+            .heliumNavigationButtons
+        ]
+    }
+    
+    func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
+        [
+            .heliumNavigationButtons,
+            .flexibleSpace,
+            .heliumSearchField,
+            .flexibleSpace
+        ]
+    }
+    
+    func toolbar(_ toolbar: NSToolbar, itemForItemIdentifier itemIdentifier: NSToolbarItem.Identifier, willBeInsertedIntoToolbar flag: Bool) -> NSToolbarItem? {
+        switch itemIdentifier {
+        case .heliumSearchField:
+            return HeliumSearchFieldToolbarItem(itemIdentifier: itemIdentifier)
+        case .heliumNavigationButtons:
+            return HeliumNavigationButtonsToolbarItem(itemIdentifier: itemIdentifier)
+        default:
+            fatalError("Unexpected itemIdentifier")
+        }
+    }
+}
+
 class HeliumPanelController: NSWindowController, NSWindowDelegate {
     convenience init() {
         self.init(window: nil)
@@ -65,8 +135,12 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
         panel.bind(.title, to: webController, withKeyPath: "title", options: nil)
         
         super.init(window: panel)
-
         panel.delegate = self
+        
+        let toolbar = HeliumToolbar()
+        
+        panel.titleVisibility = .hidden
+        panel.toolbar = toolbar
         
         NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.didBecomeActive), name: NSApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.willResignActive), name: NSApplication.willResignActiveNotification, object: nil)
