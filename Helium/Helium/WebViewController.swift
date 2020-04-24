@@ -60,27 +60,15 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         
         trackingTag = view.addTrackingRect(view.bounds, owner: self, userData: nil, assumeInside: false)
     }
-    
-    private func zoomIn() {
-        webView.magnification += 0.1
-    }
-    
-    private func zoomOut() {
-        webView.magnification -= 0.1
-    }
-    
-    private func resetZoom() {
+
+    @objc func resetZoomLevel(_ sender: AnyObject) {
         webView.magnification = 1
     }
-    
-    @objc func resetZoomLevel(_ sender: AnyObject) {
-        resetZoom()
-    }
     @objc func zoomIn(_ sender: AnyObject) {
-        zoomIn()
+        webView.magnification += 0.1
     }
     @objc func zoomOut(_ sender: AnyObject) {
-        zoomOut()
+        webView.magnification -= 0.1
     }
     
     internal func loadAlmostURL(_ text: String) {
