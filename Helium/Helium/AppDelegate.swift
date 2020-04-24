@@ -20,8 +20,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     let windowControllerManager = WindowControllerManager()
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
+    @objc func showNewWindow(_ sender: Any?) {
         windowControllerManager.newWindow().showWindow(self)
+    }
+    
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
+        showNewWindow(self)
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
