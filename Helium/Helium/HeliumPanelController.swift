@@ -124,13 +124,6 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
     
     // MARK: Translucency
         
-    private func disabledAllMouseOverPreferences(_ allMenus: [NSMenuItem]) {
-        // GROSS HARD CODED
-        for x in allMenus.dropFirst(2) {
-            x.state = .off
-        }
-    }
-    
     @objc func openLocationPress(_ sender: AnyObject) {
         let alert = NSAlert()
         alert.alertStyle = .informational
