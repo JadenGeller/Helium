@@ -22,6 +22,8 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
             .resizable,
             .closable
         ]
+        panel.level = .mainMenu
+        panel.hidesOnDeactivate = false
         panel.hasShadow = true
         panel.center()
         let panelController = HeliumPanelController(window: panel)
@@ -73,7 +75,7 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
     
     // MARK: Window lifecycle
     func windowDidResize(_ notification: Notification) {
-
+        panel.isFloatingPanel = true
     }
     
     var cancellables: [AnyCancellable] = []
