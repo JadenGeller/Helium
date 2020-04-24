@@ -44,5 +44,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         showNewWindow(self)
         return true
     }
+    
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        !sender.windows.contains(where: { window in window.isVisible })
+    }
 }
 
