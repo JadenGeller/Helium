@@ -15,7 +15,7 @@ class HeliumWebView: WKWebView {
     }
 }
 
-class WebViewController: NSViewController, WKNavigationDelegate, NSMenuItemValidation {
+class WebViewController: NSViewController, WKNavigationDelegate {
     
     var trackingTag: NSView.TrackingRectTag?
     
@@ -59,18 +59,6 @@ class WebViewController: NSViewController, WKNavigationDelegate, NSMenuItemValid
         }
         
         trackingTag = view.addTrackingRect(view.bounds, owner: self, userData: nil, assumeInside: false)
-    }
-    
-    // MARK: Actions
-    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        switch menuItem.title {
-        case "Back":
-            return webView.canGoBack
-        case "Forward":
-            return webView.canGoForward
-        default:
-            return true
-        }
     }
     
     private func zoomIn() {
