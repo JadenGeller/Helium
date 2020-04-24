@@ -29,6 +29,8 @@ class WebViewController: NSViewController, WKNavigationDelegate, NSMenuItemValid
         
         NotificationCenter.default.addObserver(self, selector: #selector(WebViewController.loadURLObject(_:)), name: NSNotification.Name(rawValue: "HeliumLoadURL"), object: nil)
         
+        bind(.title, to: webView, withKeyPath: "title", options: nil)
+        
         // Layout webview
         view.addSubview(webView)
         webView.frame = view.bounds
@@ -141,10 +143,6 @@ class WebViewController: NSViewController, WKNavigationDelegate, NSMenuItemValid
         }
         
         decisionHandler(WKNavigationActionPolicy.allow)
-    }
-    
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation) {
-        title = webView.title
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
