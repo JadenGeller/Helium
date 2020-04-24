@@ -10,7 +10,11 @@ import AppKit
 import OpenCombine
 
 class HeliumPanelController: NSWindowController, NSWindowDelegate {
-    static func makeController() -> HeliumPanelController {
+    convenience init() {
+        self.init(window: nil)
+    }
+    private override init(window: NSWindow?) {
+        precondition(window == nil, "call init() with no window")
         let webController = WebViewController()
         webController.view.frame.size = .init(width: 480, height: 300)
         let panel = NSPanel(contentViewController: webController)
@@ -27,13 +31,10 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
         panel.hasShadow = true
         panel.isFloatingPanel = true
         panel.center()
-        let panelController = HeliumPanelController(window: panel)
-        panel.delegate = panelController
-        return panelController
-    }
-    
-    override init(window: NSWindow?) {
-        super.init(window: window)
+        
+        super.init(window: panel)
+
+        panel.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.didBecomeActive), name: NSApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.willResignActive), name: NSApplication.willResignActiveNotification, object: nil)
