@@ -10,6 +10,24 @@ import AppKit
 import OpenCombine
 
 class HeliumPanel: NSPanel {
+    override init(contentRect: NSRect, styleMask style: NSWindow.StyleMask, backing backingStoreType: NSWindow.BackingStoreType, defer flag: Bool) {
+        super.init(contentRect: contentRect, styleMask: style, backing: backingStoreType, defer: flag)
+        styleMask = [
+            .hudWindow,
+            .utilityWindow,
+            .nonactivatingPanel,
+            .titled,
+            .resizable,
+            .closable
+        ]
+        level = .mainMenu
+        hidesOnDeactivate = false
+        hasShadow = true
+        isFloatingPanel = true
+        center()
+        isMovableByWindowBackground = true
+    }
+    
     override func cancelOperation(_ sender: Any?) {
         // Override default behavior to prevent panel from closing
     }
@@ -24,20 +42,6 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
         let webController = WebViewController()
         webController.view.frame.size = .init(width: 480, height: 300)
         let panel = HeliumPanel(contentViewController: webController)
-        panel.styleMask = [
-            .hudWindow,
-            .utilityWindow,
-            .nonactivatingPanel,
-            .titled,
-            .resizable,
-            .closable
-        ]
-        panel.level = .mainMenu
-        panel.hidesOnDeactivate = false
-        panel.hasShadow = true
-        panel.isFloatingPanel = true
-        panel.center()
-        panel.isMovableByWindowBackground = true
         
         super.init(window: panel)
 
