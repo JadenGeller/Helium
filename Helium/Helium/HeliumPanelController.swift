@@ -26,6 +26,11 @@ class HeliumPanel: NSPanel {
         isFloatingPanel = true
         center()
         isMovableByWindowBackground = true
+        isExcludedFromWindowsMenu = false
+    }
+ 
+    override var canBecomeMain: Bool {
+        true
     }
     
     override func cancelOperation(_ sender: Any?) {
