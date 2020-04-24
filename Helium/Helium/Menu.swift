@@ -10,6 +10,7 @@ import Cocoa
 import WebKit
 
 extension NSApplication {
+    // FIXME: Should not respond to selector if all windows are closed
     @objc func closeAllWindows(_ sender: Any?) {
         for window in windows {
             window.performClose(sender)
