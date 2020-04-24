@@ -25,10 +25,43 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
         panel.level = .mainMenu
         panel.hidesOnDeactivate = false
         panel.hasShadow = true
+        panel.isFloatingPanel = true
         panel.center()
         let panelController = HeliumPanelController(window: panel)
         panel.delegate = panelController
         return panelController
+    }
+    
+    override init(window: NSWindow?) {
+        super.init(window: window)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.didBecomeActive), name: NSApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.willResignActive), name: NSApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.didUpdateTitle(_:)), name: NSNotification.Name(rawValue: "HeliumUpdateTitle"), object: nil)
+                
+        cancellables.append(UserSetting.$disabledFullScreenFloat.sink { [unowned self] disabledFullScreenFloat in
+            if disabledFullScreenFloat {
+                self.panel.collectionBehavior.insert(.moveToActiveSpace)
+                self.panel.collectionBehavior.remove(.canJoinAllSpaces)
+
+            } else {
+                self.panel.collectionBehavior.remove(.moveToActiveSpace)
+                self.panel.collectionBehavior.insert(.canJoinAllSpaces)
+            }
+        })
+        cancellables.append(UserSetting.$translucencyMode.sink { [unowned self] _ in
+            self.updateTranslucency()
+        })
+        cancellables.append(UserSetting.$translucencyEnabled.sink { [unowned self] _ in
+            self.updateTranslucency()
+        })
+        cancellables.append(UserSetting.$opacityPercentage.sink { [unowned self] _ in
+            self.updateTranslucency()
+        })
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private var webViewController: WebViewController {
@@ -74,39 +107,8 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
     
     
     // MARK: Window lifecycle
-    func windowDidResize(_ notification: Notification) {
-        panel.isFloatingPanel = true
-    }
     
     var cancellables: [AnyCancellable] = []
-    override func windowDidLoad() {
-        panel.isFloatingPanel = true
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.didBecomeActive), name: NSApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.willResignActive), name: NSApplication.willResignActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.didUpdateTitle(_:)), name: NSNotification.Name(rawValue: "HeliumUpdateTitle"), object: nil)
-                
-        cancellables.append(UserSetting.$disabledFullScreenFloat.sink { [unowned self] disabledFullScreenFloat in
-            if disabledFullScreenFloat {
-                self.panel.collectionBehavior.insert(.moveToActiveSpace)
-                self.panel.collectionBehavior.remove(.canJoinAllSpaces)
-
-            } else {
-                self.panel.collectionBehavior.remove(.moveToActiveSpace)
-                self.panel.collectionBehavior.insert(.canJoinAllSpaces)
-            }
-        })
-        cancellables.append(UserSetting.$translucencyMode.sink { [unowned self] _ in
-            self.updateTranslucency()
-        })
-        cancellables.append(UserSetting.$translucencyEnabled.sink { [unowned self] _ in
-            print("HANDLING ENABLED")
-            self.updateTranslucency()
-        })
-        cancellables.append(UserSetting.$opacityPercentage.sink { [unowned self] _ in
-            self.updateTranslucency()
-        })
-    }
 
     // MARK: Mouse events
     override func mouseEntered(with event: NSEvent) {
