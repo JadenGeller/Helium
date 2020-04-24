@@ -9,6 +9,12 @@
 import AppKit
 import OpenCombine
 
+class HeliumPanel: NSPanel {
+    override func cancelOperation(_ sender: Any?) {
+        // Override default behavior to prevent panel from closing
+    }
+}
+
 class HeliumPanelController: NSWindowController, NSWindowDelegate {
     convenience init() {
         self.init(window: nil)
@@ -17,7 +23,7 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
         precondition(window == nil, "call init() with no window")
         let webController = WebViewController()
         webController.view.frame.size = .init(width: 480, height: 300)
-        let panel = NSPanel(contentViewController: webController)
+        let panel = HeliumPanel(contentViewController: webController)
         panel.styleMask = [
             .hudWindow,
             .utilityWindow,
