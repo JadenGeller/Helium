@@ -16,11 +16,11 @@ class HeliumWebView: WKWebView {
 }
 
 class WebViewController: NSViewController, WKNavigationDelegate, NSMenuItemValidation {
-
+    
     var trackingTag: NSView.TrackingRectTag?
-
+    
     override func loadView() {
-      self.view = NSView()
+        self.view = NSView()
     }
     
     // MARK: View lifecycle
@@ -38,7 +38,7 @@ class WebViewController: NSViewController, WKNavigationDelegate, NSMenuItemValid
         
         // Allow plug-ins such as silverlight
         webView.configuration.preferences.plugInsEnabled = true
-                
+        
         // Setup magic URLs
         webView.navigationDelegate = self
         
@@ -47,23 +47,20 @@ class WebViewController: NSViewController, WKNavigationDelegate, NSMenuItemValid
         
         // Alow back and forth
         webView.allowsBackForwardNavigationGestures = true
-        
-        // Listen for load progress
-        webView.addObserver(self, forKeyPath: "estimatedProgress", options: NSKeyValueObservingOptions.new, context: nil)
-        
+                
         clear()
     }
-
+    
     override func viewDidLayout() {
         super.viewDidLayout()
-
+        
         if let tag = trackingTag {
             view.removeTrackingRect(tag)
         }
-
+        
         trackingTag = view.addTrackingRect(view.bounds, owner: self, userData: nil, assumeInside: false)
     }
-
+    
     // MARK: Actions
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         switch menuItem.title {
@@ -90,7 +87,7 @@ class WebViewController: NSViewController, WKNavigationDelegate, NSMenuItemValid
     
     @objc func resetZoomLevel(_ sender: AnyObject) {
         resetZoom()
-         }
+    }
     @objc func zoomIn(_ sender: AnyObject) {
         zoomIn()
     }
@@ -132,7 +129,7 @@ class WebViewController: NSViewController, WKNavigationDelegate, NSMenuItemValid
             loadURL(URL(string: "https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html")!)
         }
     }
-
+    
     var webView = HeliumWebView()
     
     // Redirect Hulu and YouTube to pop-out videos
@@ -144,20 +141,6 @@ class WebViewController: NSViewController, WKNavigationDelegate, NSMenuItemValid
         
         decisionHandler(WKNavigationActionPolicy.allow)
     }
-    
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if object as! NSObject == webView && keyPath == "estimatedProgress" {
-            if let progress = change?[NSKeyValueChangeKey.newKey] as? Float {
-                let percent = progress * 100
-                var title = NSString(format: "Loading... %.2f%%", percent)
-                if percent == 100 {
-                    title = "Helium"
-                }
-                
-                let notif = Notification(name: Notification.Name(rawValue: "HeliumUpdateTitle"), object: title);
-                NotificationCenter.default.post(notif)
-            }
-        }
-    }
-    }
+
+}
 
