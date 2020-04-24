@@ -27,6 +27,7 @@ class HeliumPanel: NSPanel {
         center()
         isMovableByWindowBackground = true
         isExcludedFromWindowsMenu = false
+        isReleasedWhenClosed = true
     }
  
     override var canBecomeMain: Bool {

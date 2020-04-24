@@ -24,14 +24,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         windowControllerManager.newWindow().showWindow(self)
     }
     
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
-        showNewWindow(self)
-    }
-
-    func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
-    }
-    
     //MARK: - handleURLEvent
     // Called when the App opened via URL.
     @objc func handleURLEvent(_ event: NSAppleEventDescriptor, withReply reply: NSAppleEventDescriptor) {
@@ -46,6 +38,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "HeliumLoadURL"), object: urlObject)
         
+    }
+    
+    func applicationOpenUntitledFile(_ sender: NSApplication) -> Bool {
+        showNewWindow(self)
+        return true
     }
 }
 
