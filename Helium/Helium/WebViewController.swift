@@ -9,6 +9,12 @@
 import Cocoa
 import WebKit
 
+class HeliumWebView: WKWebView {
+    override var mouseDownCanMoveWindow: Bool {
+        true
+    }
+}
+
 class WebViewController: NSViewController, WKNavigationDelegate, NSMenuItemValidation {
 
     var trackingTag: NSView.TrackingRectTag?
@@ -125,7 +131,7 @@ class WebViewController: NSViewController, WKNavigationDelegate, NSMenuItemValid
         }
     }
 
-    var webView = WKWebView()
+    var webView = HeliumWebView()
     
     // Redirect Hulu and YouTube to pop-out videos
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {

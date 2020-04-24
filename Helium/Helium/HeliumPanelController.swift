@@ -31,6 +31,7 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
         panel.hasShadow = true
         panel.isFloatingPanel = true
         panel.center()
+        panel.isMovableByWindowBackground = true
         
         super.init(window: panel)
 
