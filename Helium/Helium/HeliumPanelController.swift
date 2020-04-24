@@ -62,6 +62,7 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
         let webController = WebViewController()
         webController.view.frame.size = .init(width: 480, height: 300)
         let panel = HeliumPanel(contentViewController: webController)
+        panel.bind(.title, to: webController, withKeyPath: "title", options: nil)
         
         super.init(window: panel)
 
@@ -69,7 +70,6 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.didBecomeActive), name: NSApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.willResignActive), name: NSApplication.willResignActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.didUpdateTitle(_:)), name: NSNotification.Name(rawValue: "HeliumUpdateTitle"), object: panel)
                 
         cancellables.append(UserSetting.$disabledFullScreenFloat.sink { [unowned self] disabledFullScreenFloat in
             if disabledFullScreenFloat {
@@ -243,12 +243,7 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
     }
     
     //MARK: Actual functionality
-    
-    @objc private func didUpdateTitle(_ notification: Notification) {
-        if let title = notification.object as? String {
-            panel.title = title
-        }
-    }
+
 
     func validateURL(_ stringURL: String) -> Bool {
         
@@ -263,6 +258,7 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
     }
     
     @objc private func willResignActive() {
+        guard let panel = panel else { return }
         panel.ignoresMouseEvents = !panel.isOpaque
     }
 }
