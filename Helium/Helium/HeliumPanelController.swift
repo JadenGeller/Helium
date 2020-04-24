@@ -100,6 +100,7 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
             self.updateTranslucency()
         })
         cancellables.append(UserSetting.$translucencyEnabled.sink { [unowned self] _ in
+            print("HANDLING ENABLED")
             self.updateTranslucency()
         })
         cancellables.append(UserSetting.$opacityPercentage.sink { [unowned self] _ in
