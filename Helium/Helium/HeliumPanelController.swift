@@ -27,11 +27,20 @@ class HeliumPanel: NSPanel {
         center()
         isMovableByWindowBackground = true
         isExcludedFromWindowsMenu = false
-        isReleasedWhenClosed = true
     }
  
     override var canBecomeMain: Bool {
         true
+    }
+    
+    override var isReleasedWhenClosed: Bool {
+        get {
+            true
+        }
+        @available(*, unavailable)
+        set {
+            // Ignore AppKit's attempts to set this property
+        }
     }
     
     override func makeKey() {
