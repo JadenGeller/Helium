@@ -70,7 +70,7 @@ class HeliumSearchFieldToolbarItem: NSToolbarItem, NSSearchFieldDelegate {
         let searchField = NSSearchField()
         searchField.delegate = self
         searchField.target = self
-        searchField.action = #selector(HeliumSearchFieldToolbarItem.navigate)
+        searchField.action = #selector(navigate)
         searchField.placeholderString = "Search or enter website name"
         searchField.sendsWholeSearchString = true // Send action only on enter, not unfocus
         view = searchField
@@ -82,17 +82,31 @@ class HeliumSearchFieldToolbarItem: NSToolbarItem, NSSearchFieldDelegate {
 }
 
 class HeliumDirectionalNavigationButtonsToolbarItem: NSToolbarItem {
+    enum Segment: Int {
+        case back = 0
+        case forward = 1
+    }
+    
     let handleNavigation: (ToolbarAction.NavigationDestination) -> Void
     init(_ handleNavigation: @escaping (ToolbarAction.NavigationDestination) -> Void) {
         self.handleNavigation = handleNavigation
         super.init(itemIdentifier: .heliumDirectionalNavigationButtons)
         let control = NSSegmentedControl()
         control.segmentStyle = .separated
-        if #available(macOS 10.13, *) {
-            // FIXME: This is super whacky in old versions of macOS
-            control.trackingMode = .momentary
-        }
+        control.trackingMode = .momentary
+        control.isContinuous = false
         control.segmentCount = 2
+        control.target = self
+        control.action = #selector(navigate)
         view = control
+    }
+    
+    @objc func navigate(_ control: NSSegmentedControl) {
+        switch Segment(rawValue: control.selectedSegment)! {
+        case .back:
+            handleNavigation(.back)
+        case .forward:
+            handleNavigation(.forward)
+        }
     }
 }
