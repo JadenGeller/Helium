@@ -71,7 +71,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         webView.magnification -= 0.1
     }
     
-    internal func loadAlmostURL(_ text: String) {
+    func loadAlmostURL(_ text: String) {
         var text = text
         if !(text.lowercased().hasPrefix("http://") || text.lowercased().hasPrefix("https://")) {
             text = "http://" + text
@@ -85,7 +85,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     
     // MARK: Loading
     
-    internal func loadURL(_ url: URL) {
+    func loadURL(_ url: URL) {
         webView.load(URLRequest(url: url))
     }
     
@@ -106,6 +106,7 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         }
     }
     
+    // FIXME: Shouldn't this be private?
     var webView = HeliumWebView()
     
     // Redirect Hulu and YouTube to pop-out videos
