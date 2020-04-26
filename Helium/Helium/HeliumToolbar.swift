@@ -15,13 +15,16 @@ enum ToolbarAction {
         case back
     }
     case navigate(NavigationDestination)
+    case hideToolbar
 }
 
 class HeliumToolbar: NSToolbar, NSToolbarDelegate {
     let handleNavigation: (ToolbarAction.NavigationDestination) -> Void
+    let hideToolbar: () -> Void
 
     init(_ handleAction: @escaping (ToolbarAction) -> Void) {
         self.handleNavigation = { destination in handleAction(.navigate(destination)) }
+        self.hideToolbar = { handleAction(.hideToolbar) }
         super.init(identifier: "HeliumToolbar")
         self.delegate = self
     }
@@ -31,7 +34,8 @@ class HeliumToolbar: NSToolbar, NSToolbarDelegate {
             .space,
             .flexibleSpace,
             .heliumSearchField,
-            .heliumDirectionalNavigationButtons
+            .heliumDirectionalNavigationButtons,
+            .heliumHideToolbarButton
         ]
     }
     
@@ -40,7 +44,8 @@ class HeliumToolbar: NSToolbar, NSToolbarDelegate {
             .heliumDirectionalNavigationButtons,
             .flexibleSpace,
             .heliumSearchField,
-            .flexibleSpace
+            .flexibleSpace,
+            .heliumHideToolbarButton
         ]
     }
     
@@ -50,6 +55,8 @@ class HeliumToolbar: NSToolbar, NSToolbarDelegate {
             return HeliumSearchFieldToolbarItem(handleNavigation)
         case .heliumDirectionalNavigationButtons:
             return HeliumDirectionalNavigationButtonsToolbarItem(handleNavigation)
+        case .heliumHideToolbarButton:
+            return HeliumHideToolbarButtonToolbarItem(hideToolbar)
         default:
             fatalError("Unexpected itemIdentifier")
         }
@@ -59,6 +66,7 @@ class HeliumToolbar: NSToolbar, NSToolbarDelegate {
 extension NSToolbarItem.Identifier {
     static var heliumSearchField = NSToolbarItem.Identifier("heliumSearchField")
     static var heliumDirectionalNavigationButtons = NSToolbarItem.Identifier("heliumDirectionalNavigationButtons")
+    static var heliumHideToolbarButton = NSToolbarItem.Identifier("heliumHideToolbarButton")
 }
 
 class HeliumSearchFieldToolbarItem: NSToolbarItem, NSSearchFieldDelegate {
@@ -109,5 +117,24 @@ class HeliumDirectionalNavigationButtonsToolbarItem: NSToolbarItem {
         case .forward:
             handleNavigation(.forward)
         }
+    }
+}
+
+class HeliumHideToolbarButtonToolbarItem: NSToolbarItem {
+    let hideToolbar: () -> Void
+    init(_ handleNavigation: @escaping () -> Void) {
+        self.hideToolbar = handleNavigation
+        super.init(itemIdentifier: .heliumDirectionalNavigationButtons)
+        let control = NSSegmentedControl()
+        control.trackingMode = .momentary
+        control.isContinuous = false
+        control.segmentCount = 1
+        control.target = self
+        control.action = #selector(hideToolbar(_:))
+        view = control
+    }
+    
+    @objc func hideToolbar(_ control: NSSegmentedControl) {
+        self.hideToolbar()
     }
 }

@@ -57,18 +57,17 @@ class HeliumWindowController: NSWindowController, NSWindowDelegate {
     convenience init() {
         self.init(window: nil)
     }
+    
+    let toolbar: HeliumToolbar
     private override init(window: NSWindow?) {
         precondition(window == nil, "call init() with no window")
         let webController = WebViewController()
         webController.view.frame.size = .init(width: 480, height: 300)
         let window = HeliumWindow(contentViewController: webController)
         window.bind(.title, to: webController, withKeyPath: "title", options: nil)
-        
-        super.init(window: window)
-        window.delegate = self
-        
+                
         // FIXME: Are there memeory leaks here?
-        let toolbar = HeliumToolbar { action in
+        toolbar = HeliumToolbar { action in
             switch action {
             case .navigate(.back):
                 webController.webView.goBack()
@@ -76,8 +75,15 @@ class HeliumWindowController: NSWindowController, NSWindowDelegate {
                 webController.webView.goForward()
             case .navigate(.toLocation(let location)):
                 webController.loadAlmostURL(location)
+            case .hideToolbar:
+                window.toolbar = nil
+                window.styleMask.remove(.titled)
             }
         }
+        
+        super.init(window: window)
+        window.delegate = self
+
         
         window.titleVisibility = .hidden
         window.toolbar = toolbar
@@ -202,17 +208,13 @@ class HeliumWindowController: NSWindowController, NSWindowDelegate {
     @objc func hideTitle(_ sender: NSMenuItem) {
         if sender.state == .on {
             sender.state = .off
-            window!.styleMask = .borderless
+            window!.styleMask.remove(.titled)
+            window!.toolbar = nil
         }
         else {
             sender.state = .on
-            window!.styleMask = [
-                .hudWindow,
-                .nonactivatingPanel,
-                .utilityWindow,
-                .resizable,
-                .titled
-            ]
+            window!.styleMask.insert(.titled)
+            window!.toolbar = toolbar
         }
 	}
     
