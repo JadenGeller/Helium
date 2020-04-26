@@ -6,6 +6,18 @@
 //  Copyright © 2015 Jaden Geller. All rights reserved.
 //
 
+enum ToolbarVisibility: String {
+    case visible
+    case hidden
+    
+    mutating func toggle() {
+        switch self {
+        case .visible: self = .hidden
+        case .hidden: self = .visible
+        }
+    }
+}
+
 internal enum UserSetting {
     @UserDefault(key: "disabledMagicURLs")
     static var disabledMagicURLs = false
@@ -24,10 +36,12 @@ internal enum UserSetting {
         case mouseOver
         case mouseOutside
     }
-    
     @UserDefault(key: "translucencyMode")
     static var translucencyMode: TranslucencyMode = .always
     
     @UserDefault(key: "translucencyEnabled")
     static var translucencyEnabled: Bool = false
+    
+    @UserDefault(key: "toolbarVisibility")
+    static var toolbarVisibility: ToolbarVisibility = .visible
 }

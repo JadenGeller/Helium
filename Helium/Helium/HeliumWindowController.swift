@@ -14,7 +14,8 @@ class HeliumWindowController: NSWindowController, NSWindowDelegate {
         self.init(window: nil)
     }
     
-    let toolbar: HeliumToolbar
+    // FIXME: Don't use IUO or var here
+    var toolbar: HeliumToolbar!
     private override init(window: NSWindow?) {
         precondition(window == nil, "call init() with no window")
         let webController = WebViewController()
@@ -22,8 +23,11 @@ class HeliumWindowController: NSWindowController, NSWindowDelegate {
         let window = HeliumWindow(contentViewController: webController)
         window.bind(.title, to: webController, withKeyPath: "title", options: nil)
                 
+        super.init(window: window)
+        window.delegate = self
+
         // FIXME: Are there memeory leaks here?
-        toolbar = HeliumToolbar { action in
+        toolbar = HeliumToolbar { [unowned self] action in
             switch action {
             case .navigate(.back):
                 webController.webView.goBack()
@@ -32,13 +36,9 @@ class HeliumWindowController: NSWindowController, NSWindowDelegate {
             case .navigate(.toLocation(let location)):
                 webController.loadAlmostURL(location)
             case .hideToolbar:
-                window.toolbar = nil
-                window.styleMask.remove(.titled)
+                self.toolbarVisibility = .hidden
             }
         }
-        
-        super.init(window: window)
-        window.delegate = self
 
         
         window.titleVisibility = .hidden
@@ -66,6 +66,20 @@ class HeliumWindowController: NSWindowController, NSWindowDelegate {
         cancellables.append(UserSetting.$opacityPercentage.sink { [unowned self] _ in
             self.updateTranslucency()
         })
+        cancellables.append(UserSetting.$toolbarVisibility.assign(to: \.toolbarVisibility, on: self))
+    }
+    
+    var toolbarVisibility: ToolbarVisibility = UserSetting.toolbarVisibility {
+        didSet {
+            switch toolbarVisibility {
+            case .visible:
+                window!.styleMask.insert(.titled)
+                window!.toolbar = toolbar
+            case .hidden:
+                window!.styleMask.remove(.titled)
+                window!.toolbar = nil
+            }
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -161,19 +175,6 @@ class HeliumWindowController: NSWindowController, NSWindowDelegate {
         }
     }
 
-    @objc func hideTitle(_ sender: NSMenuItem) {
-        if sender.state == .on {
-            sender.state = .off
-            window!.styleMask.remove(.titled)
-            window!.toolbar = nil
-        }
-        else {
-            sender.state = .on
-            window!.styleMask.insert(.titled)
-            window!.toolbar = toolbar
-        }
-	}
-    
     @objc func setHomePage(_ sender: AnyObject){
         let alert = NSAlert()
         alert.alertStyle = .informational

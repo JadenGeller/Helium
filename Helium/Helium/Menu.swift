@@ -116,8 +116,13 @@ func buildMenus() -> (servicesMenu: NSMenu, windowsMenu: NSMenu, mainMenu: NSMen
         ]),
         
         NSMenuItem(title: "View").submenu([
-            NSMenuItem(title: "Title Bar")
-                .action(#selector(HeliumWindowController.hideTitle(_:)))
+            NSMenuItem(title: UserSetting.$toolbarVisibility.map({
+                switch $0 {
+                case .visible: return "Hide Toolbar"
+                case .hidden: return "Show Toolbar"
+                }
+            }))
+                .action({ UserSetting.toolbarVisibility.toggle() })
                 .keyEquivalent("b", with: .command),
             
             NSMenuItem(title: "Translucency")
