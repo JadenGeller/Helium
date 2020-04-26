@@ -9,7 +9,7 @@
 import AppKit
 import OpenCombine
 
-class HeliumWindow: NSWindow {
+class HeliumWindow: NSPanel {
     override init(contentRect: NSRect, styleMask style: NSWindow.StyleMask, backing backingStoreType: NSWindow.BackingStoreType, defer flag: Bool) {
         super.init(contentRect: contentRect, styleMask: style, backing: backingStoreType, defer: flag)
         level = .mainMenu
@@ -18,6 +18,11 @@ class HeliumWindow: NSWindow {
         center()
         isMovableByWindowBackground = true
         isExcludedFromWindowsMenu = false
+        styleMask.insert(.nonactivatingPanel)
+        collectionBehavior = [
+            .canJoinAllSpaces,
+            .fullScreenAuxiliary,
+        ]
     }
  
     override var canBecomeMain: Bool {
