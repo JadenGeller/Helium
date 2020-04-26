@@ -98,6 +98,8 @@ class HeliumDirectionalNavigationButtonsToolbarItem: NSToolbarItem {
         control.segmentCount = 2
         control.target = self
         control.action = #selector(navigate)
+        control.setImage(NSImage(named: NSImage.goBackTemplateName), forSegment: 0)
+        control.setImage(NSImage(named: NSImage.goForwardTemplateName), forSegment: 1)
         view = control
     }
     
