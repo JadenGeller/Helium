@@ -12,15 +12,6 @@ import OpenCombine
 class HeliumWindow: NSWindow {
     override init(contentRect: NSRect, styleMask style: NSWindow.StyleMask, backing backingStoreType: NSWindow.BackingStoreType, defer flag: Bool) {
         super.init(contentRect: contentRect, styleMask: style, backing: backingStoreType, defer: flag)
-        styleMask = [
-            .hudWindow,
-            .utilityWindow,
-            .nonactivatingPanel,
-            .titled,
-            .resizable,
-            .miniaturizable,
-            .closable
-        ]
         level = .mainMenu
         hidesOnDeactivate = false
         hasShadow = true
