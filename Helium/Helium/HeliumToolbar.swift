@@ -24,7 +24,6 @@ class HeliumToolbar: NSToolbar, NSToolbarDelegate {
         self.handleNavigation = { destination in handleAction(.navigate(destination)) }
         super.init(identifier: "HeliumToolbar")
         self.delegate = self
-        sizeMode = .small
     }
     
     func toolbarAllowedItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
