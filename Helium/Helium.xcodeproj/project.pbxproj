@@ -14,7 +14,7 @@
 		4D867CB71AD6781200681331 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D867CB61AD6781200681331 /* AppDelegate.swift */; };
 		4D867CB91AD6781200681331 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D867CB81AD6781200681331 /* WebViewController.swift */; };
 		4D867CBB1AD6781200681331 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D867CBA1AD6781200681331 /* Images.xcassets */; };
-		4D867CD41AD6796A00681331 /* HeliumPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D867CD31AD6796A00681331 /* HeliumPanelController.swift */; };
+		4D867CD41AD6796A00681331 /* HeliumWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D867CD31AD6796A00681331 /* HeliumWindowController.swift */; };
 		4D8DAEAC1C3A41F300B212EC /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA3EA011BE4CEC9001A471F /* UserSettings.swift */; };
 		4D8DAEB31C3A427D00B212EC /* HeliumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8DAEB11C3A427D00B212EC /* HeliumTests.swift */; };
 		4D8DAEB41C3A427D00B212EC /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4D8DAEB21C3A427D00B212EC /* Info.plist */; };
@@ -82,7 +82,7 @@
 		4D867CB81AD6781200681331 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		4D867CBA1AD6781200681331 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4D867CC31AD6781200681331 /* HeliumTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HeliumTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4D867CD31AD6796A00681331 /* HeliumPanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeliumPanelController.swift; sourceTree = "<group>"; };
+		4D867CD31AD6796A00681331 /* HeliumWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeliumWindowController.swift; sourceTree = "<group>"; };
 		4D8DAEB11C3A427D00B212EC /* HeliumTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeliumTests.swift; sourceTree = "<group>"; };
 		4D8DAEB21C3A427D00B212EC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AAA3EA011BE4CEC9001A471F /* UserSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
@@ -169,7 +169,7 @@
 				D769ABD5244D2DB900215C76 /* Menu.swift */,
 				4D867CB61AD6781200681331 /* AppDelegate.swift */,
 				D79D51FF24514123008AC3FF /* WindowControllerManager.swift */,
-				4D867CD31AD6796A00681331 /* HeliumPanelController.swift */,
+				4D867CD31AD6796A00681331 /* HeliumWindowController.swift */,
 				D79D52422454DB15008AC3FF /* HeliumToolbar.swift */,
 				4D867CB81AD6781200681331 /* WebViewController.swift */,
 				4D867CBA1AD6781200681331 /* Images.xcassets */,
@@ -377,7 +377,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D867CD41AD6796A00681331 /* HeliumPanelController.swift in Sources */,
+				4D867CD41AD6796A00681331 /* HeliumWindowController.swift in Sources */,
 				4D8DAEAC1C3A41F300B212EC /* UserSettings.swift in Sources */,
 				D769ABD8244D2DDD00215C76 /* main.swift in Sources */,
 				D769ABDE244F477100215C76 /* UserDefaultHelpers.swift in Sources */,

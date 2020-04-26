@@ -11,8 +11,8 @@ import Cocoa
 class WindowControllerManager {
     private(set) var managedControllers: [NSWindowController] = []
     
-    func newWindow() -> HeliumPanelController {
-        let controller = HeliumPanelController()
+    func newWindow() -> HeliumWindowController {
+        let controller = HeliumWindowController()
         managedControllers.append(controller)
         NotificationCenter.default.addObserver(forName: NSWindow.willCloseNotification, object: controller.window, queue: .main) { [unowned self] _ in
             self.managedControllers.removeAll(where: { window in window == controller.window })

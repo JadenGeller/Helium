@@ -1,5 +1,5 @@
 //
-//  HeliumPanelController.swift
+//  HeliumWindowController.swift
 //  Helium
 //
 //  Created by Jaden Geller on 4/9/15.
@@ -9,7 +9,7 @@
 import AppKit
 import OpenCombine
 
-class HeliumPanel: NSPanel {
+class HeliumWindow: NSWindow {
     override init(contentRect: NSRect, styleMask style: NSWindow.StyleMask, backing backingStoreType: NSWindow.BackingStoreType, defer flag: Bool) {
         super.init(contentRect: contentRect, styleMask: style, backing: backingStoreType, defer: flag)
         styleMask = [
@@ -18,12 +18,12 @@ class HeliumPanel: NSPanel {
             .nonactivatingPanel,
             .titled,
             .resizable,
+            .miniaturizable,
             .closable
         ]
         level = .mainMenu
         hidesOnDeactivate = false
         hasShadow = true
-        isFloatingPanel = true
         center()
         isMovableByWindowBackground = true
         isExcludedFromWindowsMenu = false
@@ -53,7 +53,7 @@ class HeliumPanel: NSPanel {
     }
 }
 
-class HeliumPanelController: NSWindowController, NSWindowDelegate {
+class HeliumWindowController: NSWindowController, NSWindowDelegate {
     convenience init() {
         self.init(window: nil)
     }
@@ -61,11 +61,11 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
         precondition(window == nil, "call init() with no window")
         let webController = WebViewController()
         webController.view.frame.size = .init(width: 480, height: 300)
-        let panel = HeliumPanel(contentViewController: webController)
-        panel.bind(.title, to: webController, withKeyPath: "title", options: nil)
+        let window = HeliumWindow(contentViewController: webController)
+        window.bind(.title, to: webController, withKeyPath: "title", options: nil)
         
-        super.init(window: panel)
-        panel.delegate = self
+        super.init(window: window)
+        window.delegate = self
         
         // FIXME: Are there memeory leaks here?
         let toolbar = HeliumToolbar { action in
@@ -79,20 +79,20 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
             }
         }
         
-        panel.titleVisibility = .hidden
-        panel.toolbar = toolbar
+        window.titleVisibility = .hidden
+        window.toolbar = toolbar
         
-        NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.didBecomeActive), name: NSApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(HeliumPanelController.willResignActive), name: NSApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(HeliumWindowController.didBecomeActive), name: NSApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(HeliumWindowController.willResignActive), name: NSApplication.willResignActiveNotification, object: nil)
                 
         cancellables.append(UserSetting.$disabledFullScreenFloat.sink { [unowned self] disabledFullScreenFloat in
             if disabledFullScreenFloat {
-                self.panel.collectionBehavior.insert(.moveToActiveSpace)
-                self.panel.collectionBehavior.remove(.canJoinAllSpaces)
+                self.window!.collectionBehavior.insert(.moveToActiveSpace)
+                self.window!.collectionBehavior.remove(.canJoinAllSpaces)
 
             } else {
-                self.panel.collectionBehavior.remove(.moveToActiveSpace)
-                self.panel.collectionBehavior.insert(.canJoinAllSpaces)
+                self.window!.collectionBehavior.remove(.moveToActiveSpace)
+                self.window!.collectionBehavior.insert(.canJoinAllSpaces)
             }
         })
         cancellables.append(UserSetting.$translucencyMode.sink { [unowned self] _ in
@@ -133,24 +133,17 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
     
     func updateTranslucency() {
         if !NSApplication.shared.isActive {
-            panel.ignoresMouseEvents = shouldBeTranslucentForMouseState
+            window!.ignoresMouseEvents = shouldBeTranslucentForMouseState
         }
         if shouldBeTranslucentForMouseState {
-            panel.animator().alphaValue = CGFloat(UserSetting.opacityPercentage) / 100
-            panel.isOpaque = false
+            window!.animator().alphaValue = CGFloat(UserSetting.opacityPercentage) / 100
+            window!.isOpaque = false
         }
         else {
-            panel.isOpaque = true
-            panel.animator().alphaValue = 1
+            window!.isOpaque = true
+            window!.animator().alphaValue = 1
         }
     }
-    
-    private var panel: NSPanel! {
-        get {
-            return (self.window as! NSPanel)
-        }
-    }
-    
     
     // MARK: Window lifecycle
     
@@ -209,11 +202,11 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
     @objc func hideTitle(_ sender: NSMenuItem) {
         if sender.state == .on {
             sender.state = .off
-            panel.styleMask = .borderless
+            window!.styleMask = .borderless
         }
         else {
             sender.state = .on
-            panel.styleMask = [
+            window!.styleMask = [
                 .hudWindow,
                 .nonactivatingPanel,
                 .utilityWindow,
@@ -268,11 +261,11 @@ class HeliumPanelController: NSWindowController, NSWindowDelegate {
     }
         
     @objc private func didBecomeActive() {
-        panel.ignoresMouseEvents = false
+        window!.ignoresMouseEvents = false
     }
     
     @objc private func willResignActive() {
-        guard let panel = panel else { return }
-        panel.ignoresMouseEvents = !panel.isOpaque
+        guard let window = window else { return }
+        window.ignoresMouseEvents = !window.isOpaque
     }
 }

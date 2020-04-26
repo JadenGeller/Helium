@@ -39,7 +39,7 @@ func buildMenus() -> (servicesMenu: NSMenu, windowsMenu: NSMenu, mainMenu: NSMen
                 NSMenuItem(title: "Preferences...")
                     .submenu([
                         NSMenuItem(title: "Set Homepage")
-                            .action(#selector(HeliumPanelController.setHomePage(_:))),
+                            .action(#selector(HeliumWindowController.setHomePage(_:))),
                         NSMenuItem(title: "Magic URL Redirects")
                             .state(UserSetting.$disabledMagicURLs.map({ $0 ? .off : .on }))
                             .action({ UserSetting.disabledMagicURLs.toggle() }),
@@ -73,10 +73,10 @@ func buildMenus() -> (servicesMenu: NSMenu, windowsMenu: NSMenu, mainMenu: NSMen
                 .action(#selector(AppDelegate.showNewWindow(_:)))
                 .keyEquivalent("n", with: .command),
             NSMenuItem(title: "Open File...")
-                .action(#selector(HeliumPanelController.openFilePress(_:)))
+                .action(#selector(HeliumWindowController.openFilePress(_:)))
                 .keyEquivalent("f", with: .command),
             NSMenuItem(title: "Open Location...")
-                .action(#selector(HeliumPanelController.openLocationPress(_:)))
+                .action(#selector(HeliumWindowController.openLocationPress(_:)))
                 .keyEquivalent("l", with: .command),
             
             NSMenuItem.separator(),
@@ -117,7 +117,7 @@ func buildMenus() -> (servicesMenu: NSMenu, windowsMenu: NSMenu, mainMenu: NSMen
         
         NSMenuItem(title: "View").submenu([
             NSMenuItem(title: "Title Bar")
-                .action(#selector(HeliumPanelController.hideTitle(_:)))
+                .action(#selector(HeliumWindowController.hideTitle(_:)))
                 .keyEquivalent("b", with: .command),
             
             NSMenuItem(title: "Translucency")
