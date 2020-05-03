@@ -8,15 +8,6 @@
 
 import Cocoa
 
-protocol NSMenuItemRepresentable {
-    func makeNSMenuItem() -> NSMenuItem
-}
-
-protocol NSMenuItemListRepresentable {
-    typealias Item = NSMenuItemRepresentable
-    var items: [Item] { get }
-}
-
 protocol Menu {
     var body: Menu { get }
 }

@@ -8,7 +8,7 @@
 
 import Cocoa
 
-struct MenuButton: PrimitiveMenu, NSMenuItemRepresentable, NSMenuRepresentable {
+struct MenuButton: PrimitiveMenu, NSMenuItemRepresentable {
     var title: String
     var submenu: Menu
     

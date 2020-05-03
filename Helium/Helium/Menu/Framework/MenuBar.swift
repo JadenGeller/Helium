@@ -8,12 +8,8 @@
 
 import Cocoa
 
-protocol NSMenuRepresentable {
-    func makeNSMenu() -> NSMenu
-}
-
-struct MenuBar: NSMenuRepresentable {
-    var menus: [NSMenuRepresentable]
+struct MenuBar {
+    var menus: [MenuButton]
     
     func makeNSMenu() -> NSMenu {
         NSMenu(items: menus.map({ menu in
