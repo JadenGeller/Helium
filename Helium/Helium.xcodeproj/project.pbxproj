@@ -18,7 +18,6 @@
 		4D8DAEAC1C3A41F300B212EC /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA3EA011BE4CEC9001A471F /* UserSettings.swift */; };
 		4D8DAEB31C3A427D00B212EC /* HeliumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8DAEB11C3A427D00B212EC /* HeliumTests.swift */; };
 		4D8DAEB41C3A427D00B212EC /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4D8DAEB21C3A427D00B212EC /* Info.plist */; };
-		D750E7ED245CBE6A0033DB99 /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D750E7EC245CBE6A0033DB99 /* MenuBar.swift */; };
 		D750E7EF245CBEAE0033DB99 /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D750E7EE245CBEAE0033DB99 /* MenuButton.swift */; };
 		D750E7F3245CC1990033DB99 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D750E7F2245CC1990033DB99 /* Menu.swift */; };
 		D750E7F5245CC35F0033DB99 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = D750E7F4245CC35F0033DB99 /* Section.swift */; };
@@ -28,7 +27,7 @@
 		D750E7FD245CDC550033DB99 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D750E7FC245CDC550033DB99 /* Binding.swift */; };
 		D750E800245CDD7F0033DB99 /* ForEach.swift in Sources */ = {isa = PBXBuildFile; fileRef = D750E7FF245CDD7F0033DB99 /* ForEach.swift */; };
 		D7612E13245E647C00FEA851 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7612E12245E647C00FEA851 /* List.swift */; };
-		D7612E15245E685700FEA851 /* NSMenuItemsRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7612E14245E685700FEA851 /* NSMenuItemsRepresentable.swift */; };
+		D7612E17245E6AC800FEA851 /* NSHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7612E16245E6AC800FEA851 /* NSHostingController.swift */; };
 		D769ABD6244D2DB900215C76 /* HeliumMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769ABD5244D2DB900215C76 /* HeliumMenu.swift */; };
 		D769ABD8244D2DDD00215C76 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769ABD7244D2DDC00215C76 /* main.swift */; };
 		D769ABDA244E997B00215C76 /* MenuHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769ABD9244E997B00215C76 /* MenuHelpers.swift */; };
@@ -98,7 +97,6 @@
 		4D8DAEB11C3A427D00B212EC /* HeliumTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeliumTests.swift; sourceTree = "<group>"; };
 		4D8DAEB21C3A427D00B212EC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AAA3EA011BE4CEC9001A471F /* UserSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
-		D750E7EC245CBE6A0033DB99 /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
 		D750E7EE245CBEAE0033DB99 /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
 		D750E7F2245CC1990033DB99 /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		D750E7F4245CC35F0033DB99 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
@@ -108,7 +106,7 @@
 		D750E7FC245CDC550033DB99 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
 		D750E7FF245CDD7F0033DB99 /* ForEach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForEach.swift; sourceTree = "<group>"; };
 		D7612E12245E647C00FEA851 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
-		D7612E14245E685700FEA851 /* NSMenuItemsRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMenuItemsRepresentable.swift; sourceTree = "<group>"; };
+		D7612E16245E6AC800FEA851 /* NSHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSHostingController.swift; sourceTree = "<group>"; };
 		D769ABD5244D2DB900215C76 /* HeliumMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeliumMenu.swift; sourceTree = "<group>"; };
 		D769ABD7244D2DDC00215C76 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		D769ABD9244E997B00215C76 /* MenuHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHelpers.swift; sourceTree = "<group>"; };
@@ -243,11 +241,10 @@
 			isa = PBXGroup;
 			children = (
 				D769ABD9244E997B00215C76 /* MenuHelpers.swift */,
-				D7612E14245E685700FEA851 /* NSMenuItemsRepresentable.swift */,
+				D7612E16245E6AC800FEA851 /* NSHostingController.swift */,
 				D750E7F2245CC1990033DB99 /* Menu.swift */,
 				D7612E12245E647C00FEA851 /* List.swift */,
 				D750E7FF245CDD7F0033DB99 /* ForEach.swift */,
-				D750E7EC245CBE6A0033DB99 /* MenuBar.swift */,
 				D750E7EE245CBEAE0033DB99 /* MenuButton.swift */,
 				D750E7F4245CC35F0033DB99 /* Section.swift */,
 				D750E7F6245CD7D30033DB99 /* Button.swift */,
@@ -430,6 +427,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D750E800245CDD7F0033DB99 /* ForEach.swift in Sources */,
+				D7612E17245E6AC800FEA851 /* NSHostingController.swift in Sources */,
 				D750E7F7245CD7D30033DB99 /* Button.swift in Sources */,
 				D7612E13245E647C00FEA851 /* List.swift in Sources */,
 				4D867CD41AD6796A00681331 /* HeliumWindowController.swift in Sources */,
@@ -444,10 +442,8 @@
 				D769ABDA244E997B00215C76 /* MenuHelpers.swift in Sources */,
 				D750E7FB245CDBA30033DB99 /* Picker.swift in Sources */,
 				D79D520024514123008AC3FF /* WindowControllerManager.swift in Sources */,
-				D7612E15245E685700FEA851 /* NSMenuItemsRepresentable.swift in Sources */,
 				4D867CB91AD6781200681331 /* WebViewController.swift in Sources */,
 				D750E7F5245CC35F0033DB99 /* Section.swift in Sources */,
-				D750E7ED245CBE6A0033DB99 /* MenuBar.swift in Sources */,
 				4D867CB71AD6781200681331 /* AppDelegate.swift in Sources */,
 				D769ABD6244D2DB900215C76 /* HeliumMenu.swift in Sources */,
 				D79D52432454DB15008AC3FF /* HeliumToolbar.swift in Sources */,

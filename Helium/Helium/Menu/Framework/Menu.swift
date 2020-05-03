@@ -12,6 +12,10 @@ protocol Menu {
     var body: Menu { get }
 }
 
+protocol NSMenuItemsRepresentable {
+    func makeNSMenuItems() -> [NSMenuItem]
+}
+
 typealias PrimitiveMenu = Menu & NSMenuItemsRepresentable
 
 extension Menu {
@@ -39,6 +43,7 @@ struct Flatten: PrimitiveMenu {
     func makeNSMenuItems() -> [NSMenuItem] {
         menus.flatMap({ $0.makeNSMenuItems() })
     }
+
 }
 
 @_functionBuilder

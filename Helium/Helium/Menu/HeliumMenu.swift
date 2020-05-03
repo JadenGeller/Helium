@@ -38,7 +38,7 @@ func makeMenus() -> (servicesMenu: NSMenu, windowsMenu: NSMenu, menuBar: NSMenu)
         }
     }
 
-    let menuBar = MenuBar {
+    let menuBar = List {
         MenuButton("\(Bundle.main.name)") {
             Section {
                 Button("About \(Bundle.main.name)", action: #selector(NSApplication.orderFrontStandardAboutPanel(_:)))
