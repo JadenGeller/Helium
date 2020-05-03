@@ -8,7 +8,7 @@
 
 import Cocoa
 
-struct Button: PrimitiveMenu, NSMenuItemRepresentable {
+struct Button: PrimitiveMenu {
     enum Action {
         case selector(Selector)
         case closure(() -> Void)
@@ -54,7 +54,7 @@ struct Button: PrimitiveMenu, NSMenuItemRepresentable {
         return copy
     }
     
-    func makeNSMenuItem() -> NSMenuItem {
+    func makeNSMenuItems() -> [NSMenuItem] {
         let menuItem = NSMenuItem(title: title, action: nil, keyEquivalent: keyEquivalent)
         menuItem.keyEquivalentModifierMask = keyEquivalentModifierMask
         switch action {
@@ -67,6 +67,6 @@ struct Button: PrimitiveMenu, NSMenuItemRepresentable {
             menuItem.action = #selector(Coordinator.performAction(_:))
         }
         menuItem.state = state
-        return menuItem
+        return [menuItem]
     }
 }

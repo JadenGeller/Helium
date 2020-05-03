@@ -8,7 +8,7 @@
 
 import Cocoa
 
-struct MenuButton: PrimitiveMenu, NSMenuItemRepresentable {
+struct MenuButton: PrimitiveMenu {
     var title: String
     var submenu: Menu
     
@@ -23,9 +23,9 @@ struct MenuButton: PrimitiveMenu, NSMenuItemRepresentable {
         return menu
     }
 
-    func makeNSMenuItem() -> NSMenuItem {
+    func makeNSMenuItems() -> [NSMenuItem] {
         let menuItem = NSMenuItem(title: title, action: nil, keyEquivalent: "")
         menuItem.submenu = makeNSMenu()
-        return menuItem
+        return [menuItem]
     }
 }

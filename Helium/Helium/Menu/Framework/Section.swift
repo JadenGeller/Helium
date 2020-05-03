@@ -8,9 +8,9 @@
 
 import Cocoa
 
-struct Separator: PrimitiveMenu, NSMenuItemRepresentable {
-    func makeNSMenuItem() -> NSMenuItem {
-        NSMenuItem.separator()
+struct Separator: PrimitiveMenu {
+    func makeNSMenuItems() -> [NSMenuItem] {
+        [NSMenuItem.separator()]
     }
 }
 

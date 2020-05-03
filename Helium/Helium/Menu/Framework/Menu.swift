@@ -12,41 +12,32 @@ protocol Menu {
     var body: Menu { get }
 }
 
+typealias PrimitiveMenu = Menu & NSMenuItemsRepresentable
+
 extension Menu {
-    fileprivate var items: [NSMenuItemRepresentable] {
-        guard let items = (self as? NSMenuItemListRepresentable)?.items else {
-            return body.items
+    fileprivate func makeNSMenuItems() -> [NSMenuItem] {
+        guard let items = (self as? PrimitiveMenu)?.makeNSMenuItems() else {
+            return body.makeNSMenuItems()
         }
         return items
     }
     
     func makeNSMenu() -> NSMenu {
-        NSMenu(items: items.map({ $0.makeNSMenuItem() }))
+        NSMenu(items: makeNSMenuItems())
     }
 }
-
-typealias PrimitiveMenu = Menu & NSMenuItemListRepresentable
 
 extension Menu where Self: PrimitiveMenu {
     var body: Menu {
         fatalError("\(Self.self) is a primitive Menu")
     }
 }
-extension NSMenuItemListRepresentable where Self: NSMenuItemRepresentable {
-    var items: [Item] {
-        [self]
-    }
-}
 
 struct Flatten: PrimitiveMenu {
     var menus: [Menu]
-        
-    var items: [Item] {
-        menus.flatMap({ $0.items })
-    }
-    
-    var body: Menu {
-        fatalError("Flatten is a primitive Menu")
+  
+    func makeNSMenuItems() -> [NSMenuItem] {
+        menus.flatMap({ $0.makeNSMenuItems() })
     }
 }
 
