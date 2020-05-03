@@ -8,16 +8,25 @@
 
 import Cocoa
 
-protocol Menu: NSMenuRepresentable {
-    var body: Menu { get }
-    
+protocol NSMenuItemRepresentable {
+    func makeNSMenuItem() -> NSMenuItem
+}
+
+protocol NSMenuItemListRepresentable {
     typealias Item = NSMenuItemRepresentable
     var items: [Item] { get }
 }
 
+protocol Menu {
+    var body: Menu { get }
+}
+
 extension Menu {
-    var items: [Item] {
-        body.items
+    fileprivate var items: [NSMenuItemRepresentable] {
+        guard let items = (self as? NSMenuItemListRepresentable)?.items else {
+            return body.items
+        }
+        return items
     }
     
     func makeNSMenu() -> NSMenu {
@@ -25,23 +34,20 @@ extension Menu {
     }
 }
 
-protocol NSMenuItemRepresentable {
-    func makeNSMenuItem() -> NSMenuItem
-}
+typealias PrimitiveMenu = Menu & NSMenuItemListRepresentable
 
-extension Menu where Self: NSMenuItemRepresentable {
-    var items: [Item] {
-        [self]
-    }
-    
+extension Menu where Self: PrimitiveMenu {
     var body: Menu {
         fatalError("\(Self.self) is a primitive Menu")
     }
 }
+extension NSMenuItemListRepresentable where Self: NSMenuItemRepresentable {
+    var items: [Item] {
+        [self]
+    }
+}
 
-typealias PrimitiveMenu = Menu & NSMenuItemRepresentable
-
-struct Flatten: Menu {
+struct Flatten: PrimitiveMenu {
     var menus: [Menu]
         
     var items: [Item] {

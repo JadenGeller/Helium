@@ -8,7 +8,7 @@
 
 import Cocoa
 
-struct Button: PrimitiveMenu {
+struct Button: PrimitiveMenu, NSMenuItemRepresentable {
     enum Action {
         case selector(Selector)
         case closure(() -> Void)

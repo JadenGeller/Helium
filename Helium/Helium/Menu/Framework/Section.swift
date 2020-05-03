@@ -8,11 +8,7 @@
 
 import Cocoa
 
-struct Separator: PrimitiveMenu {
-    var body: Menu {
-        fatalError("Separator is a primitive Menu")
-    }
-
+struct Separator: PrimitiveMenu, NSMenuItemRepresentable {
     func makeNSMenuItem() -> NSMenuItem {
         NSMenuItem.separator()
     }

@@ -8,22 +8,24 @@
 
 import Cocoa
 
-struct MenuButton: NSMenuRepresentable, PrimitiveMenu {
+struct MenuButton: PrimitiveMenu, NSMenuItemRepresentable, NSMenuRepresentable {
     var title: String
     var submenu: Menu
     
+    init(_ title: String, @MenuBuilder submenu: () -> Menu) {
+        self.title = title
+        self.submenu = submenu()
+    }
+    
     func makeNSMenu() -> NSMenu {
-        NSMenu(title: title, items: submenu.items.map({ $0.makeNSMenuItem() }))
+        let menu = submenu.makeNSMenu()
+        menu.title = title
+        return menu
     }
 
     func makeNSMenuItem() -> NSMenuItem {
         let menuItem = NSMenuItem(title: title, action: nil, keyEquivalent: "")
         menuItem.submenu = makeNSMenu()
         return menuItem
-    }
-    
-    init(_ title: String, @MenuBuilder submenu: () -> Menu) {
-        self.title = title
-        self.submenu = submenu()
     }
 }
