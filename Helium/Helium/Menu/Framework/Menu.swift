@@ -69,11 +69,3 @@ struct EmptyMenu: Menu {
         Flatten(menus: [])
     }
 }
-
-struct Group: Menu {
-    var body: Menu
-    
-    init(@MenuBuilder _ body: () -> Menu) {
-        self.body = body()
-    }
-}

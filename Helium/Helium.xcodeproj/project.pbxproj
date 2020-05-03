@@ -27,6 +27,7 @@
 		D750E7FB245CDBA30033DB99 /* Picker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D750E7FA245CDBA30033DB99 /* Picker.swift */; };
 		D750E7FD245CDC550033DB99 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D750E7FC245CDC550033DB99 /* Binding.swift */; };
 		D750E800245CDD7F0033DB99 /* ForEach.swift in Sources */ = {isa = PBXBuildFile; fileRef = D750E7FF245CDD7F0033DB99 /* ForEach.swift */; };
+		D7612E13245E647C00FEA851 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7612E12245E647C00FEA851 /* List.swift */; };
 		D769ABD6244D2DB900215C76 /* HeliumMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769ABD5244D2DB900215C76 /* HeliumMenu.swift */; };
 		D769ABD8244D2DDD00215C76 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769ABD7244D2DDC00215C76 /* main.swift */; };
 		D769ABDA244E997B00215C76 /* MenuHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769ABD9244E997B00215C76 /* MenuHelpers.swift */; };
@@ -105,6 +106,7 @@
 		D750E7FA245CDBA30033DB99 /* Picker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Picker.swift; sourceTree = "<group>"; };
 		D750E7FC245CDC550033DB99 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
 		D750E7FF245CDD7F0033DB99 /* ForEach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForEach.swift; sourceTree = "<group>"; };
+		D7612E12245E647C00FEA851 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		D769ABD5244D2DB900215C76 /* HeliumMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeliumMenu.swift; sourceTree = "<group>"; };
 		D769ABD7244D2DDC00215C76 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		D769ABD9244E997B00215C76 /* MenuHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHelpers.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 			children = (
 				D769ABD9244E997B00215C76 /* MenuHelpers.swift */,
 				D750E7F2245CC1990033DB99 /* Menu.swift */,
+				D7612E12245E647C00FEA851 /* List.swift */,
 				D750E7FF245CDD7F0033DB99 /* ForEach.swift */,
 				D750E7EC245CBE6A0033DB99 /* MenuBar.swift */,
 				D750E7EE245CBEAE0033DB99 /* MenuButton.swift */,
@@ -425,6 +428,7 @@
 			files = (
 				D750E800245CDD7F0033DB99 /* ForEach.swift in Sources */,
 				D750E7F7245CD7D30033DB99 /* Button.swift in Sources */,
+				D7612E13245E647C00FEA851 /* List.swift in Sources */,
 				4D867CD41AD6796A00681331 /* HeliumWindowController.swift in Sources */,
 				D775434E24563AEE00AE5C8A /* HeliumWindow.swift in Sources */,
 				4D8DAEAC1C3A41F300B212EC /* UserSettings.swift in Sources */,

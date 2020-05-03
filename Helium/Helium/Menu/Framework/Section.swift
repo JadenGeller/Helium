@@ -22,7 +22,7 @@ struct Section: Menu {
     var innerBody: Menu
     
     var body: Menu {
-        Group {
+        List {
             Separator()
             innerBody
             Separator()

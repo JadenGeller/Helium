@@ -28,7 +28,7 @@ func makeMenus() -> (servicesMenu: NSMenu, windowsMenu: NSMenu, menuBar: NSMenu)
     let opacityPercentage = Binding(get: { UserSetting.opacityPercentage }, set: { UserSetting.opacityPercentage = $0 })
     
     let servicesMenu = EmptyMenu()
-    let windowMenu = Group {
+    let windowMenu = List {
         Section {
             Button("Minimize", action: #selector(NSWindow.performMiniaturize(_:)))
             Button("Zoom", action: #selector(NSWindow.performZoom(_:)))
