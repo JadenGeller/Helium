@@ -158,5 +158,5 @@ func makeMenus() -> (servicesMenu: NSMenu, windowsMenu: NSMenu, menuBar: NSMenu)
         }
     }
     
-    return (servicesMenu.makeNSMenu(), windowMenu.makeNSMenu(), menuBar.makeNSMenu())
+    return (NSMenu(items: servicesMenu.makeNSMenuItems()), NSMenu(items: windowMenu.makeNSMenuItems()), NSMenu(items: menuBar.makeNSMenuItems()))
 }

@@ -19,15 +19,11 @@ protocol NSMenuItemsRepresentable {
 typealias PrimitiveMenu = Menu & NSMenuItemsRepresentable
 
 extension Menu {
-    fileprivate func makeNSMenuItems() -> [NSMenuItem] {
+    func makeNSMenuItems() -> [NSMenuItem] {
         guard let items = (self as? PrimitiveMenu)?.makeNSMenuItems() else {
             return body.makeNSMenuItems()
         }
         return items
-    }
-    
-    func makeNSMenu() -> NSMenu {
-        NSMenu(items: makeNSMenuItems())
     }
 }
 

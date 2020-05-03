@@ -19,7 +19,7 @@ struct MenuButton: PrimitiveMenu {
 
     func makeNSMenuItems() -> [NSMenuItem] {
         let menuItem = NSMenuItem(title: title, action: nil, keyEquivalent: "")
-        menuItem.submenu = submenu.makeNSMenu()
+        menuItem.submenu = NSMenu(items: submenu.makeNSMenuItems())
         menuItem.submenu!.title = title
         return [menuItem]
     }
