@@ -28,6 +28,7 @@
 		D750E800245CDD7F0033DB99 /* ForEach.swift in Sources */ = {isa = PBXBuildFile; fileRef = D750E7FF245CDD7F0033DB99 /* ForEach.swift */; };
 		D7612E13245E647C00FEA851 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7612E12245E647C00FEA851 /* List.swift */; };
 		D7612E17245E6AC800FEA851 /* NSHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7612E16245E6AC800FEA851 /* NSHostingController.swift */; };
+		D7612E1D2464E62800FEA851 /* EmptyMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7612E1C2464E62800FEA851 /* EmptyMenu.swift */; };
 		D769ABD6244D2DB900215C76 /* HeliumMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769ABD5244D2DB900215C76 /* HeliumMenu.swift */; };
 		D769ABD8244D2DDD00215C76 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769ABD7244D2DDC00215C76 /* main.swift */; };
 		D769ABDA244E997B00215C76 /* MenuHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769ABD9244E997B00215C76 /* MenuHelpers.swift */; };
@@ -107,6 +108,7 @@
 		D750E7FF245CDD7F0033DB99 /* ForEach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForEach.swift; sourceTree = "<group>"; };
 		D7612E12245E647C00FEA851 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		D7612E16245E6AC800FEA851 /* NSHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSHostingController.swift; sourceTree = "<group>"; };
+		D7612E1C2464E62800FEA851 /* EmptyMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMenu.swift; sourceTree = "<group>"; };
 		D769ABD5244D2DB900215C76 /* HeliumMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeliumMenu.swift; sourceTree = "<group>"; };
 		D769ABD7244D2DDC00215C76 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		D769ABD9244E997B00215C76 /* MenuHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHelpers.swift; sourceTree = "<group>"; };
@@ -243,16 +245,33 @@
 				D769ABD9244E997B00215C76 /* MenuHelpers.swift */,
 				D7612E16245E6AC800FEA851 /* NSHostingController.swift */,
 				D750E7F2245CC1990033DB99 /* Menu.swift */,
-				D7612E12245E647C00FEA851 /* List.swift */,
-				D750E7FF245CDD7F0033DB99 /* ForEach.swift */,
+				D750E7FC245CDC550033DB99 /* Binding.swift */,
+				D7612E1A2464E0D300FEA851 /* Primitives */,
+				D7612E1B2464E10200FEA851 /* Derived */,
+			);
+			path = Framework;
+			sourceTree = "<group>";
+		};
+		D7612E1A2464E0D300FEA851 /* Primitives */ = {
+			isa = PBXGroup;
+			children = (
 				D750E7EE245CBEAE0033DB99 /* MenuButton.swift */,
 				D750E7F4245CC35F0033DB99 /* Section.swift */,
 				D750E7F6245CD7D30033DB99 /* Button.swift */,
+				D750E7FF245CDD7F0033DB99 /* ForEach.swift */,
+				D7612E12245E647C00FEA851 /* List.swift */,
+				D7612E1C2464E62800FEA851 /* EmptyMenu.swift */,
+			);
+			path = Primitives;
+			sourceTree = "<group>";
+		};
+		D7612E1B2464E10200FEA851 /* Derived */ = {
+			isa = PBXGroup;
+			children = (
 				D750E7F8245CD9710033DB99 /* Toggle.swift */,
 				D750E7FA245CDBA30033DB99 /* Picker.swift */,
-				D750E7FC245CDC550033DB99 /* Binding.swift */,
 			);
-			path = Framework;
+			path = Derived;
 			sourceTree = "<group>";
 		};
 		D7754383245922AF00AE5C8A /* Menu */ = {
@@ -444,6 +463,7 @@
 				D79D520024514123008AC3FF /* WindowControllerManager.swift in Sources */,
 				4D867CB91AD6781200681331 /* WebViewController.swift in Sources */,
 				D750E7F5245CC35F0033DB99 /* Section.swift in Sources */,
+				D7612E1D2464E62800FEA851 /* EmptyMenu.swift in Sources */,
 				4D867CB71AD6781200681331 /* AppDelegate.swift in Sources */,
 				D769ABD6244D2DB900215C76 /* HeliumMenu.swift in Sources */,
 				D79D52432454DB15008AC3FF /* HeliumToolbar.swift in Sources */,

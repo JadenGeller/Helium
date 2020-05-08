@@ -33,28 +33,9 @@ extension Menu where Self: PrimitiveMenu {
     }
 }
 
-struct Flatten: PrimitiveMenu {
-    var menus: [Menu]
-  
-    func makeNSMenuItems() -> [NSMenuItem] {
-        menus.flatMap({ $0.makeNSMenuItems() })
-    }
-
-}
-
 @_functionBuilder
 struct MenuBuilder {
     static func buildBlock(_ menu: Menu) -> Menu {
         menu
-    }
-    
-    static func buildBlock(_ menus: Menu...) -> Menu {
-        Flatten(menus: menus)
-    }
-}
-
-struct EmptyMenu: Menu {
-    var body: Menu {
-        Flatten(menus: [])
     }
 }
