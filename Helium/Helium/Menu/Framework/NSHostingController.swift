@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class NSHostingController {
+class MenuHostingController {
     let rootMenu: Menu
     
     init(rootMenu: Menu) {

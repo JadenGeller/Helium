@@ -149,3 +149,9 @@ extension NSApplication {
         }
     }
 }
+
+extension Bundle {
+    var name: String {
+        infoDictionary![kCFBundleNameKey as String] as! String
+    }
+}

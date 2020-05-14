@@ -30,7 +30,6 @@
 		D7612E17245E6AC800FEA851 /* NSHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7612E16245E6AC800FEA851 /* NSHostingController.swift */; };
 		D7612E1D2464E62800FEA851 /* EmptyMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7612E1C2464E62800FEA851 /* EmptyMenu.swift */; };
 		D769ABD8244D2DDD00215C76 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769ABD7244D2DDC00215C76 /* main.swift */; };
-		D769ABDA244E997B00215C76 /* MenuHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769ABD9244E997B00215C76 /* MenuHelpers.swift */; };
 		D769ABDE244F477100215C76 /* UserDefaultHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769ABDD244F477100215C76 /* UserDefaultHelpers.swift */; };
 		D769ABE1244FE33700215C76 /* OpenCombineDispatch in Frameworks */ = {isa = PBXBuildFile; productRef = D769ABE0244FE33700215C76 /* OpenCombineDispatch */; };
 		D769ABE3244FE33700215C76 /* OpenCombineFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = D769ABE2244FE33700215C76 /* OpenCombineFoundation */; };
@@ -112,7 +111,6 @@
 		D7612E16245E6AC800FEA851 /* NSHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSHostingController.swift; sourceTree = "<group>"; };
 		D7612E1C2464E62800FEA851 /* EmptyMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMenu.swift; sourceTree = "<group>"; };
 		D769ABD7244D2DDC00215C76 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		D769ABD9244E997B00215C76 /* MenuHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHelpers.swift; sourceTree = "<group>"; };
 		D769ABDD244F477100215C76 /* UserDefaultHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHelpers.swift; sourceTree = "<group>"; };
 		D775434D24563AEE00AE5C8A /* HeliumWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeliumWindow.swift; sourceTree = "<group>"; };
 		D77EC7C9246BA4DD00456229 /* BuiltinMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuiltinMenu.swift; sourceTree = "<group>"; };
@@ -246,7 +244,6 @@
 		D750E7FE245CDC620033DB99 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
-				D769ABD9244E997B00215C76 /* MenuHelpers.swift */,
 				D7612E16245E6AC800FEA851 /* NSHostingController.swift */,
 				D750E7F2245CC1990033DB99 /* Menu.swift */,
 				D750E7FC245CDC550033DB99 /* Binding.swift */,
@@ -466,7 +463,6 @@
 				D77EC7CA246BA4DD00456229 /* BuiltinMenu.swift in Sources */,
 				D750E7F3245CC1990033DB99 /* Menu.swift in Sources */,
 				D769ABDE244F477100215C76 /* UserDefaultHelpers.swift in Sources */,
-				D769ABDA244E997B00215C76 /* MenuHelpers.swift in Sources */,
 				D750E7FB245CDBA30033DB99 /* Picker.swift in Sources */,
 				D79D520024514123008AC3FF /* WindowControllerManager.swift in Sources */,
 				4D867CB91AD6781200681331 /* WebViewController.swift in Sources */,
