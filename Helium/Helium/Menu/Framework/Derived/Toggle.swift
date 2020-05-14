@@ -74,5 +74,5 @@ struct TitleToggleStyle: ToggleStyle {
 }
 
 extension TitleToggleStyle {
-    static var showHide = TitleToggleStyle(on: { "Show \($0)" }, off: { "Hide \($0)" })
+    static var showHide = TitleToggleStyle(on: { "Hide \($0)" }, off: { "Show \($0)" })
 }

@@ -49,9 +49,8 @@ class HeliumWindowController: NSWindowController, NSWindowDelegate {
                 
         cancellables.append(UserSetting.$disabledFullScreenFloat.sink { [unowned self] disabledFullScreenFloat in
             if disabledFullScreenFloat {
-                self.window!.collectionBehavior.insert(.moveToActiveSpace)
                 self.window!.collectionBehavior.remove(.canJoinAllSpaces)
-
+                self.window!.collectionBehavior.insert(.moveToActiveSpace)
             } else {
                 self.window!.collectionBehavior.remove(.moveToActiveSpace)
                 self.window!.collectionBehavior.insert(.canJoinAllSpaces)

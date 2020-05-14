@@ -27,7 +27,7 @@
 		D750E7FD245CDC550033DB99 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D750E7FC245CDC550033DB99 /* Binding.swift */; };
 		D750E800245CDD7F0033DB99 /* ForEach.swift in Sources */ = {isa = PBXBuildFile; fileRef = D750E7FF245CDD7F0033DB99 /* ForEach.swift */; };
 		D7612E13245E647C00FEA851 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7612E12245E647C00FEA851 /* List.swift */; };
-		D7612E17245E6AC800FEA851 /* NSHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7612E16245E6AC800FEA851 /* NSHostingController.swift */; };
+		D7612E17245E6AC800FEA851 /* HostingMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7612E16245E6AC800FEA851 /* HostingMenu.swift */; };
 		D7612E1D2464E62800FEA851 /* EmptyMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7612E1C2464E62800FEA851 /* EmptyMenu.swift */; };
 		D769ABD8244D2DDD00215C76 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769ABD7244D2DDC00215C76 /* main.swift */; };
 		D769ABDE244F477100215C76 /* UserDefaultHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D769ABDD244F477100215C76 /* UserDefaultHelpers.swift */; };
@@ -108,7 +108,7 @@
 		D750E7FC245CDC550033DB99 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
 		D750E7FF245CDD7F0033DB99 /* ForEach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForEach.swift; sourceTree = "<group>"; };
 		D7612E12245E647C00FEA851 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
-		D7612E16245E6AC800FEA851 /* NSHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSHostingController.swift; sourceTree = "<group>"; };
+		D7612E16245E6AC800FEA851 /* HostingMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostingMenu.swift; sourceTree = "<group>"; };
 		D7612E1C2464E62800FEA851 /* EmptyMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMenu.swift; sourceTree = "<group>"; };
 		D769ABD7244D2DDC00215C76 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		D769ABDD244F477100215C76 /* UserDefaultHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHelpers.swift; sourceTree = "<group>"; };
@@ -244,7 +244,7 @@
 		D750E7FE245CDC620033DB99 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
-				D7612E16245E6AC800FEA851 /* NSHostingController.swift */,
+				D7612E16245E6AC800FEA851 /* HostingMenu.swift */,
 				D750E7F2245CC1990033DB99 /* Menu.swift */,
 				D750E7FC245CDC550033DB99 /* Binding.swift */,
 				D7612E1A2464E0D300FEA851 /* Primitives */,
@@ -449,7 +449,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D750E800245CDD7F0033DB99 /* ForEach.swift in Sources */,
-				D7612E17245E6AC800FEA851 /* NSHostingController.swift in Sources */,
+				D7612E17245E6AC800FEA851 /* HostingMenu.swift in Sources */,
 				D77EC7CC246BA83800456229 /* MenuBar.swift in Sources */,
 				D750E7F7245CD7D30033DB99 /* Button.swift in Sources */,
 				D7612E13245E647C00FEA851 /* List.swift in Sources */,
