@@ -8,18 +8,8 @@
 
 import Cocoa
 
-enum BuiltinMenu: PrimitiveMenu {
-    case main
-    case services
-    case windows
-    
-    var keyPath: ReferenceWritableKeyPath<NSApplication, NSMenu?> {
-        switch self {
-        case .main: return \.mainMenu
-        case .services: return \.servicesMenu
-        case .windows: return \.windowsMenu
-        }
-    }
+struct BuiltinMenu: PrimitiveMenu {
+    var keyPath: ReferenceWritableKeyPath<NSApplication, NSMenu?>
     
     var nsMenu: NSMenu {
         if let nsMenu = NSApplication.shared[keyPath: keyPath] {
@@ -38,4 +28,10 @@ enum BuiltinMenu: PrimitiveMenu {
     func update(to menu: Menu) {
         nsMenu.items = menu.makeNSMenuItems()
     }
+}
+
+extension BuiltinMenu {
+    static let main = BuiltinMenu(keyPath: \.mainMenu)
+    static let services = BuiltinMenu(keyPath: \.servicesMenu)
+    static let windows = BuiltinMenu(keyPath: \.windowsMenu)
 }
