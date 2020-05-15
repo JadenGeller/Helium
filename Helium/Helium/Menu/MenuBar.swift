@@ -13,7 +13,7 @@ struct MenuBar: Menu {
     var body: Menu {
         List {
             MenuButton("\(Bundle.main.name)") {
-                HeliumMenu()
+                ApplicationMenu()
             }
             MenuButton("File") {
                 FileMenu()

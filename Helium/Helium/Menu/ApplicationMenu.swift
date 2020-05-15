@@ -8,7 +8,7 @@
 
 import Cocoa
 
-struct HeliumMenu: Menu {
+struct ApplicationMenu: Menu {
     let shouldMagicallyRedirect = Binding(get: { !UserSetting.disabledMagicURLs }, set: { UserSetting.disabledMagicURLs = !$0 })
     let shouldFloatAboveAllSpaces = Binding(get: { !UserSetting.disabledFullScreenFloat }, set: { UserSetting.disabledFullScreenFloat = !$0 })
 
