@@ -19,18 +19,9 @@ struct MenuButton: PrimitiveMenu {
 
     func makeNSMenuItems() -> [NSMenuItem] {
         let menuItem = NSMenuItem(title: title, action: nil, keyEquivalent: "")
-        if let builtinMenu = submenu as? BuiltinMenu {
-            let menu = builtinMenu.nsMenu
-            // FIXME: This is janky!!
-            if let supermenu = menu.supermenu {
-                supermenu.removeItem(at: supermenu.indexOfItem(withSubmenu: menu))
-            }
-            menuItem.submenu = menu
-        } else {
-            let menu = NSMenu(title: title)
-            menu.items = submenu.makeNSMenuItems()
-            menuItem.submenu = menu
-        }
+        let menu = NSMenu(title: title)
+        menu.items = submenu.makeNSMenuItems()
+        menuItem.submenu = menu
         menuItem.submenu!.title = title
         return [menuItem]
     }

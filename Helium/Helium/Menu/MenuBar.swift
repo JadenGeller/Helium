@@ -30,9 +30,7 @@ struct MenuBar: Menu {
                     }
                 }
                 Section {
-                    MenuButton("Services") {
-                        BuiltinMenu.services
-                    }
+                    ServicesMenuButton()
                 }
                 Section {
                     Button("Hide \(Bundle.main.name)", action: #selector(NSApplication.hide(_:)))
@@ -132,7 +130,7 @@ struct MenuBar: Menu {
                 //                .keyboardShortcut([.command, .shift], "h")
             }
             MenuButton("Window") {
-                BuiltinMenu.windows
+                WindowsMenu()
             }
             MenuButton("Help") {
                 Button("\(Bundle.main.name) Help", action: #selector(NSApplication.showHelp(_:)))

@@ -35,7 +35,7 @@
 		D769ABE3244FE33700215C76 /* OpenCombineFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = D769ABE2244FE33700215C76 /* OpenCombineFoundation */; };
 		D769ABE5244FE33700215C76 /* OpenCombine in Frameworks */ = {isa = PBXBuildFile; productRef = D769ABE4244FE33700215C76 /* OpenCombine */; };
 		D775434E24563AEE00AE5C8A /* HeliumWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D775434D24563AEE00AE5C8A /* HeliumWindow.swift */; };
-		D77EC7CA246BA4DD00456229 /* BuiltinMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77EC7C9246BA4DD00456229 /* BuiltinMenu.swift */; };
+		D77EC7CA246BA4DD00456229 /* ServicesMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77EC7C9246BA4DD00456229 /* ServicesMenuButton.swift */; };
 		D77EC7CC246BA83800456229 /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77EC7CB246BA83800456229 /* MenuBar.swift */; };
 		D77EC7CE246BA86000456229 /* WindowsMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77EC7CD246BA86000456229 /* WindowsMenu.swift */; };
 		D79D520024514123008AC3FF /* WindowControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79D51FF24514123008AC3FF /* WindowControllerManager.swift */; };
@@ -113,7 +113,7 @@
 		D769ABD7244D2DDC00215C76 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		D769ABDD244F477100215C76 /* UserDefaultHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHelpers.swift; sourceTree = "<group>"; };
 		D775434D24563AEE00AE5C8A /* HeliumWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeliumWindow.swift; sourceTree = "<group>"; };
-		D77EC7C9246BA4DD00456229 /* BuiltinMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuiltinMenu.swift; sourceTree = "<group>"; };
+		D77EC7C9246BA4DD00456229 /* ServicesMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesMenuButton.swift; sourceTree = "<group>"; };
 		D77EC7CB246BA83800456229 /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
 		D77EC7CD246BA86000456229 /* WindowsMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowsMenu.swift; sourceTree = "<group>"; };
 		D79D51FF24514123008AC3FF /* WindowControllerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowControllerManager.swift; sourceTree = "<group>"; };
@@ -257,12 +257,12 @@
 			isa = PBXGroup;
 			children = (
 				D750E7EE245CBEAE0033DB99 /* MenuButton.swift */,
+				D77EC7C9246BA4DD00456229 /* ServicesMenuButton.swift */,
 				D750E7F4245CC35F0033DB99 /* Section.swift */,
 				D750E7F6245CD7D30033DB99 /* Button.swift */,
 				D750E7FF245CDD7F0033DB99 /* ForEach.swift */,
 				D7612E12245E647C00FEA851 /* List.swift */,
 				D7612E1C2464E62800FEA851 /* EmptyMenu.swift */,
-				D77EC7C9246BA4DD00456229 /* BuiltinMenu.swift */,
 			);
 			path = Primitives;
 			sourceTree = "<group>";
@@ -460,7 +460,7 @@
 				D769ABD8244D2DDD00215C76 /* main.swift in Sources */,
 				D750E7F9245CD9710033DB99 /* Toggle.swift in Sources */,
 				D750E7FD245CDC550033DB99 /* Binding.swift in Sources */,
-				D77EC7CA246BA4DD00456229 /* BuiltinMenu.swift in Sources */,
+				D77EC7CA246BA4DD00456229 /* ServicesMenuButton.swift in Sources */,
 				D750E7F3245CC1990033DB99 /* Menu.swift in Sources */,
 				D769ABDE244F477100215C76 /* UserDefaultHelpers.swift in Sources */,
 				D750E7FB245CDBA30033DB99 /* Picker.swift in Sources */,
