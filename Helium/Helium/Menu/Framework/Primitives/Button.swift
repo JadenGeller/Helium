@@ -11,17 +11,23 @@ import Cocoa
 struct Button: PrimitiveMenu {
     enum Action {
         case selector(Selector)
-        case closure(() -> Void)
+        case closure(perform: () -> Void, disabled: Bool)
     }
-    class Coordinator {
+    class Coordinator: NSObject, NSMenuItemValidation {
         let action: () -> Void
+        let disabled: Bool
         
-        init(action: @escaping () -> Void) {
+        init(action: @escaping () -> Void, disabled: Bool) {
             self.action = action
+            self.disabled = disabled
         }
 
         @objc func performAction(_ sender: NSMenuItem) {
             action()
+        }
+
+        func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+            !disabled
         }
     }
     
@@ -30,6 +36,7 @@ struct Button: PrimitiveMenu {
     var keyEquivalent: String = ""
     var keyEquivalentModifierMask: NSEvent.ModifierFlags = [.command]
     var state: NSControl.StateValue = .off
+    var disabled: Bool? = nil
     
     init(_ title: String, action: Selector) {
         self.title = title
@@ -38,7 +45,7 @@ struct Button: PrimitiveMenu {
 
     init(_ title: String, action: @escaping () -> Void) {
         self.title = title
-        self.action = .closure(action)
+        self.action = .closure(perform: action, disabled: false)
     }
     
     func keyboardShortcut(_ modifiers: NSEvent.ModifierFlags, _ key: Character) -> Button {
@@ -54,14 +61,23 @@ struct Button: PrimitiveMenu {
         return copy
     }
     
+    func disabled(_ disabled: Bool) -> Button {
+        guard case .closure(let perform, _) = action else {
+            preconditionFailure("disabled cannot be used with Selector")
+        }
+        var copy = self
+        copy.action = .closure(perform: perform, disabled: disabled)
+        return copy
+    }
+    
     func makeNSMenuItems() -> [NSMenuItem] {
         let menuItem = NSMenuItem(title: title, action: nil, keyEquivalent: keyEquivalent)
         menuItem.keyEquivalentModifierMask = keyEquivalentModifierMask
         switch action {
         case .selector(let selector):
             menuItem.action = selector
-        case .closure(let closure):
-            let coordinator = Coordinator(action: closure)
+        case .closure(let closure, let disabled):
+            let coordinator = Coordinator(action: closure, disabled: disabled)
             menuItem.representedObject = coordinator
             menuItem.target = coordinator
             menuItem.action = #selector(Coordinator.performAction(_:))

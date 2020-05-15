@@ -22,22 +22,6 @@ struct ViewMenu: Menu {
                     .toggleStyle(TitleToggleStyle.showHide)
                     // FIXME: This keyboard shortcut is ignored!
                     .keyboardShortcut(.command, "b")
-                MenuButton("Translucency") {
-                    Toggle("Enabled", isOn: isTranslucencyEnabled)
-                        .keyboardShortcut(.command, "t")
-                    MenuButton("Opacity") {
-                        Picker(selection: opacityPercentage, stride(from: 0, to: 100, by: 10).map({ percentage in
-                            (percentage, "\(percentage)%")
-                        }))
-                        // FIXME: Support keyboardShortcut for Picker
-                        // .keyEquivalent(String(digit == 10 ? 0 : digit), with: .command)
-                    }
-                    Picker(selection: translucencyMode, [
-                        .always: "Always",
-                        .mouseOver: "Mouse Over",
-                        .mouseOutside: "Mouse Outside"
-                    ])
-                }
             }
             Section {
                 Button("Stop", action: #selector(WKWebView.stopLoading(_:)))
@@ -52,6 +36,22 @@ struct ViewMenu: Menu {
                     .keyboardShortcut(.command, "+")
                 Button("Zoom Out", action: #selector(WebViewController.zoomOut(_:)))
                     .keyboardShortcut(.command, "-")
+            }
+            Section {
+                Button("Opaque", action: { UserSetting.opacityPercentage = 100 })
+                    .keyboardShortcut([.command, .option], "0")
+                    .disabled(UserSetting.opacityPercentage == 100)
+                Button("Increase Opacity", action: { UserSetting.opacityPercentage += 10 })
+                    .keyboardShortcut([.command, .option], "+")
+                    .disabled(UserSetting.opacityPercentage == 100)
+                Button("Decrease Opacity", action: { UserSetting.opacityPercentage -= 10 })
+                    .keyboardShortcut([.command, .option], "-")
+                    .disabled(UserSetting.opacityPercentage == 10)
+                Picker(selection: translucencyMode, [
+                    .always: "Always",
+                    .mouseOver: "Mouse Over",
+                    .mouseOutside: "Mouse Outside"
+                ])
             }
         }
     }
