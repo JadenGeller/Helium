@@ -322,9 +322,9 @@
 		D77EC7E0246E375900456229 /* Items */ = {
 			isa = PBXGroup;
 			children = (
-				D79D52422454DB15008AC3FF /* HideToolbarButtonToolbarItem.swift */,
-				D77EC7E3246E37CE00456229 /* SearchFieldToolbarItem.swift */,
 				D77EC7E1246E377100456229 /* DirectionalNavigationButtonsToolbarItem.swift */,
+				D77EC7E3246E37CE00456229 /* SearchFieldToolbarItem.swift */,
+				D79D52422454DB15008AC3FF /* HideToolbarButtonToolbarItem.swift */,
 			);
 			path = Items;
 			sourceTree = "<group>";

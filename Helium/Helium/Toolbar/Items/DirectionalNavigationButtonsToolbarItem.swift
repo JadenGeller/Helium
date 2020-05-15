@@ -7,17 +7,29 @@
 //
 
 import Cocoa
+import OpenCombine
+import OpenCombineFoundation
+import WebKit
 
 class DirectionalNavigationButtonsToolbarItem: NSToolbarItem {
+    struct Model {
+        var observeCanGoBack: (@escaping (Bool) -> Void) -> NSKeyValueObservation
+        var observeCanGoForward: (@escaping (Bool) -> Void) -> NSKeyValueObservation
+        var backForwardList: WKBackForwardList
+        var navigateToBackForwardListItem: (WKBackForwardListItem) -> Void
+    }
+    
     enum Segment: Int {
         case back = 0
         case forward = 1
     }
     
-    let handleNavigation: (ToolbarAction.NavigationDestination) -> Void
-    init(_ handleNavigation: @escaping (ToolbarAction.NavigationDestination) -> Void) {
-        self.handleNavigation = handleNavigation
+    let model: Model
+    var tokens: [NSKeyValueObservation] = []
+    init(model: Model) {
+        self.model = model
         super.init(itemIdentifier: .directionalNavigationButtons)
+        
         let control = NSSegmentedControl()
         control.segmentStyle = .separated
         control.trackingMode = .momentary
@@ -28,14 +40,25 @@ class DirectionalNavigationButtonsToolbarItem: NSToolbarItem {
         control.setImage(NSImage(named: NSImage.goBackTemplateName), forSegment: 0)
         control.setImage(NSImage(named: NSImage.goForwardTemplateName), forSegment: 1)
         view = control
+        
+        tokens.append(model.observeCanGoBack { canGoBack in
+            control.setEnabled(canGoBack, forSegment: Segment.back.rawValue)
+        })
+        tokens.append(model.observeCanGoForward { canGoForward in
+            control.setEnabled(canGoForward, forSegment: Segment.forward.rawValue)
+        })
     }
     
+    var control: NSSegmentedControl {
+        view as! NSSegmentedControl
+    }
+
     @objc func navigate(_ control: NSSegmentedControl) {
         switch Segment(rawValue: control.selectedSegment)! {
         case .back:
-            handleNavigation(.back)
+            model.navigateToBackForwardListItem(model.backForwardList.backItem!)
         case .forward:
-            handleNavigation(.forward)
+            model.navigateToBackForwardListItem(model.backForwardList.forwardItem!)
         }
     }
 }

@@ -8,23 +8,16 @@
 
 import Cocoa
 
-enum ToolbarAction {
-    enum NavigationDestination {
-        case toLocation(String)
-        case forward
-        case back
-    }
-    case navigate(NavigationDestination)
-    case hideToolbar
-}
-
 class BrowserToolbar: NSToolbar, NSToolbarDelegate {
-    let handleNavigation: (ToolbarAction.NavigationDestination) -> Void
-    let hideToolbar: () -> Void
-
-    init(_ handleAction: @escaping (ToolbarAction) -> Void) {
-        self.handleNavigation = { destination in handleAction(.navigate(destination)) }
-        self.hideToolbar = { handleAction(.hideToolbar) }
+    struct Model {
+        var directionalNagivationButtonsModel: DirectionalNavigationButtonsToolbarItem.Model
+        var searchFieldModel: SearchFieldToolbarItem.Model
+        var hideToolbarButtonModel: HideToolbarButtonToolbarItem.Model
+    }
+    
+    let model: Model
+    init(model: Model) {
+        self.model = model
         super.init(identifier: "BrowserToolbar")
         self.delegate = self
     }
@@ -51,12 +44,12 @@ class BrowserToolbar: NSToolbar, NSToolbarDelegate {
     
     func toolbar(_ toolbar: NSToolbar, itemForItemIdentifier itemIdentifier: NSToolbarItem.Identifier, willBeInsertedIntoToolbar flag: Bool) -> NSToolbarItem? {
         switch itemIdentifier {
-        case .searchField:
-            return SearchFieldToolbarItem(handleNavigation)
         case .directionalNavigationButtons:
-            return DirectionalNavigationButtonsToolbarItem(handleNavigation)
+            return DirectionalNavigationButtonsToolbarItem(model: model.directionalNagivationButtonsModel)
+        case .searchField:
+            return SearchFieldToolbarItem(model: model.searchFieldModel)
         case .hideToolbarButton:
-            return HideToolbarButtonToolbarItem(hideToolbar)
+            return HideToolbarButtonToolbarItem(model: model.hideToolbarButtonModel)
         default:
             fatalError("Unexpected itemIdentifier")
         }

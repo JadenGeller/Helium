@@ -8,6 +8,8 @@
 
 import AppKit
 import OpenCombine
+import OpenCombineFoundation
+import WebKit
 
 class HeliumWindowController: NSWindowController, NSWindowDelegate {
     convenience init() {
@@ -25,21 +27,30 @@ class HeliumWindowController: NSWindowController, NSWindowDelegate {
                 
         super.init(window: window)
         window.delegate = self
-
+        
         // FIXME: Are there memeory leaks here?
-        toolbar = BrowserToolbar { [unowned self] action in
-            switch action {
-            case .navigate(.back):
-                webController.webView.goBack()
-            case .navigate(.forward):
-                webController.webView.goForward()
-            case .navigate(.toLocation(let location)):
-                webController.loadAlmostURL(location)
-            case .hideToolbar:
-                self.toolbarVisibility = .hidden
-            }
-        }
-
+        toolbar = BrowserToolbar(model: BrowserToolbar.Model(
+            directionalNagivationButtonsModel: DirectionalNavigationButtonsToolbarItem.Model(
+                observeCanGoBack: { handler in
+                    self.webViewController.webView.observe(\.canGoBack, options: [.initial, .new]) { webView, change in
+                        handler(change.newValue!)
+                    }
+                },
+                observeCanGoForward: { handler in
+                    self.webViewController.webView.observe(\.canGoForward, options: [.initial, .new]) { webView, change in
+                        handler(change.newValue!)
+                    }
+                },
+                backForwardList: webViewController.webView.backForwardList,
+                navigateToBackForwardListItem: { backForwardListItem in webController.webView.go(to: backForwardListItem) }
+            ),
+            searchFieldModel: SearchFieldToolbarItem.Model(
+                navigateWithSearchTerm: { searchTerm in webController.loadAlmostURL(searchTerm) }
+            ),
+            hideToolbarButtonModel: HideToolbarButtonToolbarItem.Model(
+                hideToolbar: { self.toolbarVisibility = .hidden }
+            )
+        ))
         
         window.titleVisibility = .hidden
         window.toolbar = toolbar

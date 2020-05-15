@@ -9,9 +9,13 @@
 import Cocoa
 
 class SearchFieldToolbarItem: NSToolbarItem, NSSearchFieldDelegate {
-    let handleNavigation: (ToolbarAction.NavigationDestination) -> Void
-    init(_ handleNavigation: @escaping (ToolbarAction.NavigationDestination) -> Void) {
-        self.handleNavigation = handleNavigation
+    struct Model {
+        var navigateWithSearchTerm: (String) -> Void
+    }
+    
+    let model: Model
+    init(model: Model) {
+        self.model = model
         super.init(itemIdentifier: .searchField)
         let searchField = NSSearchField()
         searchField.delegate = self
@@ -23,7 +27,7 @@ class SearchFieldToolbarItem: NSToolbarItem, NSSearchFieldDelegate {
     }
     
     @objc func navigate(_ searchField: NSSearchField) {
-        handleNavigation(.toLocation(searchField.stringValue))
+        model.navigateWithSearchTerm(searchField.stringValue)
     }
 }
 

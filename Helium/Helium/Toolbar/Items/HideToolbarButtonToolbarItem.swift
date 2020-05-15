@@ -9,9 +9,13 @@
 import Cocoa
 
 class HideToolbarButtonToolbarItem: NSToolbarItem {
-    let hideToolbar: () -> Void
-    init(_ handleNavigation: @escaping () -> Void) {
-        self.hideToolbar = handleNavigation
+    struct Model {
+        var hideToolbar: () -> Void
+    }
+    
+    let model: Model
+    init(model: Model) {
+        self.model = model
         super.init(itemIdentifier: .directionalNavigationButtons)
         let control = NSSegmentedControl()
         control.trackingMode = .momentary
@@ -23,7 +27,7 @@ class HideToolbarButtonToolbarItem: NSToolbarItem {
     }
     
     @objc func hideToolbar(_ control: NSSegmentedControl) {
-        self.hideToolbar()
+        model.hideToolbar()
     }
 }
 
