@@ -41,11 +41,27 @@ class DirectionalNavigationButtonsToolbarItem: NSToolbarItem {
         control.setImage(NSImage(named: NSImage.goForwardTemplateName), forSegment: 1)
         view = control
         
+        // FIXME: Memory leaks?
         tokens.append(model.observeCanGoBack { canGoBack in
             control.setEnabled(canGoBack, forSegment: Segment.back.rawValue)
+            control.setMenu(HostingMenu(rootMenu: {
+                ForEach(self.model.backForwardList.backList.reversed()) { backItem in
+                    // FIXME: Add icons to buttons
+                    Button(backItem.title ?? backItem.url.absoluteString, action: {
+                        self.model.navigateToBackForwardListItem(backItem)
+                    })
+                }
+            }), forSegment: Segment.back.rawValue)
         })
         tokens.append(model.observeCanGoForward { canGoForward in
             control.setEnabled(canGoForward, forSegment: Segment.forward.rawValue)
+            control.setMenu(HostingMenu(rootMenu: {
+                ForEach(self.model.backForwardList.forwardList) { forwardItem in
+                    Button(forwardItem.title ?? forwardItem.url.absoluteString, action: {
+                        self.model.navigateToBackForwardListItem(forwardItem)
+                    })
+                }
+            }), forSegment: Segment.forward.rawValue)
         })
     }
     
