@@ -15,7 +15,7 @@ class HeliumWindowController: NSWindowController, NSWindowDelegate {
     }
     
     // FIXME: Don't use IUO or var here
-    var toolbar: HeliumToolbar!
+    var toolbar: BrowserToolbar!
     private override init(window: NSWindow?) {
         precondition(window == nil, "call init() with no window")
         let webController = WebViewController()
@@ -27,7 +27,7 @@ class HeliumWindowController: NSWindowController, NSWindowDelegate {
         window.delegate = self
 
         // FIXME: Are there memeory leaks here?
-        toolbar = HeliumToolbar { [unowned self] action in
+        toolbar = BrowserToolbar { [unowned self] action in
             switch action {
             case .navigate(.back):
                 webController.webView.goBack()

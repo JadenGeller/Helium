@@ -44,8 +44,11 @@
 		D77EC7D8246E1E1C00456229 /* ViewMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77EC7D7246E1E1C00456229 /* ViewMenu.swift */; };
 		D77EC7DA246E1E5D00456229 /* HistoryMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77EC7D9246E1E5D00456229 /* HistoryMenu.swift */; };
 		D77EC7DC246E1EBA00456229 /* HelpMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77EC7DB246E1EBA00456229 /* HelpMenu.swift */; };
+		D77EC7DF246E371300456229 /* BrowserToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77EC7DE246E371300456229 /* BrowserToolbar.swift */; };
+		D77EC7E2246E377100456229 /* DirectionalNavigationButtonsToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77EC7E1246E377100456229 /* DirectionalNavigationButtonsToolbarItem.swift */; };
+		D77EC7E4246E37CE00456229 /* SearchFieldToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77EC7E3246E37CE00456229 /* SearchFieldToolbarItem.swift */; };
 		D79D520024514123008AC3FF /* WindowControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79D51FF24514123008AC3FF /* WindowControllerManager.swift */; };
-		D79D52432454DB15008AC3FF /* HeliumToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79D52422454DB15008AC3FF /* HeliumToolbar.swift */; };
+		D79D52432454DB15008AC3FF /* HideToolbarButtonToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79D52422454DB15008AC3FF /* HideToolbarButtonToolbarItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,8 +131,11 @@
 		D77EC7D7246E1E1C00456229 /* ViewMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewMenu.swift; sourceTree = "<group>"; };
 		D77EC7D9246E1E5D00456229 /* HistoryMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryMenu.swift; sourceTree = "<group>"; };
 		D77EC7DB246E1EBA00456229 /* HelpMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpMenu.swift; sourceTree = "<group>"; };
+		D77EC7DE246E371300456229 /* BrowserToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserToolbar.swift; sourceTree = "<group>"; };
+		D77EC7E1246E377100456229 /* DirectionalNavigationButtonsToolbarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionalNavigationButtonsToolbarItem.swift; sourceTree = "<group>"; };
+		D77EC7E3246E37CE00456229 /* SearchFieldToolbarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFieldToolbarItem.swift; sourceTree = "<group>"; };
 		D79D51FF24514123008AC3FF /* WindowControllerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowControllerManager.swift; sourceTree = "<group>"; };
-		D79D52422454DB15008AC3FF /* HeliumToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeliumToolbar.swift; sourceTree = "<group>"; };
+		D79D52422454DB15008AC3FF /* HideToolbarButtonToolbarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideToolbarButtonToolbarItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,11 +211,11 @@
 			children = (
 				D769ABD7244D2DDC00215C76 /* main.swift */,
 				D7754383245922AF00AE5C8A /* Menu */,
+				D77EC7DD246E36F900456229 /* Toolbar */,
 				4D867CB61AD6781200681331 /* AppDelegate.swift */,
 				D79D51FF24514123008AC3FF /* WindowControllerManager.swift */,
 				4D867CD31AD6796A00681331 /* HeliumWindowController.swift */,
 				D775434D24563AEE00AE5C8A /* HeliumWindow.swift */,
-				D79D52422454DB15008AC3FF /* HeliumToolbar.swift */,
 				4D867CB81AD6781200681331 /* WebViewController.swift */,
 				4D867CBA1AD6781200681331 /* Images.xcassets */,
 				4D867CB41AD6781200681331 /* Supporting Files */,
@@ -302,6 +308,25 @@
 				D750E7FE245CDC620033DB99 /* Framework */,
 			);
 			path = Menu;
+			sourceTree = "<group>";
+		};
+		D77EC7DD246E36F900456229 /* Toolbar */ = {
+			isa = PBXGroup;
+			children = (
+				D77EC7DE246E371300456229 /* BrowserToolbar.swift */,
+				D77EC7E0246E375900456229 /* Items */,
+			);
+			path = Toolbar;
+			sourceTree = "<group>";
+		};
+		D77EC7E0246E375900456229 /* Items */ = {
+			isa = PBXGroup;
+			children = (
+				D79D52422454DB15008AC3FF /* HideToolbarButtonToolbarItem.swift */,
+				D77EC7E3246E37CE00456229 /* SearchFieldToolbarItem.swift */,
+				D77EC7E1246E377100456229 /* DirectionalNavigationButtonsToolbarItem.swift */,
+			);
+			path = Items;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -474,6 +499,8 @@
 				D7612E13245E647C00FEA851 /* List.swift in Sources */,
 				4D867CD41AD6796A00681331 /* HeliumWindowController.swift in Sources */,
 				D77EC7D6246E1DEB00456229 /* EditMenu.swift in Sources */,
+				D77EC7E2246E377100456229 /* DirectionalNavigationButtonsToolbarItem.swift in Sources */,
+				D77EC7DF246E371300456229 /* BrowserToolbar.swift in Sources */,
 				D775434E24563AEE00AE5C8A /* HeliumWindow.swift in Sources */,
 				4D8DAEAC1C3A41F300B212EC /* UserSettings.swift in Sources */,
 				D750E7EF245CBEAE0033DB99 /* MenuButton.swift in Sources */,
@@ -483,6 +510,7 @@
 				D750E7FD245CDC550033DB99 /* Binding.swift in Sources */,
 				D77EC7CA246BA4DD00456229 /* ServicesMenuButton.swift in Sources */,
 				D750E7F3245CC1990033DB99 /* Menu.swift in Sources */,
+				D77EC7E4246E37CE00456229 /* SearchFieldToolbarItem.swift in Sources */,
 				D769ABDE244F477100215C76 /* UserDefaultHelpers.swift in Sources */,
 				D750E7FB245CDBA30033DB99 /* Picker.swift in Sources */,
 				D79D520024514123008AC3FF /* WindowControllerManager.swift in Sources */,
@@ -492,7 +520,7 @@
 				D77EC7D2246E1D5700456229 /* ApplicationMenu.swift in Sources */,
 				D77EC7DA246E1E5D00456229 /* HistoryMenu.swift in Sources */,
 				4D867CB71AD6781200681331 /* AppDelegate.swift in Sources */,
-				D79D52432454DB15008AC3FF /* HeliumToolbar.swift in Sources */,
+				D79D52432454DB15008AC3FF /* HideToolbarButtonToolbarItem.swift in Sources */,
 				D77EC7CE246BA86000456229 /* WindowMenu.swift in Sources */,
 				D77EC7D4246E1DA800456229 /* FileMenu.swift in Sources */,
 			);
