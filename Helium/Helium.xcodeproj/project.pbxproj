@@ -37,7 +37,13 @@
 		D775434E24563AEE00AE5C8A /* HeliumWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D775434D24563AEE00AE5C8A /* HeliumWindow.swift */; };
 		D77EC7CA246BA4DD00456229 /* ServicesMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77EC7C9246BA4DD00456229 /* ServicesMenuButton.swift */; };
 		D77EC7CC246BA83800456229 /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77EC7CB246BA83800456229 /* MenuBar.swift */; };
-		D77EC7CE246BA86000456229 /* WindowsMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77EC7CD246BA86000456229 /* WindowsMenu.swift */; };
+		D77EC7CE246BA86000456229 /* WindowMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77EC7CD246BA86000456229 /* WindowMenu.swift */; };
+		D77EC7D2246E1D5700456229 /* HeliumMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77EC7D1246E1D5700456229 /* HeliumMenu.swift */; };
+		D77EC7D4246E1DA800456229 /* FileMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77EC7D3246E1DA800456229 /* FileMenu.swift */; };
+		D77EC7D6246E1DEB00456229 /* EditMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77EC7D5246E1DEB00456229 /* EditMenu.swift */; };
+		D77EC7D8246E1E1C00456229 /* ViewMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77EC7D7246E1E1C00456229 /* ViewMenu.swift */; };
+		D77EC7DA246E1E5D00456229 /* HistoryMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77EC7D9246E1E5D00456229 /* HistoryMenu.swift */; };
+		D77EC7DC246E1EBA00456229 /* HelpMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77EC7DB246E1EBA00456229 /* HelpMenu.swift */; };
 		D79D520024514123008AC3FF /* WindowControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79D51FF24514123008AC3FF /* WindowControllerManager.swift */; };
 		D79D52432454DB15008AC3FF /* HeliumToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79D52422454DB15008AC3FF /* HeliumToolbar.swift */; };
 /* End PBXBuildFile section */
@@ -115,7 +121,13 @@
 		D775434D24563AEE00AE5C8A /* HeliumWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeliumWindow.swift; sourceTree = "<group>"; };
 		D77EC7C9246BA4DD00456229 /* ServicesMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesMenuButton.swift; sourceTree = "<group>"; };
 		D77EC7CB246BA83800456229 /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
-		D77EC7CD246BA86000456229 /* WindowsMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowsMenu.swift; sourceTree = "<group>"; };
+		D77EC7CD246BA86000456229 /* WindowMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowMenu.swift; sourceTree = "<group>"; };
+		D77EC7D1246E1D5700456229 /* HeliumMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeliumMenu.swift; sourceTree = "<group>"; };
+		D77EC7D3246E1DA800456229 /* FileMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileMenu.swift; sourceTree = "<group>"; };
+		D77EC7D5246E1DEB00456229 /* EditMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenu.swift; sourceTree = "<group>"; };
+		D77EC7D7246E1E1C00456229 /* ViewMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewMenu.swift; sourceTree = "<group>"; };
+		D77EC7D9246E1E5D00456229 /* HistoryMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryMenu.swift; sourceTree = "<group>"; };
+		D77EC7DB246E1EBA00456229 /* HelpMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpMenu.swift; sourceTree = "<group>"; };
 		D79D51FF24514123008AC3FF /* WindowControllerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowControllerManager.swift; sourceTree = "<group>"; };
 		D79D52422454DB15008AC3FF /* HeliumToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeliumToolbar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -280,7 +292,13 @@
 			isa = PBXGroup;
 			children = (
 				D77EC7CB246BA83800456229 /* MenuBar.swift */,
-				D77EC7CD246BA86000456229 /* WindowsMenu.swift */,
+				D77EC7D1246E1D5700456229 /* HeliumMenu.swift */,
+				D77EC7D3246E1DA800456229 /* FileMenu.swift */,
+				D77EC7D5246E1DEB00456229 /* EditMenu.swift */,
+				D77EC7D7246E1E1C00456229 /* ViewMenu.swift */,
+				D77EC7D9246E1E5D00456229 /* HistoryMenu.swift */,
+				D77EC7CD246BA86000456229 /* WindowMenu.swift */,
+				D77EC7DB246E1EBA00456229 /* HelpMenu.swift */,
 				D750E7FE245CDC620033DB99 /* Framework */,
 			);
 			path = Menu;
@@ -449,15 +467,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				D750E800245CDD7F0033DB99 /* ForEach.swift in Sources */,
+				D77EC7D8246E1E1C00456229 /* ViewMenu.swift in Sources */,
 				D7612E17245E6AC800FEA851 /* HostingMenu.swift in Sources */,
 				D77EC7CC246BA83800456229 /* MenuBar.swift in Sources */,
 				D750E7F7245CD7D30033DB99 /* Button.swift in Sources */,
 				D7612E13245E647C00FEA851 /* List.swift in Sources */,
 				4D867CD41AD6796A00681331 /* HeliumWindowController.swift in Sources */,
+				D77EC7D6246E1DEB00456229 /* EditMenu.swift in Sources */,
 				D775434E24563AEE00AE5C8A /* HeliumWindow.swift in Sources */,
 				4D8DAEAC1C3A41F300B212EC /* UserSettings.swift in Sources */,
 				D750E7EF245CBEAE0033DB99 /* MenuButton.swift in Sources */,
 				D769ABD8244D2DDD00215C76 /* main.swift in Sources */,
+				D77EC7DC246E1EBA00456229 /* HelpMenu.swift in Sources */,
 				D750E7F9245CD9710033DB99 /* Toggle.swift in Sources */,
 				D750E7FD245CDC550033DB99 /* Binding.swift in Sources */,
 				D77EC7CA246BA4DD00456229 /* ServicesMenuButton.swift in Sources */,
@@ -468,9 +489,12 @@
 				4D867CB91AD6781200681331 /* WebViewController.swift in Sources */,
 				D750E7F5245CC35F0033DB99 /* Section.swift in Sources */,
 				D7612E1D2464E62800FEA851 /* EmptyMenu.swift in Sources */,
+				D77EC7D2246E1D5700456229 /* HeliumMenu.swift in Sources */,
+				D77EC7DA246E1E5D00456229 /* HistoryMenu.swift in Sources */,
 				4D867CB71AD6781200681331 /* AppDelegate.swift in Sources */,
 				D79D52432454DB15008AC3FF /* HeliumToolbar.swift in Sources */,
-				D77EC7CE246BA86000456229 /* WindowsMenu.swift in Sources */,
+				D77EC7CE246BA86000456229 /* WindowMenu.swift in Sources */,
+				D77EC7D4246E1DA800456229 /* FileMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

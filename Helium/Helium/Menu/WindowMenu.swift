@@ -8,7 +8,7 @@
 
 import Cocoa
 
-struct WindowsMenu: Menu {
+struct WindowMenu: Menu {
     var body: Menu {
         List {
             Section {
