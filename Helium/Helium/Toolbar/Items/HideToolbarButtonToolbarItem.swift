@@ -17,12 +17,13 @@ class HideToolbarButtonToolbarItem: NSToolbarItem {
     init(model: Model) {
         self.model = model
         super.init(itemIdentifier: .directionalNavigationButtons)
-        let control = NSSegmentedControl()
+        let control = NSSegmentedControl() // FIXME: Why is this segmented?
         control.trackingMode = .momentary
         control.isContinuous = false
         control.segmentCount = 1
         control.target = self
         control.action = #selector(hideToolbar(_:))
+        control.setImage(NSImage(named: NSImage.exitFullScreenTemplateName), forSegment: 0)
         view = control
     }
     
