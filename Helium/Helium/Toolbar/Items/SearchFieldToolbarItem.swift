@@ -23,6 +23,10 @@ class SearchFieldToolbarItem: NSToolbarItem, NSSearchFieldDelegate {
         searchField.action = #selector(navigate)
         searchField.placeholderString = "Search or enter website name"
         searchField.sendsWholeSearchString = true // Send action only on enter, not unfocus
+        
+        let searchFieldCell = searchField.cell as! NSSearchFieldCell
+        searchFieldCell.cancelButtonCell = nil
+        
         view = searchField
     }
     
