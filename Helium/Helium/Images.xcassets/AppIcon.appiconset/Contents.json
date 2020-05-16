@@ -1,68 +1,68 @@
 {
   "images" : [
     {
-      "size" : "16x16",
+      "filename" : "Helium App Icon 2b Final-16.png",
       "idiom" : "mac",
-      "filename" : "icon_16.png",
-      "scale" : "1x"
+      "scale" : "1x",
+      "size" : "16x16"
     },
     {
-      "size" : "16x16",
+      "filename" : "Helium App Icon 2b Final-32.png",
       "idiom" : "mac",
-      "filename" : "icon_32.png",
-      "scale" : "2x"
+      "scale" : "2x",
+      "size" : "16x16"
     },
     {
-      "size" : "32x32",
+      "filename" : "Helium App Icon 2b Final-32.png",
       "idiom" : "mac",
-      "filename" : "icon_32.png",
-      "scale" : "1x"
+      "scale" : "1x",
+      "size" : "32x32"
     },
     {
-      "size" : "32x32",
+      "filename" : "Helium App Icon 2b Final-64.png",
       "idiom" : "mac",
-      "filename" : "icon_64.png",
-      "scale" : "2x"
+      "scale" : "2x",
+      "size" : "32x32"
     },
     {
-      "size" : "128x128",
+      "filename" : "Helium App Icon 2b Final-128.png",
       "idiom" : "mac",
-      "filename" : "icon_128.png",
-      "scale" : "1x"
+      "scale" : "1x",
+      "size" : "128x128"
     },
     {
-      "size" : "128x128",
+      "filename" : "Helium App Icon 2b Final-256.png",
       "idiom" : "mac",
-      "filename" : "icon_256.png",
-      "scale" : "2x"
+      "scale" : "2x",
+      "size" : "128x128"
     },
     {
-      "size" : "256x256",
+      "filename" : "Helium App Icon 2b Final-256.png",
       "idiom" : "mac",
-      "filename" : "icon_256.png",
-      "scale" : "1x"
+      "scale" : "1x",
+      "size" : "256x256"
     },
     {
-      "size" : "256x256",
+      "filename" : "Helium App Icon 2b Final-512.png",
       "idiom" : "mac",
-      "filename" : "icon_512.png",
-      "scale" : "2x"
+      "scale" : "2x",
+      "size" : "256x256"
     },
     {
-      "size" : "512x512",
+      "filename" : "Helium App Icon 2b Final-512.png",
       "idiom" : "mac",
-      "filename" : "icon_512.png",
-      "scale" : "1x"
+      "scale" : "1x",
+      "size" : "512x512"
     },
     {
-      "size" : "512x512",
+      "filename" : "Helium App Icon 2b Final-1024.png",
       "idiom" : "mac",
-      "filename" : "icon_1024.png",
-      "scale" : "2x"
+      "scale" : "2x",
+      "size" : "512x512"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }
