@@ -212,13 +212,10 @@
 			isa = PBXGroup;
 			children = (
 				D769ABD7244D2DDC00215C76 /* main.swift */,
-				D7754383245922AF00AE5C8A /* Menu */,
-				D77EC7DD246E36F900456229 /* Toolbar */,
 				4D867CB61AD6781200681331 /* AppDelegate.swift */,
 				D79D51FF24514123008AC3FF /* WindowControllerManager.swift */,
-				4D867CD31AD6796A00681331 /* HeliumWindowController.swift */,
-				D775434D24563AEE00AE5C8A /* HeliumWindow.swift */,
-				4D867CB81AD6781200681331 /* WebViewController.swift */,
+				D7754383245922AF00AE5C8A /* Menu */,
+				D772AE5A2470BAF000DB4F03 /* Window */,
 				4D867CBA1AD6781200681331 /* Images.xcassets */,
 				4D867CB41AD6781200681331 /* Supporting Files */,
 				B34C1EC71ADE3CCA0094ADBA /* Resources */,
@@ -295,6 +292,25 @@
 				D750E7FA245CDBA30033DB99 /* Picker.swift */,
 			);
 			path = Derived;
+			sourceTree = "<group>";
+		};
+		D772AE5A2470BAF000DB4F03 /* Window */ = {
+			isa = PBXGroup;
+			children = (
+				D77EC7DD246E36F900456229 /* Toolbar */,
+				D772AE5B2470BB1A00DB4F03 /* WebView */,
+				4D867CD31AD6796A00681331 /* HeliumWindowController.swift */,
+				D775434D24563AEE00AE5C8A /* HeliumWindow.swift */,
+			);
+			path = Window;
+			sourceTree = "<group>";
+		};
+		D772AE5B2470BB1A00DB4F03 /* WebView */ = {
+			isa = PBXGroup;
+			children = (
+				4D867CB81AD6781200681331 /* WebViewController.swift */,
+			);
+			path = WebView;
 			sourceTree = "<group>";
 		};
 		D7754383245922AF00AE5C8A /* Menu */ = {
