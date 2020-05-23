@@ -10,9 +10,11 @@ import Cocoa
 
 class SearchFieldToolbarItem: NSToolbarItem, NSSearchFieldDelegate {
     struct Model {
+        var observeLocation: (@escaping (URL?) -> Void) -> NSKeyValueObservation
         var navigateWithSearchTerm: (String) -> Void
     }
     
+    var tokens: [NSKeyValueObservation] = []
     let model: Model
     init(model: Model) {
         self.model = model
@@ -28,6 +30,11 @@ class SearchFieldToolbarItem: NSToolbarItem, NSSearchFieldDelegate {
         searchFieldCell.cancelButtonCell = nil
         
         view = searchField
+        
+        // FIXME: Memory leaks?
+        tokens.append(model.observeLocation { url in
+            searchField.stringValue = url?.absoluteString ?? ""
+        })
     }
     
     @objc func navigate(_ searchField: NSSearchField) {

@@ -45,6 +45,11 @@ class HeliumWindowController: NSWindowController, NSWindowDelegate {
                 navigateToBackForwardListItem: { backForwardListItem in webController.webView.go(to: backForwardListItem) }
             ),
             searchFieldModel: SearchFieldToolbarItem.Model(
+                observeLocation: { handler in
+                    self.webViewController.webView.observe(\.url, options: [.initial, .new]) { webView, change in
+                        handler(change.newValue!)
+                    }
+                },
                 navigateWithSearchTerm: { searchTerm in webController.loadAlmostURL(searchTerm) }
             ),
             hideToolbarButtonModel: HideToolbarButtonToolbarItem.Model(
