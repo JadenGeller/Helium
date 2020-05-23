@@ -48,7 +48,9 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         // Alow back and forth
         webView.allowsBackForwardNavigationGestures = true
                 
-        clear()
+        if let homePage = UserSetting.homePageURL {
+            loadAlmostURL(homePage)
+        }
     }
     
     override func viewDidLayout() {
@@ -92,17 +94,6 @@ class WebViewController: NSViewController, WKNavigationDelegate {
     @objc func loadURLObject(_ urlObject: Notification) {
         if let url = urlObject.object as? URL {
             loadAlmostURL(url.absoluteString);
-        }
-    }
-    
-    // MARK: Webview functions
-    func clear() {
-        // Reload to home page (or default if no URL stored in UserDefaults)
-        if let homePage = UserSetting.homePageURL {
-            loadAlmostURL(homePage)
-        }
-        else{
-            loadURL(URL(string: "https://cdn.rawgit.com/JadenGeller/Helium/master/helium_start.html")!)
         }
     }
     
