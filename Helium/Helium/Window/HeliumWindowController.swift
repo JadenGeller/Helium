@@ -236,6 +236,17 @@ class HeliumWindowController: NSWindowController, NSWindowDelegate {
         
         return predicate.evaluate(with: stringURL)
     }
+    
+    override func showWindow(_ sender: Any?) {
+        super.showWindow(sender)
+        
+        // Focus search field
+        if let searchFieldItem = window?.toolbar?.items.first(where: { item in
+            item.itemIdentifier == .searchField
+        }) as! SearchFieldToolbarItem? {
+            window?.makeFirstResponder(searchFieldItem.view)
+        }
+    }
         
     @objc private func didBecomeActive() {
         window!.ignoresMouseEvents = false
