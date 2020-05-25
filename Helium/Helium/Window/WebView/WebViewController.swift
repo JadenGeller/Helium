@@ -62,6 +62,32 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         
         trackingTag = view.addTrackingRect(view.bounds, owner: self, userData: nil, assumeInside: false)
     }
+    
+    func zoomVideo() {
+        webView.evaluateJavaScript("""
+            var style = document.createElement("style");
+            style.appendChild(document.createTextNode(""));
+            document.head.appendChild(style);
+            style.sheet.insertRule(`
+                video {
+                    position    : fixed    !important;
+                    top         : 0        !important;
+                    left        : 0        !important;
+                    width       : 100%     !important;
+                    height      : 100%     !important;
+                    max-width   : 100%     !important;
+                    background  : black    !important;
+                    visibility  : visible  !important;
+                }
+            `);
+            style.sheet.insertRule(`
+                :not(video):not(body) {
+                    visibility  : hidden   !important;
+                    overflow    : visible  !important;
+                }
+            `);
+        """)
+    }
 
     @objc func resetZoomLevel(_ sender: AnyObject) {
         webView.magnification = 1

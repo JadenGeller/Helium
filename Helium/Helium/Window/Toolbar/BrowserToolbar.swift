@@ -12,6 +12,7 @@ class BrowserToolbar: NSToolbar, NSToolbarDelegate {
     struct Model {
         var directionalNagivationButtonsModel: DirectionalNavigationButtonsToolbarItem.Model
         var searchFieldModel: SearchFieldToolbarItem.Model
+        var zoomVideoToolbarButtonModel: ZoomVideoButtonToolbarItem.Model
         var hideToolbarButtonModel: HideToolbarButtonToolbarItem.Model
     }
     
@@ -28,6 +29,7 @@ class BrowserToolbar: NSToolbar, NSToolbarDelegate {
             .flexibleSpace,
             .searchField,
             .directionalNavigationButtons,
+            .zoomVideoToolbarButton,
             .hideToolbarButton
         ]
     }
@@ -38,6 +40,7 @@ class BrowserToolbar: NSToolbar, NSToolbarDelegate {
             .flexibleSpace,
             .searchField,
             .flexibleSpace,
+            .zoomVideoToolbarButton,
             .hideToolbarButton
         ]
     }
@@ -50,6 +53,8 @@ class BrowserToolbar: NSToolbar, NSToolbarDelegate {
             return SearchFieldToolbarItem(model: model.searchFieldModel)
         case .hideToolbarButton:
             return HideToolbarButtonToolbarItem(model: model.hideToolbarButtonModel)
+        case .zoomVideoToolbarButton:
+            return ZoomVideoButtonToolbarItem(model: model.zoomVideoToolbarButtonModel)
         default:
             fatalError("Unexpected itemIdentifier")
         }

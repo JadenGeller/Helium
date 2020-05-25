@@ -36,6 +36,7 @@
 		D769ABE5244FE33700215C76 /* OpenCombine in Frameworks */ = {isa = PBXBuildFile; productRef = D769ABE4244FE33700215C76 /* OpenCombine */; };
 		D775434E24563AEE00AE5C8A /* HeliumWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D775434D24563AEE00AE5C8A /* HeliumWindow.swift */; };
 		D777E0F32470A4BD004F9B44 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D777E0F22470A4BD004F9B44 /* Credits.rtf */; };
+		D77A410A2479F23F00150830 /* ZoomVideoButtonToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77A41092479F23F00150830 /* ZoomVideoButtonToolbarItem.swift */; };
 		D77EC7CA246BA4DD00456229 /* ServicesMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77EC7C9246BA4DD00456229 /* ServicesMenuButton.swift */; };
 		D77EC7CC246BA83800456229 /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77EC7CB246BA83800456229 /* MenuBar.swift */; };
 		D77EC7CE246BA86000456229 /* WindowMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77EC7CD246BA86000456229 /* WindowMenu.swift */; };
@@ -124,6 +125,7 @@
 		D769ABDD244F477100215C76 /* UserDefaultHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHelpers.swift; sourceTree = "<group>"; };
 		D775434D24563AEE00AE5C8A /* HeliumWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeliumWindow.swift; sourceTree = "<group>"; };
 		D777E0F22470A4BD004F9B44 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
+		D77A41092479F23F00150830 /* ZoomVideoButtonToolbarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomVideoButtonToolbarItem.swift; sourceTree = "<group>"; };
 		D77EC7C9246BA4DD00456229 /* ServicesMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesMenuButton.swift; sourceTree = "<group>"; };
 		D77EC7CB246BA83800456229 /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
 		D77EC7CD246BA86000456229 /* WindowMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowMenu.swift; sourceTree = "<group>"; };
@@ -344,6 +346,7 @@
 				D77EC7E1246E377100456229 /* DirectionalNavigationButtonsToolbarItem.swift */,
 				D77EC7E3246E37CE00456229 /* SearchFieldToolbarItem.swift */,
 				D79D52422454DB15008AC3FF /* HideToolbarButtonToolbarItem.swift */,
+				D77A41092479F23F00150830 /* ZoomVideoButtonToolbarItem.swift */,
 			);
 			path = Items;
 			sourceTree = "<group>";
@@ -534,6 +537,7 @@
 				D769ABDE244F477100215C76 /* UserDefaultHelpers.swift in Sources */,
 				D750E7FB245CDBA30033DB99 /* Picker.swift in Sources */,
 				D79D520024514123008AC3FF /* WindowControllerManager.swift in Sources */,
+				D77A410A2479F23F00150830 /* ZoomVideoButtonToolbarItem.swift in Sources */,
 				4D867CB91AD6781200681331 /* WebViewController.swift in Sources */,
 				D750E7F5245CC35F0033DB99 /* Section.swift in Sources */,
 				D7612E1D2464E62800FEA851 /* EmptyMenu.swift in Sources */,

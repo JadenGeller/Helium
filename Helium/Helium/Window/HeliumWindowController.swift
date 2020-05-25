@@ -52,6 +52,9 @@ class HeliumWindowController: NSWindowController, NSWindowDelegate {
                 },
                 navigateWithSearchTerm: { searchTerm in webController.loadAlmostURL(searchTerm) }
             ),
+            zoomVideoToolbarButtonModel: ZoomVideoButtonToolbarItem.Model(
+                zoomVideo: { self.webViewController.zoomVideo() }
+            ),
             hideToolbarButtonModel: HideToolbarButtonToolbarItem.Model(
                 hideToolbar: { self.toolbarVisibility = .hidden }
             )
