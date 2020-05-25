@@ -45,6 +45,9 @@ class WebViewController: NSViewController, WKNavigationDelegate {
         // Allow zooming
         webView.allowsMagnification = true
         
+        // Enable inspector
+        webView.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
+
         // Alow back and forth
         webView.allowsBackForwardNavigationGestures = true
                 
