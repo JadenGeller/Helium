@@ -8,6 +8,20 @@
 
 import Cocoa
 
+private class SearchField: NSSearchField {
+    var isBecomingFirstResponderFromMouseDown = false
+    override var refusesFirstResponder: Bool {
+        get { isBecomingFirstResponderFromMouseDown }
+        set { isBecomingFirstResponderFromMouseDown = newValue }
+    }
+
+    override func mouseDown(with event: NSEvent) {
+        isBecomingFirstResponderFromMouseDown = true
+        defer { isBecomingFirstResponderFromMouseDown = false }
+        window?.makeFirstResponder(self)
+    }
+}
+
 class SearchFieldToolbarItem: NSToolbarItem, NSSearchFieldDelegate {
     struct Model {
         var observeLocation: (@escaping (URL?) -> Void) -> NSKeyValueObservation
@@ -19,7 +33,7 @@ class SearchFieldToolbarItem: NSToolbarItem, NSSearchFieldDelegate {
     init(model: Model) {
         self.model = model
         super.init(itemIdentifier: .searchField)
-        let searchField = NSSearchField()
+        let searchField = SearchField()
         searchField.delegate = self
         searchField.target = self
         searchField.action = #selector(navigate)
@@ -28,7 +42,7 @@ class SearchFieldToolbarItem: NSToolbarItem, NSSearchFieldDelegate {
         
         let searchFieldCell = searchField.cell as! NSSearchFieldCell
         searchFieldCell.cancelButtonCell = nil
-        
+
         view = searchField
         
         // FIXME: Memory leaks?
@@ -38,7 +52,12 @@ class SearchFieldToolbarItem: NSToolbarItem, NSSearchFieldDelegate {
     }
     
     @objc func navigate(_ searchField: NSSearchField) {
-        model.navigateWithSearchTerm(searchField.stringValue)
+        searchField.selectText(nil)
+//        model.navigateWithSearchTerm(searchField.stringValue)
+    }
+    
+    @objc func click(_ searchField: NSSearchField) {
+        print("CLICK")
     }
 }
 
